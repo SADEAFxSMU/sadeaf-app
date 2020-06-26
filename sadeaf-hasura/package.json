@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "sadeaf-hasura",
+  "version": "1.0.0",
+  "scripts": {
+  },
+  "dependencies": {
+  }
+}

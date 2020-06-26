@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "sadeaf-svc-notification",
+  "version": "1.0.0",
+  "scripts": {
+  },
+  "dependencies": {
+  }
+}

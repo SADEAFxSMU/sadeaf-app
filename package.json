@@ -1,27 +1,18 @@
 {
-  "name": "sadeaf-web",
-  "version": "1.0.0",
-  "description": "SADEAF Management System Web App",
-  "author": "SADEAFxSMU",
   "private": true,
+  "workspaces": [
+    "sadeaf-web",
+    "sadeaf-api",
+    "sadeaf-hasura",
+    "sadeaf-svc-assignment",
+    "sadeaf-svc-invoice",
+    "sadeaf-svc-notification"
+  ],
+  "engines": {
+    "node": "^14"
+  },
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "test": "jest"
-  },
-  "dependencies": {
-    "nuxt": "^2.0.0",
-    "element-ui": "^2.4.11",
-    "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/pwa": "^3.0.0-0",
-    "@nuxtjs/dotenv": "^1.4.0"
-  },
-  "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-jest": "^24.1.0",
-    "jest": "^24.1.0",
-    "vue-jest": "^4.0.0-0"
+    "dev": "TODO",
+    "dev-web": "cd sadeaf-web && yarn dev"
   }
 }
