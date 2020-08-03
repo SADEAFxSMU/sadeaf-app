@@ -1,0 +1,244 @@
+- table:
+    schema: public
+    name: account
+  object_relationships:
+  - name: admin
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: admin
+        column_mapping:
+          id: account_id
+  - name: client
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: client
+        column_mapping:
+          id: account_id
+  - name: notification_setting
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: notification_setting
+        column_mapping:
+          id: account_id
+  - name: service_requestor
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: service_requestor
+        column_mapping:
+          id: account_id
+  - name: volunteer
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: volunteer
+        column_mapping:
+          id: account_id
+- table:
+    schema: public
+    name: admin
+  object_relationships:
+  - name: account
+    using:
+      foreign_key_constraint_on: account_id
+- table:
+    schema: public
+    name: assignment
+  object_relationships:
+  - name: attendance
+    using:
+      foreign_key_constraint_on: attendance_id
+  - name: event
+    using:
+      foreign_key_constraint_on: event_id
+  - name: feedback
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: feedback
+        column_mapping:
+          id: assignment_id
+  - name: volunteer
+    using:
+      foreign_key_constraint_on: volunteer_id
+- table:
+    schema: public
+    name: attendance
+  array_relationships:
+  - name: assignments
+    using:
+      foreign_key_constraint_on:
+        column: attendance_id
+        table:
+          schema: public
+          name: assignment
+- table:
+    schema: public
+    name: client
+  object_relationships:
+  - name: account
+    using:
+      foreign_key_constraint_on: account_id
+  - name: service_requestor
+    using:
+      foreign_key_constraint_on: service_requestor_id
+  array_relationships:
+  - name: events
+    using:
+      foreign_key_constraint_on:
+        column: client_id
+        table:
+          schema: public
+          name: event
+  - name: feedbacks
+    using:
+      foreign_key_constraint_on:
+        column: client_id
+        table:
+          schema: public
+          name: feedback
+- table:
+    schema: public
+    name: email_information
+  object_relationships:
+  - name: notification_setting
+    using:
+      foreign_key_constraint_on: notification_setting_id
+- table:
+    schema: public
+    name: event
+  object_relationships:
+  - name: client
+    using:
+      foreign_key_constraint_on: client_id
+  - name: interpretation_detail
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: interpretation_details
+        column_mapping:
+          id: event_id
+  - name: invoice
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: invoice
+        column_mapping:
+          id: event_id
+  array_relationships:
+  - name: assignments
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          schema: public
+          name: assignment
+- table:
+    schema: public
+    name: feedback
+  object_relationships:
+  - name: assignment
+    using:
+      foreign_key_constraint_on: assignment_id
+  - name: client
+    using:
+      foreign_key_constraint_on: client_id
+- table:
+    schema: public
+    name: interpretation_details
+  object_relationships:
+  - name: event
+    using:
+      foreign_key_constraint_on: event_id
+- table:
+    schema: public
+    name: invoice
+  object_relationships:
+  - name: event
+    using:
+      foreign_key_constraint_on: event_id
+- table:
+    schema: public
+    name: membership
+  array_relationships:
+  - name: service_requestors
+    using:
+      foreign_key_constraint_on:
+        column: membership_id
+        table:
+          schema: public
+          name: service_requestor
+- table:
+    schema: public
+    name: notification_setting
+  object_relationships:
+  - name: account
+    using:
+      foreign_key_constraint_on: account_id
+  - name: email_information
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: email_information
+        column_mapping:
+          id: notification_setting_id
+  - name: telegram_information
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: telegram_information
+        column_mapping:
+          id: notification_setting_id
+- table:
+    schema: public
+    name: service_requestor
+  object_relationships:
+  - name: account
+    using:
+      foreign_key_constraint_on: account_id
+  - name: membership
+    using:
+      foreign_key_constraint_on: membership_id
+  array_relationships:
+  - name: clients
+    using:
+      foreign_key_constraint_on:
+        column: service_requestor_id
+        table:
+          schema: public
+          name: client
+- table:
+    schema: public
+    name: telegram_information
+  object_relationships:
+  - name: notification_setting
+    using:
+      foreign_key_constraint_on: notification_setting_id
+- table:
+    schema: public
+    name: volunteer
+  object_relationships:
+  - name: account
+    using:
+      foreign_key_constraint_on: account_id
+  array_relationships:
+  - name: assignments
+    using:
+      foreign_key_constraint_on:
+        column: volunteer_id
+        table:
+          schema: public
+          name: assignment
