@@ -8,7 +8,7 @@
                  circle />
     </div>
     <el-table
-      :data="tableDataFiltered"
+      :data="paginatedTableData"
       style="width: 100%;">
       <el-table-column v-for="column in tableSingleValueColumns"
                        :label="column.label"
@@ -51,6 +51,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+    background
+    :page-size="this.rowLimit"
+    :total="this.tableDataFiltered.length"
+    :pager-count="10"
+    :current-page="this.currentPage"
+    @current-change="this.handlePageChange"
+    />
   </div>
 </template>
 
@@ -79,6 +87,8 @@ export default {
     return {
       search: "",
       selects: {},
+      rowLimit: 5, // Limit rows for pagination
+      currentPage: 1, // Local state for current selected page
     };
   },
   created() {
@@ -100,6 +110,9 @@ export default {
     // }
   },
   methods: {
+    handlePageChange(currentPage) {
+      this.currentPage = currentPage;
+    },
     handleEdit(index, row) {
       console.log(index, row);
     },
@@ -143,8 +156,14 @@ export default {
     tableSelectColumns() {
       return this.tableColumns.filter(x => x.type === 'select');
     },
+    paginatedTableData() {
+      return this.tableDataFiltered.slice((this.currentPage - 1) * this.rowLimit, this.currentPage * this.rowLimit);
+    },
     tableDataFiltered() {
       // TODO: Use a worker for this expensive filtering
+      // reset currentPage to 1 when you search, this prevents table from showing "No Data" if your previously selected page was beyond
+      // the new paginatedTableData length
+      this.currentPage = 1; 
       return this.tableData.filter(data => {
         if (!this.search) return true;
         const searchString = this.search.toLowerCase();
@@ -162,7 +181,7 @@ export default {
         }
         return false;
       });
-    }
+    },
   }
 };
 </script>
