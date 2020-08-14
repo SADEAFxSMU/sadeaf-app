@@ -141,18 +141,32 @@ CREATE TABLE assignment (
 DROP TABLE IF EXISTS feedback;
 CREATE TABLE feedback(
     id serial,
-    notetaker_punctual BOOLEAN,
-    notetaker_conduct VARCHAR (50),
+    notetaker_punctual BOOLEAN NOT NULL,
+    notetaker_conduct VARCHAR (50) NOT NULL,
     live_comments TEXT,
-    live_information_understanding VARCHAR (50),
-    live_interaction VARCHAR (50),
+    live_information_understanding VARCHAR (50) NOT NULL,
+    live_interaction VARCHAR (50) NOT NULL,
     post_session_comments TEXT,
-    post_session_understanding VARCHAR (50),
-    post_session_interaction VARCHAR (50),
+    post_session_understanding VARCHAR (50) NOT NULL,
+    post_session_interaction VARCHAR (50) NOT NULL,
     general_feedback TEXT,
+    training_privacy_preference BOOLEAN NOT NULL,
+    confidentiality_privacy_preference BOOLEAN NOT NULL,
     client_id INT REFERENCES client(id),
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    assignment_id INT UNIQUE references assignment(id)
+);
+
+DROP TABLE IF EXISTS interpretation_details;
+CREATE TABLE interpretation_details(
+    id serial,
+    sign_system VARCHAR (255) NOT NULL,
+    filming_interpreters BOOLEAN NOT NULL,
+    allow_trainee_interpreters BOOLEAN NOT NULL,
+    number_of_deaf INT NOT NULL,
+    number_of_hearing INT NOT NULL,
+    event_id INT UNIQUE REFERENCES event(id)
 );
 
 
@@ -277,26 +291,26 @@ INSERT INTO volunteer(
 --     (1, 1);
 
 INSERT INTO notification_setting(
-    account_id
+    id, account_id
 ) VALUES
-    (1),
-    (2),
-    (3),
-    (4);
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4);
 
 INSERT INTO telegram_information(
-    chat_id, notification_setting_id
+    id, chat_id, notification_setting_id
 ) VALUES
-    (1111111111, 1),
-    (2222222222, 2),
-    (3333333333, 3);
+    (1, 1111111111, 1),
+    (2, 2222222222, 2),
+    (3, 3333333333, 3);
 
 INSERT INTO email_information(
-    email_address, notification_setting_id
+    id, email_address, notification_setting_id
 ) VALUES
-    ('admin_notification_email@gmail.com', 1),
-    ('email_me_at_this_email@email.com', 2),
-    ('bobby@gmail.com', 4);
+    (1, 'admin_notification_email@gmail.com', 1),
+    (2, 'email_me_at_this_email@email.com', 2),
+    (3, 'bobby@gmail.com', 4);
 
 INSERT INTO event (
     id, name, client_id, description, purpose, quotation
@@ -335,3 +349,17 @@ INSERT INTO assignment (
      1, 500, null);
 
     -- TODO: Add more assignments for the other clients + volunteers
+
+INSERT INTO feedback (
+    id, notetaker_punctual, notetaker_conduct, live_comments, live_information_understanding,
+    live_interaction, post_session_comments, post_session_understanding, post_session_interaction,
+    general_feedback, training_privacy_preference, confidentiality_privacy_preference, client_id, assignment_id
+) VALUES
+    (1, true, 'good', 'very punctual', 'good', 'very good', 'neutral', 'good', 'very good', 'NA',
+     true, true, 3, 1);
+
+INSERT INTO interpretation_details (
+    id, sign_system, filming_interpreters, allow_trainee_interpreters,number_of_deaf,
+    number_of_hearing,event_id
+) VALUES
+    (1, 'home system', true, true, 5, 100, 1);
