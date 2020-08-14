@@ -8,8 +8,8 @@ CREATE TABLE account(
     username VARCHAR (30) UNIQUE NOT NULL,
     password VARCHAR (30) NOT NULL,
     email VARCHAR (255) UNIQUE NOT NULL,
-    name VARCHAR (255) NOT NULL, -- ELI: Not sure if this should be in profile instead
-    contact VARCHAR(20), -- ELI: Not sure if this should be in profile instead
+    name VARCHAR (255) NOT NULL,
+    contact VARCHAR(20),
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -29,7 +29,7 @@ CREATE TABLE service_requestor(
     id serial PRIMARY KEY,
     organisation VARCHAR (255) NOT NULL,
     membership_id INT NOT NULL REFERENCES membership(id),
-    account_id INT NOT NULL REFERENCES account(id)
+    account_id INT UNIQUE NOT NULL REFERENCES account(id)
 );
 
 DROP TABLE IF EXISTS client;
@@ -40,50 +40,58 @@ CREATE TABLE client(
     preferred_comm_mode VARCHAR(30) NOT NULL,
     additional_notes TEXT,
     service_requestor_id INT REFERENCES service_requestor(id),
-    account_id INT NOT NULL REFERENCES account(id)
+    account_id INT UNIQUE NOT NULL REFERENCES account(id)
 );
 
--- ELI: Assuming the purpose of this table is to capture all the 
---      SADEAF-specific stuff, I think should split this up into 
---      client_profile, volunteer_profile since not much commonalities
-DROP TABLE IF EXISTS profile;
-CREATE TABLE profile(
-    id serial PRIMARY KEY,
-    -- TODO: Add remaining fields
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    account_id INT NOT NULL REFERENCES account(id)
-);
+-- There seems to be no need for this table for now since it doesnt contain any meaningful information
+-- All account related information can be found in account table
+-- DROP TABLE IF EXISTS profile;
+-- CREATE TABLE profile(
+--     id serial PRIMARY KEY,
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     account_id INT UNIQUE NOT NULL REFERENCES account(id)
+-- );
 
 DROP TABLE IF EXISTS admin;
 CREATE TABLE admin(
     id serial PRIMARY KEY,
-    account_id INT NOT NULL REFERENCES account(id)
+    account_id INT UNIQUE NOT NULL REFERENCES account(id)
 );
 
 DROP TABLE IF EXISTS volunteer;
 CREATE TABLE volunteer(
     id serial PRIMARY KEY,
     approval_status bool NOT NULL,
-    account_id INT NOT NULL REFERENCES account(id)
+    account_id INT UNIQUE NOT NULL REFERENCES account(id)
+);
+
+DROP TABLE IF EXISTS notification_setting;
+CREATE TABLE notification_setting(
+    id serial PRIMARY KEY,
+    account_id INT UNIQUE NOT NULL REFERENCES account(id)
+);
+
+DROP TABLE IF EXISTS telegram_information;
+CREATE TABLE telegram_information(
+    id serial PRIMARY KEY,
+    chat_id BIGINT NOT NULL,
+    notification_setting_id INT UNIQUE NOT NULL REFERENCES notification_setting(id)
+);
+
+DROP TABLE IF EXISTS email_information;
+CREATE TABLE email_information(
+     id serial PRIMARY KEY,
+     email_address VARCHAR (255) NOT NULL,
+     notification_setting_id INT UNIQUE NOT NULL REFERENCES notification_setting(id)
 );
 
 DROP TABLE IF EXISTS attendance;
 CREATE TABLE attendance (
-    id serial,
-    has_dispute BOOLEAN DEFAULT FALSE,
+    id serial PRIMARY KEY ,
+    has_dispute BOOLEAN NOT NULL,
     dispute_comment TEXT,
-    attended BOOLEAN DEFAULT FALSE,
-    PRIMARY KEY (id)
-);
-
-DROP TABLE IF EXISTS invoice;
-CREATE TABLE invoice (
-    id serial PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    amount NUMERIC NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    attended BOOLEAN NOT NULL
 );
 
 DROP TABLE IF EXISTS event;
@@ -94,15 +102,24 @@ CREATE TABLE event (
     description TEXT,
     purpose VARCHAR(100),
     quotation NUMERIC NOT NULL,
-    invoice_id INT REFERENCES invoice(id),
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+DROP TABLE IF EXISTS invoice;
+CREATE TABLE invoice (
+     id serial PRIMARY KEY,
+     name VARCHAR(255) NOT NULL,
+     amount NUMERIC NOT NULL,
+     event_id INT UNIQUE REFERENCES event(id),
+     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
 DROP TABLE IF EXISTS assignment;
 CREATE TABLE assignment (
-    id serial,
-    event_id INT NOT NULL,
+    id serial PRIMARY KEY ,
+    event_id INT NOT NULL REFERENCES event(id),
     status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
     start_dt TIMESTAMP NOT NULL,
     end_dt TIMESTAMP NOT NULL,
@@ -116,37 +133,46 @@ CREATE TABLE assignment (
     longitude float,
 
     -- Volunteer-related
-    volunteer_id INT NOT NULL,
+    volunteer_id INT NOT NULL REFERENCES volunteer(id),
     honorarium_amount float,
-    attendance_id INT,
+    attendance_id INT REFERENCES attendance(id)
+);
 
-    PRIMARY KEY (id),
-    FOREIGN KEY (event_id) REFERENCES event(id),
-    FOREIGN KEY (volunteer_id) REFERENCES volunteer(id),
-    FOREIGN KEY (attendance_id) REFERENCES attendance(id)
-
-    -- TODO: Create with trigger on insert:
-    --   > attendance document 
+DROP TABLE IF EXISTS feedback;
+CREATE TABLE feedback(
+    id serial,
+    notetaker_punctual BOOLEAN,
+    notetaker_conduct VARCHAR (50),
+    live_comments TEXT,
+    live_information_understanding VARCHAR (50),
+    live_interaction VARCHAR (50),
+    post_session_comments TEXT,
+    post_session_understanding VARCHAR (50),
+    post_session_interaction VARCHAR (50),
+    general_feedback TEXT,
+    client_id INT REFERENCES client(id),
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 
 ----------------------[ TRIGGERS & PROCEDURES ]----------------------
 
 -- Create an invoice for the new event, setting the new event's invoice_id field to the new invoice's id
-CREATE OR REPLACE FUNCTION create_invoice() RETURNS trigger AS
-$$
-BEGIN
-    INSERT INTO invoice (name, amount) VALUES (NEW.id, 0) RETURNING id INTO NEW.invoice_id;
-    RETURN NEW;
-END;
-$$
-LANGUAGE 'plpgsql';
+-- CREATE OR REPLACE FUNCTION create_invoice() RETURNS trigger AS
+-- $$
+-- BEGIN
+--     INSERT INTO invoice (name, amount) VALUES (NEW.id, 0) RETURNING id INTO NEW.invoice_id;
+--     RETURN NEW;
+-- END;
+-- $$
+-- LANGUAGE 'plpgsql';
+--
+-- CREATE TRIGGER create_invoice_trigger
+--     BEFORE INSERT ON event
+--     FOR EACH ROW
+--     EXECUTE PROCEDURE create_invoice();
 
-CREATE TRIGGER create_invoice_trigger
-    BEFORE INSERT ON event
-    FOR EACH ROW
-    EXECUTE PROCEDURE create_invoice();
-    
 -- Updates the table's updated_at timestamps on row update
 CREATE OR REPLACE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
@@ -178,7 +204,7 @@ INSERT INTO membership(
     type, expiry_date, cost, status, free_sessions_remaining
 ) VALUES
     ('corporate', now() + interval '360 days', 9.9, 'ACTIVE', 10);
-    
+
 INSERT INTO account(
     id, username, password, email, name, contact
 ) VALUES
@@ -207,7 +233,7 @@ INSERT INTO account(
     (23, 'sunnylim', 'password', 'sunnylim@gmail.com', 'Sunny Lim', '88888888');
 
 INSERT INTO admin(
-    id, account_id 
+    id, account_id
 ) VALUES
     (1, 1);
 
@@ -233,11 +259,11 @@ INSERT INTO client(
     (9, 'CreditSuisse Pte Ltd', 'analyst', 'Speech', null, null, 14),
     (10, null, 'self-employed', 'Sign Language', null, null, 15),
     (11, 'Shopee Pte Ltd', 'intern', 'Speech', null, null, 16);
-    
+
 INSERT INTO volunteer(
     id, approval_status, account_id
 ) VALUES
-    (1, TRUE, 17), 
+    (1, TRUE, 17),
     (2, TRUE, 18),
     (3, TRUE, 19),
     (4, TRUE, 20),
@@ -245,14 +271,36 @@ INSERT INTO volunteer(
     (6, TRUE, 22),
     (7, TRUE, 23);
 
-INSERT INTO profile(
-    id, account_id 
+-- INSERT INTO profile(
+--     id, account_id
+-- ) VALUES
+--     (1, 1);
+
+INSERT INTO notification_setting(
+    account_id
 ) VALUES
-    (1, 1);
+    (1),
+    (2),
+    (3),
+    (4);
+
+INSERT INTO telegram_information(
+    chat_id, notification_setting_id
+) VALUES
+    (1111111111, 1),
+    (2222222222, 2),
+    (3333333333, 3);
+
+INSERT INTO email_information(
+    email_address, notification_setting_id
+) VALUES
+    ('admin_notification_email@gmail.com', 1),
+    ('email_me_at_this_email@email.com', 2),
+    ('bobby@gmail.com', 4);
 
 INSERT INTO event (
-    id, name, client_id, description, purpose, quotation 
-) VALUES 
+    id, name, client_id, description, purpose, quotation
+) VALUES
     (1, 'IS111 - Intro to Programming', 1, 'Introductory programming class - very hands-on', 'School', 188),
     (2, 'IS113 - Web Application Development', 2, 'Introductory programming class - very hands-on', 'School', 103),
     (3, 'JPMorgan Winning Women', 1, 'Event promoting gender equality at JPMorgan', 'Workshop', 88),
@@ -266,25 +314,24 @@ INSERT INTO assignment (
     address_line_one, address_line_two, postal, room_number, latitude, longitude,
     volunteer_id, honorarium_amount, attendance_id
 ) VALUES
-    (1, 1, 'PENDING', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + interval '10 day', 
+    (1, 1, 'PENDING', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + interval '10 day',
      '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
      1, 100, null),
-     
-    (2, 1, 'PENDING', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + interval '4 day', 
+
+    (2, 1, 'PENDING', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + interval '4 day',
      '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
      2, 100, null),
-     
-    (3, 1, 'COMPLETE', CURRENT_TIMESTAMP - interval '1 day', CURRENT_TIMESTAMP, 
+
+    (3, 1, 'COMPLETE', CURRENT_TIMESTAMP - interval '1 day', CURRENT_TIMESTAMP,
      '12 Geyland St', '#03-54', '603482', 'Room 2C', 1.93821, 2.3247,
      2, 200, null),
-     
-    (4, 2, 'COMPLETE', CURRENT_TIMESTAMP - interval '3 day', CURRENT_TIMESTAMP - interval '1 day', 
+
+    (4, 2, 'COMPLETE', CURRENT_TIMESTAMP - interval '3 day', CURRENT_TIMESTAMP - interval '1 day',
      '11 Jalan Run St', '#01-23', '603482', 'Room 2B', 1.0123, 2.5962,
      1, 100, null),
-     
-    (5, 3, 'COMPLETE', CURRENT_TIMESTAMP - interval '5 day', CURRENT_TIMESTAMP - interval '3 day', 
+
+    (5, 3, 'COMPLETE', CURRENT_TIMESTAMP - interval '5 day', CURRENT_TIMESTAMP - interval '3 day',
      '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
      1, 500, null);
 
-    -- TODO: Add more assignments for the other clients + volunteers 
-     
+    -- TODO: Add more assignments for the other clients + volunteers
