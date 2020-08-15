@@ -1,13 +1,14 @@
 <template>
   <div class="card">
-    <div :body-style="{ padding: '0px' }" class="body-wrapper">
+    <div :style="cardStyle" class="body-wrapper">
       <img :src="imgSrc || getRandomPic()"
+           :style="imgStyle"
            class="image">
       <div class="text">
         <slot name="body"/>
       </div>
     </div>
-    <div class="footer">
+    <div class="footer" v-if="$slots.footer">
       <slot name="footer"/>
     </div>
   </div>
@@ -16,7 +17,7 @@
 <script>
 export default {
   name: 'UserCard',
-  props: ['imgSrc', 'text'],
+  props: ['cardStyle', 'imgSrc', 'imgStyle'],
   data() {
     return {
       currentDate: new Date()

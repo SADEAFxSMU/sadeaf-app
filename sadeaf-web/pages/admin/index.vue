@@ -48,6 +48,7 @@ import SuperTable from "../../components/tables/SuperTable";
 import StatCard from "../../components/StatCard";
 import ActionsTray from "../../components/ActionsTray";
 import DoughnutChart from "../../components/charts/Doughnut";
+import NotetakersCell from "../../components/tables/custom-columns/NotetakersCell";
 
 export default {
   name: "index",
@@ -61,20 +62,20 @@ export default {
     return {
       search: null,
       tableFields: [
-        { name: 'client', label: 'Client', type: 'string' },
+        { name: 'client', label: 'Client', type: 'string', width: 120 },
         // { name: 'age', label: 'Age', type: 'int' },
         // { name: 'salary', label: 'Salary', type: 'float', precision: 2, step: 0.1},
-        { name: 'status', label: 'Status', type: 'enum', enum: ['Pending', 'Live', 'Dead'] },
-        { name: 'date', label: 'Date', type: 'datetime' },
-        { name: 'event', label: 'Event', type: 'string' },
-        { name: 'location', label: 'Location', type: 'string' },
+        { name: 'status', label: 'Status', type: 'enum', enum: ['Pending', 'Live', 'Dead'], width: 120 },
+        { name: 'date', label: 'Date', type: 'datetime', width: 150 },
+        { name: 'event', label: 'Event', type: 'string', width: 250 },
+        { name: 'location', label: 'Location', type: 'string', width: 250 },
         {
           name: 'notetakers',
           label: 'Note-takers',
-          type: 'select',
-          multiple: true,
-          render: x => x.name,
-        }
+          type: 'custom',
+          custom: NotetakersCell,
+          width: 400,
+        },
       ],
       tableData: [{
         client: 'Tom',
@@ -90,8 +91,10 @@ export default {
         location: '1 Stanford Road, Singapore 123456',
         notetakers: [{
           name: 'Eli',
+          imgSrc: 'https://media-exp1.licdn.com/dms/image/C5603AQHl_BixhF9QOw/profile-displayphoto-shrink_100_100/0?e=1602720000&v=beta&t=lPviBneWF8uM4A4BN9tGpoBvFReXu0lewa5BAX2UEcc'
         }, {
-          name: 'Weiyuan'
+          name: 'Weiyuan',
+          imgSrc: 'https://media-exp1.licdn.com/dms/image/C5603AQGQHsAl3P_VDA/profile-displayphoto-shrink_200_200/0?e=1602720000&v=beta&t=ygRrmujDhgpwHjOIW01I_xkftZOZ5kpG9JCgtnFvZQs'
         }],
       }, {
         client: 'Morgan',
@@ -101,8 +104,10 @@ export default {
         location: '1 Stanford Road, Singapore 123456',
         notetakers: [{
           name: 'Tedmund',
+          imgSrc: 'https://media-exp1.licdn.com/dms/image/C5103AQHlCmi1sznkng/profile-displayphoto-shrink_200_200/0?e=1602720000&v=beta&t=cFtcVy3V14Q5TTivNBwqOP0sUMYJFiuXux40UTY5pN8'
         }, {
-          name: 'Wayne'
+          name: 'Wayne',
+          imgSrc: 'https://media-exp1.licdn.com/dms/image/C5603AQEoomKi9Ky-1Q/profile-displayphoto-shrink_200_200/0?e=1602720000&v=beta&t=UgQtklOFgE98jPkL_8_hEeMC9tOQ1sYipuE9V9JUVbM'
         }],
       }, {
         client: 'Jessy',
@@ -112,6 +117,7 @@ export default {
         location: '1 Stanford Road, Singapore 123456',
         notetakers: [{
           name: 'Aus',
+          imgSrc: 'https://media-exp1.licdn.com/dms/image/C5103AQH9nm5CFMJ9GA/profile-displayphoto-shrink_200_200/0?e=1602720000&v=beta&t=JNVjy67kfrng_l-tulCTjPRsMie4C8UkPTloQnXm6ck'
         }],
       }, {
         client: 'Tom',
@@ -149,6 +155,7 @@ export default {
         location: '1 Stanford Road, Singapore 123456',
         notetakers: [{
           name: 'Aus',
+          imgSrc: 'https://media-exp1.licdn.com/dms/image/C5103AQH9nm5CFMJ9GA/profile-displayphoto-shrink_200_200/0?e=1602720000&v=beta&t=JNVjy67kfrng_l-tulCTjPRsMie4C8UkPTloQnXm6ck'
         }],
       }, {
         client: 'Tom',
@@ -186,6 +193,7 @@ export default {
         location: '1 Stanford Road, Singapore 123456',
         notetakers: [{
           name: 'Aus',
+          imgSrc: 'https://media-exp1.licdn.com/dms/image/C5103AQH9nm5CFMJ9GA/profile-displayphoto-shrink_200_200/0?e=1602720000&v=beta&t=JNVjy67kfrng_l-tulCTjPRsMie4C8UkPTloQnXm6ck'
         }],
       }, {
         client: 'Tom',
@@ -223,6 +231,7 @@ export default {
         location: '1 Stanford Road, Singapore 123456',
         notetakers: [{
           name: 'Aus',
+          imgSrc: 'https://media-exp1.licdn.com/dms/image/C5103AQH9nm5CFMJ9GA/profile-displayphoto-shrink_200_200/0?e=1602720000&v=beta&t=JNVjy67kfrng_l-tulCTjPRsMie4C8UkPTloQnXm6ck'
         }],
       }, {
         client: 'Tom',
@@ -260,6 +269,7 @@ export default {
         location: '1 Stanford Road, Singapore 123456',
         notetakers: [{
           name: 'Aus',
+          imgSrc: 'https://media-exp1.licdn.com/dms/image/C5103AQH9nm5CFMJ9GA/profile-displayphoto-shrink_200_200/0?e=1602720000&v=beta&t=JNVjy67kfrng_l-tulCTjPRsMie4C8UkPTloQnXm6ck'
         }],
       }, {
         client: 'Tom',
@@ -297,6 +307,7 @@ export default {
         location: '1 Stanford Road, Singapore 123456',
         notetakers: [{
           name: 'Aus',
+          imgSrc: 'https://media-exp1.licdn.com/dms/image/C5103AQH9nm5CFMJ9GA/profile-displayphoto-shrink_200_200/0?e=1602720000&v=beta&t=JNVjy67kfrng_l-tulCTjPRsMie4C8UkPTloQnXm6ck'
         }],
       }],
       actions: [{

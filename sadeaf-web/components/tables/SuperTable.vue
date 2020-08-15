@@ -2,34 +2,30 @@
   <div ref="supertable"
        class="super-table">
     <div class="title-wrapper">
-      <h1 class="heading">Service Requests</h1>
+      <h1 class="heading">{{title}}</h1>
       <el-button icon="el-icon-full-screen"
                  @click="toggleFullscreen('supertable')"
                  circle />
     </div>
     <el-table
       :data="paginatedTableData"
+      size="small"
+      :cell-style="{padding: '5px'}"
       style="width: 100%;">
-      <el-table-column v-for="column in tableSingleValueColumns"
+      <el-table-column v-for="(column, i) in tableColumns"
+                       sortable
+                       :key="'column-' + i"
                        :label="column.label"
                        :prop="column.name"
-                       sortable
                        :filters="getFilters(column)"
-                       :filter-method="filterHandler">
-      </el-table-column>
-      <el-table-column v-for="column in tableSelectColumns"
-                       :label="column.label"
-                       :prop="column.name">
-        <template slot-scope="scope">
-          <el-select @change="x => handleSelectChange(x, column, scope.$index, scope.row)"
-                     :value="selects[column.name] && selects[column.name][scope.$index]">
-            <el-option v-for="value in scope.row[column.name]"
-                       :multiple="column.multiple"
-                       :label="column.render(value)"
-                       :value="column.render(value)">
-              {{ column.render(value) }}
-            </el-option>
-          </el-select>
+                       :filter-method="filterHandler"
+                       :width="column.width">
+        <!-- Slot here needs to be set to some rubbish else vue will apply the template to all columns -->
+        <template :slot="column.type === 'custom' ? 'default' : ''"
+                  slot-scope="{ $index, row }"
+                  v-if="column.type === 'custom'">
+          <div :is="column.custom"
+               :row="row" />
         </template>
       </el-table-column>
       <el-table-column
@@ -38,27 +34,31 @@
           <el-input
             v-model="search"
             size="mini"
-            placeholder="Type to search"/>
+            placeholder="Type to search" />
         </template>
         <template slot-scope="scope">
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            @click="handleEdit(scope.$index, scope.row)">Edit</el-button>-->
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="danger"-->
-<!--            @click="handleDelete(scope.$index, scope.row)">Delete</el-button>-->
+          <el-button-group>
+            <el-button size="mini"
+                       icon="el-icon-edit"
+                       round
+                       @click="handleEdit(scope.$index, scope.row)" />
+            <el-button size="mini"
+                       type="danger"
+                       icon="el-icon-delete"
+                       round
+                       @click="handleDelete(scope.$index, scope.row)" />
+          </el-button-group>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-    background
-    :page-size="this.rowLimit"
-    :total="this.tableDataFiltered.length"
-    :pager-count="10"
-    :current-page="this.currentPage"
-    @current-change="this.handlePageChange"
-    />
+    <div class="pagination" style="">
+      <el-pagination background
+                     :page-size="this.rowLimit"
+                     :total="this.tableDataFiltered.length"
+                     :pager-count="10"
+                     :current-page="this.currentPage"
+                     @current-change="this.handlePageChange" />
+    </div>
   </div>
 </template>
 
@@ -87,7 +87,7 @@ export default {
     return {
       search: "",
       selects: {},
-      rowLimit: 5, // Limit rows for pagination
+      rowLimit: 10, // Limit rows for pagination
       currentPage: 1, // Local state for current selected page
     };
   },
@@ -119,16 +119,6 @@ export default {
     handleDelete(index, row) {
       console.log(index, row);
     },
-    handleSelectChange(x, column, index, row) {
-      console.log(x);
-      this.selects = {
-        ...this.selects,
-        [column.name]: {
-          ...this.selects[column.name],
-          [index]: [...row[column.name].map(column.render)]
-        }
-      }
-    },
     getFilters(column) {
       if (column.type === INT || column.type === FLOAT) {
         return null;
@@ -150,12 +140,6 @@ export default {
     },
   },
   computed: {
-    tableSingleValueColumns() {
-      return this.tableColumns.filter(x => x.type !== 'select');
-    },
-    tableSelectColumns() {
-      return this.tableColumns.filter(x => x.type === 'select');
-    },
     paginatedTableData() {
       return this.tableDataFiltered.slice((this.currentPage - 1) * this.rowLimit, this.currentPage * this.rowLimit);
     },
@@ -163,7 +147,7 @@ export default {
       // TODO: Use a worker for this expensive filtering
       // reset currentPage to 1 when you search, this prevents table from showing "No Data" if your previously selected page was beyond
       // the new paginatedTableData length
-      this.currentPage = 1; 
+      this.currentPage = 1;
       return this.tableData.filter(data => {
         if (!this.search) return true;
         const searchString = this.search.toLowerCase();
@@ -199,5 +183,10 @@ export default {
 .title-wrapper .heading {
   margin-right: 12px;
   color: #6989a7;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
 }
 </style>
