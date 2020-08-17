@@ -3,7 +3,10 @@
   "name": "sadeaf-hasura",
   "version": "1.0.0",
   "scripts": {
+    "hasura-console": "cd hasura-data && hasura migrate apply && hasura metadata apply && hasura console"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "hasura-cli": "1.3.0"
   }
 }

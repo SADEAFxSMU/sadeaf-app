@@ -1,21 +1,24 @@
 # Setting up Hasura in a DEV environment
 Make sure you have docker installed locally.
 
-- Run `docker-compose -f dev-docker-compose.yaml up -d` to start the Hasura GraphQL engine and 
-the psql db
+1. Install dependencies with `yarn workspace sadeaf-hasura install`
+2. Run `docker-compose up -d` to start the Hasura GraphQL engine and the psql db
+3. Run `yarn workspace sadeaf-hasura hasura-console`
+4. The Hasura console will automatically pop up in your default browser
+
+> Make sure that the graphql engine has actually started before running step 2. If this is a fresh start, it
+might take a while. 
 
 # How it works
-- The `schema.sql` in `setup-scripts` is ran when initialising the psql db
-- The files in `metadata` are used by Hasura to track the state of all tables in the psql db. It is also what 
+- The files in `hasura-data/metadata` are used by Hasura to track the state of all tables in the psql db. It is also what 
 Hasura uses to infer relationships between tables (eg. Client is a child of Account)
+- The files in `hasura-data/migrations` are used by Hasura to track the psql db migrations made from the console
 
-# Making changes to the schema locally
-- Make your schema changes in `setup-scripts/schema.sql`
-- Comment out the metadata volume under the `graphql-engine` service in `dev-docker-compose.yaml`
-- __Down__ the containers, then `up` them again
-- Go to the Hasura web GUI and track all tables and foreign key relationships
-- Run `setup-scripts/get_metadata.sh --setup`. This copies the new metadata information into `metadata`
-- Uncomment the metadata volume in the compose file, then up the services
+# Making changes
+Remember to commit any schema or metadata changes.
+### Schema changes
+- Make psql db changes on the Hasura console
+- The migration will automatically appear in `hasura-data/migration`
 
-# Notes
-- You always need to __down__ the psql db container if you want your changes in the schema file to take effect
+### Metadata changes
+- Tracking anything new will automatically update the files in `hasura-data/metadata`

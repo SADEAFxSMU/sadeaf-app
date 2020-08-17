@@ -42,6 +42,14 @@
           name: volunteer
         column_mapping:
           id: account_id
+  array_relationships:
+  - name: memberships
+    using:
+      foreign_key_constraint_on:
+        column: account_id
+        table:
+          schema: public
+          name: membership
 - table:
     schema: public
     name: admin
@@ -171,7 +179,21 @@
 - table:
     schema: public
     name: membership
+  object_relationships:
+  - name: account
+    using:
+      foreign_key_constraint_on: account_id
+  - name: membership_type
+    using:
+      foreign_key_constraint_on: membership_type_id
   array_relationships:
+  - name: membership_renewals
+    using:
+      foreign_key_constraint_on:
+        column: membership_id
+        table:
+          schema: public
+          name: membership_renewals
   - name: service_requestors
     using:
       foreign_key_constraint_on:
@@ -179,6 +201,24 @@
         table:
           schema: public
           name: service_requestor
+- table:
+    schema: public
+    name: membership_renewals
+  object_relationships:
+  - name: membership
+    using:
+      foreign_key_constraint_on: membership_id
+- table:
+    schema: public
+    name: membership_type
+  array_relationships:
+  - name: memberships
+    using:
+      foreign_key_constraint_on:
+        column: membership_type_id
+        table:
+          schema: public
+          name: membership
 - table:
     schema: public
     name: notification_setting
