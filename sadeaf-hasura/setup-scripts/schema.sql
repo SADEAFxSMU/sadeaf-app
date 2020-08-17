@@ -14,14 +14,32 @@ CREATE TABLE account(
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+DROP TABLE IF EXISTS membership_type;
+CREATE TABLE membership_type(
+    id serial PRIMARY KEY,
+    name VARCHAR (50) UNIQUE NOT NULL,
+    cost NUMERIC NOT NULL,
+    duration_in_days INT NOT NULL, -- -1 if membership doesn't expire?
+    description TEXT
+);
+
 DROP TABLE IF EXISTS membership;
 CREATE TABLE membership(
     id serial PRIMARY KEY,
-    type VARCHAR (50) NOT NULL,
-    expiry_date TIMESTAMP NOT NULL,
-    cost NUMERIC NOT NULL,
+    account_id INT NOT NULL REFERENCES account(id),
+    membership_type_id INT NOT NULL REFERENCES membership_type(id),
     status VARCHAR (50) NOT NULL,
-    free_sessions_remaining NUMERIC NOT NULL
+    free_sessions_remaining NUMERIC NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    UNIQUE(account_id, membership_type_id, status)
+);
+
+DROP TABLE IF EXISTS membership_renewals;
+CREATE TABLE membership_renewals(
+    id serial PRIMARY KEY,
+    membership_id INT NOT NULL REFERENCES membership(id),
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 DROP TABLE IF EXISTS service_requestor;
@@ -187,6 +205,28 @@ CREATE TABLE interpretation_details(
 --     FOR EACH ROW
 --     EXECUTE PROCEDURE create_invoice();
 
+
+-- Ensure only one membership is ACTIVE at any point in time
+CREATE OR REPLACE FUNCTION ensure_at_most_one_active_membership() RETURNS trigger AS
+$$
+DECLARE membership_id INT;
+DECLARE active_count INT;
+BEGIN
+    SELECT id, COUNT(*) INTO membership_id, active_count FROM membership WHERE account_id = NEW.account_id AND status = 'ACTIVE' GROUP BY id;
+    IF NEW.id != membership_id AND NEW.status = 'ACTIVE' AND active_count > 0 THEN
+        RAISE EXCEPTION 'Cannot have more than 1 active membership for account %',  NEW.account_id;
+    END IF;
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER ensure_at_most_one_active_membership_trigger
+    BEFORE INSERT OR UPDATE ON membership
+    FOR EACH ROW
+    EXECUTE PROCEDURE ensure_at_most_one_active_membership();
+
+
 -- Updates the table's updated_at timestamps on row update
 CREATE OR REPLACE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
@@ -214,10 +254,17 @@ $$ LANGUAGE plpgsql;
 
 ----------------------[ DUMMY DATA ]----------------------
 
-INSERT INTO membership(
-    type, expiry_date, cost, status, free_sessions_remaining
+-- Sources: https://sadeaf.org.sg/join-us/be-our-member/
+--          https://sadeaf.org.sg/wp-content/uploads/2018/08/SADeaf-Membership-Factsheet.pdf
+INSERT INTO membership_type(
+    id, name, cost, duration_in_days, description
 ) VALUES
-    ('corporate', now() + interval '360 days', 9.9, 'ACTIVE', 10);
+    (1, 'ordinary', 15, 360, 'Only for Singapore citizens and permanent residents who are over the age of sixteen years'),
+    (2, 'corporate', 500, 360, 'For business organisations.'),
+    (3, 'associate', 30, 360, 'For non-Singapore citizens over the age of sixteen years.'),
+    (4, 'junior', 5, 360, 'For deaf and hard-of-hearing Singapore citizens and permanent residents under the age of sixteen years.'),
+    (5, 'life', 150, -1, 'For Ordinary Members who have been members of the Association for at least five years.'),
+    (6, 'honorary', 0, -1, 'Honorary membership shall be conferred on individuals who, in the opinion of the Executive Council, have rendered meritorious service to the Deaf of Singapore. Honorary members shall not be required to fill application forms or to pay any subscriptions.');
 
 INSERT INTO account(
     id, username, password, email, name, contact
@@ -245,6 +292,23 @@ INSERT INTO account(
     (21, 'fuxing', 'password', 'fuxing@gmail.com', 'Loh Fuxing', '88888888'),
     (22, 'elilim', 'password', 'elilim@gmail.com', 'Eli Lim', '88888888'),
     (23, 'sunnylim', 'password', 'sunnylim@gmail.com', 'Sunny Lim', '88888888');
+
+INSERT INTO membership(
+    id, account_id, membership_type_id, status, free_sessions_remaining, created_at, updated_at
+) VALUES
+    (1, 1, 3, 'EXPIRED', 0, '2016-04-12', '2018-10-31'),
+    (2, 3, 1, 'ACTIVE', 18, '2017-06-05', '2020-06-20'), -- renewed on 2020-05-08
+    (3, 5, 3, 'ACTIVE', 0, '2017-06-05', '2020-01-01'), -- renewed on 2020-01-01, not eligible for free sessions
+    (4, 6, 4, 'EXPIRED', 17, '2017-06-05', '2017-08-23'),
+    (5, 2, 3, 'EXPIRED', 0, '2018-10-31', '2019-03-20'),
+    (6, 2, 1, 'ACTIVE', 5, '2019-04-06', '2020-06-06'), -- account 2 upgraded from 'associate' to 'ordinary' membership
+    (7, 7, 5, 'ACTIVE', 16, '2019-01-01', '2019-01-01'); -- Lifetime
+
+INSERT INTO membership_renewals(
+    id, membership_id, created_at
+) VALUES
+    (1, 2, '2020-05-08'),
+    (2, 3, '2020-01-01');
 
 INSERT INTO admin(
     id, account_id
