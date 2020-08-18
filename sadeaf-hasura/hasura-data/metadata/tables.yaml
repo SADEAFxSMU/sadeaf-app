@@ -50,6 +50,126 @@
         table:
           schema: public
           name: membership
+  insert_permissions:
+  - role: service_requestor
+    permission:
+      check:
+        _and:
+        - service_requestor:
+            account_id:
+              _is_null: true
+        - volunteer:
+            account_id:
+              _is_null: true
+        - client:
+            service_requestor:
+              account_id:
+                _eq: X-Hasura-User-Id
+        - admin:
+            account_id:
+              _is_null: true
+      columns:
+      - contact
+      - email
+      - name
+      - password
+      - username
+      backend_only: false
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - contact
+      - created_at
+      - email
+      - id
+      - name
+      - updated_at
+      - username
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      allow_aggregations: true
+  - role: service_requestor
+    permission:
+      columns:
+      - contact
+      - created_at
+      - email
+      - id
+      - name
+      - updated_at
+      - username
+      filter:
+        _or:
+        - client:
+            service_requestor:
+              account_id:
+                _eq: X-Hasura-User-Id
+        - id:
+            _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      columns:
+      - contact
+      - created_at
+      - email
+      - id
+      - name
+      - updated_at
+      - username
+      filter: {}
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - contact
+      - email
+      - name
+      - password
+      - username
+      filter:
+        client:
+          id:
+            _eq: X-Hasura-User-Id
+      check: {}
+  - role: service_requestor
+    permission:
+      columns:
+      - contact
+      - email
+      - name
+      - password
+      - username
+      filter:
+        _and:
+        - service_requestor:
+            account_id:
+              _is_null: true
+        - volunteer:
+            account_id:
+              _is_null: true
+        - client:
+            service_requestor:
+              account_id:
+                _eq: X-Hasura-User-Id
+        - admin:
+            account_id:
+              _is_null: true
+      check: null
+  - role: volunteer
+    permission:
+      columns:
+      - contact
+      - email
+      - name
+      - password
+      - username
+      filter:
+        volunteer:
+          id:
+            _eq: X-Hasura-User-Id
+      check: null
 - table:
     schema: public
     name: admin
@@ -63,32 +183,286 @@
   object_relationships:
   - name: attendance
     using:
-      foreign_key_constraint_on: attendance_id
-  - name: event
-    using:
-      foreign_key_constraint_on: event_id
-  - name: feedback
-    using:
       manual_configuration:
         remote_table:
           schema: public
-          name: feedback
+          name: attendance
         column_mapping:
           id: assignment_id
+  - name: event
+    using:
+      foreign_key_constraint_on: event_id
   - name: volunteer
     using:
       foreign_key_constraint_on: volunteer_id
+  insert_permissions:
+  - role: client
+    permission:
+      check:
+        event:
+          client:
+            account_id:
+              _eq: X-Hasura-User-Id
+      columns:
+      - address_line_one
+      - address_line_two
+      - end_dt
+      - event_id
+      - latitude
+      - longitude
+      - postal
+      - room_number
+      - start_dt
+  - role: service_requestor
+    permission:
+      check:
+        event:
+          client:
+            service_requestor:
+              account_id:
+                _eq: X-Hasura-User-Id
+      columns:
+      - address_line_one
+      - address_line_two
+      - end_dt
+      - event_id
+      - latitude
+      - longitude
+      - postal
+      - room_number
+      - start_dt
+      backend_only: false
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - address_line_one
+      - address_line_two
+      - end_dt
+      - event_id
+      - id
+      - latitude
+      - longitude
+      - postal
+      - room_number
+      - start_dt
+      - status
+      - volunteer_id
+      filter:
+        event:
+          client:
+            account_id:
+              _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      columns:
+      - address_line_one
+      - address_line_two
+      - end_dt
+      - event_id
+      - id
+      - latitude
+      - longitude
+      - postal
+      - room_number
+      - start_dt
+      - status
+      - volunteer_id
+      filter:
+        event:
+          client:
+            service_requestor:
+              account_id:
+                _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      columns:
+      - address_line_one
+      - address_line_two
+      - end_dt
+      - event_id
+      - honorarium_amount
+      - id
+      - latitude
+      - longitude
+      - postal
+      - room_number
+      - start_dt
+      - status
+      - volunteer_id
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - address_line_one
+      - address_line_two
+      - end_dt
+      - latitude
+      - longitude
+      - postal
+      - room_number
+      - start_dt
+      filter:
+        event:
+          client:
+            account_id:
+              _eq: X-Hasura-User-Id
+      check: {}
+  - role: service_requestor
+    permission:
+      columns:
+      - address_line_one
+      - address_line_two
+      - end_dt
+      - id
+      - latitude
+      - longitude
+      - postal
+      - room_number
+      - start_dt
+      filter:
+        event:
+          client:
+            service_requestor:
+              account_id:
+                _eq: X-Hasura-User-Id
+      check: {}
+  - role: volunteer
+    permission:
+      columns:
+      - address_line_one
+      - address_line_two
+      - end_dt
+      - id
+      - latitude
+      - longitude
+      - postal
+      - room_number
+      - start_dt
+      filter:
+        volunteer_id:
+          _eq: X-Hasura-User-Id
+      check: {}
+  delete_permissions:
+  - role: client
+    permission:
+      filter:
+        event:
+          client:
+            account_id:
+              _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      filter:
+        event:
+          client:
+            service_requestor:
+              account_id:
+                _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: attendance
-  array_relationships:
-  - name: assignments
+  object_relationships:
+  - name: assignment
     using:
-      foreign_key_constraint_on:
-        column: attendance_id
-        table:
-          schema: public
-          name: assignment
+      foreign_key_constraint_on: assignment_id
+  insert_permissions:
+  - role: client
+    permission:
+      check:
+        assignment:
+          event:
+            client:
+              account_id:
+                _eq: X-Hasura-User-Id
+      columns:
+      - attended
+      - dispute_comment
+      - has_dispute
+      backend_only: false
+  - role: service_requestor
+    permission:
+      check:
+        assignment:
+          event:
+            client:
+              account_id:
+                _eq: X-Hasura-User-Id
+      columns:
+      - attended
+      - dispute_comment
+      - has_dispute
+      backend_only: false
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - attended
+      - has_dispute
+      - assignment_id
+      - id
+      - dispute_comment
+      filter:
+        assignment:
+          event:
+            client:
+              account_id:
+                _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      columns:
+      - attended
+      - has_dispute
+      - assignment_id
+      - id
+      - dispute_comment
+      filter:
+        assignment:
+          event:
+            client:
+              account_id:
+                _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      columns:
+      - attended
+      - has_dispute
+      - assignment_id
+      - id
+      - dispute_comment
+      filter:
+        assignment:
+          volunteer_id:
+            _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - attended
+      - dispute_comment
+      - has_dispute
+      filter:
+        assignment:
+          event:
+            client:
+              account_id:
+                _eq: X-Hasura-User-Id
+      check: null
+  - role: service_requestor
+    permission:
+      columns:
+      - attended
+      - dispute_comment
+      - has_dispute
+      filter:
+        assignment:
+          event:
+            client:
+              account_id:
+                _eq: X-Hasura-User-Id
+      check: null
 - table:
     schema: public
     name: client
@@ -107,13 +481,72 @@
         table:
           schema: public
           name: event
-  - name: feedbacks
-    using:
-      foreign_key_constraint_on:
-        column: client_id
-        table:
-          schema: public
-          name: feedback
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - account_id
+      - additional_notes
+      - designation
+      - id
+      - organisation
+      - preferred_comm_mode
+      - service_requestor_id
+      filter:
+        account_id:
+          _eq: X-Hasura-User-Id
+      allow_aggregations: true
+  - role: service_requestor
+    permission:
+      columns:
+      - account_id
+      - additional_notes
+      - designation
+      - id
+      - organisation
+      - preferred_comm_mode
+      - service_requestor_id
+      filter:
+        service_requestor:
+          account_id:
+            _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      columns:
+      - account_id
+      - additional_notes
+      - designation
+      - id
+      - organisation
+      - preferred_comm_mode
+      - service_requestor_id
+      filter: {}
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - additional_notes
+      - designation
+      - organisation
+      - preferred_comm_mode
+      - service_requestor_id
+      filter:
+        account_id:
+          _eq: X-Hasura-User-Id
+      check: {}
+  - role: service_requestor
+    permission:
+      columns:
+      - additional_notes
+      - designation
+      - organisation
+      - preferred_comm_mode
+      - service_requestor_id
+      filter:
+        service_requestor:
+          account_id:
+            _eq: X-Hasura-User-Id
+      check: null
 - table:
     schema: public
     name: email_information
@@ -121,6 +554,93 @@
   - name: notification_setting
     using:
       foreign_key_constraint_on: notification_setting_id
+  insert_permissions:
+  - role: client
+    permission:
+      check:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - email_address
+      backend_only: false
+  - role: service_requestor
+    permission:
+      check:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - email_address
+      backend_only: false
+  - role: volunteer
+    permission:
+      check:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - email_address
+      backend_only: false
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - email_address
+      - id
+      - notification_setting_id
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      columns:
+      - id
+      - notification_setting_id
+      - email_address
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      columns:
+      - id
+      - notification_setting_id
+      - email_address
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - email_address
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+      check: null
+  - role: service_requestor
+    permission:
+      columns:
+      - email_address
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+      check: null
+  - role: volunteer
+    permission:
+      columns:
+      - email_address
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+      check: null
 - table:
     schema: public
     name: event
@@ -152,16 +672,210 @@
         table:
           schema: public
           name: assignment
+  - name: feedbacks
+    using:
+      foreign_key_constraint_on:
+        column: event_id
+        table:
+          schema: public
+          name: feedback
+  insert_permissions:
+  - role: client
+    permission:
+      check:
+        client:
+          account_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - name
+      - client_id
+      - description
+      - purpose
+      - quotation
+  - role: service_requestor
+    permission:
+      check:
+        client:
+          service_requestor:
+            account_id:
+              _eq: X-Hasura-User-Id
+      columns:
+      - name
+      - client_id
+      - description
+      - purpose
+      - quotation
+  select_permissions:
+  - role: client
+    permission:
+      columns: '*'
+      filter:
+        client:
+          account_id:
+            _eq: X-Hasura-User-Id
+      allow_aggregations: true
+  - role: service_requestor
+    permission:
+      columns:
+      - client_id
+      - id
+      - quotation
+      - description
+      - created_at
+      - updated_at
+      - name
+      - purpose
+      filter:
+        client:
+          service_requestor:
+            account_id:
+              _eq: X-Hasura-User-Id
+      allow_aggregations: true
+  - role: volunteer
+    permission:
+      columns:
+      - client_id
+      - id
+      - quotation
+      - description
+      - created_at
+      - updated_at
+      - name
+      - purpose
+      filter: {}
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - description
+      - name
+      - purpose
+      - quotation
+      filter:
+        client:
+          account_id:
+            _eq: X-Hasura-User-Id
+      check: null
+  - role: service_requestor
+    permission:
+      columns:
+      - client_id
+      - description
+      - name
+      - purpose
+      filter:
+        client:
+          service_requestor:
+            account_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  delete_permissions:
+  - role: client
+    permission:
+      filter:
+        client:
+          account_id:
+            _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      filter:
+        client:
+          service_requestor:
+            account_id:
+              _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: feedback
   object_relationships:
-  - name: assignment
+  - name: event
     using:
-      foreign_key_constraint_on: assignment_id
-  - name: client
+      foreign_key_constraint_on: event_id
+  - name: volunteer
     using:
-      foreign_key_constraint_on: client_id
+      foreign_key_constraint_on: volunteer_id
+  insert_permissions:
+  - role: client
+    permission:
+      check:
+        _and:
+        - event:
+            client:
+              account_id:
+                _eq: X-Hasura-User-Id
+        - volunteer:
+            assignments:
+              event:
+                client_id:
+                  _eq: X-Hasura-User-Id
+      columns:
+      - confidentiality_privacy_preference
+      - event_id
+      - general_feedback
+      - live_comments
+      - live_information_understanding
+      - live_interaction
+      - notetaker_conduct
+      - notetaker_punctual
+      - post_session_comments
+      - post_session_interaction
+      - post_session_understanding
+      - training_privacy_preference
+      - volunteer_id
+      backend_only: false
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - confidentiality_privacy_preference
+      - notetaker_punctual
+      - training_privacy_preference
+      - event_id
+      - id
+      - volunteer_id
+      - general_feedback
+      - live_comments
+      - post_session_comments
+      - created_at
+      - updated_at
+      - live_information_understanding
+      - live_interaction
+      - notetaker_conduct
+      - post_session_interaction
+      - post_session_understanding
+      filter:
+        event:
+          client:
+            account_id:
+              _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - confidentiality_privacy_preference
+      - general_feedback
+      - live_comments
+      - live_information_understanding
+      - live_interaction
+      - notetaker_conduct
+      - notetaker_punctual
+      - post_session_comments
+      - post_session_interaction
+      - post_session_understanding
+      - training_privacy_preference
+      - updated_at
+      - volunteer_id
+      filter:
+        _and:
+        - event:
+            client:
+              account_id:
+                _eq: X-Hasura-User-Id
+        - volunteer:
+            assignments:
+              event:
+                client_id:
+                  _eq: X-Hasura-User-Id
+      check: {}
 - table:
     schema: public
     name: interpretation_details
@@ -169,6 +883,40 @@
   - name: event
     using:
       foreign_key_constraint_on: event_id
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - allow_trainee_interpreters
+      - filming_interpreters
+      - event_id
+      - id
+      - number_of_deaf
+      - number_of_hearing
+      - sign_system
+      filter: {}
+  - role: service_requestor
+    permission:
+      columns:
+      - allow_trainee_interpreters
+      - filming_interpreters
+      - event_id
+      - id
+      - number_of_deaf
+      - number_of_hearing
+      - sign_system
+      filter: {}
+  - role: volunteer
+    permission:
+      columns:
+      - allow_trainee_interpreters
+      - filming_interpreters
+      - event_id
+      - id
+      - number_of_deaf
+      - number_of_hearing
+      - sign_system
+      filter: {}
 - table:
     schema: public
     name: invoice
@@ -201,6 +949,86 @@
         table:
           schema: public
           name: service_requestor
+  insert_permissions:
+  - role: client
+    permission:
+      check:
+        account_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - account_id
+      backend_only: false
+  - role: service_requestor
+    permission:
+      check:
+        _or:
+        - account:
+            client:
+              service_requestor:
+                account_id:
+                  _eq: X-Hasura-User-Id
+        - account_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - account_id
+      - membership_type_id
+      backend_only: false
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - account_id
+      - id
+      - membership_type_id
+      - free_sessions_remaining
+      - created_at
+      - updated_at
+      - status
+      filter:
+        account_id:
+          _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      columns:
+      - account_id
+      - id
+      - membership_type_id
+      - free_sessions_remaining
+      - created_at
+      - updated_at
+      - status
+      filter:
+        _or:
+        - account:
+            client:
+              service_requestor:
+                account_id:
+                  _eq: X-Hasura-User-Id
+        - account_id:
+            _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - membership_type_id
+      filter:
+        account_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: service_requestor
+    permission:
+      columns:
+      - membership_type_id
+      filter:
+        _or:
+        - account:
+            client:
+              service_requestor:
+                account_id:
+                  _eq: X-Hasura-User-Id
+        - account_id:
+            _eq: X-Hasura-User-Id
+      check: null
 - table:
     schema: public
     name: membership_renewals
@@ -208,6 +1036,36 @@
   - name: membership
     using:
       foreign_key_constraint_on: membership_id
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - created_at
+      - id
+      - membership_id
+      filter:
+        membership:
+          account_id:
+            _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      columns:
+      - id
+      - membership_id
+      - created_at
+      filter:
+        _or:
+        - membership:
+            account:
+              service_requestor:
+                account_id:
+                  _eq: X-Hasura-User-Id
+        - membership:
+            account:
+              client:
+                service_requestor:
+                  account_id:
+                    _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: membership_type
@@ -219,6 +1077,34 @@
         table:
           schema: public
           name: membership
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - id
+      - name
+      - cost
+      - duration_in_days
+      - description
+      filter: {}
+  - role: service_requestor
+    permission:
+      columns:
+      - duration_in_days
+      - id
+      - cost
+      - description
+      - name
+      filter: {}
+  - role: volunteer
+    permission:
+      columns:
+      - duration_in_days
+      - id
+      - cost
+      - description
+      - name
+      filter: {}
 - table:
     schema: public
     name: notification_setting
@@ -242,6 +1128,100 @@
           name: telegram_information
         column_mapping:
           id: notification_setting_id
+  insert_permissions:
+  - role: client
+    permission:
+      check:
+        account_id:
+          _eq: X-Hasura-User-Id
+      set:
+        account_id: x-hasura-User-Id
+      columns:
+      - account_id
+      backend_only: false
+  - role: service_requestor
+    permission:
+      check:
+        _or:
+        - account:
+            client:
+              service_requestor:
+                account_id:
+                  _eq: X-Hasura-User-Id
+        - account:
+            service_requestor:
+              account_id:
+                _eq: X-Hasura-User-Id
+      columns:
+      - account_id
+      backend_only: false
+  - role: volunteer
+    permission:
+      check:
+        account_id:
+          _eq: X-Hasura-User-Id
+      set:
+        account_id: x-hasura-User-Id
+      columns:
+      - account_id
+      backend_only: false
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - account_id
+      - id
+      filter:
+        account_id:
+          _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      columns:
+      - account_id
+      - id
+      filter:
+        _or:
+        - account:
+            client:
+              service_requestor:
+                account_id:
+                  _eq: X-Hasura-User-Id
+        - account:
+            service_requestor:
+              account_id:
+                _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      columns:
+      - id
+      - account_id
+      filter:
+        account_id:
+          _eq: X-Hasura-User-Id
+  delete_permissions:
+  - role: client
+    permission:
+      filter:
+        account_id:
+          _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      filter:
+        _or:
+        - account:
+            client:
+              service_requestor:
+                account_id:
+                  _eq: X-Hasura-User-Id
+        - account:
+            service_requestor:
+              account_id:
+                _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      filter:
+        account_id:
+          _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: service_requestor
@@ -260,6 +1240,37 @@
         table:
           schema: public
           name: client
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - account_id
+      - id
+      - membership_id
+      - organisation
+      filter:
+        clients:
+          account_id:
+            _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      columns:
+      - account_id
+      - id
+      - membership_id
+      - organisation
+      filter:
+        account_id:
+          _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: service_requestor
+    permission:
+      columns:
+      - organisation
+      filter:
+        account_id:
+          _eq: X-Hasura-User-Id
+      check: {}
 - table:
     schema: public
     name: telegram_information
@@ -267,6 +1278,140 @@
   - name: notification_setting
     using:
       foreign_key_constraint_on: notification_setting_id
+  insert_permissions:
+  - role: client
+    permission:
+      check:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - chat_id
+      backend_only: false
+  - role: service_requestor
+    permission:
+      check:
+        _or:
+        - notification_setting:
+            account_id:
+              _eq: X-Hasura-User-Id
+        - notification_setting:
+            account:
+              client:
+                service_requestor:
+                  account_id:
+                    _eq: X-Hasura-User-Id
+      columns:
+      - chat_id
+      backend_only: false
+  - role: volunteer
+    permission:
+      check:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - chat_id
+      backend_only: false
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - id
+      - chat_id
+      - notification_setting_id
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      columns:
+      - id
+      - notification_setting_id
+      - chat_id
+      filter:
+        _or:
+        - notification_setting:
+            account_id:
+              _eq: X-Hasura-User-Id
+        - notification_setting:
+            account:
+              client:
+                service_requestor:
+                  account_id:
+                    _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      columns:
+      - id
+      - notification_setting_id
+      - chat_id
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - chat_id
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+      check: null
+  - role: service_requestor
+    permission:
+      columns:
+      - chat_id
+      filter:
+        _or:
+        - notification_setting:
+            account_id:
+              _eq: X-Hasura-User-Id
+        - notification_setting:
+            account:
+              client:
+                service_requestor:
+                  account_id:
+                    _eq: X-Hasura-User-Id
+      check: null
+  - role: volunteer
+    permission:
+      columns:
+      - chat_id
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+      check: null
+  delete_permissions:
+  - role: client
+    permission:
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
+  - role: service_requestor
+    permission:
+      filter:
+        _or:
+        - notification_setting:
+            account_id:
+              _eq: X-Hasura-User-Id
+        - notification_setting:
+            account:
+              client:
+                service_requestor:
+                  account_id:
+                    _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      filter:
+        notification_setting:
+          account_id:
+            _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: volunteer
@@ -282,3 +1427,28 @@
         table:
           schema: public
           name: assignment
+  - name: feedbacks
+    using:
+      foreign_key_constraint_on:
+        column: volunteer_id
+        table:
+          schema: public
+          name: feedback
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - account_id
+      filter: {}
+  - role: service_requestor
+    permission:
+      columns:
+      - account_id
+      filter: {}
+  - role: volunteer
+    permission:
+      columns:
+      - account_id
+      - approval_status
+      - id
+      filter: {}
