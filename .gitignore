@@ -16,3 +16,6 @@ jspm_packages/
 .eslintcache
 .node_repl_history
 .env
+
+# Mac
+.DS_Store
