@@ -1,18 +1,12 @@
 {
   "private": true,
   "workspaces": [
-    "sadeaf-web",
     "sadeaf-api",
-    "sadeaf-hasura",
     "sadeaf-svc-assignment",
     "sadeaf-svc-invoice",
     "sadeaf-svc-notification"
   ],
   "engines": {
     "node": "^14"
-  },
-  "scripts": {
-    "dev": "TODO",
-    "dev-web": "cd sadeaf-web && yarn dev"
   }
 }

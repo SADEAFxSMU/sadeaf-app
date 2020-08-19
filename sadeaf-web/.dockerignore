@@ -1,0 +1,7 @@
+.nuxt
+dist
+.idea
+
+node_modules/
+jspm_packages/
+*.tgz
