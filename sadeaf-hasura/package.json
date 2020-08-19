@@ -3,7 +3,7 @@
   "name": "sadeaf-hasura",
   "version": "1.0.0",
   "scripts": {
-    "console": "docker-compose up -d --build && hasura migrate apply && hasura metadata apply && hasura console"
+    "console": "docker-compose up -d --build && sh ./wait-for-hasura-console"
   },
   "dependencies": {},
   "devDependencies": {

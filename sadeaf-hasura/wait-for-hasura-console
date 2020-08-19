@@ -1,0 +1,25 @@
+#!/bin/sh
+
+TIMEOUT=45
+
+# config.yaml:endpoint
+ENDPOINT="http://localhost:8080/v1/version"
+
+wait_for() {
+  for _ in $(seq $TIMEOUT) ; do
+    result=$(curl $ENDPOINT -o /dev/null -w '%{http_code}\n' -s)
+
+    if [ "$result" -eq "200" ] ; then
+      exec "$@"
+      exit 0
+    fi
+    sleep 3
+    echo "Still waiting for hasura to be up..."
+
+  done
+  echo "wait-for-hasura-console timed out" >&2
+  exit 1
+}
+
+echo "Waiting for hasura to be up"
+wait_for hasura console
