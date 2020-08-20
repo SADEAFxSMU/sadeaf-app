@@ -5,21 +5,22 @@
   "author": "SADEAFxSMU",
   "description": "SADEAF Management System Web App",
   "scripts": {
-    "dev": "../node_modules/.bin/nuxt",
-    "build": "../node_modules/.bin/nuxt build",
-    "start": "../node_modules/.bin/nuxt start",
-    "generate": "../node_modules/.bin/nuxt generate",
-    "test": "../node_modules/.bin/jest"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "test": "jest"
   },
   "dependencies": {
+    "nuxt": "^2.14.0",
+    "element-ui": "^2.4.11",
+    "@nuxt/content": "^1.5.0",
+    "@nuxtjs/axios": "^5.12.0",
     "@nuxtjs/apollo": "^4.0.1-rc.3",
-    "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
     "chart.js": "^2.9.3",
-    "element-ui": "^2.4.11",
     "graphql-tag": "^2.11.0",
-    "nuxt": "^2.0.0",
     "sass-loader": "^9.0.3",
     "vue-chartjs": "^3.5.0"
   },

@@ -1,21 +1,22 @@
 # Setting up Hasura in a DEV environment
 Make sure you have docker installed locally.
 
-- Run `docker-compose -f dev-docker-compose.yaml up -d` to start the Hasura GraphQL engine and 
-the psql db
+1. Install [docker](https://docs.docker.com/get-docker/) & [docker-compose](https://docs.docker.com/compose/)
+2. Install dependencies with `yarn install`
+3. Run `yarn workspace sadeaf-hasura console`
+4. The Hasura console will automatically pop up in your default browser
 
 # How it works
-- The `schema.sql` in `setup-scripts` is ran when initialising the psql db
-- The files in `metadata` are used by Hasura to track the state of all tables in the psql db. It is also what 
+- The files in `/metadata` are used by Hasura to track the state of all tables in the psql db. It is also what 
 Hasura uses to infer relationships between tables (eg. Client is a child of Account)
+- The files in `/migrations` are used by Hasura to track the psql db migrations made from the console
 
-# Making changes to the schema locally
-- Make your schema changes in `setup-scripts/schema.sql`
-- Comment out the metadata volume under the `graphql-engine` service in `dev-docker-compose.yaml`
-- __Down__ the containers, then `up` them again
-- Go to the Hasura web GUI and track all tables and foreign key relationships
-- Run `setup-scripts/get_metadata.sh --setup`. This copies the new metadata information into `metadata`
-- Uncomment the metadata volume in the compose file, then up the services
+# Making changes
+Remember to commit any schema or metadata changes.
 
-# Notes
-- You always need to __down__ the psql db container if you want your changes in the schema file to take effect
+### Schema changes
+- Make psql db changes on the Hasura console
+- The migration will automatically appear in `/migration`
+
+### Metadata changes
+- Tracking anything new will automatically update the files in `/metadata`
