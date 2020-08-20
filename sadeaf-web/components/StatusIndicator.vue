@@ -1,14 +1,23 @@
 <template>
   <div class="status" :style="{ color, fontWeight: 'bold' }">
     <div class="circle" :style="{ backgroundColor: color }" />
-    {{ text || 'STATUS' }}
+    {{ text }}
   </div>
 </template>
 
 <script>
   export default {
     name: "StatusIndicator",
-    props: ['text', 'color']
+    props: {
+      text: {
+        type: String,
+        required: true,
+      },
+      color: {
+        type: String,
+        required: true,
+      }
+    }
   };
 </script>
 

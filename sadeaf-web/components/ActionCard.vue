@@ -1,5 +1,5 @@
 <template>
-  <div :class="`action-card ${isUrgent ? 'glowing-card' : ''}`">
+  <div class="action-card" :class="{'glowing-card': isUrgent}">
     <div>
       <h3>{{ action.category }}</h3>
       <p>{{ action.desc }}</p>
@@ -16,7 +16,12 @@
 <script>
 export default {
   name: "ActionCard",
-  props: ['action'],
+  props: {
+    action: {
+      type: Object,
+      required: true,
+    }
+  },
   computed: {
     isUrgent() {
       return this.action.isUrgent;

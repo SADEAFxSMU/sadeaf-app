@@ -17,7 +17,20 @@
 <script>
 export default {
   name: 'UserCard',
-  props: ['cardStyle', 'imgSrc', 'imgStyle'],
+  props: {
+    cardStyle: {
+      type: [String, Object],
+      required: false,
+    },
+    imgSrc: {
+      type: String,
+      required: true,
+    },
+    imgStyle: {
+      type: [String, Object],
+      required: false,
+    }
+  },
   data() {
     return {
       currentDate: new Date()

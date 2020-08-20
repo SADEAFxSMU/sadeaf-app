@@ -14,7 +14,12 @@ const statusToTypeMapping = {
 
 export default {
   name: "StatusCell",
-  props: ['row'],
+  props: {
+    row: {
+      type: Object,
+      required: true,
+    }
+  },
   computed: {
     status() {
       return this.row.status;

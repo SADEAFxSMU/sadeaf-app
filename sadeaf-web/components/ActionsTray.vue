@@ -20,12 +20,17 @@
 
 <script>
 import ActionCard from "./ActionCard";
-import { chunkify } from "../common/utils";
+import { chunk } from "lodash";
 
 export default {
   name: "ActionsTray",
   components: {ActionCard},
-  props: ['actions'],
+  props: {
+    actions: {
+      type: Object,
+      required: true,
+    }
+  },
   data() {
     return {
       pages: [],
@@ -35,7 +40,7 @@ export default {
   },
   mounted() {
     // Put actions into chunks
-    this.pages = chunkify(this.actions, this.pageSize);
+    this.pages = chunk(this.actions, this.pageSize);
   },
   computed: {
     currentPageItems() {
@@ -44,7 +49,7 @@ export default {
   },
   methods: {
     handleActionsPageChange(val) {
-      this.currentPage = --val;
+      this.currentPage = val - 1;
     }
   }
 };

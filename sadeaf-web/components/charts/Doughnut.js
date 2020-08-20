@@ -2,7 +2,20 @@ import { Doughnut } from "vue-chartjs";
 export default {
   extends: Doughnut,
   name: "DoughnutChart",
-  props: ["title", "data", "options"],
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+    data: {
+      type: Array,
+      required: true,
+    },
+    options: {
+      type: Object,
+      required: true,
+    }
+  },
   methods: {
     render() {
       this.renderChart(this.data, {

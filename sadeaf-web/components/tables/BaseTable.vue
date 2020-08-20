@@ -1,10 +1,10 @@
 <template>
-  <div ref="supertable"
-       class="super-table">
+  <div ref="basetable"
+       class="base-table">
     <div class="title-wrapper">
       <h1 class="heading">{{title}}</h1>
       <el-button icon="el-icon-full-screen"
-                 @click="toggleFullscreen('supertable')"
+                 @click="toggleFullscreen('basetable')"
                  circle />
     </div>
     <el-table
@@ -80,8 +80,21 @@ const defaultFormatters = {
 };
 
 export default {
-  name: "SuperTable",
-  props: ['title', 'tableData', 'tableColumns'],
+  name: "BaseTable",
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+    tableData: {
+      type: Array,
+      required: true,
+    },
+    tableColumns: {
+      type: Array,
+      required: true,
+    }
+  },
   mixins: [FullscreenMixin],
   data() {
     return {
@@ -171,7 +184,7 @@ export default {
 </script>
 
 <style scoped>
-.super-table {
+.base-table {
   overflow: scroll;
   background: #ffffff;
 }

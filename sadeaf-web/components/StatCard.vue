@@ -11,10 +11,33 @@
 </template>
 
 <script>
-  export default {
-    name: "StatCard",
-    props: ['accentColor', 'title', 'stat', 'icon', 'accentPosition']
-  };
+export default {
+  name: "StatCard",
+  props: {
+    accentColor: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    stat: {
+      type: String,
+      required: true,
+    },
+    icon: {
+      type: String,
+      required: true,
+    },
+    accentPosition: {
+      type: String,
+      required: false,
+      default: 'left',
+      validator: (val) => ['top', 'right', 'bottom', 'left'].includes(val)
+    }
+  }
+};
 </script>
 
 <style scoped>

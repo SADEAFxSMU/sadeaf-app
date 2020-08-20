@@ -13,7 +13,12 @@
 <script>
 export default {
   name: "NotetakersCell",
-  props: ['row'],
+  props: {
+    row: {
+      type: Object,
+      required: true,
+    }
+  },
   computed: {
     notetakers() {
       return this.row.notetakers;

@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="service-requests">
-      <super-table title="Service Requests"
+      <base-table title="Service Requests"
                    :table-data="tableData"
                    :table-columns="tableColumns"/>
     </div>
@@ -10,14 +10,14 @@
 
 <script>
 import gql from 'graphql-tag';
-import SuperTable from "../../components/tables/SuperTable";
+import BaseTable from "../../components/tables/BaseTable";
 import NotetakersCell from "../../components/tables/custom-columns/NotetakersCell";
 import StatusCell from "../../components/tables/custom-columns/StatusCell";
 
 export default {
   name: "index",
   components: {
-    SuperTable,
+    BaseTable,
   },
 
   data() {
@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     /**
-     * Mapping graphql `event` query result to tableData
+     * Mapping graphql `assignment` query result to tableData
      */
     tableData() {
       const data = [];
