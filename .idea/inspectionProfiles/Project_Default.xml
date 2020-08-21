@@ -4,11 +4,12 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="12">
-            <item index="11" class="java.lang.String" itemvalue="nuxt-content" />
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="nuxt-content" />
           </list>
         </value>
       </option>
+      <option name="myCustomValuesEnabled" value="true" />
     </inspection_tool>
     <inspection_tool class="JSJQueryEfficiency" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SqlNoDataSourceInspection" enabled="false" level="WARNING" enabled_by_default="false" />

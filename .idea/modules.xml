@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/sadeaf-api.iml" filepath="$PROJECT_DIR$/.idea/sadeaf-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sadeaf-app.iml" filepath="$PROJECT_DIR$/.idea/sadeaf-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sadeaf-hasura.iml" filepath="$PROJECT_DIR$/.idea/sadeaf-hasura.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sadeaf-web.iml" filepath="$PROJECT_DIR$/.idea/sadeaf-web.iml" />
+    </modules>
+  </component>
+</project>
