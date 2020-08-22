@@ -1,5 +1,5 @@
 <template>
-  <el-menu :default-active="activeIndex" class="el-menu-nav" mode="horizontal" @select="handleSelect">
+  <el-menu class="el-menu-nav" mode="horizontal" router>
     <div class="nav-logo">
       <h1>SADEAF Dashboard</h1>
       <status-indicator text="LIVE" color="lightseagreen" class="indicator"/>
@@ -7,8 +7,11 @@
     <el-menu-item index="/admin">
       Service Requests
     </el-menu-item>
-    <el-submenu index="/admin/users"> <!-- TODO: make top level button clickable to route to /users -->
+    <el-submenu index="/admin/users">
       <template slot="title">User Management</template>
+      <el-menu-item index="/admin/users">
+        All Users
+      </el-menu-item>
       <el-menu-item index="/admin/users?type=clients">
         Clients
       </el-menu-item>
@@ -22,7 +25,7 @@
     <el-menu-item index="/notifications">
       Notifications
     </el-menu-item>
-    <el-submenu index="/account"> <!-- TODO: make top level button clickable to route to /account -->
+    <el-submenu index="/account">
       <template slot="title">Account</template>
       <el-menu-item index="/account#profile">
         Profile
@@ -40,16 +43,6 @@ import StatusIndicator from "../../components/StatusIndicator";
 export default {
   name: "admin-navbar",
   components: {StatusIndicator},
-  data() {
-    return {
-      activeIndex: '/admin',
-    };
-  },
-  methods: {
-    handleSelect(key, keyPath) {
-      this.$router.push(key);
-    }
-  }
 };
 </script>
 
