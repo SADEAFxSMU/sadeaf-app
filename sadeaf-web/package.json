@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "author": "SADEAFxSMU",
   "description": "SADEAF Management System Web App",
+  "engines": {
+    "node": "^14"
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
