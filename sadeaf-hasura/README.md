@@ -1,9 +1,9 @@
 # Setting up Hasura in a DEV environment
-Make sure you have docker installed locally.
 
+0. `cd sadeaf-hasura`
 1. Install [docker](https://docs.docker.com/get-docker/) & [docker-compose](https://docs.docker.com/compose/)
 2. Install dependencies with `yarn install`
-3. Run `yarn workspace sadeaf-hasura console`
+3. Run `yarn run console`
 4. The Hasura console will automatically pop up in your default browser
 
 # How it works

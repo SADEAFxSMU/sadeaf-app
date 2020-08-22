@@ -6,7 +6,7 @@
     "node": "^14"
   },
   "scripts": {
-    "console": "docker-compose up -d --build && sh ./wait-for-hasura-console"
+    "console": "sh ../docker-compose-up && sh ./wait-for-hasura-console"
   },
   "dependencies": {},
   "devDependencies": {
