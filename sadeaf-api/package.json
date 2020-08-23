@@ -2,8 +2,17 @@
   "private": true,
   "name": "sadeaf-api",
   "version": "1.0.0",
+  "workspaces": [
+    "sadeaf-api-assignment",
+    "sadeaf-api-invoice",
+    "sadeaf-api-notification"
+  ],
   "scripts": {
+
   },
   "dependencies": {
+  },
+  "engines": {
+    "node": "^14"
   }
 }

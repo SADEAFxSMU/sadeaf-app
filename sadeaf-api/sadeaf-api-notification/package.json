@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "sadeaf-svc-notification",
+  "name": "sadeaf-api-notification",
   "version": "1.0.0",
   "scripts": {
   },

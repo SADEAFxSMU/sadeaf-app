@@ -2,6 +2,9 @@
   "private": true,
   "name": "sadeaf-hasura",
   "version": "1.0.0",
+  "engines": {
+    "node": "^14"
+  },
   "scripts": {
     "console": "docker-compose up -d --build && sh ./wait-for-hasura-console"
   },
