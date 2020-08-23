@@ -1,0 +1,26 @@
+name: Pull request to master, sadeaf-hasura
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'sadeaf-hasura/**'
+      - '!sadeaf-hasura/tests/**'
+      - '!sadeaf-hasura/**.md'
+
+jobs:
+  build_image:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v1
+        with:
+          path: sadeaf-hasura
+          registry: docker.pkg.github.com
+          repository: SADEAFxSMU/sadeaf-app/sadeaf-hasura
+          tags: latest
+          push: false
