@@ -2,17 +2,28 @@
   "private": true,
   "name": "sadeaf-api",
   "version": "1.0.0",
-  "workspaces": [
-    "sadeaf-api-assignment",
-    "sadeaf-api-invoice",
-    "sadeaf-api-notification"
-  ],
-  "scripts": {
-
-  },
-  "dependencies": {
-  },
   "engines": {
     "node": "^14"
+  },
+  "main": "app.js",
+  "directories": {
+    "tests": "test"
+  },
+  "scripts": {
+    "test": "tap tests/**/*.test.js",
+    "start": "fastify start --port 4000 -l info app.js",
+    "dev": "fastify start --port 4000 -w -l info -P app.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.738.0",
+    "fastify": "^3.0.0",
+    "fastify-autoload": "^3.0.2",
+    "fastify-cli": "^2.2.0",
+    "fastify-healthcheck": "^3.0.0",
+    "fastify-http-proxy": "^4.0.4",
+    "fastify-plugin": "^2.0.0"
+  },
+  "devDependencies": {
+    "tap": "^14.0.0"
   }
 }
