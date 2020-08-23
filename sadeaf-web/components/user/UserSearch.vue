@@ -39,16 +39,18 @@ export default {
   },
   methods: {
     onSearch() {
-      // TODO: Sanitise this.search
       this.$apollo.query({
-        query: gql`query {
-          account(where: { _or: { username: { _like: "${this.search}%" }}}) {
+        query: gql`query UserQuery($search: String!) {
+          account(where: { _or: { username: { _like: $search }}}) {
             id
             username
             name
             email
           }
-        }`
+        }`,
+        variables: {
+          search: this.search + '%'
+        }
       })
       .then(result => {
         this.results = result.data.account;
