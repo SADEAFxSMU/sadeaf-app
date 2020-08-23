@@ -19,7 +19,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: SADEAFxSMU/sadeaf-app/sadeaf-api
+          repository: sadeafxsmu/sadeaf-app/sadeaf-api
           tag_with_ref: true
 
       - name: Build sadeaf-hasura and push to GitHub Packages
@@ -29,7 +29,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: SADEAFxSMU/sadeaf-app/sadeaf-hasura
+          repository: sadeafxsmu/sadeaf-app/sadeaf-hasura
           tag_with_ref: true
 
       - name: Build sadeaf-web and push to GitHub Packages
@@ -39,7 +39,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: SADEAFxSMU/sadeaf-app/sadeaf-web
+          repository: sadeafxsmu/sadeaf-app/sadeaf-web
           tag_with_ref: true
 
       - name: Build sadeaf-worker and push to GitHub Packages
@@ -49,5 +49,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: SADEAFxSMU/sadeaf-app/sadeaf-worker
+          repository: sadeafxsmu/sadeaf-app/sadeaf-worker
           tag_with_ref: true
