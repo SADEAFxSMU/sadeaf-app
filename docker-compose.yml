@@ -59,3 +59,4 @@ services:
       # TODO(fuxing): To be implemented: Cognito
 
   # TODO(fuxing): To be implemented: sadeaf-worker
+  # TODO(fuxing): Add traefik here to be as close to production as possible

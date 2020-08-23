@@ -36,8 +36,6 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
     // Doc: https://apollo.vuejs.org
     '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt/content
@@ -47,14 +45,24 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {},
+  axios: {
+    proxy: true
+  },
+  /*
+  ** Automatically routed in production with traefik
+  ** This is adding for convenient sake for development only.
+  ** As `target: static` will ignore it.
+  */
+  proxy: {
+    '/api/v1': 'http://localhost:14000'
+  },
   /*
   ** Apollo module configuration
-   */
+  */
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: 'http://localhost:8080/v1/graphql',
+        httpEndpoint: '/api/v1/graphql',
       }
     }
   },
