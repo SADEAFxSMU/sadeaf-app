@@ -1,4 +1,4 @@
-name: Pull request to master, sadeaf-hasura
+name: sadeaf-hasura pr to master
 
 on:
   pull_request:
@@ -6,7 +6,6 @@ on:
       - master
     paths:
       - 'sadeaf-hasura/**'
-      - '!sadeaf-hasura/tests/**'
       - '!sadeaf-hasura/**.md'
 
 jobs:
@@ -21,6 +20,6 @@ jobs:
         with:
           path: sadeaf-hasura
           registry: docker.pkg.github.com
-          repository: SADEAFxSMU/sadeaf-app/sadeaf-hasura
+          repository: sadeafxsmu/sadeaf-app/sadeaf-hasura
           tags: latest
           push: false

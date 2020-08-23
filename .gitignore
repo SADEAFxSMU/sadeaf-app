@@ -15,6 +15,7 @@ yarn-error.log*
 node_modules/
 jspm_packages/
 *.tgz
+.nyc_output
 
 .eslintcache
 .node_repl_history

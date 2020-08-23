@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$/sadeaf-worker">
       <sourceFolder url="file://$MODULE_DIR$/sadeaf-worker/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/sadeaf-worker/workers" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/sadeaf-worker/.nyc_output" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

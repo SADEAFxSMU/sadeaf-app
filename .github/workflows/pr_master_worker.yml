@@ -1,4 +1,4 @@
-name: Pull request to master, sadeaf-worker
+name: sadeaf-worker pr to master
 
 on:
   pull_request:
@@ -6,7 +6,6 @@ on:
       - master
     paths:
       - 'sadeaf-worker/**'
-      - '!sadeaf-worker/tests/**'
       - '!sadeaf-worker/**.md'
 
 jobs:
@@ -21,7 +20,7 @@ jobs:
         with:
           path: sadeaf-worker
           registry: docker.pkg.github.com
-          repository: SADEAFxSMU/sadeaf-app/sadeaf-worker
+          repository: sadeafxsmu/sadeaf-app/sadeaf-worker
           tags: latest
           push: false
 

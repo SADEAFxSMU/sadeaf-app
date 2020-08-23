@@ -1,4 +1,4 @@
-name: Pull request to master, sadeaf-api
+name: sadeaf-api pr to master
 
 on:
   pull_request:
@@ -6,7 +6,6 @@ on:
       - master
     paths:
       - 'sadeaf-api/**'
-      - '!sadeaf-api/tests/**'
       - '!sadeaf-api/**.md'
 
 jobs:
@@ -21,7 +20,7 @@ jobs:
         with:
           path: sadeaf-api
           registry: docker.pkg.github.com
-          repository: SADEAFxSMU/sadeaf-app/sadeaf-api
+          repository: sadeafxsmu/sadeaf-app/sadeaf-api
           tags: latest
           push: false
 
