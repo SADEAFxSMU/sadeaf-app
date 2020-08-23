@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "sadeaf-worker",
+  "version": "1.0.0",
+  "engines": {
+    "node": "^14"
+  },
+  "main": "index.js",
+  "directories": {
+    "tests": "test"
+  },
+  "scripts": {
+    "test": "tap tests/**/*.test.js",
+    "start": "node index.js",
+    "dev": "supervisor index.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.738.0",
+    "fastify": "^3.0.0",
+    "pino": "^6.5.1"
+  },
+  "devDependencies": {
+    "supervisor": "^0.12.0",
+    "tap": "^14.0.0"
+  }
+}
