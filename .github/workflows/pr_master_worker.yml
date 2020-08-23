@@ -1,0 +1,42 @@
+name: Pull request to master, sadeaf-worker
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'sadeaf-worker/**'
+      - '!sadeaf-worker/tests/**'
+      - '!sadeaf-worker/**.md'
+
+jobs:
+  build_image:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v1
+        with:
+          path: sadeaf-worker
+          registry: docker.pkg.github.com
+          repository: SADEAFxSMU/sadeaf-app/sadeaf-worker
+          tags: latest
+          push: false
+
+  run_yarn_test:
+    name: Run yarn test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - run: yarn install
+        working-directory: sadeaf-worker
+
+      - run: yarn test
+        working-directory: sadeaf-worker
