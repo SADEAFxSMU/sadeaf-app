@@ -8,7 +8,7 @@
     "node": "^14"
   },
   "scripts": {
-    "dev": "nuxt",
+    "dev": "sh ../docker-compose-up && nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",

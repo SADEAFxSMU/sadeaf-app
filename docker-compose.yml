@@ -8,6 +8,16 @@ version: '3.6'
 # You can do so via this command docker-compose up --build
 
 services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+      - "8888:8080"
+    environment:
+      - SERVICES=s3,sqs,ses
+
+  # TODO(fuxing): Consider adding https://github.com/jagregory/cognito-local for Cognito
+
   postgres:
     image: postgres:11.8
     ports:
@@ -26,3 +36,26 @@ services:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/sadeaf_app
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+
+  sadeaf-api:
+    build: sadeaf-api
+    ports:
+      - "14000:4000"
+    depends_on:
+      - sadeaf-hasura
+      - localstack
+    environment:
+      SVC_SADEAF_HASURA_URL: http://sadeaf-hasura:8080
+      # TODO(fuxing): To be implemented: S3, SES, SQS and Cognito
+
+  sadeaf-web:
+    build: sadeaf-web
+    ports:
+      - "13000:3000"
+    depends_on:
+      - sadeaf-api
+    environment:
+      SVC_SADEAF_API_URL: http://sadeaf-api:4000
+      # TODO(fuxing): To be implemented: Cognito
+
+  # TODO(fuxing): To be implemented: sadeaf-worker
