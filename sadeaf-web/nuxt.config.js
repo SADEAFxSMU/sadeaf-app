@@ -38,6 +38,8 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    // Doc: https://apollo.vuejs.org
+    '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
   ],
@@ -46,6 +48,16 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {},
+  /*
+  ** Apollo module configuration
+   */
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'http://localhost:8080/v1/graphql',
+      }
+    }
+  },
   /*
   ** Build configuration
   */
