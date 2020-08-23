@@ -7,11 +7,10 @@
                  @click="toggleFullscreen('basetable')"
                  circle />
     </div>
-    <el-table
-      :data="paginatedTableData"
-      size="small"
-      :cell-style="{padding: '5px'}"
-      style="width: 100%;">
+    <el-table :data="paginatedTableData"
+              size="small"
+              :cell-style="{padding: '5px'}"
+              style="width: 100%;">
       <el-table-column v-for="(column, i) in tableColumns"
                        sortable
                        :key="'column-' + i"
@@ -21,15 +20,15 @@
                        :filter-method="filterHandler"
                        :width="column.width">
         <!-- Slot here needs to be set to some rubbish else vue will apply the template to all columns -->
-        <template :slot="column.type === 'custom' ? 'default' : ''"
+        <template :slot="column.custom ? 'default' : ''"
                   slot-scope="{ $index, row }"
-                  v-if="column.type === 'custom'">
+                  v-if="column.custom">
           <div :is="column.custom"
-               :row="row" />
+               :row="row"
+               :editable="false" />
         </template>
       </el-table-column>
-      <el-table-column
-        align="right">
+      <el-table-column align="right" :min-width="150">
         <template slot="header" slot-scope="scope">
           <el-input
             v-model="search"
@@ -51,7 +50,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagination" style="">
+    <div class="pagination">
       <el-pagination background
                      :page-size="this.rowLimit"
                      :total="this.tableDataFiltered.length"
@@ -59,11 +58,18 @@
                      :current-page="this.currentPage"
                      @current-change="this.handlePageChange" />
     </div>
+    <crud-dialog :row="{...editRow}"
+                 :index="editIndex"
+                 :visible="crudDialogVisible"
+                 :fields="tableColumns"
+                 @confirm="this.handleEditConfirm"
+                 @close="crudDialogVisible = false"/>
   </div>
 </template>
 
 <script>
 import { FullscreenMixin } from '../../common/mixins';
+import CrudDialog from "./CrudDialog";
 
 const STRING = 'string';
 const INT = 'int';
@@ -81,6 +87,7 @@ const defaultFormatters = {
 
 export default {
   name: "BaseTable",
+  components: {CrudDialog},
   props: {
     title: {
       type: String,
@@ -102,6 +109,11 @@ export default {
       selects: {},
       rowLimit: 10, // Limit rows for pagination
       currentPage: 1, // Local state for current selected page
+      editRow: null,
+      editIndex: null,
+      visible: false,
+      crudDialogVisible: false,
+      crudDialogHasEdits: false,
     };
   },
   created() {
@@ -127,10 +139,17 @@ export default {
       this.currentPage = currentPage;
     },
     handleEdit(index, row) {
-      console.log(index, row);
+      this.editRow = row;
+      this.editIndex = index;
+      this.crudDialogVisible = true;
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      // TODO: Show delete confirmation prompt
+
+    },
+    handleEditConfirm(changes, index, row) {
+      // Post to hasura?
+      console.log(changes);
     },
     getFilters(column) {
       if (column.type === INT || column.type === FLOAT) {

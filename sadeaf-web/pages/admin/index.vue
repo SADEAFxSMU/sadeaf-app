@@ -29,7 +29,8 @@ export default {
         {
           name: 'status',
           label: 'Status',
-          type: 'custom',
+          type: 'enum',
+          enum: ['PENDING', 'COMPLETE', 'LIVE'],
           custom: StatusCell,
           width: 120
         },
@@ -57,6 +58,7 @@ export default {
           start_dt
           volunteer {
             account {
+              id
               name
             }
           }
@@ -64,6 +66,7 @@ export default {
             name
             client {
               account {
+                id
                 name
               }
             }
@@ -86,7 +89,12 @@ export default {
             date: assignment.start_dt,
             event: assignment.event.name,
             location: assignment.address_line_one + ' [' + assignment.room_number + ']',
-            notetakers: [{ name: assignment.volunteer.account.name }]
+            notetakers: [
+              {
+                id: assignment.volunteer.account.id,
+                name: assignment.volunteer.account.name
+              }
+            ]
           })
         }
       }
