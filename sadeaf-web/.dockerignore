@@ -1,6 +1,7 @@
 .nuxt
 dist
 .idea
+.env
 
 node_modules/
 jspm_packages/

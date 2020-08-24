@@ -12,7 +12,7 @@
   "scripts": {
     "test": "tap tests/**/*.test.js",
     "start": "node index.js",
-    "dev": "supervisor index.js"
+    "dev": "sh ../docker-compose-up && supervisor index.js"
   },
   "dependencies": {
     "aws-sdk": "^2.738.0",
