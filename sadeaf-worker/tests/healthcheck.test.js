@@ -14,7 +14,7 @@ test('/_healthcheck should success', async (t) => {
 
   const controller = Controller([
     new Worker(queueName, {
-      cycle: 1000,
+      cycleTime: 1000,
       dieAfter: 1
     })
   ])
@@ -45,7 +45,7 @@ test('/_healthcheck should fail', async (t) => {
 
   const controller = Controller([
     new Worker(queueName, {
-      cycle: 1000,
+      cycleTime: 1000,
       dieAfter: 1
     })
   ])

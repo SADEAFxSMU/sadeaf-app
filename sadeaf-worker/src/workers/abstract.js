@@ -5,7 +5,7 @@ const OPTIONS_DEFAULT = {
   /**
    * How many milliseconds does it wait to call receiveMessage before the last empty message request.
    */
-  cycle: 30_000,
+  cycleTime: 30_000,
   /**
    * How many cycle does it wait before it die if any exceptions occured.
    */
@@ -17,7 +17,7 @@ class Worker {
   /**
    * Create worker with the name and queryUrl, you can create multiple worker.
    * @param {string} name of the SQS Queue.
-   * @param {{onReceiveMessage: function(Object, Function, {})}} options of the worker.
+   * @param {{cycleTime: number, dieAfter: number, onReceiveMessage: function(Object, Function, {})}} options of the worker.
    */
   constructor(name, options) {
     this.queueName = name
@@ -59,12 +59,12 @@ class Worker {
         if (hasAny) {
           setTimeout(this.listen, 1000)
         } else {
-          setTimeout(this.listen, this.options.cycle)
+          setTimeout(this.listen, this.options.cycleTime)
         }
       })
       .catch((err) => {
         this.logger.error(err)
-        setTimeout(this.listen, this.options.cycle)
+        setTimeout(this.listen, this.options.cycleTime)
       })
   }
 
@@ -76,7 +76,7 @@ class Worker {
    * @return {boolean} whether worker is still alive
    */
   health() {
-    return this.lastAlive + (this.options.cycle * this.options.dieAfter) > Date.now()
+    return this.lastAlive + (this.options.cycleTime * this.options.dieAfter) > Date.now()
   }
 }
 

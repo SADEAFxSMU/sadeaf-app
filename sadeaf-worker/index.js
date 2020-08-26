@@ -3,9 +3,9 @@ const fastify = require('fastify')({
   logger: true
 })
 
-Controller(fastify, [
+Controller([
   require("./src/workers/email-example")
-]).start()
+]).start(fastify)
 
 fastify.listen(5000, (err, address) => {
   if (err) throw err

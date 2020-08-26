@@ -17,6 +17,6 @@ class Controller {
   }
 }
 
-module.exports = function (fastify, workers) {
-  return new Controller(fastify, workers)
+module.exports = function (workers) {
+  return new Controller(workers)
 }
