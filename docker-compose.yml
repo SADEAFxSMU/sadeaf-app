@@ -12,9 +12,10 @@ services:
     image: localstack/localstack:0.11.4
     ports:
       - "4566:4566"
-      - "8888:8080"
+      - "8888:8888"
     environment:
       - SERVICES=s3,sqs
+      - PORT_WEB_UI=8888
       - DEFAULT_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=accessKeyId
       - AWS_SECRET_ACCESS_KEY=secretAccessKey
@@ -39,12 +40,14 @@ services:
     build: sadeaf-hasura
     ports:
       - "8080:8080"
+    restart: unless-stopped
     depends_on:
       - postgres
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/sadeaf_app
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+    command: ["./wait-for-it.sh", "postgres:5432", "-t", "90", "rabbitmq:5672", "--", "/start.sh"]
 
   sadeaf-worker:
     build: sadeaf-worker

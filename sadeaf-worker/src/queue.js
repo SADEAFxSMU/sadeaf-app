@@ -1,15 +1,17 @@
 const AWS = require('aws-sdk')
+const config = require("../config")
+
 const sqs = getSqs()
 
 function getSqs() {
-  if (process.env.SQS_ENDPOINT || process.env.NODE_ENV !== "production") {
-    AWS.config.update({region: process.env.AWS_REGION || 'us-east-1'})
-    AWS.config.accessKeyId = process.env.AWS_ACCESS_KEY_ID || "accessKeyId"
-    AWS.config.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || "secretAccessKey"
+  if (config.AWS.SQS.ENDPOINT || config.PRODUCTION) {
+    AWS.config.update({region: config.AWS.REGION})
+    AWS.config.accessKeyId = config.AWS.ACCESS_KEY_ID
+    AWS.config.secretAccessKey = config.AWS.SECRET_ACCESS_KEY
 
     return new AWS.SQS({
       apiVersion: '2012-11-05',
-      endpoint: process.env.SQS_ENDPOINT || "http://localhost:24566"
+      endpoint: config.AWS.SQS.ENDPOINT
     })
   }
 
@@ -82,6 +84,18 @@ class Queue {
 }
 
 module.exports = {
+
+  list() {
+    return new Promise((resolve, reject) => {
+      sqs.listQueues(function (err, data) {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
+    })
+  },
 
   /**
    * @param queueName

@@ -1,10 +1,10 @@
+const config = require('../../config')
 const {test} = require('tap')
 const {createQueue, deleteQueue} = require('../../src/queue')
 
 const {sleep} = require("../helper")
 const emailWorker = require("../../src/workers/email-example")
 
-const MAILHOG_ENDPOINT = "http://localhost:28025"
 const axios = require('axios').default
 
 test('email receive', async (t) => {
@@ -25,7 +25,7 @@ test('email receive', async (t) => {
   await emailWorker.queue.sendMessage(JSON.stringify(body))
   await sleep(emailWorker.options.cycle * 2)
 
-  const total = await axios.get(`${MAILHOG_ENDPOINT}/api/v2/search`, {
+  const total = await axios.get(`${config.MAILHOG.ENDPOINT}/api/v2/search`, {
     params: {kind: "to", query: body.to}
   }).then(({data}) => {
     return data?.total

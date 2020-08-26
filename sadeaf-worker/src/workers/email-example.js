@@ -1,12 +1,13 @@
 const {Worker} = require('./abstract')
+const config = require("../../config")
 const {SMTPClient} = require('emailjs')
 
 const client = new SMTPClient({
-  user: process.env.SMTP_USERNAME,
-  password: process.env.SMTP_PASSWORD,
-  host: process.env.SMTP_HOST || "localhost",
-  port: process.env.SMTP_PORT || 21025,
-  ssl: process.env.SMTP_SSL === "true",
+  user: config.SMTP.USERNAME,
+  password: config.SMTP.PASSWORD,
+  host: config.SMTP.HOST,
+  port: config.SMTP.PORT,
+  ssl: config.SMTP.SSL,
 })
 
 module.exports = new Worker("EmailExample", {
