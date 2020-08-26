@@ -36,6 +36,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
     // Doc: https://apollo.vuejs.org
     '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt/content
@@ -65,6 +66,41 @@ export default {
         httpEndpoint: '/api/v1/graphql',
       }
     }
+  },
+  /*
+  ** Nuxt auth configuration
+   */
+  router: {
+    middleware: ['auth']
+  },
+  auth: {
+    strategies: {
+      dev: {
+        scheme: 'oauth2',
+        // TODO: Change these lines to env variables
+        endpoints: {
+          authorization: 'https://sadeaf-auth.auth.' +
+            'us-east-1.amazoncognito.com/oauth2/authorize',
+          userInfo: 'https://sadeaf-auth.auth.' +
+            'us-east-1.amazoncognito.com/oauth2/userInfo',
+          logout: 'https://sadeaf-auth.auth.' +
+            'us-east-1.amazoncognito.com/logout',
+        },
+        // Make sure redirectUri, logoutRedirectUri is the same as what is configured on AWS Cognito
+        redirectUri: 'http://localhost:3000/login',
+        logoutRedirectUri: 'http://localhost:3000/login',
+        clientId: '5hbhb0p5c37c1c1v4fv93pkbu0',
+        // END OF ENV Variables
+        token: {
+          property: 'access_token',
+          type: 'Bearer',
+          maxAge: 1800
+        },
+        scope: ['openid', 'email'],
+        responseType: 'token',
+        codeChallengeMethod: 'S256',
+      }
+    },
   },
   /*
   ** Build configuration

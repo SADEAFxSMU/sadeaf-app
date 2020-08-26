@@ -34,6 +34,14 @@
         Settings
       </el-menu-item>
     </el-submenu>
+
+    <el-menu-item index="/login">
+      Login
+    </el-menu-item>
+
+    <el-menu-item @click="logout()">
+      Logout
+    </el-menu-item>
   </el-menu>
 </template>
 
@@ -43,6 +51,11 @@ import StatusIndicator from "../../components/StatusIndicator";
 export default {
   name: "admin-navbar",
   components: {StatusIndicator},
+  methods: {
+    logout() {
+      this.$auth.logout();
+    }
+  },
 };
 </script>
 

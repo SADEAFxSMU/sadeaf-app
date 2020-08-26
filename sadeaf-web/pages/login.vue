@@ -1,15 +1,20 @@
 <template>
   <div>
-    <h1>Login Page</h1>
-    <p>auth should be handled by middleware - pages shouldn't be concerned with auth</p>
+    <Login/>
   </div>
 </template>
 
 <script>
+import Login from "../components/forms/Login";
 export default {
-  name: "login"
+  name: "login",
+  components: {
+    Login
+  },
+
 };
 </script>
+
 
 <style scoped>
 
