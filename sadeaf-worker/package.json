@@ -10,12 +10,14 @@
     "tests": "test"
   },
   "scripts": {
-    "test": "tap tests/**/*.test.js",
+    "test": "docker-compose -f docker-compose.test.yml up -d && tap tests/*/**.test.js tests/**.test.js",
     "start": "node index.js",
     "dev": "sh ../docker-compose-up && supervisor index.js"
   },
   "dependencies": {
     "aws-sdk": "^2.738.0",
+    "axios": "^0.20.0",
+    "emailjs": "^3.3.0",
     "fastify": "^3.0.0",
     "pino": "^6.5.1"
   },

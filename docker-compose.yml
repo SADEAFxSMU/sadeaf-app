@@ -9,14 +9,23 @@ version: '3.6'
 
 services:
   localstack:
-    image: localstack/localstack
+    image: localstack/localstack:0.11.4
     ports:
       - "4566:4566"
       - "8888:8080"
     environment:
-      - SERVICES=s3,sqs,ses
+      - SERVICES=s3,sqs
+      - DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=accessKeyId
+      - AWS_SECRET_ACCESS_KEY=secretAccessKey
 
   # TODO(fuxing): Consider adding https://github.com/jagregory/cognito-local for Cognito
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "11025:1025"
+      - "18025:8025"
 
   postgres:
     image: postgres:11.8
@@ -36,6 +45,21 @@ services:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/sadeaf_app
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+
+  sadeaf-worker:
+    build: sadeaf-worker
+    ports:
+      - "15000:5000"
+    depends_on:
+      - sadeaf-hasura
+    environment:
+      SVC_SADEAF_HASURA_URL: http://sadeaf-hasura:8080
+      SMTP_HOST: mailhog
+      SMTP_PORT: 1025
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: accessKeyId
+      AWS_SECRET_ACCESS_KEY: secretAccessKey
+      SQS_ENDPOINT: http://localstack:4566
 
   sadeaf-api:
     build: sadeaf-api
@@ -58,5 +82,5 @@ services:
       SVC_SADEAF_API_URL: http://sadeaf-api:4000
       # TODO(fuxing): To be implemented: Cognito
 
-  # TODO(fuxing): To be implemented: sadeaf-worker
+
   # TODO(fuxing): Add traefik here to be as close to production as possible
