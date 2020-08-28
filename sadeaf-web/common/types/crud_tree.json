@@ -1,0 +1,5004 @@
+{
+  "account": {
+    "admin": {
+      "select": {
+        "contact": {
+          "name": "contact",
+          "type": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "email": {
+          "name": "email",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "password": {
+          "name": "password",
+          "type": "string"
+        },
+        "role": {
+          "name": "role",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "username": {
+          "name": "username",
+          "type": "string"
+        },
+        "admin": {
+          "type": "object",
+          "ref": "admin",
+          "name": "admin"
+        },
+        "client": {
+          "type": "object",
+          "ref": "client",
+          "name": "client"
+        },
+        "memberships": {
+          "type": "array",
+          "ref": "membership",
+          "name": "memberships"
+        },
+        "memberships_aggregate": {
+          "type": "object",
+          "ref": "memberships_aggregate",
+          "name": "memberships_aggregate"
+        },
+        "notification_setting": {
+          "type": "object",
+          "ref": "notification_setting",
+          "name": "notification_setting"
+        },
+        "service_requestor": {
+          "type": "object",
+          "ref": "service_requestor",
+          "name": "service_requestor"
+        },
+        "volunteer": {
+          "type": "object",
+          "ref": "volunteer",
+          "name": "volunteer"
+        }
+      },
+      "insert": {
+        "contact": {
+          "name": "contact",
+          "type": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "email": {
+          "name": "email",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "password": {
+          "name": "password",
+          "type": "string"
+        },
+        "role": {
+          "name": "role",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "username": {
+          "name": "username",
+          "type": "string"
+        },
+        "admin": {
+          "type": "object",
+          "ref": "admin",
+          "name": "admin"
+        },
+        "client": {
+          "type": "object",
+          "ref": "client",
+          "name": "client"
+        },
+        "memberships": {
+          "type": "array",
+          "ref": "membership",
+          "name": "memberships"
+        },
+        "memberships_aggregate": {
+          "type": "object",
+          "ref": "memberships_aggregate",
+          "name": "memberships_aggregate"
+        },
+        "notification_setting": {
+          "type": "object",
+          "ref": "notification_setting",
+          "name": "notification_setting"
+        },
+        "service_requestor": {
+          "type": "object",
+          "ref": "service_requestor",
+          "name": "service_requestor"
+        },
+        "volunteer": {
+          "type": "object",
+          "ref": "volunteer",
+          "name": "volunteer"
+        }
+      },
+      "update": {
+        "contact": {
+          "name": "contact",
+          "type": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "email": {
+          "name": "email",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "password": {
+          "name": "password",
+          "type": "string"
+        },
+        "role": {
+          "name": "role",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "username": {
+          "name": "username",
+          "type": "string"
+        },
+        "admin": {
+          "type": "object",
+          "ref": "admin",
+          "name": "admin"
+        },
+        "client": {
+          "type": "object",
+          "ref": "client",
+          "name": "client"
+        },
+        "memberships": {
+          "type": "array",
+          "ref": "membership",
+          "name": "memberships"
+        },
+        "memberships_aggregate": {
+          "type": "object",
+          "ref": "memberships_aggregate",
+          "name": "memberships_aggregate"
+        },
+        "notification_setting": {
+          "type": "object",
+          "ref": "notification_setting",
+          "name": "notification_setting"
+        },
+        "service_requestor": {
+          "type": "object",
+          "ref": "service_requestor",
+          "name": "service_requestor"
+        },
+        "volunteer": {
+          "type": "object",
+          "ref": "volunteer",
+          "name": "volunteer"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "contact": {
+          "name": "contact",
+          "type": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "email": {
+          "name": "email",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "username": {
+          "name": "username",
+          "type": "string"
+        },
+        "admin": {
+          "type": "object",
+          "name": "admin",
+          "ref": "admin"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "membership": {
+          "type": "array",
+          "name": "memberships",
+          "ref": "membership"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "update": {
+        "contact": {
+          "name": "contact",
+          "type": "string"
+        },
+        "email": {
+          "name": "email",
+          "type": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "password": {
+          "name": "password",
+          "type": "string"
+        },
+        "username": {
+          "name": "username",
+          "type": "string"
+        },
+        "admin": {
+          "type": "object",
+          "name": "admin",
+          "ref": "admin"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "membership": {
+          "type": "array",
+          "name": "memberships",
+          "ref": "membership"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      }
+    },
+    "service_requestor": {
+      "select": {
+        "contact": {
+          "name": "contact",
+          "type": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "email": {
+          "name": "email",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "username": {
+          "name": "username",
+          "type": "string"
+        },
+        "admin": {
+          "type": "object",
+          "name": "admin",
+          "ref": "admin"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "membership": {
+          "type": "array",
+          "name": "memberships",
+          "ref": "membership"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "insert": {
+        "contact": {
+          "name": "contact",
+          "type": "string"
+        },
+        "email": {
+          "name": "email",
+          "type": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "password": {
+          "name": "password",
+          "type": "string"
+        },
+        "username": {
+          "name": "username",
+          "type": "string"
+        },
+        "admin": {
+          "type": "object",
+          "name": "admin",
+          "ref": "admin"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "membership": {
+          "type": "array",
+          "name": "memberships",
+          "ref": "membership"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "update": {
+        "contact": {
+          "name": "contact",
+          "type": "string"
+        },
+        "email": {
+          "name": "email",
+          "type": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "password": {
+          "name": "password",
+          "type": "string"
+        },
+        "username": {
+          "name": "username",
+          "type": "string"
+        },
+        "admin": {
+          "type": "object",
+          "name": "admin",
+          "ref": "admin"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "membership": {
+          "type": "array",
+          "name": "memberships",
+          "ref": "membership"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      }
+    },
+    "volunteer": {
+      "select": {
+        "contact": {
+          "name": "contact",
+          "type": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "email": {
+          "name": "email",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "username": {
+          "name": "username",
+          "type": "string"
+        },
+        "admin": {
+          "type": "object",
+          "name": "admin",
+          "ref": "admin"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "membership": {
+          "type": "array",
+          "name": "memberships",
+          "ref": "membership"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "update": {
+        "contact": {
+          "name": "contact",
+          "type": "string"
+        },
+        "email": {
+          "name": "email",
+          "type": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "password": {
+          "name": "password",
+          "type": "string"
+        },
+        "username": {
+          "name": "username",
+          "type": "string"
+        },
+        "admin": {
+          "type": "object",
+          "name": "admin",
+          "ref": "admin"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "membership": {
+          "type": "array",
+          "name": "memberships",
+          "ref": "membership"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      }
+    }
+  },
+  "admin": {
+    "admin": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        }
+      },
+      "update": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        }
+      },
+      "delete": true
+    }
+  },
+  "assignment": {
+    "admin": {
+      "select": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "honorarium_amount": {
+          "name": "honorarium_amount",
+          "type": "float"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "attendance": {
+          "type": "object",
+          "ref": "attendance",
+          "name": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "ref": "volunteer",
+          "name": "volunteer"
+        }
+      },
+      "insert": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "honorarium_amount": {
+          "name": "honorarium_amount",
+          "type": "float"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "attendance": {
+          "type": "object",
+          "ref": "attendance",
+          "name": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "ref": "volunteer",
+          "name": "volunteer"
+        }
+      },
+      "update": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "honorarium_amount": {
+          "name": "honorarium_amount",
+          "type": "float"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "attendance": {
+          "type": "object",
+          "ref": "attendance",
+          "name": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "ref": "volunteer",
+          "name": "volunteer"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "attendance": {
+          "type": "object",
+          "name": "attendance",
+          "ref": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "insert": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "attendance": {
+          "type": "object",
+          "name": "attendance",
+          "ref": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "update": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "attendance": {
+          "type": "object",
+          "name": "attendance",
+          "ref": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "delete": true
+    },
+    "service_requestor": {
+      "select": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "attendance": {
+          "type": "object",
+          "name": "attendance",
+          "ref": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "insert": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "attendance": {
+          "type": "object",
+          "name": "attendance",
+          "ref": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "update": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "attendance": {
+          "type": "object",
+          "name": "attendance",
+          "ref": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "delete": true
+    },
+    "volunteer": {
+      "select": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "honorarium_amount": {
+          "name": "honorarium_amount",
+          "type": "float"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "attendance": {
+          "type": "object",
+          "name": "attendance",
+          "ref": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "update": {
+        "address_line_one": {
+          "name": "address_line_one",
+          "type": "string"
+        },
+        "address_line_two": {
+          "name": "address_line_two",
+          "type": "string"
+        },
+        "end_dt": {
+          "name": "end_dt",
+          "type": "timestamp"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "float"
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "float"
+        },
+        "postal": {
+          "name": "postal",
+          "type": "string"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "string"
+        },
+        "start_dt": {
+          "name": "start_dt",
+          "type": "timestamp"
+        },
+        "attendance": {
+          "type": "object",
+          "name": "attendance",
+          "ref": "attendance"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      }
+    }
+  },
+  "attendance": {
+    "admin": {
+      "select": {
+        "assignment_id": {
+          "name": "assignment_id",
+          "type": "int"
+        },
+        "attended": {
+          "name": "attended",
+          "type": "boolean"
+        },
+        "dispute_comment": {
+          "name": "dispute_comment",
+          "type": "string"
+        },
+        "has_dispute": {
+          "name": "has_dispute",
+          "type": "boolean"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "assignment": {
+          "type": "object",
+          "ref": "assignment",
+          "name": "assignment"
+        }
+      },
+      "insert": {
+        "assignment_id": {
+          "name": "assignment_id",
+          "type": "int"
+        },
+        "attended": {
+          "name": "attended",
+          "type": "boolean"
+        },
+        "dispute_comment": {
+          "name": "dispute_comment",
+          "type": "string"
+        },
+        "has_dispute": {
+          "name": "has_dispute",
+          "type": "boolean"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "assignment": {
+          "type": "object",
+          "ref": "assignment",
+          "name": "assignment"
+        }
+      },
+      "update": {
+        "assignment_id": {
+          "name": "assignment_id",
+          "type": "int"
+        },
+        "attended": {
+          "name": "attended",
+          "type": "boolean"
+        },
+        "dispute_comment": {
+          "name": "dispute_comment",
+          "type": "string"
+        },
+        "has_dispute": {
+          "name": "has_dispute",
+          "type": "boolean"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "assignment": {
+          "type": "object",
+          "ref": "assignment",
+          "name": "assignment"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "attended": {
+          "name": "attended",
+          "type": "boolean"
+        },
+        "has_dispute": {
+          "name": "has_dispute",
+          "type": "boolean"
+        },
+        "assignment_id": {
+          "name": "assignment_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "dispute_comment": {
+          "name": "dispute_comment",
+          "type": "string"
+        },
+        "assignment": {
+          "type": "object",
+          "name": "assignment",
+          "ref": "assignment"
+        }
+      },
+      "insert": {
+        "attended": {
+          "name": "attended",
+          "type": "boolean"
+        },
+        "dispute_comment": {
+          "name": "dispute_comment",
+          "type": "string"
+        },
+        "has_dispute": {
+          "name": "has_dispute",
+          "type": "boolean"
+        },
+        "assignment": {
+          "type": "object",
+          "name": "assignment",
+          "ref": "assignment"
+        }
+      },
+      "update": {
+        "attended": {
+          "name": "attended",
+          "type": "boolean"
+        },
+        "dispute_comment": {
+          "name": "dispute_comment",
+          "type": "string"
+        },
+        "has_dispute": {
+          "name": "has_dispute",
+          "type": "boolean"
+        },
+        "assignment": {
+          "type": "object",
+          "name": "assignment",
+          "ref": "assignment"
+        }
+      }
+    },
+    "service_requestor": {
+      "select": {
+        "attended": {
+          "name": "attended",
+          "type": "boolean"
+        },
+        "has_dispute": {
+          "name": "has_dispute",
+          "type": "boolean"
+        },
+        "assignment_id": {
+          "name": "assignment_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "dispute_comment": {
+          "name": "dispute_comment",
+          "type": "string"
+        },
+        "assignment": {
+          "type": "object",
+          "name": "assignment",
+          "ref": "assignment"
+        }
+      },
+      "insert": {
+        "attended": {
+          "name": "attended",
+          "type": "boolean"
+        },
+        "dispute_comment": {
+          "name": "dispute_comment",
+          "type": "string"
+        },
+        "has_dispute": {
+          "name": "has_dispute",
+          "type": "boolean"
+        },
+        "assignment": {
+          "type": "object",
+          "name": "assignment",
+          "ref": "assignment"
+        }
+      },
+      "update": {
+        "attended": {
+          "name": "attended",
+          "type": "boolean"
+        },
+        "dispute_comment": {
+          "name": "dispute_comment",
+          "type": "string"
+        },
+        "has_dispute": {
+          "name": "has_dispute",
+          "type": "boolean"
+        },
+        "assignment": {
+          "type": "object",
+          "name": "assignment",
+          "ref": "assignment"
+        }
+      }
+    },
+    "volunteer": {
+      "select": {
+        "attended": {
+          "name": "attended",
+          "type": "boolean"
+        },
+        "has_dispute": {
+          "name": "has_dispute",
+          "type": "boolean"
+        },
+        "assignment_id": {
+          "name": "assignment_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "dispute_comment": {
+          "name": "dispute_comment",
+          "type": "string"
+        },
+        "assignment": {
+          "type": "object",
+          "name": "assignment",
+          "ref": "assignment"
+        }
+      }
+    }
+  },
+  "client": {
+    "admin": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "additional_notes": {
+          "name": "additional_notes",
+          "type": "string"
+        },
+        "designation": {
+          "name": "designation",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "preferred_comm_mode": {
+          "name": "preferred_comm_mode",
+          "type": "string"
+        },
+        "service_requestor_id": {
+          "name": "service_requestor_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "events": {
+          "type": "array",
+          "ref": "event",
+          "name": "events"
+        },
+        "events_aggregate": {
+          "type": "object",
+          "ref": "events_aggregate",
+          "name": "events_aggregate"
+        },
+        "service_requestor": {
+          "type": "object",
+          "ref": "service_requestor",
+          "name": "service_requestor"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "additional_notes": {
+          "name": "additional_notes",
+          "type": "string"
+        },
+        "designation": {
+          "name": "designation",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "preferred_comm_mode": {
+          "name": "preferred_comm_mode",
+          "type": "string"
+        },
+        "service_requestor_id": {
+          "name": "service_requestor_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "events": {
+          "type": "array",
+          "ref": "event",
+          "name": "events"
+        },
+        "events_aggregate": {
+          "type": "object",
+          "ref": "events_aggregate",
+          "name": "events_aggregate"
+        },
+        "service_requestor": {
+          "type": "object",
+          "ref": "service_requestor",
+          "name": "service_requestor"
+        }
+      },
+      "update": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "additional_notes": {
+          "name": "additional_notes",
+          "type": "string"
+        },
+        "designation": {
+          "name": "designation",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "preferred_comm_mode": {
+          "name": "preferred_comm_mode",
+          "type": "string"
+        },
+        "service_requestor_id": {
+          "name": "service_requestor_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "events": {
+          "type": "array",
+          "ref": "event",
+          "name": "events"
+        },
+        "events_aggregate": {
+          "type": "object",
+          "ref": "events_aggregate",
+          "name": "events_aggregate"
+        },
+        "service_requestor": {
+          "type": "object",
+          "ref": "service_requestor",
+          "name": "service_requestor"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "additional_notes": {
+          "name": "additional_notes",
+          "type": "string"
+        },
+        "designation": {
+          "name": "designation",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "preferred_comm_mode": {
+          "name": "preferred_comm_mode",
+          "type": "string"
+        },
+        "service_requestor_id": {
+          "name": "service_requestor_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "event": {
+          "type": "array",
+          "name": "events",
+          "ref": "event"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        }
+      },
+      "update": {
+        "additional_notes": {
+          "name": "additional_notes",
+          "type": "string"
+        },
+        "designation": {
+          "name": "designation",
+          "type": "string"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "preferred_comm_mode": {
+          "name": "preferred_comm_mode",
+          "type": "string"
+        },
+        "service_requestor_id": {
+          "name": "service_requestor_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "event": {
+          "type": "array",
+          "name": "events",
+          "ref": "event"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        }
+      }
+    },
+    "service_requestor": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "additional_notes": {
+          "name": "additional_notes",
+          "type": "string"
+        },
+        "designation": {
+          "name": "designation",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "preferred_comm_mode": {
+          "name": "preferred_comm_mode",
+          "type": "string"
+        },
+        "service_requestor_id": {
+          "name": "service_requestor_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "event": {
+          "type": "array",
+          "name": "events",
+          "ref": "event"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        }
+      },
+      "update": {
+        "additional_notes": {
+          "name": "additional_notes",
+          "type": "string"
+        },
+        "designation": {
+          "name": "designation",
+          "type": "string"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "preferred_comm_mode": {
+          "name": "preferred_comm_mode",
+          "type": "string"
+        },
+        "service_requestor_id": {
+          "name": "service_requestor_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "event": {
+          "type": "array",
+          "name": "events",
+          "ref": "event"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        }
+      }
+    },
+    "volunteer": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "additional_notes": {
+          "name": "additional_notes",
+          "type": "string"
+        },
+        "designation": {
+          "name": "designation",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "preferred_comm_mode": {
+          "name": "preferred_comm_mode",
+          "type": "string"
+        },
+        "service_requestor_id": {
+          "name": "service_requestor_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "event": {
+          "type": "array",
+          "name": "events",
+          "ref": "event"
+        },
+        "service_requestor": {
+          "type": "object",
+          "name": "service_requestor",
+          "ref": "service_requestor"
+        }
+      }
+    }
+  },
+  "email_information": {
+    "admin": {
+      "select": {
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "notification_setting": {
+          "type": "object",
+          "ref": "notification_setting",
+          "name": "notification_setting"
+        }
+      },
+      "insert": {
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "notification_setting": {
+          "type": "object",
+          "ref": "notification_setting",
+          "name": "notification_setting"
+        }
+      },
+      "update": {
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "notification_setting": {
+          "type": "object",
+          "ref": "notification_setting",
+          "name": "notification_setting"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "insert": {
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "update": {
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      }
+    },
+    "service_requestor": {
+      "select": {
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "insert": {
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "update": {
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      }
+    },
+    "volunteer": {
+      "select": {
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "insert": {
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "update": {
+        "email_address": {
+          "name": "email_address",
+          "type": "string"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      }
+    }
+  },
+  "event": {
+    "admin": {
+      "select": {
+        "client_id": {
+          "name": "client_id",
+          "type": "int"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "string"
+        },
+        "quotation": {
+          "name": "quotation",
+          "type": "numeric"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "assignments": {
+          "type": "array",
+          "ref": "assignment",
+          "name": "assignments"
+        },
+        "assignments_aggregate": {
+          "type": "object",
+          "ref": "assignments_aggregate",
+          "name": "assignments_aggregate"
+        },
+        "client": {
+          "type": "object",
+          "ref": "client",
+          "name": "client"
+        },
+        "feedbacks": {
+          "type": "array",
+          "ref": "feedback",
+          "name": "feedbacks"
+        },
+        "feedbacks_aggregate": {
+          "type": "object",
+          "ref": "feedbacks_aggregate",
+          "name": "feedbacks_aggregate"
+        },
+        "interpretation_detail": {
+          "type": "object",
+          "ref": "interpretation_detail",
+          "name": "interpretation_detail"
+        },
+        "invoice": {
+          "type": "object",
+          "ref": "invoice",
+          "name": "invoice"
+        }
+      },
+      "insert": {
+        "client_id": {
+          "name": "client_id",
+          "type": "int"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "string"
+        },
+        "quotation": {
+          "name": "quotation",
+          "type": "numeric"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "assignments": {
+          "type": "array",
+          "ref": "assignment",
+          "name": "assignments"
+        },
+        "assignments_aggregate": {
+          "type": "object",
+          "ref": "assignments_aggregate",
+          "name": "assignments_aggregate"
+        },
+        "client": {
+          "type": "object",
+          "ref": "client",
+          "name": "client"
+        },
+        "feedbacks": {
+          "type": "array",
+          "ref": "feedback",
+          "name": "feedbacks"
+        },
+        "feedbacks_aggregate": {
+          "type": "object",
+          "ref": "feedbacks_aggregate",
+          "name": "feedbacks_aggregate"
+        },
+        "interpretation_detail": {
+          "type": "object",
+          "ref": "interpretation_detail",
+          "name": "interpretation_detail"
+        },
+        "invoice": {
+          "type": "object",
+          "ref": "invoice",
+          "name": "invoice"
+        }
+      },
+      "update": {
+        "client_id": {
+          "name": "client_id",
+          "type": "int"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "string"
+        },
+        "quotation": {
+          "name": "quotation",
+          "type": "numeric"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "assignments": {
+          "type": "array",
+          "ref": "assignment",
+          "name": "assignments"
+        },
+        "assignments_aggregate": {
+          "type": "object",
+          "ref": "assignments_aggregate",
+          "name": "assignments_aggregate"
+        },
+        "client": {
+          "type": "object",
+          "ref": "client",
+          "name": "client"
+        },
+        "feedbacks": {
+          "type": "array",
+          "ref": "feedback",
+          "name": "feedbacks"
+        },
+        "feedbacks_aggregate": {
+          "type": "object",
+          "ref": "feedbacks_aggregate",
+          "name": "feedbacks_aggregate"
+        },
+        "interpretation_detail": {
+          "type": "object",
+          "ref": "interpretation_detail",
+          "name": "interpretation_detail"
+        },
+        "invoice": {
+          "type": "object",
+          "ref": "invoice",
+          "name": "invoice"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "client_id": {
+          "name": "client_id",
+          "type": "int"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "string"
+        },
+        "quotation": {
+          "name": "quotation",
+          "type": "numeric"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "assignments": {
+          "type": "array",
+          "ref": "assignment",
+          "name": "assignments"
+        },
+        "assignments_aggregate": {
+          "type": "object",
+          "ref": "assignments_aggregate",
+          "name": "assignments_aggregate"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "feedbacks": {
+          "type": "array",
+          "ref": "feedback",
+          "name": "feedbacks"
+        },
+        "feedbacks_aggregate": {
+          "type": "object",
+          "ref": "feedbacks_aggregate",
+          "name": "feedbacks_aggregate"
+        },
+        "interpretation_detail": {
+          "type": "object",
+          "ref": "interpretation_detail",
+          "name": "interpretation_detail"
+        },
+        "invoice": {
+          "type": "object",
+          "name": "invoice",
+          "ref": "invoice"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment"
+        },
+        "feedback": {
+          "type": "array",
+          "name": "feedbacks",
+          "ref": "feedback"
+        }
+      },
+      "insert": {
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "client_id": {
+          "name": "client_id",
+          "type": "int"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "string"
+        },
+        "quotation": {
+          "name": "quotation",
+          "type": "numeric"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "feedback": {
+          "type": "array",
+          "name": "feedbacks",
+          "ref": "feedback"
+        },
+        "invoice": {
+          "type": "object",
+          "name": "invoice",
+          "ref": "invoice"
+        }
+      },
+      "update": {
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "string"
+        },
+        "quotation": {
+          "name": "quotation",
+          "type": "numeric"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "feedback": {
+          "type": "array",
+          "name": "feedbacks",
+          "ref": "feedback"
+        },
+        "invoice": {
+          "type": "object",
+          "name": "invoice",
+          "ref": "invoice"
+        }
+      },
+      "delete": true
+    },
+    "service_requestor": {
+      "select": {
+        "client_id": {
+          "name": "client_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "quotation": {
+          "name": "quotation",
+          "type": "numeric"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "string"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "feedback": {
+          "type": "array",
+          "name": "feedbacks",
+          "ref": "feedback"
+        },
+        "invoice": {
+          "type": "object",
+          "name": "invoice",
+          "ref": "invoice"
+        }
+      },
+      "insert": {
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "client_id": {
+          "name": "client_id",
+          "type": "int"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "string"
+        },
+        "quotation": {
+          "name": "quotation",
+          "type": "numeric"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "feedback": {
+          "type": "array",
+          "name": "feedbacks",
+          "ref": "feedback"
+        },
+        "invoice": {
+          "type": "object",
+          "name": "invoice",
+          "ref": "invoice"
+        }
+      },
+      "update": {
+        "client_id": {
+          "name": "client_id",
+          "type": "int"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "string"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "feedback": {
+          "type": "array",
+          "name": "feedbacks",
+          "ref": "feedback"
+        },
+        "invoice": {
+          "type": "object",
+          "name": "invoice",
+          "ref": "invoice"
+        }
+      },
+      "delete": true
+    },
+    "volunteer": {
+      "select": {
+        "client_id": {
+          "name": "client_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "quotation": {
+          "name": "quotation",
+          "type": "numeric"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "string"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment"
+        },
+        "client": {
+          "type": "object",
+          "name": "client",
+          "ref": "client"
+        },
+        "feedback": {
+          "type": "array",
+          "name": "feedbacks",
+          "ref": "feedback"
+        },
+        "invoice": {
+          "type": "object",
+          "name": "invoice",
+          "ref": "invoice"
+        }
+      }
+    }
+  },
+  "feedback": {
+    "admin": {
+      "select": {
+        "confidentiality_privacy_preference": {
+          "name": "confidentiality_privacy_preference",
+          "type": "boolean"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "general_feedback": {
+          "name": "general_feedback",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "live_comments": {
+          "name": "live_comments",
+          "type": "string"
+        },
+        "live_information_understanding": {
+          "name": "live_information_understanding",
+          "type": "string"
+        },
+        "live_interaction": {
+          "name": "live_interaction",
+          "type": "string"
+        },
+        "notetaker_conduct": {
+          "name": "notetaker_conduct",
+          "type": "string"
+        },
+        "notetaker_punctual": {
+          "name": "notetaker_punctual",
+          "type": "boolean"
+        },
+        "post_session_comments": {
+          "name": "post_session_comments",
+          "type": "string"
+        },
+        "post_session_interaction": {
+          "name": "post_session_interaction",
+          "type": "string"
+        },
+        "post_session_understanding": {
+          "name": "post_session_understanding",
+          "type": "string"
+        },
+        "training_privacy_preference": {
+          "name": "training_privacy_preference",
+          "type": "boolean"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "ref": "volunteer",
+          "name": "volunteer"
+        }
+      },
+      "insert": {
+        "confidentiality_privacy_preference": {
+          "name": "confidentiality_privacy_preference",
+          "type": "boolean"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "general_feedback": {
+          "name": "general_feedback",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "live_comments": {
+          "name": "live_comments",
+          "type": "string"
+        },
+        "live_information_understanding": {
+          "name": "live_information_understanding",
+          "type": "string"
+        },
+        "live_interaction": {
+          "name": "live_interaction",
+          "type": "string"
+        },
+        "notetaker_conduct": {
+          "name": "notetaker_conduct",
+          "type": "string"
+        },
+        "notetaker_punctual": {
+          "name": "notetaker_punctual",
+          "type": "boolean"
+        },
+        "post_session_comments": {
+          "name": "post_session_comments",
+          "type": "string"
+        },
+        "post_session_interaction": {
+          "name": "post_session_interaction",
+          "type": "string"
+        },
+        "post_session_understanding": {
+          "name": "post_session_understanding",
+          "type": "string"
+        },
+        "training_privacy_preference": {
+          "name": "training_privacy_preference",
+          "type": "boolean"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "ref": "volunteer",
+          "name": "volunteer"
+        }
+      },
+      "update": {
+        "confidentiality_privacy_preference": {
+          "name": "confidentiality_privacy_preference",
+          "type": "boolean"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "general_feedback": {
+          "name": "general_feedback",
+          "type": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "live_comments": {
+          "name": "live_comments",
+          "type": "string"
+        },
+        "live_information_understanding": {
+          "name": "live_information_understanding",
+          "type": "string"
+        },
+        "live_interaction": {
+          "name": "live_interaction",
+          "type": "string"
+        },
+        "notetaker_conduct": {
+          "name": "notetaker_conduct",
+          "type": "string"
+        },
+        "notetaker_punctual": {
+          "name": "notetaker_punctual",
+          "type": "boolean"
+        },
+        "post_session_comments": {
+          "name": "post_session_comments",
+          "type": "string"
+        },
+        "post_session_interaction": {
+          "name": "post_session_interaction",
+          "type": "string"
+        },
+        "post_session_understanding": {
+          "name": "post_session_understanding",
+          "type": "string"
+        },
+        "training_privacy_preference": {
+          "name": "training_privacy_preference",
+          "type": "boolean"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "ref": "volunteer",
+          "name": "volunteer"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "confidentiality_privacy_preference": {
+          "name": "confidentiality_privacy_preference",
+          "type": "boolean"
+        },
+        "notetaker_punctual": {
+          "name": "notetaker_punctual",
+          "type": "boolean"
+        },
+        "training_privacy_preference": {
+          "name": "training_privacy_preference",
+          "type": "boolean"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "general_feedback": {
+          "name": "general_feedback",
+          "type": "string"
+        },
+        "live_comments": {
+          "name": "live_comments",
+          "type": "string"
+        },
+        "post_session_comments": {
+          "name": "post_session_comments",
+          "type": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "live_information_understanding": {
+          "name": "live_information_understanding",
+          "type": "string"
+        },
+        "live_interaction": {
+          "name": "live_interaction",
+          "type": "string"
+        },
+        "notetaker_conduct": {
+          "name": "notetaker_conduct",
+          "type": "string"
+        },
+        "post_session_interaction": {
+          "name": "post_session_interaction",
+          "type": "string"
+        },
+        "post_session_understanding": {
+          "name": "post_session_understanding",
+          "type": "string"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "insert": {
+        "confidentiality_privacy_preference": {
+          "name": "confidentiality_privacy_preference",
+          "type": "boolean"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "general_feedback": {
+          "name": "general_feedback",
+          "type": "string"
+        },
+        "live_comments": {
+          "name": "live_comments",
+          "type": "string"
+        },
+        "live_information_understanding": {
+          "name": "live_information_understanding",
+          "type": "string"
+        },
+        "live_interaction": {
+          "name": "live_interaction",
+          "type": "string"
+        },
+        "notetaker_conduct": {
+          "name": "notetaker_conduct",
+          "type": "string"
+        },
+        "notetaker_punctual": {
+          "name": "notetaker_punctual",
+          "type": "boolean"
+        },
+        "post_session_comments": {
+          "name": "post_session_comments",
+          "type": "string"
+        },
+        "post_session_interaction": {
+          "name": "post_session_interaction",
+          "type": "string"
+        },
+        "post_session_understanding": {
+          "name": "post_session_understanding",
+          "type": "string"
+        },
+        "training_privacy_preference": {
+          "name": "training_privacy_preference",
+          "type": "boolean"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      },
+      "update": {
+        "confidentiality_privacy_preference": {
+          "name": "confidentiality_privacy_preference",
+          "type": "boolean"
+        },
+        "general_feedback": {
+          "name": "general_feedback",
+          "type": "string"
+        },
+        "live_comments": {
+          "name": "live_comments",
+          "type": "string"
+        },
+        "live_information_understanding": {
+          "name": "live_information_understanding",
+          "type": "string"
+        },
+        "live_interaction": {
+          "name": "live_interaction",
+          "type": "string"
+        },
+        "notetaker_conduct": {
+          "name": "notetaker_conduct",
+          "type": "string"
+        },
+        "notetaker_punctual": {
+          "name": "notetaker_punctual",
+          "type": "boolean"
+        },
+        "post_session_comments": {
+          "name": "post_session_comments",
+          "type": "string"
+        },
+        "post_session_interaction": {
+          "name": "post_session_interaction",
+          "type": "string"
+        },
+        "post_session_understanding": {
+          "name": "post_session_understanding",
+          "type": "string"
+        },
+        "training_privacy_preference": {
+          "name": "training_privacy_preference",
+          "type": "boolean"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "volunteer_id": {
+          "name": "volunteer_id",
+          "type": "int"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        },
+        "volunteer": {
+          "type": "object",
+          "name": "volunteer",
+          "ref": "volunteer"
+        }
+      }
+    }
+  },
+  "interpretation_details": {
+    "admin": {
+      "select": {
+        "allow_trainee_interpreters": {
+          "name": "allow_trainee_interpreters",
+          "type": "boolean"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "filming_interpreters": {
+          "name": "filming_interpreters",
+          "type": "boolean"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "number_of_deaf": {
+          "name": "number_of_deaf",
+          "type": "int"
+        },
+        "number_of_hearing": {
+          "name": "number_of_hearing",
+          "type": "int"
+        },
+        "sign_system": {
+          "name": "sign_system",
+          "type": "string"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        }
+      },
+      "insert": {
+        "allow_trainee_interpreters": {
+          "name": "allow_trainee_interpreters",
+          "type": "boolean"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "filming_interpreters": {
+          "name": "filming_interpreters",
+          "type": "boolean"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "number_of_deaf": {
+          "name": "number_of_deaf",
+          "type": "int"
+        },
+        "number_of_hearing": {
+          "name": "number_of_hearing",
+          "type": "int"
+        },
+        "sign_system": {
+          "name": "sign_system",
+          "type": "string"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        }
+      },
+      "update": {
+        "allow_trainee_interpreters": {
+          "name": "allow_trainee_interpreters",
+          "type": "boolean"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "filming_interpreters": {
+          "name": "filming_interpreters",
+          "type": "boolean"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "number_of_deaf": {
+          "name": "number_of_deaf",
+          "type": "int"
+        },
+        "number_of_hearing": {
+          "name": "number_of_hearing",
+          "type": "int"
+        },
+        "sign_system": {
+          "name": "sign_system",
+          "type": "string"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "allow_trainee_interpreters": {
+          "name": "allow_trainee_interpreters",
+          "type": "boolean"
+        },
+        "filming_interpreters": {
+          "name": "filming_interpreters",
+          "type": "boolean"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "number_of_deaf": {
+          "name": "number_of_deaf",
+          "type": "int"
+        },
+        "number_of_hearing": {
+          "name": "number_of_hearing",
+          "type": "int"
+        },
+        "sign_system": {
+          "name": "sign_system",
+          "type": "string"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        }
+      }
+    },
+    "service_requestor": {
+      "select": {
+        "allow_trainee_interpreters": {
+          "name": "allow_trainee_interpreters",
+          "type": "boolean"
+        },
+        "filming_interpreters": {
+          "name": "filming_interpreters",
+          "type": "boolean"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "number_of_deaf": {
+          "name": "number_of_deaf",
+          "type": "int"
+        },
+        "number_of_hearing": {
+          "name": "number_of_hearing",
+          "type": "int"
+        },
+        "sign_system": {
+          "name": "sign_system",
+          "type": "string"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        }
+      }
+    },
+    "volunteer": {
+      "select": {
+        "allow_trainee_interpreters": {
+          "name": "allow_trainee_interpreters",
+          "type": "boolean"
+        },
+        "filming_interpreters": {
+          "name": "filming_interpreters",
+          "type": "boolean"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "number_of_deaf": {
+          "name": "number_of_deaf",
+          "type": "int"
+        },
+        "number_of_hearing": {
+          "name": "number_of_hearing",
+          "type": "int"
+        },
+        "sign_system": {
+          "name": "sign_system",
+          "type": "string"
+        },
+        "event": {
+          "type": "object",
+          "name": "event",
+          "ref": "event"
+        }
+      }
+    }
+  },
+  "invoice": {
+    "admin": {
+      "select": {
+        "amount": {
+          "name": "amount",
+          "type": "numeric"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        }
+      },
+      "insert": {
+        "amount": {
+          "name": "amount",
+          "type": "numeric"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        }
+      },
+      "update": {
+        "amount": {
+          "name": "amount",
+          "type": "numeric"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "event": {
+          "type": "object",
+          "ref": "event",
+          "name": "event"
+        }
+      },
+      "delete": true
+    }
+  },
+  "membership": {
+    "admin": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "free_sessions_remaining": {
+          "name": "free_sessions_remaining",
+          "type": "numeric"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_type_id": {
+          "name": "membership_type_id",
+          "type": "int"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "membership_renewals": {
+          "type": "array",
+          "ref": "membership_renewal",
+          "name": "membership_renewals"
+        },
+        "membership_renewals_aggregate": {
+          "type": "object",
+          "ref": "membership_renewals_aggregate",
+          "name": "membership_renewals_aggregate"
+        },
+        "membership_type": {
+          "type": "object",
+          "ref": "membership_type",
+          "name": "membership_type"
+        },
+        "service_requestors": {
+          "type": "array",
+          "ref": "service_requestor",
+          "name": "service_requestors"
+        },
+        "service_requestors_aggregate": {
+          "type": "object",
+          "ref": "service_requestors_aggregate",
+          "name": "service_requestors_aggregate"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "free_sessions_remaining": {
+          "name": "free_sessions_remaining",
+          "type": "numeric"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_type_id": {
+          "name": "membership_type_id",
+          "type": "int"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "membership_renewals": {
+          "type": "array",
+          "ref": "membership_renewal",
+          "name": "membership_renewals"
+        },
+        "membership_renewals_aggregate": {
+          "type": "object",
+          "ref": "membership_renewals_aggregate",
+          "name": "membership_renewals_aggregate"
+        },
+        "membership_type": {
+          "type": "object",
+          "ref": "membership_type",
+          "name": "membership_type"
+        },
+        "service_requestors": {
+          "type": "array",
+          "ref": "service_requestor",
+          "name": "service_requestors"
+        },
+        "service_requestors_aggregate": {
+          "type": "object",
+          "ref": "service_requestors_aggregate",
+          "name": "service_requestors_aggregate"
+        }
+      },
+      "update": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "free_sessions_remaining": {
+          "name": "free_sessions_remaining",
+          "type": "numeric"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_type_id": {
+          "name": "membership_type_id",
+          "type": "int"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "membership_renewals": {
+          "type": "array",
+          "ref": "membership_renewal",
+          "name": "membership_renewals"
+        },
+        "membership_renewals_aggregate": {
+          "type": "object",
+          "ref": "membership_renewals_aggregate",
+          "name": "membership_renewals_aggregate"
+        },
+        "membership_type": {
+          "type": "object",
+          "ref": "membership_type",
+          "name": "membership_type"
+        },
+        "service_requestors": {
+          "type": "array",
+          "ref": "service_requestor",
+          "name": "service_requestors"
+        },
+        "service_requestors_aggregate": {
+          "type": "object",
+          "ref": "service_requestors_aggregate",
+          "name": "service_requestors_aggregate"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_type_id": {
+          "name": "membership_type_id",
+          "type": "int"
+        },
+        "free_sessions_remaining": {
+          "name": "free_sessions_remaining",
+          "type": "numeric"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "membership_renewal": {
+          "type": "array",
+          "name": "membership_renewals",
+          "ref": "membership_renewal"
+        },
+        "membership_type": {
+          "type": "object",
+          "name": "membership_type",
+          "ref": "membership_type"
+        },
+        "service_requestor": {
+          "type": "array",
+          "name": "service_requestors",
+          "ref": "service_requestor"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "membership_renewal": {
+          "type": "array",
+          "name": "membership_renewals",
+          "ref": "membership_renewal"
+        },
+        "membership_type": {
+          "type": "object",
+          "name": "membership_type",
+          "ref": "membership_type"
+        },
+        "service_requestor": {
+          "type": "array",
+          "name": "service_requestors",
+          "ref": "service_requestor"
+        }
+      },
+      "update": {
+        "membership_type_id": {
+          "name": "membership_type_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "membership_renewal": {
+          "type": "array",
+          "name": "membership_renewals",
+          "ref": "membership_renewal"
+        },
+        "membership_type": {
+          "type": "object",
+          "name": "membership_type",
+          "ref": "membership_type"
+        },
+        "service_requestor": {
+          "type": "array",
+          "name": "service_requestors",
+          "ref": "service_requestor"
+        }
+      }
+    },
+    "service_requestor": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_type_id": {
+          "name": "membership_type_id",
+          "type": "int"
+        },
+        "free_sessions_remaining": {
+          "name": "free_sessions_remaining",
+          "type": "numeric"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp"
+        },
+        "status": {
+          "name": "status",
+          "type": "string"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "membership_renewal": {
+          "type": "array",
+          "name": "membership_renewals",
+          "ref": "membership_renewal"
+        },
+        "membership_type": {
+          "type": "object",
+          "name": "membership_type",
+          "ref": "membership_type"
+        },
+        "service_requestor": {
+          "type": "array",
+          "name": "service_requestors",
+          "ref": "service_requestor"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "membership_type_id": {
+          "name": "membership_type_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "membership_renewal": {
+          "type": "array",
+          "name": "membership_renewals",
+          "ref": "membership_renewal"
+        },
+        "membership_type": {
+          "type": "object",
+          "name": "membership_type",
+          "ref": "membership_type"
+        },
+        "service_requestor": {
+          "type": "array",
+          "name": "service_requestors",
+          "ref": "service_requestor"
+        }
+      },
+      "update": {
+        "membership_type_id": {
+          "name": "membership_type_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "membership_renewal": {
+          "type": "array",
+          "name": "membership_renewals",
+          "ref": "membership_renewal"
+        },
+        "membership_type": {
+          "type": "object",
+          "name": "membership_type",
+          "ref": "membership_type"
+        },
+        "service_requestor": {
+          "type": "array",
+          "name": "service_requestors",
+          "ref": "service_requestor"
+        }
+      }
+    }
+  },
+  "membership_renewals": {
+    "admin": {
+      "select": {
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "int"
+        },
+        "membership": {
+          "type": "object",
+          "ref": "membership",
+          "name": "membership"
+        }
+      },
+      "insert": {
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "int"
+        },
+        "membership": {
+          "type": "object",
+          "ref": "membership",
+          "name": "membership"
+        }
+      },
+      "update": {
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "int"
+        },
+        "membership": {
+          "type": "object",
+          "ref": "membership",
+          "name": "membership"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "int"
+        },
+        "membership": {
+          "type": "object",
+          "name": "membership",
+          "ref": "membership"
+        }
+      }
+    },
+    "service_requestor": {
+      "select": {
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "int"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp"
+        },
+        "membership": {
+          "type": "object",
+          "name": "membership",
+          "ref": "membership"
+        }
+      }
+    }
+  },
+  "membership_type": {
+    "admin": {
+      "select": {
+        "cost": {
+          "name": "cost",
+          "type": "numeric"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "duration_in_days": {
+          "name": "duration_in_days",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "memberships": {
+          "type": "array",
+          "ref": "membership",
+          "name": "memberships"
+        },
+        "memberships_aggregate": {
+          "type": "object",
+          "ref": "memberships_aggregate",
+          "name": "memberships_aggregate"
+        }
+      },
+      "insert": {
+        "cost": {
+          "name": "cost",
+          "type": "numeric"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "duration_in_days": {
+          "name": "duration_in_days",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "memberships": {
+          "type": "array",
+          "ref": "membership",
+          "name": "memberships"
+        },
+        "memberships_aggregate": {
+          "type": "object",
+          "ref": "memberships_aggregate",
+          "name": "memberships_aggregate"
+        }
+      },
+      "update": {
+        "cost": {
+          "name": "cost",
+          "type": "numeric"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "duration_in_days": {
+          "name": "duration_in_days",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "memberships": {
+          "type": "array",
+          "ref": "membership",
+          "name": "memberships"
+        },
+        "memberships_aggregate": {
+          "type": "object",
+          "ref": "memberships_aggregate",
+          "name": "memberships_aggregate"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "cost": {
+          "name": "cost",
+          "type": "numeric"
+        },
+        "duration_in_days": {
+          "name": "duration_in_days",
+          "type": "int"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "membership": {
+          "type": "array",
+          "name": "memberships",
+          "ref": "membership"
+        }
+      }
+    },
+    "service_requestor": {
+      "select": {
+        "duration_in_days": {
+          "name": "duration_in_days",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "cost": {
+          "name": "cost",
+          "type": "numeric"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "membership": {
+          "type": "array",
+          "name": "memberships",
+          "ref": "membership"
+        }
+      }
+    },
+    "volunteer": {
+      "select": {
+        "duration_in_days": {
+          "name": "duration_in_days",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "cost": {
+          "name": "cost",
+          "type": "numeric"
+        },
+        "description": {
+          "name": "description",
+          "type": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "string"
+        },
+        "membership": {
+          "type": "array",
+          "name": "memberships",
+          "ref": "membership"
+        }
+      }
+    }
+  },
+  "notification_setting": {
+    "admin": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "email_information": {
+          "type": "object",
+          "ref": "email_information",
+          "name": "email_information"
+        },
+        "telegram_information": {
+          "type": "object",
+          "ref": "telegram_information",
+          "name": "telegram_information"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "email_information": {
+          "type": "object",
+          "ref": "email_information",
+          "name": "email_information"
+        },
+        "telegram_information": {
+          "type": "object",
+          "ref": "telegram_information",
+          "name": "telegram_information"
+        }
+      },
+      "update": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "email_information": {
+          "type": "object",
+          "ref": "email_information",
+          "name": "email_information"
+        },
+        "telegram_information": {
+          "type": "object",
+          "ref": "telegram_information",
+          "name": "telegram_information"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "email_information": {
+          "type": "object",
+          "name": "email_information",
+          "ref": "email_information"
+        },
+        "telegram_information": {
+          "type": "object",
+          "name": "telegram_information",
+          "ref": "telegram_information"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "email_information": {
+          "type": "object",
+          "name": "email_information",
+          "ref": "email_information"
+        },
+        "telegram_information": {
+          "type": "object",
+          "name": "telegram_information",
+          "ref": "telegram_information"
+        }
+      },
+      "delete": true
+    },
+    "service_requestor": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "email_information": {
+          "type": "object",
+          "name": "email_information",
+          "ref": "email_information"
+        },
+        "telegram_information": {
+          "type": "object",
+          "name": "telegram_information",
+          "ref": "telegram_information"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "email_information": {
+          "type": "object",
+          "name": "email_information",
+          "ref": "email_information"
+        },
+        "telegram_information": {
+          "type": "object",
+          "name": "telegram_information",
+          "ref": "telegram_information"
+        }
+      },
+      "delete": true
+    },
+    "volunteer": {
+      "select": {
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "email_information": {
+          "type": "object",
+          "name": "email_information",
+          "ref": "email_information"
+        },
+        "telegram_information": {
+          "type": "object",
+          "name": "telegram_information",
+          "ref": "telegram_information"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "email_information": {
+          "type": "object",
+          "name": "email_information",
+          "ref": "email_information"
+        },
+        "telegram_information": {
+          "type": "object",
+          "name": "telegram_information",
+          "ref": "telegram_information"
+        }
+      },
+      "delete": true
+    }
+  },
+  "service_requestor": {
+    "admin": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "clients": {
+          "type": "array",
+          "ref": "client",
+          "name": "clients"
+        },
+        "clients_aggregate": {
+          "type": "object",
+          "ref": "clients_aggregate",
+          "name": "clients_aggregate"
+        },
+        "membership": {
+          "type": "object",
+          "ref": "membership",
+          "name": "membership"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "clients": {
+          "type": "array",
+          "ref": "client",
+          "name": "clients"
+        },
+        "clients_aggregate": {
+          "type": "object",
+          "ref": "clients_aggregate",
+          "name": "clients_aggregate"
+        },
+        "membership": {
+          "type": "object",
+          "ref": "membership",
+          "name": "membership"
+        }
+      },
+      "update": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "clients": {
+          "type": "array",
+          "ref": "client",
+          "name": "clients"
+        },
+        "clients_aggregate": {
+          "type": "object",
+          "ref": "clients_aggregate",
+          "name": "clients_aggregate"
+        },
+        "membership": {
+          "type": "object",
+          "ref": "membership",
+          "name": "membership"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "client": {
+          "type": "array",
+          "name": "clients",
+          "ref": "client"
+        },
+        "membership": {
+          "type": "object",
+          "name": "membership",
+          "ref": "membership"
+        }
+      }
+    },
+    "service_requestor": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "int"
+        },
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "client": {
+          "type": "array",
+          "name": "clients",
+          "ref": "client"
+        },
+        "membership": {
+          "type": "object",
+          "name": "membership",
+          "ref": "membership"
+        }
+      },
+      "update": {
+        "organisation": {
+          "name": "organisation",
+          "type": "string"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "client": {
+          "type": "array",
+          "name": "clients",
+          "ref": "client"
+        },
+        "membership": {
+          "type": "object",
+          "name": "membership",
+          "ref": "membership"
+        }
+      }
+    }
+  },
+  "telegram_information": {
+    "admin": {
+      "select": {
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "notification_setting": {
+          "type": "object",
+          "ref": "notification_setting",
+          "name": "notification_setting"
+        }
+      },
+      "insert": {
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "notification_setting": {
+          "type": "object",
+          "ref": "notification_setting",
+          "name": "notification_setting"
+        }
+      },
+      "update": {
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "notification_setting": {
+          "type": "object",
+          "ref": "notification_setting",
+          "name": "notification_setting"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "insert": {
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "update": {
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "delete": true
+    },
+    "service_requestor": {
+      "select": {
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "insert": {
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "update": {
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "delete": true
+    },
+    "volunteer": {
+      "select": {
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "notification_setting_id": {
+          "name": "notification_setting_id",
+          "type": "int"
+        },
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "insert": {
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "update": {
+        "chat_id": {
+          "name": "chat_id",
+          "type": "float"
+        },
+        "notification_setting": {
+          "type": "object",
+          "name": "notification_setting",
+          "ref": "notification_setting"
+        }
+      },
+      "delete": true
+    }
+  },
+  "volunteer": {
+    "admin": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "approval_status": {
+          "name": "approval_status",
+          "type": "boolean"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "assignments": {
+          "type": "array",
+          "ref": "assignment",
+          "name": "assignments"
+        },
+        "assignments_aggregate": {
+          "type": "object",
+          "ref": "assignments_aggregate",
+          "name": "assignments_aggregate"
+        },
+        "feedbacks": {
+          "type": "array",
+          "ref": "feedback",
+          "name": "feedbacks"
+        },
+        "feedbacks_aggregate": {
+          "type": "object",
+          "ref": "feedbacks_aggregate",
+          "name": "feedbacks_aggregate"
+        }
+      },
+      "insert": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "approval_status": {
+          "name": "approval_status",
+          "type": "boolean"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "assignments": {
+          "type": "array",
+          "ref": "assignment",
+          "name": "assignments"
+        },
+        "assignments_aggregate": {
+          "type": "object",
+          "ref": "assignments_aggregate",
+          "name": "assignments_aggregate"
+        },
+        "feedbacks": {
+          "type": "array",
+          "ref": "feedback",
+          "name": "feedbacks"
+        },
+        "feedbacks_aggregate": {
+          "type": "object",
+          "ref": "feedbacks_aggregate",
+          "name": "feedbacks_aggregate"
+        }
+      },
+      "update": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "approval_status": {
+          "name": "approval_status",
+          "type": "boolean"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "ref": "account",
+          "name": "account"
+        },
+        "assignments": {
+          "type": "array",
+          "ref": "assignment",
+          "name": "assignments"
+        },
+        "assignments_aggregate": {
+          "type": "object",
+          "ref": "assignments_aggregate",
+          "name": "assignments_aggregate"
+        },
+        "feedbacks": {
+          "type": "array",
+          "ref": "feedback",
+          "name": "feedbacks"
+        },
+        "feedbacks_aggregate": {
+          "type": "object",
+          "ref": "feedbacks_aggregate",
+          "name": "feedbacks_aggregate"
+        }
+      },
+      "delete": true
+    },
+    "client": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment"
+        },
+        "feedback": {
+          "type": "array",
+          "name": "feedbacks",
+          "ref": "feedback"
+        }
+      }
+    },
+    "service_requestor": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment"
+        },
+        "feedback": {
+          "type": "array",
+          "name": "feedbacks",
+          "ref": "feedback"
+        }
+      }
+    },
+    "volunteer": {
+      "select": {
+        "account_id": {
+          "name": "account_id",
+          "type": "int"
+        },
+        "approval_status": {
+          "name": "approval_status",
+          "type": "boolean"
+        },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
+        "account": {
+          "type": "object",
+          "name": "account",
+          "ref": "account"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment"
+        },
+        "feedback": {
+          "type": "array",
+          "name": "feedbacks",
+          "ref": "feedback"
+        }
+      }
+    }
+  }
+}
