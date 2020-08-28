@@ -7,7 +7,7 @@ const client = new SMTPClient({
   password: config.SMTP.PASSWORD,
   host: config.SMTP.HOST,
   port: config.SMTP.PORT,
-  ssl: config.SMTP.SSL,
+  tls: config.SMTP.TLS,
 })
 
 module.exports = new Worker("EmailExample", {

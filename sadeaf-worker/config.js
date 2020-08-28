@@ -13,7 +13,7 @@ module.exports = {
     PASSWORD: process.env.SMTP_PASSWORD,
     HOST: process.env.SMTP_HOST || 'localhost',
     PORT: process.env.SMTP_PORT || 11025,
-    SSL: process.env.SMTP_SSL === 'true'
+    TLS: process.env.SMTP_TLS === 'true'
   },
   MAILHOG: {
     ENDPOINT: process.env.MAILHOG_ENDPOINT || "http://localhost:18025"
