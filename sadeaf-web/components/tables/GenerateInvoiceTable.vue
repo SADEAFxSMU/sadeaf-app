@@ -79,32 +79,32 @@
         }
       },
       computed: {
-        totalRows: function() {
+        totalRows() {
           return this.filteredRows.length;
         },
-        filteredRows: function() {
-          return this.processedEventRows.filter(data => !this.search || data.name.toLowerCase().includes(this.search.toLowerCase()));
+        filteredRows() {
+          if (!this.search) {
+            return this.processedEventRows;
+          }
+          return this.processedEventRows.filter(data => data.name.toLowerCase().includes(this.search.toLowerCase()));
         },
-        pagedRows: function() {
+        pagedRows() {
           let endIndex = (this.currentPage * this.pageSize)
           let startIndex = endIndex - this.pageSize;
           return this.processedEventRows.slice(startIndex, endIndex)
         },
-        processedEventRows: function() {
-          // formats and returns the formatted rows
-          // we need to process/format the rows since the data from Hasura is raw
-          const processedEventRows = [];
-
-          if (this.event) {
-            for (let row of this.event) {
-              let updatedAtDate = new Date(Date.parse(row.updated_at))
-              let processedRow = {...row}
-              processedRow.updated_at = updatedAtDate.toLocaleString();
-              processedEventRows.push(processedRow)
+        /**
+         * formats and returns the formatted rows
+         * we need to process/format the rows since the data from Hasura is raw
+         * @return {[]}
+         */
+        processedEventRows () {
+          return this.event?.map(row => {
+            return {
+              ...row,
+              updated_at: new Date(Date.parse(row.updated_at)).toLocaleString()
             }
-          }
-
-          return processedEventRows;
+          }) || []
         }
       },
       methods: {

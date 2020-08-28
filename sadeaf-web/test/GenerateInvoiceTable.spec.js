@@ -54,21 +54,26 @@ beforeEach(() => {
   wrapper.setData({event: fakeData})
 })
 
-describe("When data is pulled from Hasura", () => {
-  it('should have the right number of rows', function () {
+describe('Table Formatting', () => {
+  it('should have the right number of rows', () => {
     expect(wrapper.vm.totalRows).toBe(2);
   });
 
-  it('should process and format the rows correctly', function () {
+  it('should process and format the rows correctly', () => {
     expect(wrapper.vm.processedEventRows).toStrictEqual([processedFakeEvent1, processedFakeEvent2])
   });
+})
 
-  it('should filter the right rows based on search variable', function () {
+describe('Search by Event', () => {
+  it('should filter the right rows based on search variable', () => {
     wrapper.setData({search: "2"})
     expect(wrapper.vm.filteredRows).toStrictEqual([processedFakeEvent2])
   });
+})
 
-  it('should show the right rows based on page size', function () {
+
+describe('Table Pagination', () => {
+  it('should show the right rows based on page size', () => {
     wrapper.setData({pageSize: 1})
     wrapper.setData({currentPage: 1})
     expect(wrapper.vm.pagedRows).toStrictEqual([processedFakeEvent1])
