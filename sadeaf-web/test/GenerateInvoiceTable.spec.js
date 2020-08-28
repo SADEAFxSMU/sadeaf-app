@@ -55,10 +55,6 @@ beforeEach(() => {
 })
 
 describe('Table Formatting', () => {
-  it('should have the right number of rows', () => {
-    expect(wrapper.vm.totalRows).toBe(2);
-  });
-
   it('should process and format the rows correctly', () => {
     expect(wrapper.vm.processedEventRows).toStrictEqual([processedFakeEvent1, processedFakeEvent2])
   });
@@ -73,6 +69,10 @@ describe('Search by Event', () => {
 
 
 describe('Table Pagination', () => {
+  it('should have the right number of total rows', () => {
+    expect(wrapper.vm.totalRows).toBe(2);
+  });
+
   it('should show the right rows based on page size', () => {
     wrapper.setData({pageSize: 1})
     wrapper.setData({currentPage: 1})
