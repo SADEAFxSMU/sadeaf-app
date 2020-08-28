@@ -24,6 +24,9 @@
     "fastify-plugin": "^2.0.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.160",
+    "@types/node": "^14.6.1",
+    "@types/pino": "^6.3.0",
     "tap": "^14.0.0"
   }
 }

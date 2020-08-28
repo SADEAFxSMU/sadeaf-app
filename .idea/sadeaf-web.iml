@@ -6,6 +6,5 @@
       <excludeFolder url="file://$MODULE_DIR$/sadeaf-web/.nuxt" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="@types/lodash" level="application" />
   </component>
 </module>
