@@ -2,3 +2,6 @@
 sw.js
 .nuxt
 dist
+
+# testing
+coverage
