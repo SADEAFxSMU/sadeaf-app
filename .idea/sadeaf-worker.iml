@@ -8,7 +8,5 @@
       <excludeFolder url="file://$MODULE_DIR$/sadeaf-worker/.nyc_output" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="@types/lodash" level="application" />
-    <orderEntry type="library" name="@types/pino" level="application" />
   </component>
 </module>
