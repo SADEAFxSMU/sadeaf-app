@@ -1,6 +1,6 @@
 export default {
   mode: 'spa',
-  target: 'static',
+  target: 'server',
   /*
   ** Headers of the page
   */
@@ -48,13 +48,8 @@ export default {
   axios: {
     proxy: true
   },
-  /*
-  ** Automatically routed in production with traefik
-  ** This is adding for convenient sake for development only.
-  ** As `target: static` will ignore it.
-  */
   proxy: {
-    '/api/v1': 'http://localhost:14000'
+    '/api/v1': process.env.SVC_SADEAF_API_URL || 'http://localhost:14000'
   },
   /*
   ** Apollo module configuration
