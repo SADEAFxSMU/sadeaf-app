@@ -41,37 +41,38 @@
         "admin": {
           "type": "object",
           "ref": "admin",
-          "name": "admin"
+          "name": "admin",
+          "rel": "hasOne"
         },
         "client": {
           "type": "object",
           "ref": "client",
-          "name": "client"
+          "name": "client",
+          "rel": "hasOne"
         },
         "memberships": {
           "type": "array",
           "ref": "membership",
-          "name": "memberships"
-        },
-        "memberships_aggregate": {
-          "type": "object",
-          "ref": "memberships_aggregate",
-          "name": "memberships_aggregate"
+          "name": "memberships",
+          "rel": "hasMany"
         },
         "notification_setting": {
           "type": "object",
           "ref": "notification_setting",
-          "name": "notification_setting"
+          "name": "notification_setting",
+          "rel": "hasOne"
         },
         "service_requestor": {
           "type": "object",
           "ref": "service_requestor",
-          "name": "service_requestor"
+          "name": "service_requestor",
+          "rel": "hasOne"
         },
         "volunteer": {
           "type": "object",
           "ref": "volunteer",
-          "name": "volunteer"
+          "name": "volunteer",
+          "rel": "hasOne"
         }
       },
       "insert": {
@@ -114,37 +115,38 @@
         "admin": {
           "type": "object",
           "ref": "admin",
-          "name": "admin"
+          "name": "admin",
+          "rel": "hasOne"
         },
         "client": {
           "type": "object",
           "ref": "client",
-          "name": "client"
+          "name": "client",
+          "rel": "hasOne"
         },
         "memberships": {
           "type": "array",
           "ref": "membership",
-          "name": "memberships"
-        },
-        "memberships_aggregate": {
-          "type": "object",
-          "ref": "memberships_aggregate",
-          "name": "memberships_aggregate"
+          "name": "memberships",
+          "rel": "hasMany"
         },
         "notification_setting": {
           "type": "object",
           "ref": "notification_setting",
-          "name": "notification_setting"
+          "name": "notification_setting",
+          "rel": "hasOne"
         },
         "service_requestor": {
           "type": "object",
           "ref": "service_requestor",
-          "name": "service_requestor"
+          "name": "service_requestor",
+          "rel": "hasOne"
         },
         "volunteer": {
           "type": "object",
           "ref": "volunteer",
-          "name": "volunteer"
+          "name": "volunteer",
+          "rel": "hasOne"
         }
       },
       "update": {
@@ -187,37 +189,38 @@
         "admin": {
           "type": "object",
           "ref": "admin",
-          "name": "admin"
+          "name": "admin",
+          "rel": "hasOne"
         },
         "client": {
           "type": "object",
           "ref": "client",
-          "name": "client"
+          "name": "client",
+          "rel": "hasOne"
         },
         "memberships": {
           "type": "array",
           "ref": "membership",
-          "name": "memberships"
-        },
-        "memberships_aggregate": {
-          "type": "object",
-          "ref": "memberships_aggregate",
-          "name": "memberships_aggregate"
+          "name": "memberships",
+          "rel": "hasMany"
         },
         "notification_setting": {
           "type": "object",
           "ref": "notification_setting",
-          "name": "notification_setting"
+          "name": "notification_setting",
+          "rel": "hasOne"
         },
         "service_requestor": {
           "type": "object",
           "ref": "service_requestor",
-          "name": "service_requestor"
+          "name": "service_requestor",
+          "rel": "hasOne"
         },
         "volunteer": {
           "type": "object",
           "ref": "volunteer",
-          "name": "volunteer"
+          "name": "volunteer",
+          "rel": "hasOne"
         }
       },
       "delete": true
@@ -252,35 +255,11 @@
           "name": "username",
           "type": "string"
         },
-        "admin": {
-          "type": "object",
-          "name": "admin",
-          "ref": "admin"
-        },
-        "client": {
-          "type": "object",
-          "name": "client",
-          "ref": "client"
-        },
         "membership": {
           "type": "array",
           "name": "memberships",
-          "ref": "membership"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
-        },
-        "service_requestor": {
-          "type": "object",
-          "name": "service_requestor",
-          "ref": "service_requestor"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "membership",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -304,35 +283,11 @@
           "name": "username",
           "type": "string"
         },
-        "admin": {
-          "type": "object",
-          "name": "admin",
-          "ref": "admin"
-        },
-        "client": {
-          "type": "object",
-          "name": "client",
-          "ref": "client"
-        },
         "membership": {
           "type": "array",
           "name": "memberships",
-          "ref": "membership"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
-        },
-        "service_requestor": {
-          "type": "object",
-          "name": "service_requestor",
-          "ref": "service_requestor"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "membership",
+          "rel": "hasMany"
         }
       }
     },
@@ -366,35 +321,11 @@
           "name": "username",
           "type": "string"
         },
-        "admin": {
-          "type": "object",
-          "name": "admin",
-          "ref": "admin"
-        },
-        "client": {
-          "type": "object",
-          "name": "client",
-          "ref": "client"
-        },
         "membership": {
           "type": "array",
           "name": "memberships",
-          "ref": "membership"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
-        },
-        "service_requestor": {
-          "type": "object",
-          "name": "service_requestor",
-          "ref": "service_requestor"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "membership",
+          "rel": "hasMany"
         }
       },
       "insert": {
@@ -418,35 +349,11 @@
           "name": "username",
           "type": "string"
         },
-        "admin": {
-          "type": "object",
-          "name": "admin",
-          "ref": "admin"
-        },
-        "client": {
-          "type": "object",
-          "name": "client",
-          "ref": "client"
-        },
         "membership": {
           "type": "array",
           "name": "memberships",
-          "ref": "membership"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
-        },
-        "service_requestor": {
-          "type": "object",
-          "name": "service_requestor",
-          "ref": "service_requestor"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "membership",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -470,35 +377,11 @@
           "name": "username",
           "type": "string"
         },
-        "admin": {
-          "type": "object",
-          "name": "admin",
-          "ref": "admin"
-        },
-        "client": {
-          "type": "object",
-          "name": "client",
-          "ref": "client"
-        },
         "membership": {
           "type": "array",
           "name": "memberships",
-          "ref": "membership"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
-        },
-        "service_requestor": {
-          "type": "object",
-          "name": "service_requestor",
-          "ref": "service_requestor"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "membership",
+          "rel": "hasMany"
         }
       }
     },
@@ -532,35 +415,11 @@
           "name": "username",
           "type": "string"
         },
-        "admin": {
-          "type": "object",
-          "name": "admin",
-          "ref": "admin"
-        },
-        "client": {
-          "type": "object",
-          "name": "client",
-          "ref": "client"
-        },
         "membership": {
           "type": "array",
           "name": "memberships",
-          "ref": "membership"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
-        },
-        "service_requestor": {
-          "type": "object",
-          "name": "service_requestor",
-          "ref": "service_requestor"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "membership",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -584,35 +443,11 @@
           "name": "username",
           "type": "string"
         },
-        "admin": {
-          "type": "object",
-          "name": "admin",
-          "ref": "admin"
-        },
-        "client": {
-          "type": "object",
-          "name": "client",
-          "ref": "client"
-        },
         "membership": {
           "type": "array",
           "name": "memberships",
-          "ref": "membership"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
-        },
-        "service_requestor": {
-          "type": "object",
-          "name": "service_requestor",
-          "ref": "service_requestor"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "membership",
+          "rel": "hasMany"
         }
       }
     }
@@ -631,7 +466,8 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -646,7 +482,8 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -661,7 +498,8 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -725,17 +563,20 @@
         "attendance": {
           "type": "object",
           "ref": "attendance",
-          "name": "attendance"
+          "name": "attendance",
+          "rel": "hasOne"
         },
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "ref": "volunteer",
-          "name": "volunteer"
+          "name": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -794,17 +635,20 @@
         "attendance": {
           "type": "object",
           "ref": "attendance",
-          "name": "attendance"
+          "name": "attendance",
+          "rel": "hasOne"
         },
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "ref": "volunteer",
-          "name": "volunteer"
+          "name": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -863,17 +707,20 @@
         "attendance": {
           "type": "object",
           "ref": "attendance",
-          "name": "attendance"
+          "name": "attendance",
+          "rel": "hasOne"
         },
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "ref": "volunteer",
-          "name": "volunteer"
+          "name": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -928,20 +775,17 @@
           "name": "volunteer_id",
           "type": "int"
         },
-        "attendance": {
-          "type": "object",
-          "name": "attendance",
-          "ref": "attendance"
-        },
         "event": {
           "type": "object",
           "name": "event",
-          "ref": "event"
+          "ref": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -981,20 +825,11 @@
           "name": "start_dt",
           "type": "timestamp"
         },
-        "attendance": {
-          "type": "object",
-          "name": "attendance",
-          "ref": "attendance"
-        },
         "event": {
           "type": "object",
           "name": "event",
-          "ref": "event"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "event",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -1029,21 +864,6 @@
         "start_dt": {
           "name": "start_dt",
           "type": "timestamp"
-        },
-        "attendance": {
-          "type": "object",
-          "name": "attendance",
-          "ref": "attendance"
-        },
-        "event": {
-          "type": "object",
-          "name": "event",
-          "ref": "event"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
         }
       },
       "delete": true
@@ -1098,20 +918,17 @@
           "name": "volunteer_id",
           "type": "int"
         },
-        "attendance": {
-          "type": "object",
-          "name": "attendance",
-          "ref": "attendance"
-        },
         "event": {
           "type": "object",
           "name": "event",
-          "ref": "event"
+          "ref": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -1151,20 +968,11 @@
           "name": "start_dt",
           "type": "timestamp"
         },
-        "attendance": {
-          "type": "object",
-          "name": "attendance",
-          "ref": "attendance"
-        },
         "event": {
           "type": "object",
           "name": "event",
-          "ref": "event"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "event",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -1203,21 +1011,6 @@
         "start_dt": {
           "name": "start_dt",
           "type": "timestamp"
-        },
-        "attendance": {
-          "type": "object",
-          "name": "attendance",
-          "ref": "attendance"
-        },
-        "event": {
-          "type": "object",
-          "name": "event",
-          "ref": "event"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
         }
       },
       "delete": true
@@ -1276,20 +1069,17 @@
           "name": "volunteer_id",
           "type": "int"
         },
-        "attendance": {
-          "type": "object",
-          "name": "attendance",
-          "ref": "attendance"
-        },
         "event": {
           "type": "object",
           "name": "event",
-          "ref": "event"
+          "ref": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -1328,21 +1118,6 @@
         "start_dt": {
           "name": "start_dt",
           "type": "timestamp"
-        },
-        "attendance": {
-          "type": "object",
-          "name": "attendance",
-          "ref": "attendance"
-        },
-        "event": {
-          "type": "object",
-          "name": "event",
-          "ref": "event"
-        },
-        "volunteer": {
-          "type": "object",
-          "name": "volunteer",
-          "ref": "volunteer"
         }
       }
     }
@@ -1373,7 +1148,8 @@
         "assignment": {
           "type": "object",
           "ref": "assignment",
-          "name": "assignment"
+          "name": "assignment",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -1400,7 +1176,8 @@
         "assignment": {
           "type": "object",
           "ref": "assignment",
-          "name": "assignment"
+          "name": "assignment",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -1427,7 +1204,8 @@
         "assignment": {
           "type": "object",
           "ref": "assignment",
-          "name": "assignment"
+          "name": "assignment",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -1457,7 +1235,8 @@
         "assignment": {
           "type": "object",
           "name": "assignment",
-          "ref": "assignment"
+          "ref": "assignment",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -1472,11 +1251,6 @@
         "has_dispute": {
           "name": "has_dispute",
           "type": "boolean"
-        },
-        "assignment": {
-          "type": "object",
-          "name": "assignment",
-          "ref": "assignment"
         }
       },
       "update": {
@@ -1491,11 +1265,6 @@
         "has_dispute": {
           "name": "has_dispute",
           "type": "boolean"
-        },
-        "assignment": {
-          "type": "object",
-          "name": "assignment",
-          "ref": "assignment"
         }
       }
     },
@@ -1524,7 +1293,8 @@
         "assignment": {
           "type": "object",
           "name": "assignment",
-          "ref": "assignment"
+          "ref": "assignment",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -1539,11 +1309,6 @@
         "has_dispute": {
           "name": "has_dispute",
           "type": "boolean"
-        },
-        "assignment": {
-          "type": "object",
-          "name": "assignment",
-          "ref": "assignment"
         }
       },
       "update": {
@@ -1558,11 +1323,6 @@
         "has_dispute": {
           "name": "has_dispute",
           "type": "boolean"
-        },
-        "assignment": {
-          "type": "object",
-          "name": "assignment",
-          "ref": "assignment"
         }
       }
     },
@@ -1591,7 +1351,8 @@
         "assignment": {
           "type": "object",
           "name": "assignment",
-          "ref": "assignment"
+          "ref": "assignment",
+          "rel": "belongsTo"
         }
       }
     }
@@ -1630,22 +1391,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "events": {
           "type": "array",
           "ref": "event",
-          "name": "events"
-        },
-        "events_aggregate": {
-          "type": "object",
-          "ref": "events_aggregate",
-          "name": "events_aggregate"
+          "name": "events",
+          "rel": "hasMany"
         },
         "service_requestor": {
           "type": "object",
           "ref": "service_requestor",
-          "name": "service_requestor"
+          "name": "service_requestor",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -1680,22 +1439,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "events": {
           "type": "array",
           "ref": "event",
-          "name": "events"
-        },
-        "events_aggregate": {
-          "type": "object",
-          "ref": "events_aggregate",
-          "name": "events_aggregate"
+          "name": "events",
+          "rel": "hasMany"
         },
         "service_requestor": {
           "type": "object",
           "ref": "service_requestor",
-          "name": "service_requestor"
+          "name": "service_requestor",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -1730,22 +1487,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "events": {
           "type": "array",
           "ref": "event",
-          "name": "events"
-        },
-        "events_aggregate": {
-          "type": "object",
-          "ref": "events_aggregate",
-          "name": "events_aggregate"
+          "name": "events",
+          "rel": "hasMany"
         },
         "service_requestor": {
           "type": "object",
           "ref": "service_requestor",
-          "name": "service_requestor"
+          "name": "service_requestor",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -1783,17 +1538,20 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "event": {
-          "type": "array",
-          "name": "events",
-          "ref": "event"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "service_requestor": {
           "type": "object",
           "name": "service_requestor",
-          "ref": "service_requestor"
+          "ref": "service_requestor",
+          "rel": "belongsTo"
+        },
+        "event": {
+          "type": "array",
+          "name": "events",
+          "ref": "event",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -1817,20 +1575,17 @@
           "name": "service_requestor_id",
           "type": "int"
         },
-        "account": {
+        "service_requestor": {
           "type": "object",
-          "name": "account",
-          "ref": "account"
+          "name": "service_requestor",
+          "ref": "service_requestor",
+          "rel": "belongsTo"
         },
         "event": {
           "type": "array",
           "name": "events",
-          "ref": "event"
-        },
-        "service_requestor": {
-          "type": "object",
-          "name": "service_requestor",
-          "ref": "service_requestor"
+          "ref": "event",
+          "rel": "hasMany"
         }
       }
     },
@@ -1867,17 +1622,20 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "event": {
-          "type": "array",
-          "name": "events",
-          "ref": "event"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "service_requestor": {
           "type": "object",
           "name": "service_requestor",
-          "ref": "service_requestor"
+          "ref": "service_requestor",
+          "rel": "belongsTo"
+        },
+        "event": {
+          "type": "array",
+          "name": "events",
+          "ref": "event",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -1901,20 +1659,17 @@
           "name": "service_requestor_id",
           "type": "int"
         },
-        "account": {
+        "service_requestor": {
           "type": "object",
-          "name": "account",
-          "ref": "account"
+          "name": "service_requestor",
+          "ref": "service_requestor",
+          "rel": "belongsTo"
         },
         "event": {
           "type": "array",
           "name": "events",
-          "ref": "event"
-        },
-        "service_requestor": {
-          "type": "object",
-          "name": "service_requestor",
-          "ref": "service_requestor"
+          "ref": "event",
+          "rel": "hasMany"
         }
       }
     },
@@ -1951,17 +1706,20 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "event": {
-          "type": "array",
-          "name": "events",
-          "ref": "event"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "service_requestor": {
           "type": "object",
           "name": "service_requestor",
-          "ref": "service_requestor"
+          "ref": "service_requestor",
+          "rel": "belongsTo"
+        },
+        "event": {
+          "type": "array",
+          "name": "events",
+          "ref": "event",
+          "rel": "hasMany"
         }
       }
     }
@@ -1984,7 +1742,8 @@
         "notification_setting": {
           "type": "object",
           "ref": "notification_setting",
-          "name": "notification_setting"
+          "name": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -2003,7 +1762,8 @@
         "notification_setting": {
           "type": "object",
           "ref": "notification_setting",
-          "name": "notification_setting"
+          "name": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -2022,7 +1782,8 @@
         "notification_setting": {
           "type": "object",
           "ref": "notification_setting",
-          "name": "notification_setting"
+          "name": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -2044,29 +1805,20 @@
         "notification_setting": {
           "type": "object",
           "name": "notification_setting",
-          "ref": "notification_setting"
+          "ref": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "insert": {
         "email_address": {
           "name": "email_address",
           "type": "string"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       },
       "update": {
         "email_address": {
           "name": "email_address",
           "type": "string"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       }
     },
@@ -2087,29 +1839,20 @@
         "notification_setting": {
           "type": "object",
           "name": "notification_setting",
-          "ref": "notification_setting"
+          "ref": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "insert": {
         "email_address": {
           "name": "email_address",
           "type": "string"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       },
       "update": {
         "email_address": {
           "name": "email_address",
           "type": "string"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       }
     },
@@ -2130,29 +1873,20 @@
         "notification_setting": {
           "type": "object",
           "name": "notification_setting",
-          "ref": "notification_setting"
+          "ref": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "insert": {
         "email_address": {
           "name": "email_address",
           "type": "string"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       },
       "update": {
         "email_address": {
           "name": "email_address",
           "type": "string"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       }
     }
@@ -2195,37 +1929,32 @@
         "assignments": {
           "type": "array",
           "ref": "assignment",
-          "name": "assignments"
-        },
-        "assignments_aggregate": {
-          "type": "object",
-          "ref": "assignments_aggregate",
-          "name": "assignments_aggregate"
+          "name": "assignments",
+          "rel": "hasMany"
         },
         "client": {
           "type": "object",
           "ref": "client",
-          "name": "client"
+          "name": "client",
+          "rel": "belongsTo"
         },
         "feedbacks": {
           "type": "array",
           "ref": "feedback",
-          "name": "feedbacks"
-        },
-        "feedbacks_aggregate": {
-          "type": "object",
-          "ref": "feedbacks_aggregate",
-          "name": "feedbacks_aggregate"
+          "name": "feedbacks",
+          "rel": "hasMany"
         },
         "interpretation_detail": {
           "type": "object",
           "ref": "interpretation_detail",
-          "name": "interpretation_detail"
+          "name": "interpretation_detail",
+          "rel": "hasOne"
         },
         "invoice": {
           "type": "object",
           "ref": "invoice",
-          "name": "invoice"
+          "name": "invoice",
+          "rel": "hasOne"
         }
       },
       "insert": {
@@ -2264,37 +1993,32 @@
         "assignments": {
           "type": "array",
           "ref": "assignment",
-          "name": "assignments"
-        },
-        "assignments_aggregate": {
-          "type": "object",
-          "ref": "assignments_aggregate",
-          "name": "assignments_aggregate"
+          "name": "assignments",
+          "rel": "hasMany"
         },
         "client": {
           "type": "object",
           "ref": "client",
-          "name": "client"
+          "name": "client",
+          "rel": "belongsTo"
         },
         "feedbacks": {
           "type": "array",
           "ref": "feedback",
-          "name": "feedbacks"
-        },
-        "feedbacks_aggregate": {
-          "type": "object",
-          "ref": "feedbacks_aggregate",
-          "name": "feedbacks_aggregate"
+          "name": "feedbacks",
+          "rel": "hasMany"
         },
         "interpretation_detail": {
           "type": "object",
           "ref": "interpretation_detail",
-          "name": "interpretation_detail"
+          "name": "interpretation_detail",
+          "rel": "hasOne"
         },
         "invoice": {
           "type": "object",
           "ref": "invoice",
-          "name": "invoice"
+          "name": "invoice",
+          "rel": "hasOne"
         }
       },
       "update": {
@@ -2333,37 +2057,32 @@
         "assignments": {
           "type": "array",
           "ref": "assignment",
-          "name": "assignments"
-        },
-        "assignments_aggregate": {
-          "type": "object",
-          "ref": "assignments_aggregate",
-          "name": "assignments_aggregate"
+          "name": "assignments",
+          "rel": "hasMany"
         },
         "client": {
           "type": "object",
           "ref": "client",
-          "name": "client"
+          "name": "client",
+          "rel": "belongsTo"
         },
         "feedbacks": {
           "type": "array",
           "ref": "feedback",
-          "name": "feedbacks"
-        },
-        "feedbacks_aggregate": {
-          "type": "object",
-          "ref": "feedbacks_aggregate",
-          "name": "feedbacks_aggregate"
+          "name": "feedbacks",
+          "rel": "hasMany"
         },
         "interpretation_detail": {
           "type": "object",
           "ref": "interpretation_detail",
-          "name": "interpretation_detail"
+          "name": "interpretation_detail",
+          "rel": "hasOne"
         },
         "invoice": {
           "type": "object",
           "ref": "invoice",
-          "name": "invoice"
+          "name": "invoice",
+          "rel": "hasOne"
         }
       },
       "delete": true
@@ -2405,47 +2124,44 @@
         "assignments": {
           "type": "array",
           "ref": "assignment",
-          "name": "assignments"
-        },
-        "assignments_aggregate": {
-          "type": "object",
-          "ref": "assignments_aggregate",
-          "name": "assignments_aggregate"
+          "name": "assignments",
+          "rel": "hasMany"
         },
         "client": {
           "type": "object",
           "name": "client",
-          "ref": "client"
+          "ref": "client",
+          "rel": "belongsTo"
         },
         "feedbacks": {
           "type": "array",
           "ref": "feedback",
-          "name": "feedbacks"
-        },
-        "feedbacks_aggregate": {
-          "type": "object",
-          "ref": "feedbacks_aggregate",
-          "name": "feedbacks_aggregate"
+          "name": "feedbacks",
+          "rel": "hasMany"
         },
         "interpretation_detail": {
           "type": "object",
           "ref": "interpretation_detail",
-          "name": "interpretation_detail"
+          "name": "interpretation_detail",
+          "rel": "hasOne"
         },
         "invoice": {
           "type": "object",
+          "ref": "invoice",
           "name": "invoice",
-          "ref": "invoice"
+          "rel": "hasOne"
         },
         "assignment": {
           "type": "array",
           "name": "assignments",
-          "ref": "assignment"
+          "ref": "assignment",
+          "rel": "hasMany"
         },
         "feedback": {
           "type": "array",
           "name": "feedbacks",
-          "ref": "feedback"
+          "ref": "feedback",
+          "rel": "hasMany"
         }
       },
       "insert": {
@@ -2469,25 +2185,23 @@
           "name": "quotation",
           "type": "numeric"
         },
-        "assignment": {
-          "type": "array",
-          "name": "assignments",
-          "ref": "assignment"
-        },
         "client": {
           "type": "object",
           "name": "client",
-          "ref": "client"
+          "ref": "client",
+          "rel": "belongsTo"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment",
+          "rel": "hasMany"
         },
         "feedback": {
           "type": "array",
           "name": "feedbacks",
-          "ref": "feedback"
-        },
-        "invoice": {
-          "type": "object",
-          "name": "invoice",
-          "ref": "invoice"
+          "ref": "feedback",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -2510,22 +2224,14 @@
         "assignment": {
           "type": "array",
           "name": "assignments",
-          "ref": "assignment"
-        },
-        "client": {
-          "type": "object",
-          "name": "client",
-          "ref": "client"
+          "ref": "assignment",
+          "rel": "hasMany"
         },
         "feedback": {
           "type": "array",
           "name": "feedbacks",
-          "ref": "feedback"
-        },
-        "invoice": {
-          "type": "object",
-          "name": "invoice",
-          "ref": "invoice"
+          "ref": "feedback",
+          "rel": "hasMany"
         }
       },
       "delete": true
@@ -2564,25 +2270,23 @@
           "name": "purpose",
           "type": "string"
         },
-        "assignment": {
-          "type": "array",
-          "name": "assignments",
-          "ref": "assignment"
-        },
         "client": {
           "type": "object",
           "name": "client",
-          "ref": "client"
+          "ref": "client",
+          "rel": "belongsTo"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment",
+          "rel": "hasMany"
         },
         "feedback": {
           "type": "array",
           "name": "feedbacks",
-          "ref": "feedback"
-        },
-        "invoice": {
-          "type": "object",
-          "name": "invoice",
-          "ref": "invoice"
+          "ref": "feedback",
+          "rel": "hasMany"
         }
       },
       "insert": {
@@ -2606,25 +2310,23 @@
           "name": "quotation",
           "type": "numeric"
         },
-        "assignment": {
-          "type": "array",
-          "name": "assignments",
-          "ref": "assignment"
-        },
         "client": {
           "type": "object",
           "name": "client",
-          "ref": "client"
+          "ref": "client",
+          "rel": "belongsTo"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment",
+          "rel": "hasMany"
         },
         "feedback": {
           "type": "array",
           "name": "feedbacks",
-          "ref": "feedback"
-        },
-        "invoice": {
-          "type": "object",
-          "name": "invoice",
-          "ref": "invoice"
+          "ref": "feedback",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -2644,25 +2346,23 @@
           "name": "purpose",
           "type": "string"
         },
-        "assignment": {
-          "type": "array",
-          "name": "assignments",
-          "ref": "assignment"
-        },
         "client": {
           "type": "object",
           "name": "client",
-          "ref": "client"
+          "ref": "client",
+          "rel": "belongsTo"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment",
+          "rel": "hasMany"
         },
         "feedback": {
           "type": "array",
           "name": "feedbacks",
-          "ref": "feedback"
-        },
-        "invoice": {
-          "type": "object",
-          "name": "invoice",
-          "ref": "invoice"
+          "ref": "feedback",
+          "rel": "hasMany"
         }
       },
       "delete": true
@@ -2701,25 +2401,23 @@
           "name": "purpose",
           "type": "string"
         },
-        "assignment": {
-          "type": "array",
-          "name": "assignments",
-          "ref": "assignment"
-        },
         "client": {
           "type": "object",
           "name": "client",
-          "ref": "client"
+          "ref": "client",
+          "rel": "belongsTo"
+        },
+        "assignment": {
+          "type": "array",
+          "name": "assignments",
+          "ref": "assignment",
+          "rel": "hasMany"
         },
         "feedback": {
           "type": "array",
           "name": "feedbacks",
-          "ref": "feedback"
-        },
-        "invoice": {
-          "type": "object",
-          "name": "invoice",
-          "ref": "invoice"
+          "ref": "feedback",
+          "rel": "hasMany"
         }
       }
     }
@@ -2794,12 +2492,14 @@
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "ref": "volunteer",
-          "name": "volunteer"
+          "name": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -2870,12 +2570,14 @@
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "ref": "volunteer",
-          "name": "volunteer"
+          "name": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -2946,12 +2648,14 @@
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "ref": "volunteer",
-          "name": "volunteer"
+          "name": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -3025,12 +2729,14 @@
         "event": {
           "type": "object",
           "name": "event",
-          "ref": "event"
+          "ref": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -3089,12 +2795,14 @@
         "event": {
           "type": "object",
           "name": "event",
-          "ref": "event"
+          "ref": "event",
+          "rel": "belongsTo"
         },
         "volunteer": {
           "type": "object",
           "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "volunteer",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -3150,15 +2858,11 @@
           "name": "volunteer_id",
           "type": "int"
         },
-        "event": {
-          "type": "object",
-          "name": "event",
-          "ref": "event"
-        },
         "volunteer": {
           "type": "object",
           "name": "volunteer",
-          "ref": "volunteer"
+          "ref": "volunteer",
+          "rel": "belongsTo"
         }
       }
     }
@@ -3197,7 +2901,8 @@
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -3232,7 +2937,8 @@
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -3267,7 +2973,8 @@
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -3305,7 +3012,8 @@
         "event": {
           "type": "object",
           "name": "event",
-          "ref": "event"
+          "ref": "event",
+          "rel": "belongsTo"
         }
       }
     },
@@ -3342,7 +3050,8 @@
         "event": {
           "type": "object",
           "name": "event",
-          "ref": "event"
+          "ref": "event",
+          "rel": "belongsTo"
         }
       }
     },
@@ -3379,7 +3088,8 @@
         "event": {
           "type": "object",
           "name": "event",
-          "ref": "event"
+          "ref": "event",
+          "rel": "belongsTo"
         }
       }
     }
@@ -3414,7 +3124,8 @@
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -3445,7 +3156,8 @@
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -3476,7 +3188,8 @@
         "event": {
           "type": "object",
           "ref": "event",
-          "name": "event"
+          "name": "event",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -3516,32 +3229,26 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "membership_renewals": {
           "type": "array",
           "ref": "membership_renewal",
-          "name": "membership_renewals"
-        },
-        "membership_renewals_aggregate": {
-          "type": "object",
-          "ref": "membership_renewals_aggregate",
-          "name": "membership_renewals_aggregate"
+          "name": "membership_renewals",
+          "rel": "hasMany"
         },
         "membership_type": {
           "type": "object",
           "ref": "membership_type",
-          "name": "membership_type"
+          "name": "membership_type",
+          "rel": "belongsTo"
         },
         "service_requestors": {
           "type": "array",
           "ref": "service_requestor",
-          "name": "service_requestors"
-        },
-        "service_requestors_aggregate": {
-          "type": "object",
-          "ref": "service_requestors_aggregate",
-          "name": "service_requestors_aggregate"
+          "name": "service_requestors",
+          "rel": "hasMany"
         }
       },
       "insert": {
@@ -3576,32 +3283,26 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "membership_renewals": {
           "type": "array",
           "ref": "membership_renewal",
-          "name": "membership_renewals"
-        },
-        "membership_renewals_aggregate": {
-          "type": "object",
-          "ref": "membership_renewals_aggregate",
-          "name": "membership_renewals_aggregate"
+          "name": "membership_renewals",
+          "rel": "hasMany"
         },
         "membership_type": {
           "type": "object",
           "ref": "membership_type",
-          "name": "membership_type"
+          "name": "membership_type",
+          "rel": "belongsTo"
         },
         "service_requestors": {
           "type": "array",
           "ref": "service_requestor",
-          "name": "service_requestors"
-        },
-        "service_requestors_aggregate": {
-          "type": "object",
-          "ref": "service_requestors_aggregate",
-          "name": "service_requestors_aggregate"
+          "name": "service_requestors",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -3636,32 +3337,26 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "membership_renewals": {
           "type": "array",
           "ref": "membership_renewal",
-          "name": "membership_renewals"
-        },
-        "membership_renewals_aggregate": {
-          "type": "object",
-          "ref": "membership_renewals_aggregate",
-          "name": "membership_renewals_aggregate"
+          "name": "membership_renewals",
+          "rel": "hasMany"
         },
         "membership_type": {
           "type": "object",
           "ref": "membership_type",
-          "name": "membership_type"
+          "name": "membership_type",
+          "rel": "belongsTo"
         },
         "service_requestors": {
           "type": "array",
           "ref": "service_requestor",
-          "name": "service_requestors"
-        },
-        "service_requestors_aggregate": {
-          "type": "object",
-          "ref": "service_requestors_aggregate",
-          "name": "service_requestors_aggregate"
+          "name": "service_requestors",
+          "rel": "hasMany"
         }
       },
       "delete": true
@@ -3699,22 +3394,20 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "membership_renewal": {
-          "type": "array",
-          "name": "membership_renewals",
-          "ref": "membership_renewal"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "membership_type": {
           "type": "object",
           "name": "membership_type",
-          "ref": "membership_type"
+          "ref": "membership_type",
+          "rel": "belongsTo"
         },
         "service_requestor": {
           "type": "array",
           "name": "service_requestors",
-          "ref": "service_requestor"
+          "ref": "service_requestor",
+          "rel": "hasMany"
         }
       },
       "insert": {
@@ -3725,22 +3418,14 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "membership_renewal": {
-          "type": "array",
-          "name": "membership_renewals",
-          "ref": "membership_renewal"
-        },
-        "membership_type": {
-          "type": "object",
-          "name": "membership_type",
-          "ref": "membership_type"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "service_requestor": {
           "type": "array",
           "name": "service_requestors",
-          "ref": "service_requestor"
+          "ref": "service_requestor",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -3748,25 +3433,17 @@
           "name": "membership_type_id",
           "type": "int"
         },
-        "account": {
-          "type": "object",
-          "name": "account",
-          "ref": "account"
-        },
-        "membership_renewal": {
-          "type": "array",
-          "name": "membership_renewals",
-          "ref": "membership_renewal"
-        },
         "membership_type": {
           "type": "object",
           "name": "membership_type",
-          "ref": "membership_type"
+          "ref": "membership_type",
+          "rel": "belongsTo"
         },
         "service_requestor": {
           "type": "array",
           "name": "service_requestors",
-          "ref": "service_requestor"
+          "ref": "service_requestor",
+          "rel": "hasMany"
         }
       }
     },
@@ -3803,22 +3480,20 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "membership_renewal": {
-          "type": "array",
-          "name": "membership_renewals",
-          "ref": "membership_renewal"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "membership_type": {
           "type": "object",
           "name": "membership_type",
-          "ref": "membership_type"
+          "ref": "membership_type",
+          "rel": "belongsTo"
         },
         "service_requestor": {
           "type": "array",
           "name": "service_requestors",
-          "ref": "service_requestor"
+          "ref": "service_requestor",
+          "rel": "hasMany"
         }
       },
       "insert": {
@@ -3833,22 +3508,20 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "membership_renewal": {
-          "type": "array",
-          "name": "membership_renewals",
-          "ref": "membership_renewal"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "membership_type": {
           "type": "object",
           "name": "membership_type",
-          "ref": "membership_type"
+          "ref": "membership_type",
+          "rel": "belongsTo"
         },
         "service_requestor": {
           "type": "array",
           "name": "service_requestors",
-          "ref": "service_requestor"
+          "ref": "service_requestor",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -3856,25 +3529,17 @@
           "name": "membership_type_id",
           "type": "int"
         },
-        "account": {
-          "type": "object",
-          "name": "account",
-          "ref": "account"
-        },
-        "membership_renewal": {
-          "type": "array",
-          "name": "membership_renewals",
-          "ref": "membership_renewal"
-        },
         "membership_type": {
           "type": "object",
           "name": "membership_type",
-          "ref": "membership_type"
+          "ref": "membership_type",
+          "rel": "belongsTo"
         },
         "service_requestor": {
           "type": "array",
           "name": "service_requestors",
-          "ref": "service_requestor"
+          "ref": "service_requestor",
+          "rel": "hasMany"
         }
       }
     }
@@ -3897,7 +3562,8 @@
         "membership": {
           "type": "object",
           "ref": "membership",
-          "name": "membership"
+          "name": "membership",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -3916,7 +3582,8 @@
         "membership": {
           "type": "object",
           "ref": "membership",
-          "name": "membership"
+          "name": "membership",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -3935,7 +3602,8 @@
         "membership": {
           "type": "object",
           "ref": "membership",
-          "name": "membership"
+          "name": "membership",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -3957,7 +3625,8 @@
         "membership": {
           "type": "object",
           "name": "membership",
-          "ref": "membership"
+          "ref": "membership",
+          "rel": "belongsTo"
         }
       }
     },
@@ -3978,7 +3647,8 @@
         "membership": {
           "type": "object",
           "name": "membership",
-          "ref": "membership"
+          "ref": "membership",
+          "rel": "belongsTo"
         }
       }
     }
@@ -4009,12 +3679,8 @@
         "memberships": {
           "type": "array",
           "ref": "membership",
-          "name": "memberships"
-        },
-        "memberships_aggregate": {
-          "type": "object",
-          "ref": "memberships_aggregate",
-          "name": "memberships_aggregate"
+          "name": "memberships",
+          "rel": "hasMany"
         }
       },
       "insert": {
@@ -4041,12 +3707,8 @@
         "memberships": {
           "type": "array",
           "ref": "membership",
-          "name": "memberships"
-        },
-        "memberships_aggregate": {
-          "type": "object",
-          "ref": "memberships_aggregate",
-          "name": "memberships_aggregate"
+          "name": "memberships",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -4073,12 +3735,8 @@
         "memberships": {
           "type": "array",
           "ref": "membership",
-          "name": "memberships"
-        },
-        "memberships_aggregate": {
-          "type": "object",
-          "ref": "memberships_aggregate",
-          "name": "memberships_aggregate"
+          "name": "memberships",
+          "rel": "hasMany"
         }
       },
       "delete": true
@@ -4108,7 +3766,8 @@
         "membership": {
           "type": "array",
           "name": "memberships",
-          "ref": "membership"
+          "ref": "membership",
+          "rel": "hasMany"
         }
       }
     },
@@ -4137,7 +3796,8 @@
         "membership": {
           "type": "array",
           "name": "memberships",
-          "ref": "membership"
+          "ref": "membership",
+          "rel": "hasMany"
         }
       }
     },
@@ -4166,7 +3826,8 @@
         "membership": {
           "type": "array",
           "name": "memberships",
-          "ref": "membership"
+          "ref": "membership",
+          "rel": "hasMany"
         }
       }
     }
@@ -4185,17 +3846,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "email_information": {
           "type": "object",
           "ref": "email_information",
-          "name": "email_information"
+          "name": "email_information",
+          "rel": "hasOne"
         },
         "telegram_information": {
           "type": "object",
           "ref": "telegram_information",
-          "name": "telegram_information"
+          "name": "telegram_information",
+          "rel": "hasOne"
         }
       },
       "insert": {
@@ -4210,17 +3874,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "email_information": {
           "type": "object",
           "ref": "email_information",
-          "name": "email_information"
+          "name": "email_information",
+          "rel": "hasOne"
         },
         "telegram_information": {
           "type": "object",
           "ref": "telegram_information",
-          "name": "telegram_information"
+          "name": "telegram_information",
+          "rel": "hasOne"
         }
       },
       "update": {
@@ -4235,17 +3902,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "email_information": {
           "type": "object",
           "ref": "email_information",
-          "name": "email_information"
+          "name": "email_information",
+          "rel": "hasOne"
         },
         "telegram_information": {
           "type": "object",
           "ref": "telegram_information",
-          "name": "telegram_information"
+          "name": "telegram_information",
+          "rel": "hasOne"
         }
       },
       "delete": true
@@ -4263,17 +3933,8 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "email_information": {
-          "type": "object",
-          "name": "email_information",
-          "ref": "email_information"
-        },
-        "telegram_information": {
-          "type": "object",
-          "name": "telegram_information",
-          "ref": "telegram_information"
+          "ref": "account",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -4284,17 +3945,8 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "email_information": {
-          "type": "object",
-          "name": "email_information",
-          "ref": "email_information"
-        },
-        "telegram_information": {
-          "type": "object",
-          "name": "telegram_information",
-          "ref": "telegram_information"
+          "ref": "account",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -4312,17 +3964,8 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "email_information": {
-          "type": "object",
-          "name": "email_information",
-          "ref": "email_information"
-        },
-        "telegram_information": {
-          "type": "object",
-          "name": "telegram_information",
-          "ref": "telegram_information"
+          "ref": "account",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -4333,17 +3976,8 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "email_information": {
-          "type": "object",
-          "name": "email_information",
-          "ref": "email_information"
-        },
-        "telegram_information": {
-          "type": "object",
-          "name": "telegram_information",
-          "ref": "telegram_information"
+          "ref": "account",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -4361,17 +3995,8 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "email_information": {
-          "type": "object",
-          "name": "email_information",
-          "ref": "email_information"
-        },
-        "telegram_information": {
-          "type": "object",
-          "name": "telegram_information",
-          "ref": "telegram_information"
+          "ref": "account",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -4382,17 +4007,8 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "email_information": {
-          "type": "object",
-          "name": "email_information",
-          "ref": "email_information"
-        },
-        "telegram_information": {
-          "type": "object",
-          "name": "telegram_information",
-          "ref": "telegram_information"
+          "ref": "account",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -4420,22 +4036,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "clients": {
           "type": "array",
           "ref": "client",
-          "name": "clients"
-        },
-        "clients_aggregate": {
-          "type": "object",
-          "ref": "clients_aggregate",
-          "name": "clients_aggregate"
+          "name": "clients",
+          "rel": "hasMany"
         },
         "membership": {
           "type": "object",
           "ref": "membership",
-          "name": "membership"
+          "name": "membership",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -4458,22 +4072,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "clients": {
           "type": "array",
           "ref": "client",
-          "name": "clients"
-        },
-        "clients_aggregate": {
-          "type": "object",
-          "ref": "clients_aggregate",
-          "name": "clients_aggregate"
+          "name": "clients",
+          "rel": "hasMany"
         },
         "membership": {
           "type": "object",
           "ref": "membership",
-          "name": "membership"
+          "name": "membership",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -4496,22 +4108,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "clients": {
           "type": "array",
           "ref": "client",
-          "name": "clients"
-        },
-        "clients_aggregate": {
-          "type": "object",
-          "ref": "clients_aggregate",
-          "name": "clients_aggregate"
+          "name": "clients",
+          "rel": "hasMany"
         },
         "membership": {
           "type": "object",
           "ref": "membership",
-          "name": "membership"
+          "name": "membership",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -4537,17 +4147,20 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "client": {
-          "type": "array",
-          "name": "clients",
-          "ref": "client"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "membership": {
           "type": "object",
           "name": "membership",
-          "ref": "membership"
+          "ref": "membership",
+          "rel": "belongsTo"
+        },
+        "client": {
+          "type": "array",
+          "name": "clients",
+          "ref": "client",
+          "rel": "hasMany"
         }
       }
     },
@@ -4572,17 +4185,20 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
-        },
-        "client": {
-          "type": "array",
-          "name": "clients",
-          "ref": "client"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "membership": {
           "type": "object",
           "name": "membership",
-          "ref": "membership"
+          "ref": "membership",
+          "rel": "belongsTo"
+        },
+        "client": {
+          "type": "array",
+          "name": "clients",
+          "ref": "client",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -4590,20 +4206,11 @@
           "name": "organisation",
           "type": "string"
         },
-        "account": {
-          "type": "object",
-          "name": "account",
-          "ref": "account"
-        },
         "client": {
           "type": "array",
           "name": "clients",
-          "ref": "client"
-        },
-        "membership": {
-          "type": "object",
-          "name": "membership",
-          "ref": "membership"
+          "ref": "client",
+          "rel": "hasMany"
         }
       }
     }
@@ -4626,7 +4233,8 @@
         "notification_setting": {
           "type": "object",
           "ref": "notification_setting",
-          "name": "notification_setting"
+          "name": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "insert": {
@@ -4645,7 +4253,8 @@
         "notification_setting": {
           "type": "object",
           "ref": "notification_setting",
-          "name": "notification_setting"
+          "name": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "update": {
@@ -4664,7 +4273,8 @@
         "notification_setting": {
           "type": "object",
           "ref": "notification_setting",
-          "name": "notification_setting"
+          "name": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "delete": true
@@ -4686,29 +4296,20 @@
         "notification_setting": {
           "type": "object",
           "name": "notification_setting",
-          "ref": "notification_setting"
+          "ref": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "insert": {
         "chat_id": {
           "name": "chat_id",
           "type": "float"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       },
       "update": {
         "chat_id": {
           "name": "chat_id",
           "type": "float"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       },
       "delete": true
@@ -4730,29 +4331,20 @@
         "notification_setting": {
           "type": "object",
           "name": "notification_setting",
-          "ref": "notification_setting"
+          "ref": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "insert": {
         "chat_id": {
           "name": "chat_id",
           "type": "float"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       },
       "update": {
         "chat_id": {
           "name": "chat_id",
           "type": "float"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       },
       "delete": true
@@ -4774,29 +4366,20 @@
         "notification_setting": {
           "type": "object",
           "name": "notification_setting",
-          "ref": "notification_setting"
+          "ref": "notification_setting",
+          "rel": "belongsTo"
         }
       },
       "insert": {
         "chat_id": {
           "name": "chat_id",
           "type": "float"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       },
       "update": {
         "chat_id": {
           "name": "chat_id",
           "type": "float"
-        },
-        "notification_setting": {
-          "type": "object",
-          "name": "notification_setting",
-          "ref": "notification_setting"
         }
       },
       "delete": true
@@ -4820,27 +4403,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "assignments": {
           "type": "array",
           "ref": "assignment",
-          "name": "assignments"
-        },
-        "assignments_aggregate": {
-          "type": "object",
-          "ref": "assignments_aggregate",
-          "name": "assignments_aggregate"
+          "name": "assignments",
+          "rel": "hasMany"
         },
         "feedbacks": {
           "type": "array",
           "ref": "feedback",
-          "name": "feedbacks"
-        },
-        "feedbacks_aggregate": {
-          "type": "object",
-          "ref": "feedbacks_aggregate",
-          "name": "feedbacks_aggregate"
+          "name": "feedbacks",
+          "rel": "hasMany"
         }
       },
       "insert": {
@@ -4859,27 +4435,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "assignments": {
           "type": "array",
           "ref": "assignment",
-          "name": "assignments"
-        },
-        "assignments_aggregate": {
-          "type": "object",
-          "ref": "assignments_aggregate",
-          "name": "assignments_aggregate"
+          "name": "assignments",
+          "rel": "hasMany"
         },
         "feedbacks": {
           "type": "array",
           "ref": "feedback",
-          "name": "feedbacks"
-        },
-        "feedbacks_aggregate": {
-          "type": "object",
-          "ref": "feedbacks_aggregate",
-          "name": "feedbacks_aggregate"
+          "name": "feedbacks",
+          "rel": "hasMany"
         }
       },
       "update": {
@@ -4898,27 +4467,20 @@
         "account": {
           "type": "object",
           "ref": "account",
-          "name": "account"
+          "name": "account",
+          "rel": "belongsTo"
         },
         "assignments": {
           "type": "array",
           "ref": "assignment",
-          "name": "assignments"
-        },
-        "assignments_aggregate": {
-          "type": "object",
-          "ref": "assignments_aggregate",
-          "name": "assignments_aggregate"
+          "name": "assignments",
+          "rel": "hasMany"
         },
         "feedbacks": {
           "type": "array",
           "ref": "feedback",
-          "name": "feedbacks"
-        },
-        "feedbacks_aggregate": {
-          "type": "object",
-          "ref": "feedbacks_aggregate",
-          "name": "feedbacks_aggregate"
+          "name": "feedbacks",
+          "rel": "hasMany"
         }
       },
       "delete": true
@@ -4929,20 +4491,27 @@
           "name": "account_id",
           "type": "int"
         },
+        "id": {
+          "name": "id",
+          "type": "int"
+        },
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "assignment": {
           "type": "array",
           "name": "assignments",
-          "ref": "assignment"
+          "ref": "assignment",
+          "rel": "hasMany"
         },
         "feedback": {
           "type": "array",
           "name": "feedbacks",
-          "ref": "feedback"
+          "ref": "feedback",
+          "rel": "hasMany"
         }
       }
     },
@@ -4955,17 +4524,20 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "assignment": {
           "type": "array",
           "name": "assignments",
-          "ref": "assignment"
+          "ref": "assignment",
+          "rel": "hasMany"
         },
         "feedback": {
           "type": "array",
           "name": "feedbacks",
-          "ref": "feedback"
+          "ref": "feedback",
+          "rel": "hasMany"
         }
       }
     },
@@ -4986,17 +4558,20 @@
         "account": {
           "type": "object",
           "name": "account",
-          "ref": "account"
+          "ref": "account",
+          "rel": "belongsTo"
         },
         "assignment": {
           "type": "array",
           "name": "assignments",
-          "ref": "assignment"
+          "ref": "assignment",
+          "rel": "hasMany"
         },
         "feedback": {
           "type": "array",
           "name": "feedbacks",
-          "ref": "feedback"
+          "ref": "feedback",
+          "rel": "hasMany"
         }
       }
     }

@@ -9,7 +9,7 @@
         <el-button icon="el-icon-full-screen"
                    @click="toggleFullscreen('basetable')" />
         <el-button icon="el-icon-plus"
-                   @click="handleCreate"/>
+                   @click="handleInsertClick"/>
         <el-input v-model="search"
                   style="padding-left: 6px;"
                   placeholder="Type to search" />
@@ -49,16 +49,21 @@
       </el-table-column>
       <el-table-column align="center" :min-width="150" label="Edit">
         <template slot-scope="scope">
-          <el-button-group>
             <el-button size="mini"
                        icon="el-icon-edit"
                        round
-                       @click="handleEdit(scope.$index, scope.row)" />
-            <el-button size="mini"
-                       icon="el-icon-delete"
-                       round
-                       @click="handleDelete(scope.$index, scope.row)" />
-          </el-button-group>
+                       @click="handleEditClick(scope.$index, scope.row)" />
+            <el-popconfirm confirmButtonText='Confirm'
+                          cancelButtonText='Cancel'
+                          icon="el-icon-info"
+                          iconColor="red"
+                          title="Are you sure you want to delete this?"
+                          @onConfirm="handleDeleteConfirm(scope.$index, scope.row)">
+              <el-button slot="reference"
+                         size="mini"
+                         icon="el-icon-delete"
+                         round />
+            </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -71,39 +76,50 @@
                      :current-page="currentPage"
                      @current-change="handlePageChange" />
     </div>
-    <crud-dialog :row="{...editRow}"
-                 :index="editIndex"
-                 :create-mode="createMode"
-                 :visible="crudDialogVisible"
-                 :fields="tableColumns"
-                 @confirm="handleEditConfirm"
-                 @close="crudDialogVisible = false"/>
+    <insert-dialog :schema="schema"
+                   :role="role"
+                   :visible="insertDialogVisible"
+                   @confirm="handleInsertConfirm"
+                   @close="insertDialogVisible = false" />
+    <update-dialog :schema="schema" :role="role"
+                   :values="{...editRow}"
+                   :index="editIndex"
+                   :visible="updateDialogVisible"
+                   @confirm="handleUpdateConfirm"
+                   @close="updateDialogVisible = false" />
   </div>
 </template>
 
 <script>
 import CRUD_TREE from '../../common/types/crud_tree.json';
 import { FullscreenMixin } from '../../common/mixins';
-import CrudDialog from "./CrudDialog";
-import { buildGraphQLQuery } from "../../common/types/GraphqlCrudManager";
+import {
+  buildGraphQLQuery,
+  buildGraphQLUpdate,
+  buildGraphQLInsert,
+  buildGraphQLDelete,
+} from "../../common/types/GraphqlCrudManager";
+import UpdateDialog from "./UpdateDialog";
+import InsertDialog from "./InsertDialog";
 
 const STRING = 'string';
 const INT = 'int';
 const FLOAT = 'float';
+const NUMERIC = 'numeric'
 const ENUM = 'enum';
-const DATETIME = 'datetime';
-const supportedTypes = new Set([STRING, INT, FLOAT, ENUM, DATETIME]);
+const TIMESTAMP = 'timestamp';
 const defaultFormatters = {
   [STRING]: x => x,
   [INT]: x => x,
   [FLOAT]: x => x,
+  [NUMERIC]: x => x,
   [ENUM]: x => x,
-  [DATETIME]: x => new Date(x).toLocaleDateString(),
+  [TIMESTAMP]: x => new Date(x).toLocaleDateString(),
 };
 
 export default {
   name: "CrudTable",
-  components: {CrudDialog},
+  components: {InsertDialog, UpdateDialog},
   props: {
     title: {
       type: String,
@@ -149,11 +165,9 @@ export default {
       search: "",
       currentPage: 1, // Local state for current selected page
       editRow: null,
-      createMode: false,
       editIndex: null,
-      visible: false,
-      crudDialogVisible: false,
-      crudDialogHasEdits: false,
+      insertDialogVisible: false,
+      updateDialogVisible: false,
       tableColumnsByName: {},
       tableData: [],
     };
@@ -198,23 +212,39 @@ export default {
     handlePageChange(currentPage) {
       this.currentPage = currentPage;
     },
-    handleCreate() {
-      this.editRow = {};
-      this.createMode = true;
-      this.tableColumns.forEach(column => this.editRow[column.name] = null);
-      this.crudDialogVisible = true;
+    handleInsertClick() {
+      const editRow = {};
+      this.tableColumns.forEach(column => editRow[column.name] = null);
+      this.insertDialogVisible = true;
     },
-    handleEdit(index, row) {
+    handleEditClick(index, row) {
       this.editRow = row;
       this.createMode = false;
       this.editIndex = index;
-      this.crudDialogVisible = true;
+      this.updateDialogVisible = true;
     },
-    handleDelete(index, row) {
-      // TODO: Show delete confirmation prompt
+    handleDeleteConfirm(index, row) {
+      const deleteMutation = buildGraphQLDelete({
+        schema: this.schema,
+        role: this.role,
+        pk: row.id
+      });
+      this.$apollo.mutate({ mutation: deleteMutation });
+      this.$emit('delete', index, row);
+    },
+    handleInsertConfirm(values) {
 
+      this.$emit('insert', values);
     },
-    handleEditConfirm(changes, index, row) {
+    handleUpdateConfirm(changes, index, row) {
+      const schema = this.schema;
+      const role = this.role;
+
+      const query = buildGraphQLUpdate({ schema, role, pk: row.id, newValues: changes });
+
+      this.$apollo.mutate({
+        mutation: query
+      });
       this.$emit('update', changes, index, row);
     },
     getFilters(column) {

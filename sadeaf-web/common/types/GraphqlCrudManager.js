@@ -1,4 +1,5 @@
-const CrudTree = require('./CrudTree');
+const { Type } = require('./index');
+const crudTree = require('./CrudTree');
 const gql = require('graphql-tag');
 
 class GraphqlCrudManager {
@@ -36,16 +37,41 @@ class GraphqlCrudManager {
    * TODO
    * @param schema
    * @param role
-   * @param {{string: *}} fields - values by field name
+   * @param {{string: *}} values - values by field name
    * @return string | null
    */
-  buildGraphQLInsert = ({ schema, role, fields }) => {
+  buildGraphQLInsert = ({ schema, role, values }) => {
+    return this.__buildGraphQLInsert(schema, role, values);
+  }
+
+  __buildGraphQLInsert = (schema, role, values) => {
+    console.log(`${schema}.${role} Inserting => `, values);
+
+    if (!schema || !role || !values) {
+      return null
+    }
+
     const fieldDefs = this.__crudTree.getRoleSchemaPermittedInsertFields({ role, schema });
 
-    if (fieldDefs && this.__verifyFieldsPermissions(fields, fieldDefs)) {
-      const objectFieldLines = this.__objectToGraphqlFieldsString(fields, fieldDefs);
-      console.log(objectFieldLines);
-      const query = `
+    const primitiveFields = {};
+    const nestedFields = {};
+    Object.entries(values).forEach(([fieldName, value]) => {
+      const schemaRef = fieldName;
+      const field = fieldDefs[schemaRef];
+      if (field && this.__isNestedField(field)) {
+        nestedFields[fieldName] = { schemaRef, values: value };
+      } else {
+        primitiveFields[fieldName] = value;
+      }
+    })
+
+    console.log('primitives => ', primitiveFields);
+
+    let query;
+
+    if (fieldDefs && this.__verifyFieldsPermissions(primitiveFields, fieldDefs)) {
+      const objectFieldLines = this.__objectToGraphqlFieldsString(primitiveFields, fieldDefs);
+      query = `
       mutation insert_single_${schema} {
         insert_${schema}_one(
           object: {
@@ -53,9 +79,15 @@ class GraphqlCrudManager {
           }
         ) { id }
       }`;
-      return gql`${query}`;
+      console.log('--------- INSERT ---------');
+      console.log(query);
     }
-    return null;
+
+    return gql`${query}`;
+  }
+
+  __buildGraphQLInsertQueue = () => {
+
   }
 
 
@@ -103,24 +135,29 @@ class GraphqlCrudManager {
    */
   __objectToGraphqlFieldsString = (object, fieldDefs) => {
     return Object.entries(object)
+      .filter(([_, value]) => value)
       .map(([fieldName, value]) => fieldName + ': ' + this.__formatValueForGraphqlQueryString(fieldDefs[fieldName].type, value))
       .join(', ');
   }
 
   __formatValueForGraphqlQueryString = (type, value) => {
     switch (type) {
-      case 'string':
+      case Type.string:
         return '"' + value + '"';
-      case 'int':
+      case Type.timestamp:
+        return '"' + value.toISOString() + '"';
+      case Type.int:
       default:
-        return value.toString();
+        console.log(type, value);
+        return value;
     }
   }
 
   /**
    *
-   * @param schema
-   * @param role
+   * @param {string} schema
+   * @param {string} role
+   * @param {int} pk
    */
   buildGraphQLDelete = ({ schema, role, pk }) => {
     const id = pk;
@@ -152,14 +189,6 @@ class GraphqlCrudManager {
 
       return gql`${query}`;
     }
-  }
-
-  /**
-   * TODO
-   * @param schema
-   * @param role
-   */
-  getPrimitiveSelectFields = ({ schema, role }) => {
   }
 
   /**
@@ -231,6 +260,7 @@ class GraphqlCrudManager {
   __verifyFieldsPermissions = (requestFields, permittedFields) => {
     for (const fieldName in requestFields) {
       if (!permittedFields[fieldName]) {
+        console.error('Missing permission for ' + fieldName);
         return false;
       }
     }
@@ -261,48 +291,6 @@ class GraphqlCrudManager {
   }
 }
 
-const crudTree = new CrudTree(true);
 const graphQLCrudManager = new GraphqlCrudManager(crudTree);
 
-const select = graphQLCrudManager.buildGraphQLQuery({
-  schema: 'client',
-  role: 'client',
-  depth: 1
-});
-
-
-
-//
-// console.log('-------------- UPDATE -------------');
-// const update = graphQLCrudManager.buildGraphQLUpdate({
-//   schema: 'event',
-//   role: 'admin',
-//   pk: 1,
-//   newValues: {
-//     name: "event_" + Date.now(),
-//     client_id: 1,
-//   }
-// });
-
-// const insert = graphQLCrudManager.buildGraphQLInsert({
-//   schema: 'event',
-//   role: 'admin',
-//   fields: {
-//     name: "Test event!!",
-//     quotation: 100,
-//     client_id: 1,
-//   }
-// });
-// console.log(insert);
-
-// const _delete = graphQLCrudManager.buildGraphQLDelete({
-//   schema: 'assignment',
-//   role: 'client',
-//   pk: 1,
-// });
-// console.log(_delete);
-
-
-module.exports = {
-  buildGraphQLQuery: graphQLCrudManager.buildGraphQLQuery
-}
+module.exports = graphQLCrudManager;
