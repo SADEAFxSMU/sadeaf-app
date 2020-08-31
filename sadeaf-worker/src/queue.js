@@ -19,10 +19,17 @@ function getSqs() {
 }
 
 class Queue {
+
+  /**
+   * @param queueUrl
+   */
   constructor(queueUrl) {
     this.queueUrl = queueUrl
   }
 
+  /**
+   * @return {Promise<[string]>}
+   */
   getMessages() {
     const params = {
       MaxNumberOfMessages: 10,
@@ -65,6 +72,11 @@ class Queue {
     })
   }
 
+  /**
+   * Delete message in the queue
+   * @param message
+   * @return {Promise}
+   */
   deleteMessage(message) {
     const deleteParams = {
       QueueUrl: this.queueUrl,
@@ -85,13 +97,16 @@ class Queue {
 
 module.exports = {
 
+  /**
+   * @return {Promise<[string]>}
+   */
   list() {
     return new Promise((resolve, reject) => {
       sqs.listQueues(function (err, data) {
         if (err) {
           reject(err)
         } else {
-          resolve()
+          resolve(data.QueueUrls)
         }
       })
     })
