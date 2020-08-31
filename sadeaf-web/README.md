@@ -30,6 +30,11 @@ $ yarn test
 2. Click on the GraphQL plugin tab (or Cmd + Shift + A "graphql")
 3. Click plus button (`Add schema configuration`) and select sadeaf-web/ to use the existing config files for the plugin.
 
+## Updating schema.graphql
+You'll update schema.graphql when db migrations have been made
+1. Open `.graphqlconfig` in intellij
+2. Press the play button next to the graphql endpoint
+
 ---
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
