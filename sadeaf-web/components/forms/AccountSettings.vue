@@ -1,21 +1,21 @@
 <template>
   <!--   TODO: Validate Form fields-->
-  <el-form label-width="100px" ref="formInput" label-position="left" :model="accountDetails">
+  <el-form label-width="100px" ref="formInput" label-position="left" :model="accountDetails" :rules="rules">
 
-    <el-form-item label="Full Name">
+    <el-form-item label="Full Name" prop="name">
       <el-input prop="fullName" v-model="accountDetails.name"/>
     </el-form-item>
 
-    <el-form-item label="Email">
+    <el-form-item label="Email" prop="email">
       <el-input prop="email" v-model="accountDetails.email"/>
     </el-form-item>
 
-    <el-form-item label="Password">
+    <el-form-item label="Password" prop="password">
       <el-input prop="password" type="password" v-model="accountDetails.password"/>
     </el-form-item>
 
     <el-form-item size="large">
-      <el-button type="primary" @click="updateAccountDetails">Submit Form</el-button>
+      <el-button type="primary" @click="updateAccountDetails('formInput')">Update Profile Details</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -37,6 +37,11 @@
     mutation MyMutation($username: String!, $name: String!, $email: String!, $password: String!) {
       update_account(where: {username: {_eq: $username}}, _set: {name: $name, email: $email}) {
         affected_rows
+        returning {
+          name
+          username
+          email
+        }
       }
     }
   `
@@ -48,6 +53,16 @@
         // TODO: Update username to to be current logged in user --> Taken from vue store?
         username: "pep2e",
         account: [{name: "", email: "", password: ""}],
+        // Rules for form
+        rules: {
+          name: [
+            {required: true, message: "Please input a name", trigger: "blur"},
+          ],
+          email: [
+            {required: true, message: "Please input an email", trigger: "blur"},
+            {type: 'email', message: 'Please input valid email address', trigger: ['blur', 'change']}
+          ],
+        }
       }
     },
     computed: {
@@ -56,33 +71,22 @@
       }
     },
     methods: {
-      updateAccountDetails() {
-        console.log("updating...");
-
-        this.$apollo.mutate({
-          mutation: UPDATE_PROFILE_QUERY,
-          variables: {
-            name: this.accountDetails.name,
-            email: this.accountDetails.email,
-            password: this.accountDetails.password,
-            username: this.username,
-          },
-
-          // TODO: Check if you need to do this update step to update currently stored data on form --> Might not be needed, think later
-          update: (cache, {data: {update_account}}) => {
-            if (update_account.affected_rows) {
-              if (this.type === "prviate") {
-                const data = cache.readQuery({
-                  query: GET_PROFILE_DETAILS
-                })
-                const newDetails = update_account.returning;
-                data.account[0] = newDetails[0];
-                cache.writeQuery({
-                  query: GET_PROFILE_DETAILS,
-                  data
-                })
+      // TODO: If we are using Cognito, we should send these new details to Cognito as well
+      updateAccountDetails(formName) {
+        this.$refs[formName].validate((validInputs) => {
+          if (validInputs) {
+            this.$apollo.mutate({
+              mutation: UPDATE_PROFILE_QUERY,
+              variables: {
+                name: this.accountDetails.name,
+                email: this.accountDetails.email,
+                password: this.accountDetails.password,
+                username: this.username,
               }
-            }
+            }).then(d => alert("Updated!"))
+              .catch(e => alert("Failed to update!" + e.message()))
+          } else {
+            return false;
           }
         })
       }
@@ -91,7 +95,7 @@
       account: {
         query: GET_PROFILE_DETAILS,
         variables() {
-          return { username: this.username }
+          return {username: this.username}
         },
         update: data => data.account,
       },
