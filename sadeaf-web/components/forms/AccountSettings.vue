@@ -15,7 +15,8 @@
     </el-form-item>
 
     <el-form-item size="large">
-      <el-button type="primary" @click="updateAccountDetails('formInput')">Update Profile Details</el-button>
+      <el-button ref="formButton" type="primary" @click="updateAccountDetails('formInput')">Update Profile Details
+      </el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -32,19 +33,6 @@
             }
           }
         `;
-
-  const UPDATE_PROFILE_QUERY = gql`
-    mutation MyMutation($username: String!, $name: String!, $email: String!, $password: String!) {
-      update_account(where: {username: {_eq: $username}}, _set: {name: $name, email: $email}) {
-        affected_rows
-        returning {
-          name
-          username
-          email
-        }
-      }
-    }
-  `
 
   export default {
     name: "AccountSettings",
@@ -71,20 +59,24 @@
       }
     },
     methods: {
-      // TODO: If we are using Cognito, we should send these new details to Cognito as well
+      // TODO: Handle password change
       updateAccountDetails(formName) {
         this.$refs[formName].validate((validInputs) => {
           if (validInputs) {
-            this.$apollo.mutate({
-              mutation: UPDATE_PROFILE_QUERY,
-              variables: {
-                name: this.accountDetails.name,
-                email: this.accountDetails.email,
-                password: this.accountDetails.password,
+            // TODO: Store these endpoints in a constants folder?
+            this.$axios.$post("http://localhost:4000/api/v1/accounts/updateDetails",
+              {
+                ...this.accountDetails,
                 username: this.username,
-              }
-            }).then(d => alert("Updated!"))
-              .catch(e => alert("Failed to update!" + e.message()))
+              },
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                  "Content-Type": 'application/json'
+                }
+              })
+              .then(d => alert("Updated!"))
+              .catch(e => alert("Failed to update!"))
           } else {
             return false;
           }

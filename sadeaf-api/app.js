@@ -2,6 +2,12 @@ const path = require('path')
 const AutoLoad = require('fastify-autoload')
 
 module.exports = async function (fastify, opts) {
+  // allow CORS
+  fastify.register(require('fastify-cors'))
+
+  // allow axios
+  fastify.register(require('fastify-axios'))
+
   // This loads all plugins defined in plugins that are reused through your application
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'plugins'),
@@ -15,6 +21,7 @@ module.exports = async function (fastify, opts) {
       prefix: '/api/v1'
     }, opts)
   })
+
 
   // Proxy graphql to hasura
   fastify.register(require('fastify-http-proxy'), {
