@@ -33,6 +33,9 @@
       <el-menu-item index="/account#settings">
         Settings
       </el-menu-item>
+      <el-menu-item index="/account/notifications">
+        Notification Preferences
+      </el-menu-item>
     </el-submenu>
   </el-menu>
 </template>
