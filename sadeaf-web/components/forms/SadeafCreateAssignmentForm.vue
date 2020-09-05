@@ -32,6 +32,7 @@
       <el-form-item label="Status">
         <el-select v-model="form.status">
           <el-option v-for="status in assignmentStatuses"
+                     :key="'opt-' + status"
                      :value="status">
             {{ status }}
           </el-option>

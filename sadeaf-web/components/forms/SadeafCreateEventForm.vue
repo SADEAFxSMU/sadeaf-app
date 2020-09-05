@@ -11,6 +11,7 @@
           <el-select v-model="form.purpose"
                      placeholder="School">
             <el-option v-for="option in eventPurposeOptions"
+                       :key="'opt-' + option"
                        :value="option">
               {{ option }}
             </el-option>

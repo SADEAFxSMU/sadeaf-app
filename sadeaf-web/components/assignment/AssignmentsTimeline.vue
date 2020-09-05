@@ -2,6 +2,7 @@
   <div>
     <el-timeline>
       <el-timeline-item v-for="assignment in assignments"
+                        :key="'assignment-' + assignment.id"
                         :color="color(assignment)"
                         :timestamp="assignment.start_dt + ' - ' + assignment.end_dt">
         <div class="status-bar">
