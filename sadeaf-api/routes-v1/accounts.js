@@ -6,7 +6,7 @@ module.exports = async function (fastify, opts) {
   })
 
   fastify.post('/accounts/updateDetails', async function (request, reply) {
-    const {name, username, password, email} = request.body;
+    const {name, username, email, contact} = request.body;
     // TODO: Store endpoints in constants folder?
     const hasuraUrl = "http://localhost:8080/v1/graphql";
 
@@ -19,13 +19,14 @@ module.exports = async function (fastify, opts) {
           "Content-Type": "application/json"
         },
         query: `
-          mutation MyMutation($username: String!, $name: String!, $email: String!, $password: String!) {
-            update_account(where: {username: {_eq: $username}}, _set: {name: $name, email: $email}) {
+          mutation MyMutation($username: String!, $name: String!, $email: String!, $contact: String!) {
+            update_account(where: {username: {_eq: $username}}, _set: {contact: $contact, name: $name, email: $email}) {
               affected_rows
               returning {
                 name
                 username
                 email
+                contact
               }
             }
           }
@@ -33,8 +34,8 @@ module.exports = async function (fastify, opts) {
         variables: {
           name,
           username,
-          password,
-          email
+          email,
+          contact: contact + "",
         }
       });
       if (res.data.errors) {
@@ -43,6 +44,7 @@ module.exports = async function (fastify, opts) {
       }
       return reply.code(200).send({message: "Successfully updated profile details!"});
     } catch (e) {
+      console.log(e);
       return reply.code(400).send({message: "Failed to update profile details!"})
     }
   })

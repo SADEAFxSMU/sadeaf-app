@@ -1,34 +1,30 @@
 <template>
   <!--   TODO: Validate Form fields-->
-  <el-form label-width="100px" ref="formInput" label-position="left" :model="accountDetails" :rules="rules">
+  <div>
+    <PersonalDetails
+      card-header="Personal Details"
+      :update-callback="this.updateAccountCb"
+      :personal-details="this.accountDetails"
+    />
 
-    <el-form-item label="Full Name" prop="name">
-      <el-input prop="fullName" v-model="accountDetails.name"/>
-    </el-form-item>
+    <PasswordDetails
+    />
 
-    <el-form-item label="Email" prop="email">
-      <el-input prop="email" v-model="accountDetails.email"/>
-    </el-form-item>
+  </div>
 
-    <el-form-item label="Password" prop="password">
-      <el-input prop="password" type="password" v-model="accountDetails.password"/>
-    </el-form-item>
-
-    <el-form-item size="large">
-      <el-button ref="formButton" type="primary" @click="updateAccountDetails('formInput')">Update Profile Details
-      </el-button>
-    </el-form-item>
-  </el-form>
 </template>
 
 <script>
   import gql from 'graphql-tag'
+  import PersonalDetails from "@/components/forms/PersonalDetails";
+  import PasswordDetails from "@/components/forms/PasswordDetails";
 
   const GET_PROFILE_DETAILS = gql`
           query MyQuery($username: String!) {
               account(where: {username: {_eq: $username}}) {
               name
               email
+              contact
               password
             }
           }
@@ -36,52 +32,55 @@
 
   export default {
     name: "AccountSettings",
+    components: {PasswordDetails, PersonalDetails},
     data() {
       return {
         // TODO: Update username to to be current logged in user --> Taken from vue store?
-        username: "pep2e",
-        account: [{name: "", email: "", password: ""}],
-        // Rules for form
-        rules: {
-          name: [
-            {required: true, message: "Please input a name", trigger: "blur"},
-          ],
-          email: [
-            {required: true, message: "Please input an email", trigger: "blur"},
-            {type: 'email', message: 'Please input valid email address', trigger: ['blur', 'change']}
-          ],
-        }
+        username: "austin",
+        accountDetails: {},
+        passwordDetails: {},
       }
     },
-    computed: {
-      accountDetails: function () {
-        return this.account[0]
-      }
-    },
-    methods: {
-      // TODO: Handle password change
-      updateAccountDetails(formName) {
-        this.$refs[formName].validate((validInputs) => {
-          if (validInputs) {
-            // TODO: Store these endpoints in a constants folder?
-            this.$axios.$post("http://localhost:4000/api/v1/accounts/updateDetails",
-              {
-                ...this.accountDetails,
-                username: this.username,
-              },
-              {
-                headers: {
-                  "Access-Control-Allow-Origin": "*",
-                  "Content-Type": 'application/json'
-                }
-              })
-              .then(d => alert("Updated!"))
-              .catch(e => alert("Failed to update!"))
-          } else {
-            return false;
+    watch: {
+      account(newVal) {
+        const [ fetchedAccountDetails ] = newVal
+        this.passwordDetails = { 'password': { value: fetchedAccountDetails['password'], label: 'password' } };
+        delete fetchedAccountDetails["__typename"]
+        delete fetchedAccountDetails['password']
+        Object.keys(fetchedAccountDetails).forEach((k) => {
+          this.accountDetails = {
+            ...this.accountDetails,
+            [k] : {
+              value: fetchedAccountDetails[k],
+              label: k[0].toUpperCase() + k.slice(1),
+            }
           }
         })
       }
+    },
+    methods: {
+      updatePasswordCb() {
+        console.log("hello");
+      },
+      updateAccountCb(accDetails) {
+        const data = {username: this.username};
+        Object.keys(accDetails).forEach(k => {
+          data[k]= accDetails[k].value
+        })
+
+        console.log(data);
+        // TODO: Store these endpoints in a constants folder?
+        this.$axios.$post("http://localhost:4000/api/v1/accounts/updateDetails",
+          data,
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": 'application/json'
+            }
+          })
+          .then(d => this.$message({message: "Updated profile details!", type: "success"}))
+          .catch(e => this.$message.error("Failed to update!"))
+      },
     },
     apollo: {
       account: {
