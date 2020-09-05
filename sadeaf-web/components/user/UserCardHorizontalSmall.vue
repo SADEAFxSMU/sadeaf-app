@@ -1,39 +1,32 @@
 <template>
-  <div class="cell">
-    <div v-for="notetaker in notetakers"
-         class="profile">
-      <img :src="notetaker.imgSrc"
-           class="image"
-           style=""/>
-      <h4 class="name">{{ notetaker.name }}</h4>
-    </div>
+  <div class="profile" v-on="$listeners">
+    <slot name="avatar">
+      <img v-if="user && user.imgSrc"
+           :src="user.imgSrc"
+           class="image" />
+      <el-avatar v-else
+                 class="el-icon-user-solid"
+                 size="small" />
+    </slot>
+    <slot name="body">
+      <h4 class="name">{{ user && user.name }}</h4>
+    </slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: "NotetakersCell",
+  name: "UserCardHorizontalSmall",
   props: {
-    row: {
+    user: {
       type: Object,
       required: true,
-    }
-  },
-  computed: {
-    notetakers() {
-      return this.row.notetakers;
     },
   },
-};
+}
 </script>
 
 <style scoped>
-.cell {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0;
-}
 
 .cell > :last-child {
   margin-right: 0;

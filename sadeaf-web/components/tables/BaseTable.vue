@@ -1,82 +1,80 @@
 <template>
   <div ref="basetable"
        class="base-table">
-    <div class="title-wrapper">
-      <h1 class="heading">{{title}}</h1>
-      <el-button icon="el-icon-full-screen"
-                 @click="toggleFullscreen('basetable')"
-                 circle />
+    <div class="title-wrapper" v-if="title || toolbar">
+      <h1 class="heading" v-if="title">
+        {{ title }}
+      </h1>
+      <div class="toolbar" v-if="toolbar">
+        <el-input v-model="search"
+                  style="padding: 0 6px 0 6px;"
+                  placeholder="Type to search" />
+        <slot name="toolbar" />
+      </div>
     </div>
-    <el-table
-      :data="paginatedTableData"
-      size="small"
-      :cell-style="{padding: '5px'}"
-      style="width: 100%;">
-      <el-table-column v-for="(column, i) in tableColumns"
-                       sortable
+    <el-table :data="paginatedTableData"
+              size="small"
+              :cell-style="{padding: '5px'}"
+              class="table"
+              highlight-current-row
+              row-key="id"
+              :expand-row-keys="expandedRowKeys"
+              @expand-change="handleExpandRowsChange"
+              border
+              :class="{ 'elevated': elevated }">
+      <el-table-column v-if="expandableRows" :type="'expand'">
+        <template v-slot="{ row }">
+          <slot name="expanded" :row="row" />
+        </template>
+      </el-table-column>
+      <el-table-column v-for="(column, i) in columns"
+                       resizable
                        :key="'column-' + i"
                        :label="column.label"
                        :prop="column.name"
-                       :filters="getFilters(column)"
-                       :filter-method="filterHandler"
                        :width="column.width">
-        <!-- Slot here needs to be set to some rubbish else vue will apply the template to all columns -->
-        <template :slot="column.type === 'custom' ? 'default' : ''"
-                  slot-scope="{ $index, row }"
-                  v-if="column.type === 'custom'">
-          <div :is="column.custom"
-               :row="row" />
+        <template :slot="isSlotProvidedForColumn(column) ? 'default' : ''"
+                  slot-scope="{ row }"
+                  v-if="isSlotProvidedForColumn(column)">
+          <slot :name="column.name" :row="row" />
         </template>
       </el-table-column>
       <el-table-column
-        align="right">
-        <template slot="header" slot-scope="scope">
-          <el-input
-            v-model="search"
-            size="mini"
-            placeholder="Type to search" />
-        </template>
-        <template slot-scope="scope">
-          <el-button-group>
-            <el-button size="mini"
-                       icon="el-icon-edit"
-                       round
-                       @click="handleEdit(scope.$index, scope.row)" />
-            <el-button size="mini"
-                       type="danger"
-                       icon="el-icon-delete"
-                       round
-                       @click="handleDelete(scope.$index, scope.row)" />
-          </el-button-group>
+        fixed="right"
+        label="Operations"
+        width="120">
+        <template slot-scope="{ row }">
+          <slot name="edit" :row="row" />
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagination" style="">
-      <el-pagination background
-                     :page-size="this.rowLimit"
-                     :total="this.tableDataFiltered.length"
+    <div class="pagination">
+      <el-pagination hide-on-single-page
+                     background
+                     :page-size="rowLimit"
+                     :total="tableDataFiltered.length"
                      :pager-count="10"
-                     :current-page="this.currentPage"
-                     @current-change="this.handlePageChange" />
+                     :current-page="currentPage"
+                     @current-change="handlePageChange" />
     </div>
   </div>
 </template>
 
 <script>
-import { FullscreenMixin } from '../../common/mixins';
 
 const STRING = 'string';
 const INT = 'int';
 const FLOAT = 'float';
+const NUMERIC = 'numeric'
 const ENUM = 'enum';
-const DATETIME = 'datetime';
-const supportedTypes = new Set([STRING, INT, FLOAT, ENUM, DATETIME]);
+const TIMESTAMP = 'timestamp';
 const defaultFormatters = {
   [STRING]: x => x,
   [INT]: x => x,
   [FLOAT]: x => x,
+  [NUMERIC]: x => x,
   [ENUM]: x => x,
-  [DATETIME]: x => x,
+  [TIMESTAMP]: x => new Date(x).toLocaleDateString(),
 };
 
 export default {
@@ -84,74 +82,79 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: false,
     },
-    tableData: {
+    rows: {
       type: Array,
-      required: true,
+      required: false,
     },
-    tableColumns: {
+    columns: {
       type: Array,
-      required: true,
-    }
+      required: false,
+      default: () => []
+    },
+    toolbar: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    elevated: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    rowLimit: {
+      type: Number,
+      required: false,
+      default: 10,
+    },
+    expandableRows: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    columnWidth: {
+      type: Number,
+      required: false,
+      default: 150,
+    },
+    expandedRowKeys: [],
   },
-  mixins: [FullscreenMixin],
   data() {
     return {
       search: "",
-      selects: {},
-      rowLimit: 10, // Limit rows for pagination
       currentPage: 1, // Local state for current selected page
+      editRow: null,
+      editIndex: null,
+      insertDialogVisible: false,
+      updateDialogVisible: false,
+      tableColumnsByName: {},
+      columnOptions: {},
+      tableData: [],
     };
   },
-  created() {
-    this.STRING = STRING;
-    this.INT = INT;
-    this.FLOAT = FLOAT;
-    this.ENUM = ENUM;
-    this.DATETIME = DATETIME;
 
-    /**
-     * Perform prop validation:
-     *   1. Check if props data types passed in are supported
-     *   2. No colliding column names
-     * Dynamically create keys in this component's data object (state)
-     * for each of the columns passed in - to support search functionality
-     */
-    // for (const column of this.tableColumns) {
-    //   this.searches[this.getSearchKey(column.name)] = null;
-    // }
-  },
   methods: {
+    handleExpandRowsChange(_, rows) {
+      this.expandedRowKeys = rows.map(row => row.id);
+    },
     handlePageChange(currentPage) {
       this.currentPage = currentPage;
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
-    getFilters(column) {
-      if (column.type === INT || column.type === FLOAT) {
-        return null;
-      }
-      if (column.type === ENUM) {
-        return column.enum.map(val => ({text: val, value: val}));
-      }
-
-      const uniqueVals = new Set();
-      for (const row of this.tableData) {
-        const value = row[column.name];
-        uniqueVals.add(value);
-      }
-      return [...uniqueVals].map(x => ({ text: x, value: x }));
     },
     filterHandler(value, row, column) {
       const property = column['property'];
       return row[property] === value;
     },
+    formatter(row, column, x) {
+      const tableColumn = this.tableColumnsByName[column.property];
+      const { type, formatter } = tableColumn;
+      return formatter ? formatter(x) : defaultFormatters[type](x);
+    },
+    isSlotProvidedForColumn(column) {
+      return column.name in this.$scopedSlots;
+    },
   },
+
   computed: {
     paginatedTableData() {
       return this.tableDataFiltered.slice((this.currentPage - 1) * this.rowLimit, this.currentPage * this.rowLimit);
@@ -161,32 +164,38 @@ export default {
       // reset currentPage to 1 when you search, this prevents table from showing "No Data" if your previously selected page was beyond
       // the new paginatedTableData length
       this.currentPage = 1;
-      return this.tableData.filter(data => {
+      return this.rows.filter(data => {
         if (!this.search) return true;
         const searchString = this.search.toLowerCase();
         for (const column in data) {
           const value = data[column];
-          if (typeof value === 'string') {
-            if (value.toLowerCase().includes(searchString)) {
-              return true;
-            }
-          } else {
-            if (value.toString().includes(searchString)) {
-              return true;
+          if (value) {
+            if (typeof value === 'string') {
+              if (value.toLowerCase().includes(searchString)) {
+                return true;
+              }
+            } else {
+              if (value.toString().includes(searchString)) {
+                return true;
+              }
             }
           }
         }
         return false;
       });
     },
-  }
+  },
 };
 </script>
 
 <style scoped>
 .base-table {
-  overflow: scroll;
-  background: #ffffff;
+}
+.table {
+  border-radius: 8px;
+}
+.table.elevated {
+  box-shadow: 0 2px 8px #d6d8dd;
 }
 .title-wrapper {
   display: flex;
@@ -196,6 +205,10 @@ export default {
 .title-wrapper .heading {
   margin-right: 12px;
   color: #6989a7;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
 }
 .pagination {
   display: flex;

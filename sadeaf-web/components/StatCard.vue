@@ -23,12 +23,12 @@ export default {
       required: true,
     },
     stat: {
-      type: String,
+      type: [String, Number],
       required: true,
     },
     icon: {
       type: String,
-      required: true,
+      required: false,
     },
     accentPosition: {
       type: String,
@@ -41,51 +41,53 @@ export default {
 </script>
 
 <style scoped>
-  .statcard {
-    display: flex;
-    align-items: center;
-    position: relative;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px 1px #d0ddf0;
-    overflow: hidden;
-    padding: 8px 24px 0 16px;
-    min-width: 250px;
-    min-height: 150px;
-    max-height: 200px;
-    margin: 8px;
-    color: #486177;
-  }
+.statcard {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: 4px;
+  background: white;
+  box-shadow: 0 2px 4px 1px #d0ddf0;
+  overflow: hidden;
+  padding: 8px 24px 0 16px;
+  min-width: 250px;
+  min-height: 150px;
+  max-height: 200px;
+  margin: 8px;
+  color: #486177;
+}
 
-  .icon {
-    font-size: 3.5em;
-    color: #486177;
-    margin-right: 16px;
-  }
+.icon {
+  font-size: 3.5em;
+  color: #486177;
+  margin-right: 16px;
+}
 
-  .main-content {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    text-align: right;
-  }
+.main-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: right;
+}
 
-  .title {
-    font-size: 1.5em;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin: 0;
-  }
+.title {
+  font-size: 1.5em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin: 0;
+}
 
-  .stat {
-    font-size: 2.5em;
-    margin: 0 12px 0 0;
-  }
+.stat {
+  font-size: 2.5em;
+  margin: 0 12px 0 0;
+}
 
-  .statcard-accent {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 8px;
-    height: 100%;
-  }
+.statcard-accent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+}
 </style>
