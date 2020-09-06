@@ -3,7 +3,7 @@
     <div class="client">
       <user-card :user="client.account" />
     </div>
-    <el-form :model="form" :label-width="150 + 'px'">
+    <el-form :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
           <el-input v-model="form.address_line_one"

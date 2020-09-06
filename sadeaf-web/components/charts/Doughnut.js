@@ -21,7 +21,7 @@ export default {
     render() {
       this.renderChart(this.data, {
         title: {
-          display: this.title,
+          display: this.title !== '',
           text: this.title,
         },
         ...this.options

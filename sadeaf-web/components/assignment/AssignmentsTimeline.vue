@@ -24,13 +24,16 @@
 import AssignmentCard from "./AssignmentCard";
 import StatusIndicator from "../StatusIndicator";
 import SadeafCreateAssignmentForm from "../forms/SadeafCreateAssignmentForm";
+import { ASSIGNMENT_STATUSES } from "../../common/types/constants";
+const {
+  OPEN,
+  MATCHED,
+  COMPLETE,
+  CANCELLED,
+  URGENT,
+  UNKNOWN,
+} = ASSIGNMENT_STATUSES;
 
-const OPEN = 'OPEN';
-const MATCHED = 'MATCHED';
-const COMPLETE = 'COMPLETE';
-const CANCELLED = 'CANCELLED';
-const URGENT = 'URGENT';
-const UNKNOWN = 'UNKNOWN';
 const STATUS_COLORS = {
   [OPEN]: '#f1b65d',
   [MATCHED]: '#65adff',

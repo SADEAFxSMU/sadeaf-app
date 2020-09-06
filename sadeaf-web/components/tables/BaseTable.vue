@@ -1,11 +1,11 @@
 <template>
   <div ref="basetable"
        class="base-table">
-    <div class="title-wrapper" v-if="title || toolbar">
+    <div class="title-wrapper" v-if="title || showToolbar">
       <h1 class="heading" v-if="title">
         {{ title }}
       </h1>
-      <div class="toolbar" v-if="toolbar">
+      <div class="toolbar" v-if="showToolbar">
         <el-input v-model="search"
                   style="padding: 0 6px 0 6px;"
                   placeholder="Type to search" />
@@ -93,7 +93,7 @@ export default {
       required: false,
       default: () => []
     },
-    toolbar: {
+    showToolbar: {
       type: Boolean,
       required: false,
       default: true,
