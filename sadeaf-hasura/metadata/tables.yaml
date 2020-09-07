@@ -1439,6 +1439,7 @@
     permission:
       columns:
       - account_id
+      - id
       filter: {}
   - role: service_requestor
     permission:

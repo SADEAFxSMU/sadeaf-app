@@ -1,6 +1,6 @@
 <template>
   <div class="status" :style="{ color, fontWeight: 'bold' }">
-    <div class="circle" :style="{ backgroundColor: color }" />
+    <div v-if="showBall" class="circle" :style="{ backgroundColor: color }" />
     {{ text }}
   </div>
 </template>
@@ -16,7 +16,12 @@
       color: {
         type: String,
         required: true,
-      }
+      },
+      showBall: {
+        type: Boolean,
+        required: false,
+        default: true,
+      },
     }
   };
 </script>

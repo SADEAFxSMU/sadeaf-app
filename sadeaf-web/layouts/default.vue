@@ -6,7 +6,7 @@
         <client-navbar v-else-if="userType === 'client'"/>
         <volunteer-navbar v-else-if="userType === 'volunteer'"/>
       </el-header>
-      <el-main>
+      <el-main style="background: #f4f5ff; min-height: 95vh;">
         <nuxt/>
       </el-main>
     </el-container>
