@@ -9,7 +9,6 @@ module.exports = async function (fastify, opts) {
     const {name, username, email, contact} = request.body;
     // TODO: Store endpoints in constants folder?
     const hasuraUrl = "http://localhost:8080/v1/graphql";
-
     try {
       // TODO: Send new profile details to Cognito as well
       // TODO: Handle password change

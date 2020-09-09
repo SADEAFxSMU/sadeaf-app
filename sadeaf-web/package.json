@@ -24,7 +24,7 @@
     "graphql-tag": "^2.11.0",
     "lodash": "^4.17.20",
     "nuxt": "^2.14.0",
-    "sass-loader": "^9.0.3",
+    "sass-loader": "^10.0.2",
     "vue-chartjs": "^3.5.0"
   },
   "devDependencies": {
@@ -33,6 +33,14 @@
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-jest": "^24.1.0",
     "jest": "^24.1.0",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.1.1",
     "vue-jest": "^4.0.0-0"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
   }
 }

@@ -49,7 +49,7 @@ export default {
     proxy: true
   },
   proxy: {
-    '/api/v1': process.env.SVC_SADEAF_API_URL || 'http://localhost:14000'
+    '/api/v1': process.env.SVC_SADEAF_API_URL || 'http://localhost:4000'
   },
   /*
   ** Apollo module configuration
