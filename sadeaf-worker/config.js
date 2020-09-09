@@ -1,5 +1,5 @@
 module.exports = {
-  PRODUCTION: process.env.NODE_ENV !== "production",
+  PRODUCTION: process.env.NODE_ENV === "production",
   AWS: {
     REGION: process.env.AWS_REGION || 'us-east-1',
     ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || "accessKeyId",

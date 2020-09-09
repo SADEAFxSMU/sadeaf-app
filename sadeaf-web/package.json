@@ -12,7 +12,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "test": "jest"
+    "test": "jest",
+    "graphql-codegen": "cd tools/codegen && node graphqlQueryBuilder.js"
   },
   "dependencies": {
     "@nuxt/content": "^1.5.0",
@@ -20,6 +21,7 @@
     "@nuxtjs/axios": "^5.12.0",
     "@nuxtjs/pwa": "^3.0.0-0",
     "chart.js": "^2.9.3",
+    "debounce": "^1.2.0",
     "element-ui": "^2.4.11",
     "graphql-tag": "^2.11.0",
     "lodash": "^4.17.20",
@@ -32,9 +34,13 @@
     "@types/lodash": "^4.14.160",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-jest": "^24.1.0",
+    "dedent-js": "^1.0.1",
+    "inquirer": "^7.3.3",
     "jest": "^24.1.0",
     "node-sass": "^4.14.1",
     "prettier": "^2.1.1",
+    "js-yaml": "^3.14.0",
+    "node-fetch": "^2.6.1",
     "vue-jest": "^4.0.0-0"
   },
   "prettier": {

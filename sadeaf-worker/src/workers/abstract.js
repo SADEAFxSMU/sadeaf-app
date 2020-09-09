@@ -48,7 +48,7 @@ class Worker {
 
         for (const message of messages) {
           this.options.onReceiveMessage.call(this, JSON.parse(message.Body), () => {
-            this.queue.deleteMessage(message)
+            return this.queue.deleteMessage(message)
               .catch((err) => this.logger.error(err))
           }, message.Attributes)
         }

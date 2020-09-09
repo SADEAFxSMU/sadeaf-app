@@ -91,7 +91,7 @@
         pagedRows() {
           let endIndex = (this.currentPage * this.pageSize)
           let startIndex = endIndex - this.pageSize;
-          return this.processedEventRows.slice(startIndex, endIndex)
+          return this.filteredRows.slice(startIndex, endIndex)
         },
         /**
          * formats and returns the formatted rows

@@ -10,7 +10,7 @@
     "tests": "test"
   },
   "scripts": {
-    "test": "sh ../docker-compose-up localstack mailhog sadeaf-hasura && node wait-for.js && tap tests/*/**.test.js tests/**.test.js",
+    "test": "sh ../docker-compose-up && node wait-for.js && tap tests/*/**.test.js tests/**.test.js",
     "start": "node index.js",
     "dev": "sh ../docker-compose-up && supervisor index.js"
   },

@@ -47,6 +47,7 @@ services:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/sadeaf_app
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      SVC_SADEAF_WORKER_URL: http://sadeaf-worker:5000
 
   sadeaf-worker:
     build: sadeaf-worker

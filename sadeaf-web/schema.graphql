@@ -2381,11 +2381,17 @@ type notification_setting {
   "An object relationship"
   account: account!
   account_id: Int!
+  client_matched: Boolean
+  client_unmatched: Boolean
   "An object relationship"
   email_information: email_information
   id: Int!
   "An object relationship"
   telegram_information: telegram_information
+  volunteer_matched: Boolean
+  volunteer_new: Boolean
+  volunteer_periodic: Boolean
+  volunteer_urgent: Boolean
 }
 
 "aggregated selection of \"notification_setting\""
@@ -3575,6 +3581,7 @@ type telegram_information {
   "An object relationship"
   notification_setting: notification_setting!
   notification_setting_id: Int!
+  user_handle: String!
 }
 
 "aggregated selection of \"telegram_information\""
@@ -3610,6 +3617,7 @@ type telegram_information_max_fields {
   chat_id: bigint
   id: Int
   notification_setting_id: Int
+  user_handle: String
 }
 
 "aggregate min on columns"
@@ -3617,6 +3625,7 @@ type telegram_information_min_fields {
   chat_id: bigint
   id: Int
   notification_setting_id: Int
+  user_handle: String
 }
 
 "response of any mutation on the table \"telegram_information\""
@@ -4403,7 +4412,19 @@ enum notification_setting_select_column {
   "column name"
   account_id
   "column name"
+  client_matched
+  "column name"
+  client_unmatched
+  "column name"
   id
+  "column name"
+  volunteer_matched
+  "column name"
+  volunteer_new
+  "column name"
+  volunteer_periodic
+  "column name"
+  volunteer_urgent
 }
 
 "update columns of table \"notification_setting\""
@@ -4411,7 +4432,19 @@ enum notification_setting_update_column {
   "column name"
   account_id
   "column name"
+  client_matched
+  "column name"
+  client_unmatched
+  "column name"
   id
+  "column name"
+  volunteer_matched
+  "column name"
+  volunteer_new
+  "column name"
+  volunteer_periodic
+  "column name"
+  volunteer_urgent
 }
 
 "column ordering options"
@@ -4468,6 +4501,8 @@ enum telegram_information_constraint {
   telegram_information_notification_setting_id_key
   "unique or primary key constraint"
   telegram_information_pkey
+  "unique or primary key constraint"
+  telegram_information_user_handle_key
 }
 
 "select columns of table \"telegram_information\""
@@ -4478,6 +4513,8 @@ enum telegram_information_select_column {
   id
   "column name"
   notification_setting_id
+  "column name"
+  user_handle
 }
 
 "update columns of table \"telegram_information\""
@@ -4488,6 +4525,8 @@ enum telegram_information_update_column {
   id
   "column name"
   notification_setting_id
+  "column name"
+  user_handle
 }
 
 "unique or primary key constraints on table \"volunteer\""
@@ -6903,9 +6942,15 @@ input notification_setting_bool_exp {
   _or: [notification_setting_bool_exp]
   account: account_bool_exp
   account_id: Int_comparison_exp
+  client_matched: Boolean_comparison_exp
+  client_unmatched: Boolean_comparison_exp
   email_information: email_information_bool_exp
   id: Int_comparison_exp
   telegram_information: telegram_information_bool_exp
+  volunteer_matched: Boolean_comparison_exp
+  volunteer_new: Boolean_comparison_exp
+  volunteer_periodic: Boolean_comparison_exp
+  volunteer_urgent: Boolean_comparison_exp
 }
 
 "input type for incrementing integer column in table \"notification_setting\""
@@ -6918,9 +6963,15 @@ input notification_setting_inc_input {
 input notification_setting_insert_input {
   account: account_obj_rel_insert_input
   account_id: Int
+  client_matched: Boolean
+  client_unmatched: Boolean
   email_information: email_information_obj_rel_insert_input
   id: Int
   telegram_information: telegram_information_obj_rel_insert_input
+  volunteer_matched: Boolean
+  volunteer_new: Boolean
+  volunteer_periodic: Boolean
+  volunteer_urgent: Boolean
 }
 
 "order by max() on columns of table \"notification_setting\""
@@ -6952,9 +7003,15 @@ input notification_setting_on_conflict {
 input notification_setting_order_by {
   account: account_order_by
   account_id: order_by
+  client_matched: order_by
+  client_unmatched: order_by
   email_information: email_information_order_by
   id: order_by
   telegram_information: telegram_information_order_by
+  volunteer_matched: order_by
+  volunteer_new: order_by
+  volunteer_periodic: order_by
+  volunteer_urgent: order_by
 }
 
 "primary key columns input for table: \"notification_setting\""
@@ -6965,7 +7022,13 @@ input notification_setting_pk_columns_input {
 "input type for updating data in table \"notification_setting\""
 input notification_setting_set_input {
   account_id: Int
+  client_matched: Boolean
+  client_unmatched: Boolean
   id: Int
+  volunteer_matched: Boolean
+  volunteer_new: Boolean
+  volunteer_periodic: Boolean
+  volunteer_urgent: Boolean
 }
 
 "order by stddev() on columns of table \"notification_setting\""
@@ -7222,6 +7285,7 @@ input telegram_information_bool_exp {
   id: Int_comparison_exp
   notification_setting: notification_setting_bool_exp
   notification_setting_id: Int_comparison_exp
+  user_handle: String_comparison_exp
 }
 
 "input type for incrementing integer column in table \"telegram_information\""
@@ -7237,6 +7301,7 @@ input telegram_information_insert_input {
   id: Int
   notification_setting: notification_setting_obj_rel_insert_input
   notification_setting_id: Int
+  user_handle: String
 }
 
 "order by max() on columns of table \"telegram_information\""
@@ -7244,6 +7309,7 @@ input telegram_information_max_order_by {
   chat_id: order_by
   id: order_by
   notification_setting_id: order_by
+  user_handle: order_by
 }
 
 "order by min() on columns of table \"telegram_information\""
@@ -7251,6 +7317,7 @@ input telegram_information_min_order_by {
   chat_id: order_by
   id: order_by
   notification_setting_id: order_by
+  user_handle: order_by
 }
 
 "input type for inserting object relation for remote table \"telegram_information\""
@@ -7272,6 +7339,7 @@ input telegram_information_order_by {
   id: order_by
   notification_setting: notification_setting_order_by
   notification_setting_id: order_by
+  user_handle: order_by
 }
 
 "primary key columns input for table: \"telegram_information\""
@@ -7284,6 +7352,7 @@ input telegram_information_set_input {
   chat_id: bigint
   id: Int
   notification_setting_id: Int
+  user_handle: String
 }
 
 "order by stddev() on columns of table \"telegram_information\""

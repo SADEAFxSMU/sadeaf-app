@@ -5,7 +5,8 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     data: {
       type: Array,
@@ -20,7 +21,7 @@ export default {
     render() {
       this.renderChart(this.data, {
         title: {
-          display: true,
+          display: this.title !== '',
           text: this.title,
         },
         ...this.options
