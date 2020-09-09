@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot name="test"></slot>
-    <el-card shadow="hover" class="personal-details-card">
+    <el-card shadow="hover" class="account-details-card">
       <div slot="header" class="clearfix">
         <span>{{ cardHeader.toLocaleUpperCase() }}</span>
         <el-button class="edit-btn" type="text" @click="toggleEdit">Edit</el-button>
@@ -16,6 +16,7 @@
           :model="formValuesToValidate"
           :rules="rules"
           size="small"
+          status-icon
         >
 
           <el-form-item
@@ -226,7 +227,7 @@ export default {
 </script>
 
 <style lang="scss">
-.personal-details-card {
+.account-details-card {
   & .el-card__header {
     font-size: 13px;
     letter-spacing: .4px;

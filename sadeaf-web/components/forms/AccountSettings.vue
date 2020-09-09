@@ -3,12 +3,9 @@
   <div>
     <PersonalDetails
       card-header="Personal Details"
-    >
-      <template #test>
-        hello world
-      </template>
-    </PersonalDetails>
+    />
 
+    <div class="padding"/>
     <PasswordDetails
       card-header="Password Details"
     />
@@ -35,5 +32,8 @@ export default {
 </script>
 
 <style scoped>
+.padding {
+  margin: 10px;
+}
 
 </style>
