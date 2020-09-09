@@ -227,28 +227,29 @@ export default {
 </script>
 
 <style lang="scss">
+//these styles are shared w password details, can clean up w global stylesheet
 .account-details-card {
-  & .el-card__header {
+  .el-card__header {
     font-size: 13px;
     letter-spacing: .4px;
     font-weight: bold;
   }
 
-  & .el-form-item__label {
+  .el-form-item__label {
     font-size: 11px;
     color: #909399;
     padding-bottom: 0px;
   }
 
-  & .el-form-item {
+  .el-form-item {
     margin-bottom: 12px;
   }
 
-  & .el-form-item:last-child {
+  .el-form-item:last-child {
     margin-bottom: 0px;
   }
 
-  & .el-input__inner {
+  .el-input__inner {
     font-size: 13px;
     color: #303133;
     text-align: left;
