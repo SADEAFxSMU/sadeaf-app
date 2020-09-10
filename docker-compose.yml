@@ -64,24 +64,14 @@ services:
       AWS_SECRET_ACCESS_KEY: secretAccessKey
       SQS_ENDPOINT: http://localstack:4566
 
-  sadeaf-api:
-    build: sadeaf-api
-    ports:
-      - "14000:4000"
-    depends_on:
-      - sadeaf-hasura
-      - localstack
-    environment:
-      SVC_SADEAF_HASURA_URL: http://sadeaf-hasura:8080
-      # TODO(fuxing): To be implemented: Cognito
-
   sadeaf-web:
     build: sadeaf-web
     ports:
       - "13000:3000"
     depends_on:
-      - sadeaf-api
+      - sadeaf-hasura
+      - localstack
     environment:
-      SVC_SADEAF_API_URL: http://sadeaf-api:4000
+      SVC_SADEAF_HASURA_URL: http://sadeaf-hasura:8080
       # TODO(fuxing): To be implemented: Cognito
 

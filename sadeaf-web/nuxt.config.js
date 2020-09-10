@@ -1,9 +1,6 @@
 export default {
   mode: 'spa',
   target: 'server',
-  /*
-  ** Headers of the page
-  */
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -15,23 +12,14 @@ export default {
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
     ]
   },
-  /*
-  ** Global CSS
-  */
   css: [
     'element-ui/lib/theme-chalk/index.css'
   ],
-  /*
-  ** Plugins to load before mounting the App
-  */
   plugins: [
     '@/plugins/element-ui'
   ],
   components: true,
   buildModules: [],
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
@@ -41,35 +29,19 @@ export default {
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
-    proxy: true
+  serverMiddleware: {
+    '/api/v1': '~/api'
   },
-  proxy: {
-    '/api/v1': process.env.SVC_SADEAF_API_URL || 'http://localhost:14000'
-  },
-  /*
-  ** Apollo module configuration
-  */
   apollo: {
     clientConfigs: {
       default: {
         httpEndpoint: '/api/v1/graphql',
-        wsEndpoint: 'ws://localhost:8080/v1/graphql',
+        wsEndpoint: 'ws://api/v1/graphql',
       }
     }
   },
-  /*
-  ** Build configuration
-  */
   build: {
     transpile: [/^element-ui/],
-    /*
-    ** You can extend webpack config here
-    */
     extend(config, ctx) {
     }
   }
