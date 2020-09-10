@@ -30,7 +30,7 @@ export default {
     '@nuxt/content',
   ],
   serverMiddleware: {
-    '/api/v1': '~/api'
+    '/api/v1': '~/src'
   },
   apollo: {
     clientConfigs: {

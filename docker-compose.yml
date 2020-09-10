@@ -14,13 +14,11 @@ services:
       - "4566:4566"
       - "8888:8888"
     environment:
-      - SERVICES=s3,sqs
+      - SERVICES=s3
       - PORT_WEB_UI=8888
       - DEFAULT_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=accessKeyId
       - AWS_SECRET_ACCESS_KEY=secretAccessKey
-
-  # TODO(fuxing): Consider adding https://github.com/jagregory/cognito-local for Cognito
 
   mailhog:
     image: mailhog/mailhog:v1.0.1
@@ -35,6 +33,8 @@ services:
     environment:
       POSTGRES_PASSWORD: postgrespassword
       POSTGRES_DB: sadeaf_app
+    volumes:
+      - "./docker-postgres-init.sh:/docker-entrypoint-initdb.d/init-user-db.sh"
 
   sadeaf-hasura:
     build: sadeaf-hasura
@@ -47,31 +47,24 @@ services:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/sadeaf_app
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      SVC_SADEAF_WORKER_URL: http://sadeaf-worker:5000
+      WEB_HOOK_URL: http://host.docker.internal:3000
 
-  sadeaf-worker:
-    build: sadeaf-worker
-    ports:
-      - "15000:5000"
-    depends_on:
-      - sadeaf-hasura
-    environment:
-      SVC_SADEAF_HASURA_URL: http://sadeaf-hasura:8080
-      SMTP_HOST: mailhog
-      SMTP_PORT: 1025
-      AWS_REGION: us-east-1
-      AWS_ACCESS_KEY_ID: accessKeyId
-      AWS_SECRET_ACCESS_KEY: secretAccessKey
-      SQS_ENDPOINT: http://localstack:4566
-
-  sadeaf-web:
-    build: sadeaf-web
-    ports:
-      - "13000:3000"
-    depends_on:
-      - sadeaf-hasura
-      - localstack
-    environment:
-      SVC_SADEAF_HASURA_URL: http://sadeaf-hasura:8080
+#  sadeaf-web:
+#    build: sadeaf-web
+#    ports:
+#      - "13000:3000"
+#    depends_on:
+#      - sadeaf-hasura
+#      - localstack
+#    environment:
+#      SVC_SADEAF_HASURA_URL: http://sadeaf-hasura:8080
+#
+#      SMTP_HOST: mailhog
+#      SMTP_PORT: 1025
+#
+#      AWS_REGION: us-east-1
+#      AWS_ACCESS_KEY_ID: accessKeyId
+#      AWS_SECRET_ACCESS_KEY: secretAccessKey
+#
+#      POSTGRES_QUEUE_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/sadeaf_worker
       # TODO(fuxing): To be implemented: Cognito
-

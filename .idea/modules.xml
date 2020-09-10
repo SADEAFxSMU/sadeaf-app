@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/sadeaf-app.iml" filepath="$PROJECT_DIR$/.idea/sadeaf-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/sadeaf-hasura.iml" filepath="$PROJECT_DIR$/.idea/sadeaf-hasura.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/sadeaf-web.iml" filepath="$PROJECT_DIR$/.idea/sadeaf-web.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/sadeaf-worker.iml" filepath="$PROJECT_DIR$/.idea/sadeaf-worker.iml" />
     </modules>
   </component>
 </project>
