@@ -8,9 +8,21 @@ export const ASSIGNMENT_STATUSES = {
 }
 
 export const EVENT_PURPOSE_OPTIONS = [
-  'School',
-  'Business',
-  'Workshop',
-  'Court Hearing',
-  'Other',
+  'Conference/Dialogue/Forum/Seminar/Rally',
+  'Counselling',
+  'Course / Workshop',
+  'Deaf Awareness Program / Sign Language Courses',
+  'Discussion/Meeting',
+  'Employment Related',
+  'Events (Exhibition/Excursion/Field Trip)',
+  'Lectures/Tutorial/Practical Lab',
+  'Legal',
+  'Media',
+  'Medical',
+  'Personal/Social',
+  'Police',
+  'Religious',
+  'ROM/ROMM',
+  'Tours',
+  'Others',
 ]

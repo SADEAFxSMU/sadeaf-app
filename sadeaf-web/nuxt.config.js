@@ -25,7 +25,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/dayjs',
   ],
   components: true,
   buildModules: [],
@@ -40,6 +41,7 @@ export default {
     '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
+    '@nuxtjs/dayjs',
   ],
   /*
   ** Axios module configuration

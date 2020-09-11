@@ -118,7 +118,6 @@ export default {
       required: false,
       default: 150,
     },
-    expandedRowKeys: [],
   },
   data() {
     return {
@@ -131,6 +130,7 @@ export default {
       tableColumnsByName: {},
       columnOptions: {},
       tableData: [],
+      expandedRowKeys: [],
     };
   },
 

@@ -4,7 +4,7 @@
       <el-timeline-item v-for="assignment in assignments"
                         :key="'assignment-' + assignment.id"
                         :color="color(assignment)"
-                        :timestamp="assignment.start_dt + ' - ' + assignment.end_dt">
+                        :timestamp="formatTimestamp(assignment.start_dt) + ' - ' + formatTimestamp(assignment.end_dt)">
         <div class="status-bar">
           <status-indicator :color="color(assignment)"
                             :text="status(assignment)"
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import AssignmentCard from "./AssignmentCard";
+import AssignmentCard from "./AssignmentCardSmall";
 import StatusIndicator from "../StatusIndicator";
 import SadeafCreateAssignmentForm from "../forms/SadeafCreateAssignmentForm";
 import { ASSIGNMENT_STATUSES } from "../../common/types/constants";
@@ -78,6 +78,9 @@ export default {
     },
     handleUpdateAssignment(assignment) {
       this.$emit('updateAssignment', assignment);
+    },
+    formatTimestamp(timestamp) {
+      return this.$dayjs(timestamp).format('ddd, DD MMM, HH:mm');
     }
   }
 };
