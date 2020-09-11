@@ -4,9 +4,6 @@ module.exports = {
     REGION: process.env.AWS_REGION || 'us-east-1',
     ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || "accessKeyId",
     SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "secretAccessKey",
-    SQS: {
-      ENDPOINT: process.env.AWS_SQS_ENDPOINT || "http://localhost:4566"
-    }
   },
   SMTP: {
     USERNAME: process.env.SMTP_USERNAME,
@@ -18,7 +15,7 @@ module.exports = {
   MAILHOG: {
     ENDPOINT: process.env.MAILHOG_ENDPOINT || "http://localhost:18025"
   },
-  LOCALSTACK: {
-    ENDPOINT: process.env.LOCALSTACK_ENDPOINT || "http://localhost:8888"
+  POSTGRES: {
+    QUEUE_DATABASE_URL: process.env.POSTGRES_QUEUE_DATABASE_URL || 'postgres://postgres:postgrespassword@localhost:5432/sadeaf_worker'
   }
 }
