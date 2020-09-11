@@ -29,14 +29,23 @@ export default {
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
   ],
+  axios: {
+    proxy: true
+  },
+  proxy: {
+    '/api/graphql': {
+      target: 'http://localhost:8080',
+      pathRewrite: {'^/api/graphql': '/v1/graphql'}
+    }
+  },
   serverMiddleware: {
-    '/api/v1': '~/src'
+    '/api': '~/src'
   },
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: '/api/v1/graphql',
-        wsEndpoint: 'ws://api/v1/graphql',
+        httpEndpoint: '/api/graphql',
+        wsEndpoint: 'ws://localhost:3000/api/graphql',
       }
     }
   },
