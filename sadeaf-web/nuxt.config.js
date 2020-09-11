@@ -38,7 +38,7 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: '/api/v1/graphql',
-        wsEndpoint: 'ws://api/v1/graphql',
+        wsEndpoint: 'ws://localhost:8080/v1/graphql',
       }
     }
   },

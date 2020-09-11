@@ -12,8 +12,8 @@ app.use('/graphql', createProxyMiddleware({
   target: process.env.SVC_SADEAF_HASURA_URL || 'http://localhost:8080',
   ws: true,
   pathRewrite: {
-    '^/api/v1/graphql': '/graphql'
-  }
+    '^/api/v1/graphql': '/v1/graphql'
+  },
 }))
 
 app.use(bodyParser.json())

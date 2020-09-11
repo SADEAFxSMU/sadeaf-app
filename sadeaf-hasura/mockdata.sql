@@ -160,7 +160,7 @@ INSERT INTO assignment (
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  1, 100),
 
-(2, 1, 'OPEN', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+(2, 1, 'PENDING', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  null, 100),
 
@@ -184,7 +184,7 @@ INSERT INTO assignment (
 '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
 1, 500),
 
-(8, 3, 'OPEN', '2020-08-12T15:00:00.000Z', '2020-08-12T18:30:00.000Z',
+(8, 3, 'PENDING', '2020-08-12T15:00:00.000Z', '2020-08-12T18:30:00.000Z',
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
  null, 500);
 

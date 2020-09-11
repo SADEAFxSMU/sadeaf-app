@@ -49,11 +49,9 @@
 </template>
 
 <script>
-import ClientCreateEventForm from "../forms/ClientCreateEventForm";
 import gql from "graphql-tag";
+import ClientCreateEventForm from "../forms/ClientCreateEventForm";
 import UserCard from "../user/UserCard";
-import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
-import StatusIndicator from "../StatusIndicator";
 import AssignmentCard from "../cards/AssignmentCard";
 import ClientUpsertAssignmentForm from "../forms/ClientUpsertAssignmentForm";
 
@@ -63,8 +61,6 @@ export default {
   components: {
     ClientUpsertAssignmentForm,
     AssignmentCard,
-    StatusIndicator,
-    UserCardHorizontalSmall,
     UserCard,
     ClientCreateEventForm
   },

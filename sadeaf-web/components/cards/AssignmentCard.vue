@@ -3,7 +3,7 @@
     <div class="header">
       <div class="title-wrapper">
         <h2 class="title">{{ assignment.event.name }}</h2>
-        <status-indicator :text="assignment.status" color="salmon" />
+        <assignment-status :status="assignment.status" />
       </div>
       <el-button icon="el-icon-edit" size="mini" @click="$emit('editClick', assignment)" />
     </div>
@@ -27,9 +27,10 @@
 <script>
 import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 import StatusIndicator from "../StatusIndicator";
+import AssignmentStatus from "../AssignmentStatus";
 export default {
   name: "AssignmentCard",
-  components: {StatusIndicator, UserCardHorizontalSmall},
+  components: {AssignmentStatus, StatusIndicator, UserCardHorizontalSmall},
   props: {
     assignment: {
       type: Object,
