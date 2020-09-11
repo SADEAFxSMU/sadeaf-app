@@ -19,7 +19,9 @@
     <transition name="fade">
       <div class="assignment-command-panel" v-if="createServiceRequestFormVisible">
         <el-tabs v-model="tab">
-          <el-tab-pane label="Current" name="assignments" v-if="getAssignmentsOnDate(selectedDate)">
+          <el-tab-pane v-if="getAssignmentsOnDate(selectedDate)"
+                       :label="selectedDate.toDateString() + ' Session'"
+                       name="assignments" >
             <div class="assignment-cards">
               <assignment-card v-for="assignment in getAssignmentsOnDate(selectedDate)"
                                :key="'as-' + assignment.id"
