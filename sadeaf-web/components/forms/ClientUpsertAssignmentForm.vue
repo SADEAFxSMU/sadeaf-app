@@ -41,7 +41,7 @@
         <danger-zone>
           <div class="cancel-field">
             <div>
-              <h3 class="heading">Cancel Assignment</h3>
+              <h3 class="heading">Cancel this session</h3>
               <p style="opacity: 0.7; line-height: 18px;">
                 NOTE: Last minute cancellation of appointments are strictly discouraged. It will
                 not only affect volunteers, but also ...
