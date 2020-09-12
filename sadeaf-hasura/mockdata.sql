@@ -221,3 +221,22 @@ INSERT INTO interpretation_details (
     number_of_hearing,event_id
 ) VALUES
 (1, 'home system', true, true, 5, 100, 1);
+
+SELECT setval(pg_get_serial_sequence('telegram_information', 'id'), coalesce(max(id) + 1, 1), false) FROM telegram_information;
+SELECT setval(pg_get_serial_sequence('email_information', 'id'), coalesce(max(id) + 1, 1), false) FROM email_information;
+SELECT setval(pg_get_serial_sequence('attendance', 'id'), coalesce(max(id) + 1, 1), false) FROM attendance;
+SELECT setval(pg_get_serial_sequence('assignment', 'id'), coalesce(max(id) + 1, 1), false) FROM assignment;
+SELECT setval(pg_get_serial_sequence('invoice', 'id'), coalesce(max(id) + 1, 1), false) FROM invoice;
+SELECT setval(pg_get_serial_sequence('feedback', 'id'), coalesce(max(id) + 1, 1), false) FROM feedback;
+SELECT setval(pg_get_serial_sequence('interpretation_details', 'id'), coalesce(max(id) + 1, 1), false) FROM interpretation_details;
+SELECT setval(pg_get_serial_sequence('event', 'id'), coalesce(max(id) + 1, 1), false) FROM event;
+SELECT setval(pg_get_serial_sequence('notification_setting', 'id'), coalesce(max(id) + 1, 1), false) FROM notification_setting;
+SELECT setval(pg_get_serial_sequence('volunteer', 'id'), coalesce(max(id) + 1, 1), false) FROM volunteer;
+SELECT setval(pg_get_serial_sequence('client', 'id'), coalesce(max(id) + 1, 1), false) FROM client;
+SELECT setval(pg_get_serial_sequence('service_requestor', 'id'), coalesce(max(id) + 1, 1), false) FROM service_requestor;
+SELECT setval(pg_get_serial_sequence('admin', 'id'), coalesce(max(id) + 1, 1), false) FROM admin;
+SELECT setval(pg_get_serial_sequence('membership_renewals', 'id'), coalesce(max(id) + 1, 1), false) FROM membership_renewals;
+SELECT setval(pg_get_serial_sequence('membership', 'id'), coalesce(max(id) + 1, 1), false) FROM membership;
+SELECT setval(pg_get_serial_sequence('membership_type', 'id'), coalesce(max(id) + 1, 1), false) FROM membership_type;
+SELECT setval(pg_get_serial_sequence('account', 'id'), coalesce(max(id) + 1, 1), false) FROM account;
+SELECT setval(pg_get_serial_sequence('quotation', 'id'), coalesce(max(id) + 1, 1), false) FROM quotation;
