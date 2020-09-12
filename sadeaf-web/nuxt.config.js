@@ -31,14 +31,14 @@ export default {
     '@nuxt/content',
     '@nuxtjs/dayjs',
   ],
-  serverMiddleware: {
-    '/api/v1': '~/src'
-  },
+  serverMiddleware: [
+    {prefix: false, handler: '~/src'}
+  ],
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: '/api/v1/graphql',
-        wsEndpoint: 'ws://localhost:8080/v1/graphql',
+        httpEndpoint: '/api/graphql',
+        wsEndpoint: 'ws://localhost:3000/api/graphql',
       }
     }
   },

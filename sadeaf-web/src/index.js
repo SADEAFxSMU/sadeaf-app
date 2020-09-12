@@ -1,18 +1,17 @@
 import express from "express";
 import bodyParser from "body-parser";
-import healthcheck from "express-healthcheck";
 import {createProxyMiddleware} from "http-proxy-middleware";
 
 import worker from "./worker";
 
 const app = express()
 
-app.use('/_healthcheck', healthcheck())
-app.use('/graphql', createProxyMiddleware({
+app.use(createProxyMiddleware('/api/graphql', {
   target: process.env.SVC_SADEAF_HASURA_URL || 'http://localhost:8080',
   ws: true,
+  changeOrigin: true,
   pathRewrite: {
-    '^/api/v1/graphql': '/v1/graphql'
+    '^/api/graphql': '/v1/graphql'
   },
 }))
 
