@@ -6,7 +6,8 @@
     "node": "^14"
   },
   "scripts": {
-    "console": "sh ../docker-compose-up && sh ./wait-for-hasura-console"
+    "console": "sh ../docker-compose-up && sh ./wait-for-hasura-console",
+    "squash-migrations": "hasura migrate squash"
   },
   "dependencies": {},
   "devDependencies": {

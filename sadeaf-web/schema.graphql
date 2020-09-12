@@ -266,8 +266,8 @@ type assignment {
   start_dt: timestamp!
   status: String!
   "An object relationship"
-  volunteer: volunteer!
-  volunteer_id: Int!
+  volunteer: volunteer
+  volunteer_id: Int
 }
 
 "aggregated selection of \"assignment\""
@@ -552,6 +552,9 @@ type client {
   organisation: String
   preferred_comm_mode: String!
   "An object relationship"
+  quotation: quotation
+  quotation_id: Int
+  "An object relationship"
   service_requestor: service_requestor
   service_requestor_id: Int
 }
@@ -581,6 +584,7 @@ type client_aggregate_fields {
 type client_avg_fields {
   account_id: Float
   id: Float
+  quotation_id: Float
   service_requestor_id: Float
 }
 
@@ -592,6 +596,7 @@ type client_max_fields {
   id: Int
   organisation: String
   preferred_comm_mode: String
+  quotation_id: Int
   service_requestor_id: Int
 }
 
@@ -603,6 +608,7 @@ type client_min_fields {
   id: Int
   organisation: String
   preferred_comm_mode: String
+  quotation_id: Int
   service_requestor_id: Int
 }
 
@@ -618,6 +624,7 @@ type client_mutation_response {
 type client_stddev_fields {
   account_id: Float
   id: Float
+  quotation_id: Float
   service_requestor_id: Float
 }
 
@@ -625,6 +632,7 @@ type client_stddev_fields {
 type client_stddev_pop_fields {
   account_id: Float
   id: Float
+  quotation_id: Float
   service_requestor_id: Float
 }
 
@@ -632,6 +640,7 @@ type client_stddev_pop_fields {
 type client_stddev_samp_fields {
   account_id: Float
   id: Float
+  quotation_id: Float
   service_requestor_id: Float
 }
 
@@ -639,6 +648,7 @@ type client_stddev_samp_fields {
 type client_sum_fields {
   account_id: Int
   id: Int
+  quotation_id: Int
   service_requestor_id: Int
 }
 
@@ -646,6 +656,7 @@ type client_sum_fields {
 type client_var_pop_fields {
   account_id: Float
   id: Float
+  quotation_id: Float
   service_requestor_id: Float
 }
 
@@ -653,6 +664,7 @@ type client_var_pop_fields {
 type client_var_samp_fields {
   account_id: Float
   id: Float
+  quotation_id: Float
   service_requestor_id: Float
 }
 
@@ -660,6 +672,7 @@ type client_var_samp_fields {
 type client_variance_fields {
   account_id: Float
   id: Float
+  quotation_id: Float
   service_requestor_id: Float
 }
 
@@ -829,7 +842,6 @@ type event {
   invoice: invoice
   name: String!
   purpose: String
-  quotation: numeric!
   updated_at: timestamp!
 }
 
@@ -858,7 +870,6 @@ type event_aggregate_fields {
 type event_avg_fields {
   client_id: Float
   id: Float
-  quotation: Float
 }
 
 "aggregate max on columns"
@@ -869,7 +880,6 @@ type event_max_fields {
   id: Int
   name: String
   purpose: String
-  quotation: numeric
   updated_at: timestamp
 }
 
@@ -881,7 +891,6 @@ type event_min_fields {
   id: Int
   name: String
   purpose: String
-  quotation: numeric
   updated_at: timestamp
 }
 
@@ -897,49 +906,42 @@ type event_mutation_response {
 type event_stddev_fields {
   client_id: Float
   id: Float
-  quotation: Float
 }
 
 "aggregate stddev_pop on columns"
 type event_stddev_pop_fields {
   client_id: Float
   id: Float
-  quotation: Float
 }
 
 "aggregate stddev_samp on columns"
 type event_stddev_samp_fields {
   client_id: Float
   id: Float
-  quotation: Float
 }
 
 "aggregate sum on columns"
 type event_sum_fields {
   client_id: Int
   id: Int
-  quotation: numeric
 }
 
 "aggregate var_pop on columns"
 type event_var_pop_fields {
   client_id: Float
   id: Float
-  quotation: Float
 }
 
 "aggregate var_samp on columns"
 type event_var_samp_fields {
   client_id: Float
   id: Float
-  quotation: Float
 }
 
 "aggregate variance on columns"
 type event_variance_fields {
   client_id: Float
   id: Float
-  quotation: Float
 }
 
 "columns and relationships of \"feedback\""
@@ -1842,6 +1844,13 @@ type mutation_root {
   ): notification_setting_mutation_response
   "delete single row from the table: \"notification_setting\""
   delete_notification_setting_by_pk(id: Int!): notification_setting
+  "delete data from the table: \"quotation\""
+  delete_quotation(
+    "filter the rows which have to be deleted"
+    where: quotation_bool_exp!
+  ): quotation_mutation_response
+  "delete single row from the table: \"quotation\""
+  delete_quotation_by_pk(id: Int!): quotation
   "delete data from the table: \"service_requestor\""
   delete_service_requestor(
     "filter the rows which have to be deleted"
@@ -2059,6 +2068,20 @@ type mutation_root {
     "on conflict condition"
     on_conflict: notification_setting_on_conflict
   ): notification_setting
+  "insert data into the table: \"quotation\""
+  insert_quotation(
+    "the rows to be inserted"
+    objects: [quotation_insert_input!]!,
+    "on conflict condition"
+    on_conflict: quotation_on_conflict
+  ): quotation_mutation_response
+  "insert a single row into the table: \"quotation\""
+  insert_quotation_one(
+    "the row to be inserted"
+    object: quotation_insert_input!,
+    "on conflict condition"
+    on_conflict: quotation_on_conflict
+  ): quotation
   "insert data into the table: \"service_requestor\""
   insert_service_requestor(
     "the rows to be inserted"
@@ -2323,6 +2346,23 @@ type mutation_root {
     _set: notification_setting_set_input,
     pk_columns: notification_setting_pk_columns_input!
   ): notification_setting
+  "update data of the table: \"quotation\""
+  update_quotation(
+    "increments the integer columns with given value of the filtered values"
+    _inc: quotation_inc_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: quotation_set_input,
+    "filter the rows which have to be updated"
+    where: quotation_bool_exp!
+  ): quotation_mutation_response
+  "update single row of the table: \"quotation\""
+  update_quotation_by_pk(
+    "increments the integer columns with given value of the filtered values"
+    _inc: quotation_inc_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: quotation_set_input,
+    pk_columns: quotation_pk_columns_input!
+  ): quotation
   "update data of the table: \"service_requestor\""
   update_service_requestor(
     "increments the integer columns with given value of the filtered values"
@@ -2873,6 +2913,34 @@ type query_root {
   ): notification_setting_aggregate!
   "fetch data from the table: \"notification_setting\" using primary key columns"
   notification_setting_by_pk(id: Int!): notification_setting
+  "fetch data from the table: \"quotation\""
+  quotation(
+    "distinct select on columns"
+    distinct_on: [quotation_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [quotation_order_by!],
+    "filter the rows returned"
+    where: quotation_bool_exp
+  ): [quotation!]!
+  "fetch aggregated fields from the table: \"quotation\""
+  quotation_aggregate(
+    "distinct select on columns"
+    distinct_on: [quotation_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [quotation_order_by!],
+    "filter the rows returned"
+    where: quotation_bool_exp
+  ): quotation_aggregate!
+  "fetch data from the table: \"quotation\" using primary key columns"
+  quotation_by_pk(id: Int!): quotation
   "fetch data from the table: \"service_requestor\""
   service_requestor(
     "distinct select on columns"
@@ -2957,6 +3025,149 @@ type query_root {
   ): volunteer_aggregate!
   "fetch data from the table: \"volunteer\" using primary key columns"
   volunteer_by_pk(id: Int!): volunteer
+}
+
+"""
+
+Reference - https://sadeaf.org.sg/service/notetaking/
+
+
+columns and relationships of "quotation"
+"""
+type quotation {
+  created_at: timestamptz!
+  fee_for_first_block: numeric!
+  fee_per_subsequent_block: numeric!
+  first_block_duration_m: Int!
+  id: Int!
+  requestor_type: String!
+  subsequent_block_duration_m: Int!
+  updated_at: timestamptz!
+}
+
+"aggregated selection of \"quotation\""
+type quotation_aggregate {
+  aggregate: quotation_aggregate_fields
+  nodes: [quotation!]!
+}
+
+"aggregate fields of \"quotation\""
+type quotation_aggregate_fields {
+  avg: quotation_avg_fields
+  count(columns: [quotation_select_column!], distinct: Boolean): Int
+  max: quotation_max_fields
+  min: quotation_min_fields
+  stddev: quotation_stddev_fields
+  stddev_pop: quotation_stddev_pop_fields
+  stddev_samp: quotation_stddev_samp_fields
+  sum: quotation_sum_fields
+  var_pop: quotation_var_pop_fields
+  var_samp: quotation_var_samp_fields
+  variance: quotation_variance_fields
+}
+
+"aggregate avg on columns"
+type quotation_avg_fields {
+  fee_for_first_block: Float
+  fee_per_subsequent_block: Float
+  first_block_duration_m: Float
+  id: Float
+  subsequent_block_duration_m: Float
+}
+
+"aggregate max on columns"
+type quotation_max_fields {
+  created_at: timestamptz
+  fee_for_first_block: numeric
+  fee_per_subsequent_block: numeric
+  first_block_duration_m: Int
+  id: Int
+  requestor_type: String
+  subsequent_block_duration_m: Int
+  updated_at: timestamptz
+}
+
+"aggregate min on columns"
+type quotation_min_fields {
+  created_at: timestamptz
+  fee_for_first_block: numeric
+  fee_per_subsequent_block: numeric
+  first_block_duration_m: Int
+  id: Int
+  requestor_type: String
+  subsequent_block_duration_m: Int
+  updated_at: timestamptz
+}
+
+"response of any mutation on the table \"quotation\""
+type quotation_mutation_response {
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [quotation!]!
+}
+
+"aggregate stddev on columns"
+type quotation_stddev_fields {
+  fee_for_first_block: Float
+  fee_per_subsequent_block: Float
+  first_block_duration_m: Float
+  id: Float
+  subsequent_block_duration_m: Float
+}
+
+"aggregate stddev_pop on columns"
+type quotation_stddev_pop_fields {
+  fee_for_first_block: Float
+  fee_per_subsequent_block: Float
+  first_block_duration_m: Float
+  id: Float
+  subsequent_block_duration_m: Float
+}
+
+"aggregate stddev_samp on columns"
+type quotation_stddev_samp_fields {
+  fee_for_first_block: Float
+  fee_per_subsequent_block: Float
+  first_block_duration_m: Float
+  id: Float
+  subsequent_block_duration_m: Float
+}
+
+"aggregate sum on columns"
+type quotation_sum_fields {
+  fee_for_first_block: numeric
+  fee_per_subsequent_block: numeric
+  first_block_duration_m: Int
+  id: Int
+  subsequent_block_duration_m: Int
+}
+
+"aggregate var_pop on columns"
+type quotation_var_pop_fields {
+  fee_for_first_block: Float
+  fee_per_subsequent_block: Float
+  first_block_duration_m: Float
+  id: Float
+  subsequent_block_duration_m: Float
+}
+
+"aggregate var_samp on columns"
+type quotation_var_samp_fields {
+  fee_for_first_block: Float
+  fee_per_subsequent_block: Float
+  first_block_duration_m: Float
+  id: Float
+  subsequent_block_duration_m: Float
+}
+
+"aggregate variance on columns"
+type quotation_variance_fields {
+  fee_for_first_block: Float
+  fee_per_subsequent_block: Float
+  first_block_duration_m: Float
+  id: Float
+  subsequent_block_duration_m: Float
 }
 
 "columns and relationships of \"service_requestor\""
@@ -3488,6 +3699,34 @@ type subscription_root {
   ): notification_setting_aggregate!
   "fetch data from the table: \"notification_setting\" using primary key columns"
   notification_setting_by_pk(id: Int!): notification_setting
+  "fetch data from the table: \"quotation\""
+  quotation(
+    "distinct select on columns"
+    distinct_on: [quotation_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [quotation_order_by!],
+    "filter the rows returned"
+    where: quotation_bool_exp
+  ): [quotation!]!
+  "fetch aggregated fields from the table: \"quotation\""
+  quotation_aggregate(
+    "distinct select on columns"
+    distinct_on: [quotation_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [quotation_order_by!],
+    "filter the rows returned"
+    where: quotation_bool_exp
+  ): quotation_aggregate!
+  "fetch data from the table: \"quotation\" using primary key columns"
+  quotation_by_pk(id: Int!): quotation
   "fetch data from the table: \"service_requestor\""
   service_requestor(
     "distinct select on columns"
@@ -3576,7 +3815,7 @@ type subscription_root {
 
 "columns and relationships of \"telegram_information\""
 type telegram_information {
-  chat_id: bigint!
+  chat_id: bigint
   id: Int!
   "An object relationship"
   notification_setting: notification_setting!
@@ -4038,6 +4277,8 @@ enum client_select_column {
   "column name"
   preferred_comm_mode
   "column name"
+  quotation_id
+  "column name"
   service_requestor_id
 }
 
@@ -4055,6 +4296,8 @@ enum client_update_column {
   organisation
   "column name"
   preferred_comm_mode
+  "column name"
+  quotation_id
   "column name"
   service_requestor_id
 }
@@ -4108,8 +4351,6 @@ enum event_select_column {
   "column name"
   purpose
   "column name"
-  quotation
-  "column name"
   updated_at
 }
 
@@ -4127,8 +4368,6 @@ enum event_update_column {
   name
   "column name"
   purpose
-  "column name"
-  quotation
   "column name"
   updated_at
 }
@@ -4461,6 +4700,54 @@ enum order_by {
   desc_nulls_first
   "in the descending order, nulls last"
   desc_nulls_last
+}
+
+"unique or primary key constraints on table \"quotation\""
+enum quotation_constraint {
+  "unique or primary key constraint"
+  quotation_pkey
+  "unique or primary key constraint"
+  quotation_requestor_type_key
+}
+
+"select columns of table \"quotation\""
+enum quotation_select_column {
+  "column name"
+  created_at
+  "column name"
+  fee_for_first_block
+  "column name"
+  fee_per_subsequent_block
+  "column name"
+  first_block_duration_m
+  "column name"
+  id
+  "column name"
+  requestor_type
+  "column name"
+  subsequent_block_duration_m
+  "column name"
+  updated_at
+}
+
+"update columns of table \"quotation\""
+enum quotation_update_column {
+  "column name"
+  created_at
+  "column name"
+  fee_for_first_block
+  "column name"
+  fee_per_subsequent_block
+  "column name"
+  first_block_duration_m
+  "column name"
+  id
+  "column name"
+  requestor_type
+  "column name"
+  subsequent_block_duration_m
+  "column name"
+  updated_at
 }
 
 "unique or primary key constraints on table \"service_requestor\""
@@ -5350,6 +5637,7 @@ input client_arr_rel_insert_input {
 input client_avg_order_by {
   account_id: order_by
   id: order_by
+  quotation_id: order_by
   service_requestor_id: order_by
 }
 
@@ -5366,6 +5654,8 @@ input client_bool_exp {
   id: Int_comparison_exp
   organisation: String_comparison_exp
   preferred_comm_mode: String_comparison_exp
+  quotation: quotation_bool_exp
+  quotation_id: Int_comparison_exp
   service_requestor: service_requestor_bool_exp
   service_requestor_id: Int_comparison_exp
 }
@@ -5374,6 +5664,7 @@ input client_bool_exp {
 input client_inc_input {
   account_id: Int
   id: Int
+  quotation_id: Int
   service_requestor_id: Int
 }
 
@@ -5387,6 +5678,8 @@ input client_insert_input {
   id: Int
   organisation: String
   preferred_comm_mode: String
+  quotation: quotation_obj_rel_insert_input
+  quotation_id: Int
   service_requestor: service_requestor_obj_rel_insert_input
   service_requestor_id: Int
 }
@@ -5399,6 +5692,7 @@ input client_max_order_by {
   id: order_by
   organisation: order_by
   preferred_comm_mode: order_by
+  quotation_id: order_by
   service_requestor_id: order_by
 }
 
@@ -5410,6 +5704,7 @@ input client_min_order_by {
   id: order_by
   organisation: order_by
   preferred_comm_mode: order_by
+  quotation_id: order_by
   service_requestor_id: order_by
 }
 
@@ -5436,6 +5731,8 @@ input client_order_by {
   id: order_by
   organisation: order_by
   preferred_comm_mode: order_by
+  quotation: quotation_order_by
+  quotation_id: order_by
   service_requestor: service_requestor_order_by
   service_requestor_id: order_by
 }
@@ -5453,6 +5750,7 @@ input client_set_input {
   id: Int
   organisation: String
   preferred_comm_mode: String
+  quotation_id: Int
   service_requestor_id: Int
 }
 
@@ -5460,6 +5758,7 @@ input client_set_input {
 input client_stddev_order_by {
   account_id: order_by
   id: order_by
+  quotation_id: order_by
   service_requestor_id: order_by
 }
 
@@ -5467,6 +5766,7 @@ input client_stddev_order_by {
 input client_stddev_pop_order_by {
   account_id: order_by
   id: order_by
+  quotation_id: order_by
   service_requestor_id: order_by
 }
 
@@ -5474,6 +5774,7 @@ input client_stddev_pop_order_by {
 input client_stddev_samp_order_by {
   account_id: order_by
   id: order_by
+  quotation_id: order_by
   service_requestor_id: order_by
 }
 
@@ -5481,6 +5782,7 @@ input client_stddev_samp_order_by {
 input client_sum_order_by {
   account_id: order_by
   id: order_by
+  quotation_id: order_by
   service_requestor_id: order_by
 }
 
@@ -5488,6 +5790,7 @@ input client_sum_order_by {
 input client_var_pop_order_by {
   account_id: order_by
   id: order_by
+  quotation_id: order_by
   service_requestor_id: order_by
 }
 
@@ -5495,6 +5798,7 @@ input client_var_pop_order_by {
 input client_var_samp_order_by {
   account_id: order_by
   id: order_by
+  quotation_id: order_by
   service_requestor_id: order_by
 }
 
@@ -5502,6 +5806,7 @@ input client_var_samp_order_by {
 input client_variance_order_by {
   account_id: order_by
   id: order_by
+  quotation_id: order_by
   service_requestor_id: order_by
 }
 
@@ -5671,7 +5976,6 @@ input event_arr_rel_insert_input {
 input event_avg_order_by {
   client_id: order_by
   id: order_by
-  quotation: order_by
 }
 
 "Boolean expression to filter rows from the table \"event\". All fields are combined with a logical 'AND'."
@@ -5690,7 +5994,6 @@ input event_bool_exp {
   invoice: invoice_bool_exp
   name: String_comparison_exp
   purpose: String_comparison_exp
-  quotation: numeric_comparison_exp
   updated_at: timestamp_comparison_exp
 }
 
@@ -5698,7 +6001,6 @@ input event_bool_exp {
 input event_inc_input {
   client_id: Int
   id: Int
-  quotation: numeric
 }
 
 "input type for inserting data into table \"event\""
@@ -5714,7 +6016,6 @@ input event_insert_input {
   invoice: invoice_obj_rel_insert_input
   name: String
   purpose: String
-  quotation: numeric
   updated_at: timestamp
 }
 
@@ -5726,7 +6027,6 @@ input event_max_order_by {
   id: order_by
   name: order_by
   purpose: order_by
-  quotation: order_by
   updated_at: order_by
 }
 
@@ -5738,7 +6038,6 @@ input event_min_order_by {
   id: order_by
   name: order_by
   purpose: order_by
-  quotation: order_by
   updated_at: order_by
 }
 
@@ -5768,7 +6067,6 @@ input event_order_by {
   invoice: invoice_order_by
   name: order_by
   purpose: order_by
-  quotation: order_by
   updated_at: order_by
 }
 
@@ -5785,7 +6083,6 @@ input event_set_input {
   id: Int
   name: String
   purpose: String
-  quotation: numeric
   updated_at: timestamp
 }
 
@@ -5793,49 +6090,42 @@ input event_set_input {
 input event_stddev_order_by {
   client_id: order_by
   id: order_by
-  quotation: order_by
 }
 
 "order by stddev_pop() on columns of table \"event\""
 input event_stddev_pop_order_by {
   client_id: order_by
   id: order_by
-  quotation: order_by
 }
 
 "order by stddev_samp() on columns of table \"event\""
 input event_stddev_samp_order_by {
   client_id: order_by
   id: order_by
-  quotation: order_by
 }
 
 "order by sum() on columns of table \"event\""
 input event_sum_order_by {
   client_id: order_by
   id: order_by
-  quotation: order_by
 }
 
 "order by var_pop() on columns of table \"event\""
 input event_var_pop_order_by {
   client_id: order_by
   id: order_by
-  quotation: order_by
 }
 
 "order by var_samp() on columns of table \"event\""
 input event_var_samp_order_by {
   client_id: order_by
   id: order_by
-  quotation: order_by
 }
 
 "order by variance() on columns of table \"event\""
 input event_variance_order_by {
   client_id: order_by
   id: order_by
-  quotation: order_by
 }
 
 "order by aggregate values of table \"feedback\""
@@ -7086,6 +7376,201 @@ input numeric_comparison_exp {
   _nin: [numeric!]
 }
 
+"order by aggregate values of table \"quotation\""
+input quotation_aggregate_order_by {
+  avg: quotation_avg_order_by
+  count: order_by
+  max: quotation_max_order_by
+  min: quotation_min_order_by
+  stddev: quotation_stddev_order_by
+  stddev_pop: quotation_stddev_pop_order_by
+  stddev_samp: quotation_stddev_samp_order_by
+  sum: quotation_sum_order_by
+  var_pop: quotation_var_pop_order_by
+  var_samp: quotation_var_samp_order_by
+  variance: quotation_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"quotation\""
+input quotation_arr_rel_insert_input {
+  data: [quotation_insert_input!]!
+  on_conflict: quotation_on_conflict
+}
+
+"order by avg() on columns of table \"quotation\""
+input quotation_avg_order_by {
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  subsequent_block_duration_m: order_by
+}
+
+"Boolean expression to filter rows from the table \"quotation\". All fields are combined with a logical 'AND'."
+input quotation_bool_exp {
+  _and: [quotation_bool_exp]
+  _not: quotation_bool_exp
+  _or: [quotation_bool_exp]
+  created_at: timestamptz_comparison_exp
+  fee_for_first_block: numeric_comparison_exp
+  fee_per_subsequent_block: numeric_comparison_exp
+  first_block_duration_m: Int_comparison_exp
+  id: Int_comparison_exp
+  requestor_type: String_comparison_exp
+  subsequent_block_duration_m: Int_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"input type for incrementing integer column in table \"quotation\""
+input quotation_inc_input {
+  fee_for_first_block: numeric
+  fee_per_subsequent_block: numeric
+  first_block_duration_m: Int
+  id: Int
+  subsequent_block_duration_m: Int
+}
+
+"input type for inserting data into table \"quotation\""
+input quotation_insert_input {
+  created_at: timestamptz
+  fee_for_first_block: numeric
+  fee_per_subsequent_block: numeric
+  first_block_duration_m: Int
+  id: Int
+  requestor_type: String
+  subsequent_block_duration_m: Int
+  updated_at: timestamptz
+}
+
+"order by max() on columns of table \"quotation\""
+input quotation_max_order_by {
+  created_at: order_by
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  requestor_type: order_by
+  subsequent_block_duration_m: order_by
+  updated_at: order_by
+}
+
+"order by min() on columns of table \"quotation\""
+input quotation_min_order_by {
+  created_at: order_by
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  requestor_type: order_by
+  subsequent_block_duration_m: order_by
+  updated_at: order_by
+}
+
+"input type for inserting object relation for remote table \"quotation\""
+input quotation_obj_rel_insert_input {
+  data: quotation_insert_input!
+  on_conflict: quotation_on_conflict
+}
+
+"on conflict condition type for table \"quotation\""
+input quotation_on_conflict {
+  constraint: quotation_constraint!
+  update_columns: [quotation_update_column!]!
+  where: quotation_bool_exp
+}
+
+"ordering options when selecting data from \"quotation\""
+input quotation_order_by {
+  created_at: order_by
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  requestor_type: order_by
+  subsequent_block_duration_m: order_by
+  updated_at: order_by
+}
+
+"primary key columns input for table: \"quotation\""
+input quotation_pk_columns_input {
+  id: Int!
+}
+
+"input type for updating data in table \"quotation\""
+input quotation_set_input {
+  created_at: timestamptz
+  fee_for_first_block: numeric
+  fee_per_subsequent_block: numeric
+  first_block_duration_m: Int
+  id: Int
+  requestor_type: String
+  subsequent_block_duration_m: Int
+  updated_at: timestamptz
+}
+
+"order by stddev() on columns of table \"quotation\""
+input quotation_stddev_order_by {
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  subsequent_block_duration_m: order_by
+}
+
+"order by stddev_pop() on columns of table \"quotation\""
+input quotation_stddev_pop_order_by {
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  subsequent_block_duration_m: order_by
+}
+
+"order by stddev_samp() on columns of table \"quotation\""
+input quotation_stddev_samp_order_by {
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  subsequent_block_duration_m: order_by
+}
+
+"order by sum() on columns of table \"quotation\""
+input quotation_sum_order_by {
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  subsequent_block_duration_m: order_by
+}
+
+"order by var_pop() on columns of table \"quotation\""
+input quotation_var_pop_order_by {
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  subsequent_block_duration_m: order_by
+}
+
+"order by var_samp() on columns of table \"quotation\""
+input quotation_var_samp_order_by {
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  subsequent_block_duration_m: order_by
+}
+
+"order by variance() on columns of table \"quotation\""
+input quotation_variance_order_by {
+  fee_for_first_block: order_by
+  fee_per_subsequent_block: order_by
+  first_block_duration_m: order_by
+  id: order_by
+  subsequent_block_duration_m: order_by
+}
+
 "order by aggregate values of table \"service_requestor\""
 input service_requestor_aggregate_order_by {
   avg: service_requestor_avg_order_by
@@ -7417,6 +7902,19 @@ input timestamp_comparison_exp {
   _nin: [timestamp!]
 }
 
+"expression to compare columns of type timestamptz. All fields are combined with logical 'AND'."
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
 "order by aggregate values of table \"volunteer\""
 input volunteer_aggregate_order_by {
   avg: volunteer_avg_order_by
@@ -7570,3 +8068,5 @@ scalar float8
 scalar numeric
 
 scalar timestamp
+
+scalar timestamptz
