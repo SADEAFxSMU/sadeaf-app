@@ -153,7 +153,6 @@ const INSERT_EVENT = gql`
     $client_id: Int!
     $description: String
     $purpose: String
-    $quotation: numeric!
     $assignments: assignment_arr_rel_insert_input
   ) {
     insert_event_one(
@@ -162,7 +161,6 @@ const INSERT_EVENT = gql`
         client_id: $client_id
         description: $description
         purpose: $purpose
-        quotation: $quotation
         assignments: $assignments
       }
     ) {
@@ -171,7 +169,6 @@ const INSERT_EVENT = gql`
       client_id
       description
       purpose
-      quotation
       assignments {
         id
         address_line_one
@@ -294,7 +291,6 @@ export default {
           description: this.form.description,
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
-          quotation: 40, // TODO - remove this attr on hasura
           assignments: { data: this.assignments },
         }
       });
