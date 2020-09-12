@@ -16,10 +16,12 @@
     "graphql-codegen": "cd tools/codegen && node graphqlQueryBuilder.js"
   },
   "dependencies": {
+    "@aws-amplify/ui-vue": "^0.2.18",
     "@nuxt/content": "^1.5.0",
     "@nuxtjs/apollo": "^4.0.1-rc.3",
     "@nuxtjs/axios": "^5.12.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "aws-amplify": "^3.2.0",
     "aws-sdk": "^2.738.0",
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.3",

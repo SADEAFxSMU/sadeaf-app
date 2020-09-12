@@ -2,7 +2,7 @@ export default {
   mode: 'spa',
   target: 'server',
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'SADEAF Management',
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
@@ -16,7 +16,8 @@ export default {
     'element-ui/lib/theme-chalk/index.css'
   ],
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    {src: '@/plugins/amplify-cognito', ssr: false},
   ],
   components: true,
   buildModules: [],

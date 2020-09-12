@@ -16,7 +16,6 @@ app.use(createProxyMiddleware('/api/graphql', {
 }))
 
 app.use(bodyParser.json())
-app.use(require('./api/routes/accounts'))
 app.use(require('./api/routes/hasura'))
 
 worker().then(() => {
