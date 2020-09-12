@@ -22,6 +22,7 @@ export default {
   components: true,
   buildModules: [],
   modules: [
+    '~/hasura',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
@@ -31,7 +32,7 @@ export default {
     '@nuxt/content',
   ],
   serverMiddleware: [
-    {prefix: false, handler: '~/src'}
+    {prefix: false, handler: '~/api'}
   ],
   apollo: {
     clientConfigs: {

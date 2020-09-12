@@ -2,8 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import {createProxyMiddleware} from "http-proxy-middleware";
 
-import worker from "./worker";
-
 const app = express()
 
 app.use(createProxyMiddleware('/api/graphql', {
@@ -16,10 +14,6 @@ app.use(createProxyMiddleware('/api/graphql', {
 }))
 
 app.use(bodyParser.json())
-app.use(require('./api/routes/hasura'))
-
-worker().then(() => {
-
-})
+app.use(require('./routes/accounts'))
 
 export default app

@@ -1,5 +1,6 @@
 import pubsub from "../pubsub";
-import {SMTP} from "../config";
+// noinspection ES6PreferShortImport
+import {SMTP} from "../../config";
 import {SMTPClient} from "emailjs";
 
 const client = new SMTPClient({

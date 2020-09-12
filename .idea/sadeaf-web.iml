@@ -3,9 +3,10 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$/sadeaf-web">
-      <sourceFolder url="file://$MODULE_DIR$/sadeaf-web/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sadeaf-web/api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sadeaf-web/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/sadeaf-web/test-worker" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/sadeaf-web/hasura" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/sadeaf-web/.nuxt" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />

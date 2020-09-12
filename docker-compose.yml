@@ -33,8 +33,6 @@ services:
     environment:
       POSTGRES_PASSWORD: postgrespassword
       POSTGRES_DB: sadeaf_app
-    volumes:
-      - "./docker-postgres-init.sh:/docker-entrypoint-initdb.d/init-user-db.sh"
 
   sadeaf-hasura:
     build: sadeaf-hasura
@@ -47,24 +45,4 @@ services:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/sadeaf_app
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      WEB_HOOK_URL: http://host.docker.internal:3000
-
-#  sadeaf-web:
-#    build: sadeaf-web
-#    ports:
-#      - "13000:3000"
-#    depends_on:
-#      - sadeaf-hasura
-#      - localstack
-#    environment:
-#      SVC_SADEAF_HASURA_URL: http://sadeaf-hasura:8080
-#
-#      SMTP_HOST: mailhog
-#      SMTP_PORT: 1025
-#
-#      AWS_REGION: us-east-1
-#      AWS_ACCESS_KEY_ID: accessKeyId
-#      AWS_SECRET_ACCESS_KEY: secretAccessKey
-#
-#      POSTGRES_QUEUE_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/sadeaf_worker
-      # TODO(fuxing): To be implemented: Cognito
+      WEB_HOOK_URL: http://host.docker.internal:4000
