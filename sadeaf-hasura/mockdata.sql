@@ -1,22 +1,23 @@
 ----------------------[ DUMMY DATA ]----------------------
 
-DELETE FROM telegram_information WHERE 1=1;
-DELETE FROM email_information WHERE 1=1;
-DELETE FROM attendance WHERE 1 = 1;
-DELETE FROM assignment WHERE 1=1;
-DELETE FROM invoice WHERE 1=1;
-DELETE FROM feedback WHERE 1=1;
-DELETE FROM interpretation_details WHERE 1=1;
-DELETE FROM event WHERE 1=1;
-DELETE FROM notification_setting WHERE 1=1;
-DELETE FROM volunteer WHERE 1=1;
-DELETE FROM client WHERE 1=1;
-DELETE FROM service_requestor WHERE 1=1;
-DELETE FROM admin WHERE 1=1;
-DELETE FROM membership_renewals WHERE 1=1;
-DELETE FROM membership WHERE 1=1;
-DELETE FROM membership_type WHERE 1=1;
-DELETE FROM account WHERE 1=1;
+DELETE FROM telegram_information;
+DELETE FROM email_information;
+DELETE FROM attendance;
+DELETE FROM assignment;
+DELETE FROM invoice;
+DELETE FROM feedback;
+DELETE FROM interpretation_details;
+DELETE FROM event;
+DELETE FROM notification_setting;
+DELETE FROM volunteer;
+DELETE FROM client;
+DELETE FROM service_requestor;
+DELETE FROM admin;
+DELETE FROM membership_renewals;
+DELETE FROM membership;
+DELETE FROM membership_type;
+DELETE FROM account;
+DELETE FROM quotation;
 
 -- Sources: https://sadeaf.org.sg/join-us/be-our-member/
 --          https://sadeaf.org.sg/wp-content/uploads/2018/08/SADeaf-Membership-Factsheet.pdf
@@ -87,20 +88,36 @@ INSERT INTO service_requestor(
 (3, 'NUS', 1, 4),
 (4, 'DBS', 1, 5);
 
-INSERT INTO client(
-    id, organisation, designation, preferred_comm_mode, additional_notes, service_requestor_id, account_id
+INSERT INTO quotation(
+    id,  requestor_type, first_block_duration_m, fee_for_first_block, subsequent_block_duration_m, fee_per_subsequent_block
 ) VALUES
-(1, 'Singapore Management University', 'student', 'Sign Language', null, 1, 6),
-(2, 'Singapore Management University', 'student', 'Speech', null, 1, 7),
-(3, 'Singapore Management University', 'student', 'Speech', null, 1, 8),
-(4, 'Nanyang Technological University', 'student', 'Sign Language', null, 2, 9),
-(5, 'Nanyang Technological University', 'student', 'Speech', null, 2, 10),
-(6, 'National University of Singapore', 'student', 'Speech', null, 3, 11),
-(7, 'DBS Pte Ltd', 'associate', 'Sign Language', null, 4, 12),
-(8, 'DBS Pte Ltd', 'vice president', 'Sign Language', null, 4, 13),
-(9, 'CreditSuisse Pte Ltd', 'analyst', 'Speech', null, null, 14),
-(10, null, 'self-employed', 'Sign Language', null, null, 15),
-(11, 'Shopee Pte Ltd', 'intern', 'Speech', null, null, 16);
+(1, 'Affiliates', 120, 20, 30, 5),
+(2, 'SADeaf Staff', 120, 20, 30, 5),
+(3, 'Registered Client', 120, 20, 30, 5),
+(4, 'Voluntary Welfare Organisations', 120, 60, 30, 15),
+(5, 'Institutes of Higher Learning (New Category)', 120, 80, 30, 20),
+(6, 'Medical (New Category)', 120, 80, 30, 20),
+(7, 'Government Boards & Agencies', 120, 80, 30, 20),
+(8, 'Legal', 120, 80, 30, 20),
+(9, 'Corporates/Groups', 120, 80, 30, 20),
+(10, 'Syariah Court', 120, 80, 30, 20),
+(11, 'Unregistered Individual', 120, 80, 30, 20),
+(12, 'Tourist', 120, 100, 30, 25);
+
+INSERT INTO client(
+    id, organisation, designation, preferred_comm_mode, additional_notes, service_requestor_id, account_id, quotation_id
+) VALUES
+(1, 'Singapore Management University', 'student', 'Sign Language', null, 1, 6, 3),
+(2, 'Singapore Management University', 'student', 'Speech', null, 1, 7, 3),
+(3, 'Singapore Management University', 'student', 'Speech', null, 1, 8, 3),
+(4, 'Nanyang Technological University', 'student', 'Sign Language', null, 2, 9, 3),
+(5, 'Nanyang Technological University', 'student', 'Speech', null, 2, 10, 3),
+(6, 'National University of Singapore', 'student', 'Speech', null, 3, 11, 3),
+(7, 'DBS Pte Ltd', 'associate', 'Sign Language', null, 4, 12, 9),
+(8, 'DBS Pte Ltd', 'vice president', 'Sign Language', null, 4, 13, 9),
+(9, 'CreditSuisse Pte Ltd', 'analyst', 'Speech', null, null, 14, 9),
+(10, null, 'self-employed', 'Sign Language', null, null, 15, 3),
+(11, 'Shopee Pte Ltd', 'intern', 'Speech', null, null, 16, 9);
 
 INSERT INTO volunteer(
     id, approval_status, account_id
@@ -141,15 +158,15 @@ INSERT INTO email_information(
 (3, 'bobby@gmail.com', 4);
 
 INSERT INTO event (
-    id, name, client_id, description, purpose, quotation
+    id, name, client_id, description, purpose
 ) VALUES
-(1, 'IS111 - Intro to Programming', 1, 'Introductory programming class - very hands-on', 'School', 188),
-(2, 'IS113 - Web Application Development', 2, 'Introductory programming class - very hands-on', 'School', 103),
-(3, 'JPMorgan Winning Women', 1, 'Event promoting gender equality at JPMorgan', 'Workshop', 88),
-(4, 'CodeIT Suisse', 3, 'Annual hackathon for recruitment and campus outreach', 'Workshop', 100),
-(5, 'COMM169 - Management Communication', 3, 'CORE SMU module', 'School', 100),
-(6, 'COMM169 - Management Communication', 4, 'CORE SMU module', 'School', 100),
-(7, 'COMM169 - Management Communication', 5, 'CORE SMU module', 'School', 100);
+(1, 'IS111 - Intro to Programming', 1, 'Introductory programming class - very hands-on', 'School'),
+(2, 'IS113 - Web Application Development', 2, 'Introductory programming class - very hands-on', 'School'),
+(3, 'JPMorgan Winning Women', 1, 'Event promoting gender equality at JPMorgan', 'Workshop'),
+(4, 'CodeIT Suisse', 3, 'Annual hackathon for recruitment and campus outreach', 'Workshop'),
+(5, 'COMM169 - Management Communication', 3, 'CORE SMU module', 'School'),
+(6, 'COMM169 - Management Communication', 4, 'CORE SMU module', 'School'),
+(7, 'COMM169 - Management Communication', 5, 'CORE SMU module', 'School');
 
 INSERT INTO assignment (
     id, event_id, status, start_dt, end_dt,
