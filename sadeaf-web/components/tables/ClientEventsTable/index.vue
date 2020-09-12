@@ -148,7 +148,6 @@ export default {
           rows.push({
             id: event.id,
             client: event.client,
-            quotation: event.quotation,
             status: aggStatus,
             purpose: event.purpose,
             name: event.name,
@@ -176,7 +175,6 @@ export default {
             name
             description
             purpose
-            quotation
             client {
               id
               account {
