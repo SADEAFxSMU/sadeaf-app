@@ -210,7 +210,6 @@ export default {
             name
             description
             purpose
-            quotation
             client {
               id
               account {
@@ -219,7 +218,7 @@ export default {
                 email
               }
             }
-            statuses: assignments_aggregate(distinct_on: status, limit: 1) {
+            statuses: assignments_aggregate(distinct_on: status) {
               nodes { status }
             }
             volunteers: assignments_aggregate(distinct_on: volunteer_id) {
