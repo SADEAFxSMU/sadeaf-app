@@ -6,7 +6,6 @@ import worker from "./worker";
 
 const app = express()
 
-// TODO(fuxing): Maybe can remove this
 app.use(createProxyMiddleware('/api/graphql', {
   target: process.env.SVC_SADEAF_HASURA_URL || 'http://localhost:8080',
   ws: true,
