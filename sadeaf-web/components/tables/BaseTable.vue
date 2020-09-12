@@ -52,8 +52,8 @@
       <el-pagination hide-on-single-page
                      background
                      :page-size="rowLimit"
+                     :pager-count="11"
                      :total="tableDataFiltered.length"
-                     :pager-count="10"
                      :current-page="currentPage"
                      @current-change="handlePageChange" />
     </div>
@@ -65,7 +65,7 @@
 const STRING = 'string';
 const INT = 'int';
 const FLOAT = 'float';
-const NUMERIC = 'numeric'
+const NUMERIC = 'numeric';
 const ENUM = 'enum';
 const TIMESTAMP = 'timestamp';
 const defaultFormatters = {
@@ -78,7 +78,7 @@ const defaultFormatters = {
 };
 
 export default {
-  name: "BaseTable",
+  name: 'BaseTable',
   props: {
     title: {
       type: String,
@@ -91,7 +91,7 @@ export default {
     columns: {
       type: Array,
       required: false,
-      default: () => []
+      default: () => [],
     },
     showToolbar: {
       type: Boolean,
@@ -121,7 +121,7 @@ export default {
   },
   data() {
     return {
-      search: "",
+      search: '',
       currentPage: 1, // Local state for current selected page
       editRow: null,
       editIndex: null,
@@ -191,25 +191,31 @@ export default {
 <style scoped>
 .base-table {
 }
+
 .table {
   border-radius: 8px;
 }
+
 .table.elevated {
   box-shadow: 0 2px 8px #d6d8dd;
 }
+
 .title-wrapper {
   display: flex;
   align-items: center;
   padding: 20px;
 }
+
 .title-wrapper .heading {
   margin-right: 12px;
   color: #6989a7;
 }
+
 .toolbar {
   display: flex;
   align-items: center;
 }
+
 .pagination {
   display: flex;
   justify-content: center;
