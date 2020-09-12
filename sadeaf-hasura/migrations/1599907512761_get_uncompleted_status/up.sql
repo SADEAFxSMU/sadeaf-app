@@ -6,6 +6,6 @@ SELECT EXISTS (
   WHERE
     event_id = events_row.id
     AND
-    status NOT LIKE 'COMPLETE'
+    status NOT LIKE 'COMPLETE' AND status NOT LIKE 'CANCELLED'
 );
 $$ LANGUAGE sql STABLE;
