@@ -16,6 +16,6 @@ module.exports = {
     ENDPOINT: process.env.MAILHOG_ENDPOINT || "http://localhost:18025"
   },
   POSTGRES: {
-    QUEUE_DATABASE_URL: process.env.POSTGRES_QUEUE_DATABASE_URL || 'postgres://postgres:postgrespassword@localhost:5432/sadeaf_worker'
+    QUEUE_DATABASE_URL: process.env.POSTGRES_QUEUE_DATABASE_URL || 'postgres://postgres:postgrespassword@localhost:5432/sadeaf_app'
   }
 }
