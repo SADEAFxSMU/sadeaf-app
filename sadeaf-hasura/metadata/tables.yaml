@@ -470,6 +470,9 @@
   - name: account
     using:
       foreign_key_constraint_on: account_id
+  - name: quotation
+    using:
+      foreign_key_constraint_on: quotation_id
   - name: service_requestor
     using:
       foreign_key_constraint_on: service_requestor_id
@@ -695,11 +698,10 @@
           account_id:
             _eq: X-Hasura-User-Id
       columns:
-      - name
       - client_id
       - description
+      - name
       - purpose
-      - quotation
   - role: service_requestor
     permission:
       check:
@@ -708,15 +710,21 @@
             account_id:
               _eq: X-Hasura-User-Id
       columns:
-      - name
       - client_id
       - description
+      - name
       - purpose
-      - quotation
   select_permissions:
   - role: client
     permission:
-      columns: '*'
+      columns:
+      - client_id
+      - created_at
+      - description
+      - id
+      - name
+      - purpose
+      - updated_at
       filter:
         client:
           account_id:
@@ -726,13 +734,12 @@
     permission:
       columns:
       - client_id
-      - id
-      - quotation
-      - description
       - created_at
-      - updated_at
+      - description
+      - id
       - name
       - purpose
+      - updated_at
       filter:
         client:
           service_requestor:
@@ -743,13 +750,12 @@
     permission:
       columns:
       - client_id
-      - id
-      - quotation
-      - description
       - created_at
-      - updated_at
+      - description
+      - id
       - name
       - purpose
+      - updated_at
       filter: {}
   update_permissions:
   - role: client
@@ -758,7 +764,6 @@
       - description
       - name
       - purpose
-      - quotation
       filter:
         client:
           account_id:
@@ -1230,6 +1235,9 @@
       filter:
         account_id:
           _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: quotation
 - table:
     schema: public
     name: service_requestor

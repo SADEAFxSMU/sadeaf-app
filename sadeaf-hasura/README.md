@@ -22,5 +22,8 @@ Remember to commit any schema or metadata changes.
 - Tracking anything new will automatically update the files in `/metadata`
 
 ### Squashing Migrations
-- Unless you're doing some fancy PATH magic, you most likely won't be able to use `hasura` in your CLI
-- The easiest way is just to add a temporary command in `package.json`, then delete it after you're done
+- Squash migrations before committing
+  ```
+  yarn run squash-migrations --from "<timestamp>" --name "<name>"
+  ```
+- Example: `yarn run squash-migrations --from 1598941155670 --name "notification_setting_updates"`
