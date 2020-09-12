@@ -26,9 +26,6 @@
         <el-input v-model="form.description"
                   placeholder="..." />
       </el-form-item>
-      <el-form-item label="Quotation">
-        <el-input-number v-model="form.quotation" />
-      </el-form-item>
       <el-form-item label="Client">
         <div v-if="client">
           <user-card-horizontal-small :user="client.account" />
@@ -79,7 +76,6 @@ const UPDATE_EVENT = gql`mutation UpdateEvent(
   $id: Int!
   $name: String
   $purpose: String
-  $quotation: numeric
 ) {
   update_event_by_pk(
     pk_columns: { id: $id }
@@ -89,7 +85,6 @@ const UPDATE_EVENT = gql`mutation UpdateEvent(
       id: $id
       name: $name
       purpose: $purpose
-      quotation: $quotation
     }
   ) {
     client_id
@@ -98,7 +93,6 @@ const UPDATE_EVENT = gql`mutation UpdateEvent(
     id
     name
     purpose
-    quotation
     updated_at
   }
 }`;
@@ -108,7 +102,6 @@ const INSERT_EVENT = gql`mutation InsertEvent(
   $description: String
   $name: String
   $purpose: String
-  $quotation: numeric
 ) {
   insert_event_one(
     object: {
@@ -116,7 +109,6 @@ const INSERT_EVENT = gql`mutation InsertEvent(
       description: $description
       name: $name
       purpose: $purpose
-      quotation: $quotation
     }
   ) {
     client_id
@@ -125,7 +117,6 @@ const INSERT_EVENT = gql`mutation InsertEvent(
     id
     name
     purpose
-    quotation
     updated_at
   }
 }`;
@@ -201,7 +192,6 @@ export default {
           description: this.form.description,
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
-          quotation: this.form.quotation,
         }
       });
       this.event = data.event;
@@ -217,7 +207,6 @@ export default {
           description: this.form.description,
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
-          quotation: this.form.quotation,
         }
       })
       this.event = data.event;
