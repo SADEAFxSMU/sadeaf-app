@@ -6,7 +6,7 @@
         <admin-navbar v-if="userType === 'admin'"/>
         <client-navbar v-else-if="userType === 'client'"/>
         <volunteer-navbar v-else-if="userType === 'volunteer'"/>
-        <service_requestor-navbar v-else-if="userType === 'service_requestor'"/>
+        <service-requestor-navbar v-else-if="userType === 'service_requestor'"/>
       </el-header>
       <el-main class="main">
         <nuxt/>
@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import AdminNavbar from "./navbar/admin";
-import ClientNavbar from "./navbar/client";
-import VolunteerNavbar from "./navbar/volunteer";
+import AdminNavbar from "../components/navbar/admin";
+import ClientNavbar from "../components/navbar/client";
+import VolunteerNavbar from "../components/navbar/volunteer";
 import UserSwitcher from "../components/dev_only/UserSwitcher";
-import Service_requestorNavbar from "./navbar/service_requestor";
+import ServiceRequestorNavbar from "../components/navbar/service-requestor";
 
 export default {
-  components: {Service_requestorNavbar, UserSwitcher, AdminNavbar, ClientNavbar, VolunteerNavbar},
+  components: {ServiceRequestorNavbar, UserSwitcher, AdminNavbar, ClientNavbar, VolunteerNavbar},
 
   data() {
     return {

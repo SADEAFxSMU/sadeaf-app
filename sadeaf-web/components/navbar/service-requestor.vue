@@ -9,12 +9,12 @@
 </template>
 
 <script>
-  import BaseNavbar from "./BaseNavbar";
+import BaseNavbar from "./BaseNavbar";
 
-  export default {
-    name: "service-requestor-navbar",
-    components: {BaseNavbar},
-  };
+export default {
+  name: "service-requestor-navbar",
+  components: {BaseNavbar},
+};
 </script>
 
 <style scoped>

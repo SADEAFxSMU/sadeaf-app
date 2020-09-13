@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import StatusIndicator from "../../components/StatusIndicator";
+import StatusIndicator from "../StatusIndicator";
 export default {
   name: "BaseNavbar",
   components: {StatusIndicator},
