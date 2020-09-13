@@ -9,8 +9,10 @@ export default {
     const app = express()
     app.use(bodyParser.json())
 
-    app.post('/_hasura/webhook/:queue', async function (req, res, next) {
-      await publish(req.params.queue, req.body)
+    app.post('/_hasura/webhook', async function (req, res, next) {
+      // worker/queue names should match the name of the trigger
+      let triggerName = req.body.trigger.name;
+      await publish(triggerName, req.body)
       res.json({})
     })
 

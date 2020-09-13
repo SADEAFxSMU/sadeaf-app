@@ -8,7 +8,7 @@ based on the new user handle
 module.exports = async function () {
   const {subscribe} = await pubsub()
 
-  await subscribe('chat-id-updater', async ({data}) => {
+  await subscribe('update_chat_id_on_handle_update', async ({data}) => {
     await new Promise((resolve, reject) => {
       try {
         // old values of the telegram-information table

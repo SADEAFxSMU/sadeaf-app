@@ -1439,7 +1439,7 @@
       num_retries: 0
       interval_sec: 10
       timeout_sec: 60
-    webhook: http://host.docker.internal:4000/_hasura/webhook/chat-id-updater
+    webhook_from_env: WEB_HOOK_URL
 - table:
     schema: public
     name: volunteer

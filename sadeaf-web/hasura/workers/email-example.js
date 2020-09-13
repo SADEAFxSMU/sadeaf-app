@@ -16,6 +16,7 @@ module.exports = async function () {
 
   await subscribe('email-example', async ({data: {from, to, subject, body}}) => {
     // TODO(sde): Refer to this https://github.com/eleith/emailjs
+    // TODO(sde): properly implement this with a Hasura trigger
     const msg = {
       from: from,
       to: to,
