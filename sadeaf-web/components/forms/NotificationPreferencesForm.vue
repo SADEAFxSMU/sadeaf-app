@@ -257,7 +257,11 @@
             notification_setting_id: this.form.id
           }
         }).then((data) => {
-          console.log("inserted telegram data", data)
+          this.$notify({
+            title: 'Success',
+            message: 'You have set Telegram as a notification preference',
+            type: 'success'
+          })
         }).catch((error) => {
           console.log('insert telegram settings error', error)
         })
@@ -282,7 +286,11 @@
             telegram_information_id: this.form.telegram_information.id
           }
         }).then((data) => {
-          console.log("updated telegram data", data)
+          this.$notify({
+            title: 'Success',
+            message: 'You have updated your Telegram handle',
+            type: 'success'
+          })
         }).catch((error) => {
           console.log('update telegram data error', error)
         })
@@ -304,7 +312,11 @@
             telegram_information_id: this.form.telegram_information.id
           }
         }).then((data) => {
-          console.log("deleted telegram data", data)
+          this.$notify({
+            title: 'Success',
+            message: 'You have removed Telegram as a notification preference',
+            type: 'success'
+          })
         }).catch((error) => {
           console.log('delete telegram data error', error)
         })
