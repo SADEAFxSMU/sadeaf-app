@@ -1,7 +1,7 @@
 <template>
   <base-navbar>
     <template v-slot:user-nav>
-      <el-menu-item index="/volunteer">
+      <el-menu-item index="/org">
         Service Requests
       </el-menu-item>
     </template>
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import BaseNavbar from "./BaseNavbar";
+  import BaseNavbar from "./BaseNavbar";
 
-export default {
-  name: "volunteer-navbar",
-  components: {BaseNavbar},
-};
+  export default {
+    name: "service-requestor-navbar",
+    components: {BaseNavbar},
+  };
 </script>
 
 <style scoped>

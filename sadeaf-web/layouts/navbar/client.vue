@@ -1,12 +1,19 @@
 <template>
-  <div>
-    <h1>Client Navbar</h1>
-  </div>
+  <base-navbar>
+    <template v-slot:user-nav>
+      <el-menu-item index="/client">
+        Service Requests
+      </el-menu-item>
+    </template>
+  </base-navbar>
 </template>
 
 <script>
+import BaseNavbar from "./BaseNavbar";
+
 export default {
-  name: "client-navbar"
+  name: "client-navbar",
+  components: {BaseNavbar},
 };
 </script>
 
