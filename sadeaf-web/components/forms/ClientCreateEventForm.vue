@@ -9,7 +9,7 @@
                   placeholder="IS111 - Introduction to Programming" />
       </el-form-item>
       <el-form-item label="Purpose" prop="purpose" required>
-        <div style="display: flex;">
+        <div class="field-purpose">
           <el-select v-model="form.purpose"
                      placeholder="School">
             <el-option v-for="option in eventPurposeOptions"
@@ -31,7 +31,9 @@
       </el-form-item>
       <el-form-item prop="time">
         <template v-slot:label>
-          <el-icon name="time" />
+          <div class="required-asterisk">
+            <el-icon name="time" />
+          </div>
         </template>
         <div>
           <el-row>
@@ -43,14 +45,12 @@
               </el-form-item>
             </el-col>
             <el-col :xs="24" :lg="12">
-              <el-form-item prop="start_time" required>
+              <el-form-item prop="duration">
                 <el-time-picker v-model="form.start_time"
                                 format="HH:mm"
                                 placeholder="Start"
                                 style="width: 120px;" />
-              </el-form-item>
-              -
-              <el-form-item prop="end_time" required>
+                -
                 <el-time-picker v-model="form.end_time"
                                 format="HH:mm"
                                 placeholder="End"
@@ -58,7 +58,7 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <div style="margin-top: 4px;">
+          <div class="field-repeat">
             <el-form-item prop="repeat">
               <el-select v-model="form.repeat"
                          placeholder="Repeats every">
@@ -83,58 +83,51 @@
           </div>
         </div>
       </el-form-item>
-      <el-form-item required>
+      <el-form-item prop="location">
         <template v-slot:label>
-          <el-icon name="location" />
+          <div class="required-asterisk">
+            <el-icon name="location" />
+          </div>
         </template>
-        <!-- Assignments -->
-        <div style="display: flex;">
-          <div style="flex: 2; width: 100%;">
-            <div style="margin-bottom: 8px;">
-              <p>Location</p>
-              <div style="display: flex; margin-top: 5px;">
-                <el-form-item prop="address_line_one" required>
-                  <el-input v-model="form.address_line_one"
-                            placeholder="Address Line 1" />
-                </el-form-item>
-                <el-input v-model="form.room_number"
-                          style="margin-left: 5px; width: 200px;"
-                          placeholder="Room Number" />
-              </div>
-              <div style="display: flex; margin-top: 5px">
-                <el-input v-model="form.address_line_two"
-                          placeholder="Address Line 2" />
-                <el-input v-model="form.postal"
-                          style="margin-left: 5px; width: 150px;"
-                          placeholder="Postal Code" />
-              </div>
-            </div>
+        <div class="field-location">
+          <p>Location</p>
+          <div class="body">
+            <el-input v-model="form.address_line_one"
+                      placeholder="Address Line 1" />
+            <el-input v-model="form.room_number"
+                      style="margin-left: 5px; width: 200px;"
+                      placeholder="Room Number" />
+          </div>
+          <div class="body">
+            <el-input v-model="form.address_line_two"
+                      placeholder="Address Line 2" />
+            <el-input v-model="form.postal"
+                      style="margin-left: 5px; width: 150px;"
+                      placeholder="Postal Code" />
           </div>
         </div>
       </el-form-item>
-      <el-form-item >
-        <div style="display: flex; justify-content: space-between;">
-          <el-button-group>
-            <el-button @click="submitForm">
-              Confirm
-            </el-button>
-            <el-button @click="handleCancel">
-              Cancel
-            </el-button>
-          </el-button-group>
-          <el-popconfirm v-if="event"
-                        confirmButtonText='Confirm'
-                        cancelButtonText='Cancel'
-                        icon="el-icon-info"
-                        iconColor="red"
-                        title="Are you sure you want to delete this?"
-                        @onConfirm="handleDelete">
-            <el-button slot="reference"
-                       type="danger">
-              Delete
-            </el-button>
-          </el-popconfirm>
-        </div>
+      <el-form-item>
+        <el-button-group>
+          <el-button @click="submitForm">
+            Confirm
+          </el-button>
+          <el-button @click="handleCancel">
+            Cancel
+          </el-button>
+        </el-button-group>
+        <el-popconfirm v-if="event"
+                      confirmButtonText='Confirm'
+                      cancelButtonText='Cancel'
+                      icon="el-icon-info"
+                      iconColor="red"
+                      title="Are you sure you want to delete this?"
+                      @onConfirm="handleDelete">
+          <el-button slot="reference"
+                     type="danger">
+            Delete
+          </el-button>
+        </el-popconfirm>
       </el-form-item>
     </el-form>
   </div>
@@ -144,8 +137,8 @@
 import { EVENT_PURPOSE_OPTIONS } from "../../common/types/constants";
 import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 import UserCard from "../user/UserCard";
-import gql from 'graphql-tag';
 import SmallDeleteButton from "../buttons/SmallDeleteButton";
+import gql from 'graphql-tag';
 
 const INSERT_EVENT = gql`
   mutation InsertEvent(
@@ -212,25 +205,16 @@ export default {
         date: [
           { required: true, message: 'Please enter a date' }
         ],
-        start_time: [
-          { required: true, message: 'Please enter a start time' },
+        duration: [
           {
-            validator: (rule, value, callback) => {
-              if (value > this.form.end_time) {
-                callback(new Error('Start time must be before end time'));
-              } else {
-                callback();
-              }
-            },
-            trigger: 'blur'
-          }
-        ],
-        end_time: [
-          { required: true, message: 'Please enter an end time' },
-          {
-            validator: (rule, value, callback) => {
-              if (value < this.form.start_time) {
-                callback(new Error('End time must be after start time'));
+            validator: (_, __, callback) => {
+              let { start_time, end_time } = this.form;
+              start_time = this.$dayjs(start_time);
+              end_time   = this.$dayjs(end_time);
+
+              const diff_hours = end_time.diff(start_time, 'hour', false);
+              if (diff_hours < 2) {
+                callback(new Error('Minimum duration is 2 hours'));
               } else {
                 callback();
               }
@@ -243,6 +227,18 @@ export default {
         ],
         repeatCount: [
           { required: true, message: 'Please indicate a count' }
+        ],
+        location: [
+          {
+            validator: (rule, value, callback) => {
+              // address_line_one is mandatory, the rest are optional
+              if (this.form.address_line_one) {
+                callback();
+              } else {
+                callback(new Error('Please enter an address!'));
+              }
+            }
+          }
         ],
       },
       form: {
@@ -371,4 +367,28 @@ export default {
 </script>
 
 <style scoped>
+.field-purpose {
+  display: flex;
+}
+
+.field-repeat {
+  margin-top: 4px;
+}
+
+.field-location {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.field-location .body {
+  display: flex;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.required-asterisk:before {
+  content: '*';
+  margin-right: 4px;
+  color: #F56C6C;
+}
 </style>

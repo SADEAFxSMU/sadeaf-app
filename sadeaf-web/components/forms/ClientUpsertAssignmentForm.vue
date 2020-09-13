@@ -5,10 +5,9 @@
         <h3>Assigned Volunteer</h3>
         <user-card :user="assignedVolunteer.account" />
       </div>
-      <div v-else
-           style="display: flex; align-items: center;">
+      <div v-else class="pending-volunteer">
         <el-icon name="loading" />
-        <h1 style="margin-left: 8px;">Pending Volunteer</h1>
+        <h1 class="title">Pending Volunteer</h1>
       </div>
     </div>
     <el-form :model="form" label-width="150px">
@@ -42,17 +41,17 @@
           <div class="cancel-field">
             <div>
               <h3 class="heading">Cancel this session</h3>
-              <p style="opacity: 0.7; line-height: 18px;">
+              <p class="body">
                 NOTE: Last minute cancellation of appointments are strictly discouraged. It will
                 not only affect volunteers, but also ...
               </p>
             </div>
             <el-popconfirm confirmButtonText='Confirm'
-                           cancelButtonText='Cancel'
-                           icon="el-icon-info"
-                           iconColor="red"
-                           title="Are you sure you want to cancel this assignment?"
-                           @onConfirm="handleDelete">
+                          cancelButtonText='Cancel'
+                          icon="el-icon-info"
+                          iconColor="red"
+                          title="Are you sure you want to cancel this assignment?"
+                          @onConfirm="handleDelete">
               <el-button slot="reference"
                          type="danger"
                          size="mini">
@@ -282,6 +281,15 @@ export default {
   padding: 12px;
   margin-bottom: 6px;
 }
+
+.pending-volunteer {
+  display: flex;
+  align-items: center;
+}
+.pending-volunteer .title {
+  margin-left: 8px;
+}
+
 .cancel-field {
   display: flex;
   justify-content: space-between;
@@ -290,5 +298,9 @@ export default {
 .cancel-field .heading {
   color: #be5555;
 }
-
+.cancel-field .body {
+  opacity: 0.7;
+  line-height: 18px;
+  word-break: keep-all;
+}
 </style>

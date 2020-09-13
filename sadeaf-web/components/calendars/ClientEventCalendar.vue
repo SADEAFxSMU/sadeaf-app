@@ -7,7 +7,7 @@
           <h4 :class="{ 'greyed': isBeforeToday(date) }">{{ date.getDate() }}</h4>
           <div v-if="getAssignmentsOnDate(date)" class="assignment-cell">
             <div v-for="assignment in getAssignmentsOnDate(date)"
-                 style="margin-bottom: 4px;">
+                 class="body">
               <el-tag size="mini">
                 {{ assignment.event.name }}
               </el-tag>
@@ -215,6 +215,10 @@ export default {
   margin-top: 4px;
   overflow: scroll;
   max-height: 55px;
+}
+
+.assignment-cell .body {
+  margin-bottom: 4px;
 }
 
 .assignment-command-panel {

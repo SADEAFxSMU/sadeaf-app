@@ -10,8 +10,8 @@
       <!-- Expanded row -->
       <template v-slot:expanded="{ row }">
         <div class="expanded-row">
-          <div style="display: flex; align-items: center; margin-bottom: 16px;">
-            <h2 style="opacity: 0.5; margin-right: 8px;">Assignments</h2>
+          <div class="body">
+            <h2 class="title">Assignments</h2>
             <el-button icon="el-icon-plus"
                        size="mini"
                        @click="handleNewAssignmentClick(row)" />
@@ -244,5 +244,14 @@ export default {
   padding: 18px;
   border-radius: 6px;
   overflow: hidden;
+}
+.expanded-row .body {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.expanded-row .title {
+  opacity: 0.5;
+  margin-right: 8px;
 }
 </style>
