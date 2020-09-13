@@ -16,7 +16,8 @@ export default {
     'element-ui/lib/theme-chalk/index.css'
   ],
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/dayjs',
   ],
   components: true,
   buildModules: [],
@@ -29,6 +30,7 @@ export default {
     '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
+    '@nuxtjs/dayjs',
   ],
   serverMiddleware: [
     {prefix: false, handler: '~/api'}

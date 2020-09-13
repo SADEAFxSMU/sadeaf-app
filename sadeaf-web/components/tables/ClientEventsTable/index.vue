@@ -10,8 +10,8 @@
       <!-- Expanded row -->
       <template v-slot:expanded="{ row }">
         <div class="expanded-row">
-          <div style="display: flex; align-items: center; margin-bottom: 16px;">
-            <h2 style="opacity: 0.5; margin-right: 8px;">Assignments</h2>
+          <div class="body">
+            <h2 class="title">Assignments</h2>
             <el-button icon="el-icon-plus"
                        size="mini"
                        @click="handleNewAssignmentClick(row)" />
@@ -50,22 +50,6 @@
         </el-button>
       </template>
     </base-table>
-    <el-dialog title="Create New Event"
-               :visible="createEventDialogVisible"
-               @close="handleUpsertEventCancel">
-      <sadeaf-create-event-form :event="updateEvent"
-                                @success="createEventDialogVisible = false"
-                                @cancel="handleUpsertEventCancel"/>
-    </el-dialog>
-    <el-dialog title="Manual Client-Volunteer Assignment"
-               :visible="createAssignmentDialogVisible"
-               @close="handleAssignmentFormCancel">
-      <sadeaf-create-assignment-form :event_id="event_id"
-                                     :client="client"
-                                     :assignment="updateAssignment"
-                                     @success="createAssignmentDialogVisible = false"
-                                     @cancel="handleAssignmentFormCancel" />
-    </el-dialog>
   </div>
 </template>
 
@@ -76,33 +60,27 @@ import UserCardHorizontalSmall from "../../user/UserCardHorizontalSmall";
 import SadeafCreateAssignmentForm from "../../forms/SadeafCreateAssignmentForm";
 import gql from 'graphql-tag';
 import AssignmentsTimeline from "../../cards/AssignmentsTimeline";
-import SadeafCreateEventForm from "../../forms/SadeafCreateEventForm";
+import ClientCreateEventForm from "../../forms/ClientCreateEventForm";
 
 export default {
-  name: "AdminEventsTable",
+  name: "ClientEventsTable",
+
   components: {
-    SadeafCreateEventForm,
+    ClientCreateEventForm,
     AssignmentsTimeline,
     UserCardHorizontalSmall,
     VolunteersCell,
     SadeafCreateAssignmentForm,
     BaseTable,
   },
+
   data() {
     return {
-      schema: 'event',
-      role: 'admin',
       createAssignmentDialogVisible: false,
       createEventDialogVisible: false,
       updateEvent: null,
-      event_id: null,
-      client: null,
       updateAssignment: null,
       columns: [
-        {
-          name: 'client',
-          label: 'Client',
-        },
         {
           name: 'name',
           label: 'Event',
@@ -183,28 +161,16 @@ export default {
       }
       this.tableData = rows;
     },
-
-    setSummaryStats(events) {
-      let matched = 0;
-      let unmatched = 0;
-      events.forEach(event => {
-        event.assignments.forEach(assignment => {
-          if (assignment.volunteer) {
-            matched++;
-          } else {
-            unmatched++;
-          }
-        });
-      });
-      this.$emit('summary', { matched, unmatched });
-    }
   },
 
   apollo: {
     $subscribe: {
       event: {
-        query: gql`subscription EventsSubscription {
-          events: event(order_by: { assignments_aggregate: { max: { start_dt: desc_nulls_last }}}) {
+        query: gql`subscription EventsSubscription($client_id: Int!) {
+          events: event(
+            where: { client_id: { _eq: $client_id } }
+            order_by: { assignments_aggregate: { max: { start_dt: desc_nulls_last }}}
+          ) {
             id
             name
             description
@@ -217,7 +183,7 @@ export default {
                 email
               }
             }
-            statuses: assignments_aggregate(distinct_on: status) {
+            statuses: assignments_aggregate(distinct_on: status, limit: 1) {
               nodes { status }
             }
             volunteers: assignments_aggregate(distinct_on: volunteer_id) {
@@ -249,13 +215,25 @@ export default {
             }
           }
         }`,
+        variables() {
+          return {
+            client_id: this.client.id
+          }
+        },
+        skip () {
+          return !this.client;
+        },
         result({ data }) {
           this.mapQueryResponseToRows(data.events);
-          this.setSummaryStats(data.events);
         }
       }
     }
   },
+  computed: {
+    client() {
+      return this.$store.state.auth.client;
+    }
+  }
 };
 </script>
 
@@ -266,5 +244,14 @@ export default {
   padding: 18px;
   border-radius: 6px;
   overflow: hidden;
+}
+.expanded-row .body {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.expanded-row .title {
+  opacity: 0.5;
+  margin-right: 8px;
 }
 </style>

@@ -173,19 +173,19 @@ INSERT INTO assignment (
     address_line_one, address_line_two, postal, room_number, latitude, longitude,
     volunteer_id, honorarium_amount
 ) VALUES
-(1, 1, 'MATCHED', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + interval '10 day',
+(1, 1, 'MATCHED', CURRENT_TIMESTAMP + interval '2 hour', CURRENT_TIMESTAMP + interval '10 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  1, 100),
 
-(2, 1, 'OPEN', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + interval '4 day',
+(2, 1, 'PENDING', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  null, 100),
 
-(3, 1, 'MATCHED', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + interval '10 day',
+(3, 1, 'MATCHED', CURRENT_TIMESTAMP + interval '24 hour', CURRENT_TIMESTAMP + interval '10 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  1, 100),
 
-(4, 1, 'OPEN', CURRENT_TIMESTAMP - interval '1 day', CURRENT_TIMESTAMP,
+(4, 1, 'CANCELLED', CURRENT_TIMESTAMP - interval '1 day', CURRENT_TIMESTAMP,
  '12 Geyland St', '#03-54', '603482', 'Room 2C', 1.93821, 2.3247,
  null, 200),
 
@@ -201,7 +201,7 @@ INSERT INTO assignment (
 '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
 1, 500),
 
-(8, 3, 'OPEN', '2020-08-12T15:00:00.000Z', '2020-08-12T18:30:00.000Z',
+(8, 3, 'PENDING', '2020-08-12T15:00:00.000Z', '2020-08-12T18:30:00.000Z',
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
  null, 500);
 

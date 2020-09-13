@@ -4,11 +4,10 @@
       <el-timeline-item v-for="assignment in assignments"
                         :key="'assignment-' + assignment.id"
                         :color="color(assignment)"
-                        :timestamp="assignment.start_dt + ' - ' + assignment.end_dt">
+                        :timestamp="formatTimestamp(assignment.start_dt) + ' - ' + formatTimestamp(assignment.end_dt)">
         <div class="status-bar">
-          <status-indicator :color="color(assignment)"
-                            :text="status(assignment)"
-                            :show-ball="false" />
+          <assignment-status :status="assignment.status"
+                             :show-ball="false" />
           <el-button @click="handleUpdateAssignment(assignment)"
                      icon="el-icon-edit"
                      size="mini"
@@ -21,31 +20,18 @@
 </template>
 
 <script>
-import AssignmentCard from "./AssignmentCard";
-import StatusIndicator from "../StatusIndicator";
+import AssignmentCard from "./AssignmentCardSmall";
+import AssignmentStatus from "../AssignmentStatus";
 import SadeafCreateAssignmentForm from "../forms/SadeafCreateAssignmentForm";
-import { ASSIGNMENT_STATUSES } from "../../common/types/constants";
-const {
-  OPEN,
-  MATCHED,
-  COMPLETE,
-  CANCELLED,
-  URGENT,
-  UNKNOWN,
-} = ASSIGNMENT_STATUSES;
-
-const STATUS_COLORS = {
-  [OPEN]: '#f1b65d',
-  [MATCHED]: '#65adff',
-  [COMPLETE]: '#59cb7a',
-  [CANCELLED]: '#ee5d5d',
-  [URGENT]: '#fa4c4c',
-  [UNKNOWN]: '#b34ef3',
-}
+import { ASSIGNMENT_STATUS_COLORS } from "../../common/types/constants";
 
 export default {
   name: "AssignmentsTimeline",
-  components: {AssignmentCard, StatusIndicator, SadeafCreateAssignmentForm},
+  components: {
+    AssignmentCard,
+    AssignmentStatus,
+    SadeafCreateAssignmentForm
+  },
   props: {
     event_id: {
       type: Number,
@@ -67,18 +53,18 @@ export default {
     }
   },
   methods: {
-    status(assignment) {
-      return assignment.status || UNKNOWN;
-    },
     hasVolunteerAssigned(assignment) {
       return assignment.volunteer && assignment.volunteer.account;
     },
-    color(assignment) {
-      return STATUS_COLORS[this.status(assignment)];
-    },
     handleUpdateAssignment(assignment) {
       this.$emit('updateAssignment', assignment);
-    }
+    },
+    formatTimestamp(timestamp) {
+      return this.$dayjs(timestamp).format('ddd, DD MMM, HH:mm');
+    },
+    color(assignment) {
+      return ASSIGNMENT_STATUS_COLORS[assignment.status];
+    },
   }
 };
 </script>
