@@ -1428,6 +1428,18 @@
         notification_setting:
           account_id:
             _eq: X-Hasura-User-Id
+  event_triggers:
+  - name: update_chat_id_on_handle_update
+    definition:
+      enable_manual: false
+      update:
+        columns:
+        - user_handle
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook: http://host.docker.internal:4000/_hasura/webhook/chat-id-updater
 - table:
     schema: public
     name: volunteer
