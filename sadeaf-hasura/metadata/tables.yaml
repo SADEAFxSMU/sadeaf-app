@@ -682,6 +682,14 @@
         table:
           schema: public
           name: feedback
+  computed_fields:
+  - name: uncompleted_status
+    definition:
+      function:
+        schema: public
+        name: get_uncompleted_status
+    comment: Check if event is uncompleted or not. If any assignments within the event
+      has a status of NOT "COMPLETE", uncompleted_status == true.
   insert_permissions:
   - role: client
     permission:
