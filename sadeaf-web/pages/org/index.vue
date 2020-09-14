@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <h1>Client Navbar</h1>
-  </div>
+  <h1>Service Requestor Home Page</h1>
 </template>
 
 <script>
 export default {
-  name: "client-navbar"
+  name: "service_requestor-home"
 };
 </script>
 

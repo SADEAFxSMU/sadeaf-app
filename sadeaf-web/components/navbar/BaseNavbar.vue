@@ -4,24 +4,7 @@
       <h1>SADEAF Dashboard</h1>
       <status-indicator text="LIVE" color="lightseagreen" class="indicator"/>
     </div>
-    <el-menu-item index="/admin">
-      Service Requests
-    </el-menu-item>
-    <el-submenu index="/admin/users">
-      <template slot="title">User Management</template>
-      <el-menu-item index="/admin/users">
-        All Users
-      </el-menu-item>
-      <el-menu-item index="/admin/users?type=clients">
-        Clients
-      </el-menu-item>
-      <el-menu-item index="/admin/users?type=service-requestors">
-        Service Requestors
-      </el-menu-item>
-      <el-menu-item index="/admin/users?type=volunteers">
-        Volunteers
-      </el-menu-item>
-    </el-submenu>
+    <slot name="user-nav"></slot>
     <el-menu-item index="/notifications">
       Notifications
     </el-menu-item>
@@ -41,10 +24,9 @@
 </template>
 
 <script>
-import StatusIndicator from "../../components/StatusIndicator";
-
+import StatusIndicator from "../StatusIndicator";
 export default {
-  name: "admin-navbar",
+  name: "BaseNavbar",
   components: {StatusIndicator},
 };
 </script>
