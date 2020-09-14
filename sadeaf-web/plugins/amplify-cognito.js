@@ -17,16 +17,12 @@ export default function (context, inject) {
     currentSession() {
       return Auth.currentSession()
     },
+    /**
+     * @return {Promise<boolean>}
+     */
     async isAuthenticated() {
       const user = await Auth.currentUserInfo()
-      return user.username != null
-    },
-    async hasGroup(group) {
-      const session = await Auth.currentSession()
-      const payload = await session.getIdToken().decodePayload()
-      const groups = payload['cognito:groups'] || []
-
-      return groups.includes(group)
+      return user?.username != null
     },
     /**
      * @return {Promise<>}
