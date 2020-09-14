@@ -16,9 +16,10 @@ export default {
     'element-ui/lib/theme-chalk/index.css'
   ],
   plugins: [
-    '@/plugins/element-ui',
+    '@/plugins/amplify-cognito',
+    '@/plugins/apollo',
     '@/plugins/dayjs',
-    {src: '@/plugins/amplify-cognito', ssr: false},
+    '@/plugins/element-ui'
   ],
   components: true,
   buildModules: [],
@@ -27,8 +28,6 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    // Doc: https://apollo.vuejs.org
-    '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
     '@nuxtjs/dayjs',
@@ -36,14 +35,6 @@ export default {
   serverMiddleware: [
     {prefix: false, handler: '~/api'}
   ],
-  apollo: {
-    clientConfigs: {
-      default: {
-        httpEndpoint: '/api/graphql',
-        wsEndpoint: 'ws://localhost:3000/api/graphql',
-      }
-    }
-  },
   build: {
     transpile: [/^element-ui/],
     extend(config, ctx) {
