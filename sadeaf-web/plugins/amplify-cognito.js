@@ -17,7 +17,7 @@ export default function (context, inject) {
     currentSession() {
       return Auth.currentSession()
     },
-    async isAuthed() {
+    async isAuthenticated() {
       const user = await Auth.currentUserInfo()
       return user.username != null
     },

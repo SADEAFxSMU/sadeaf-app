@@ -9,10 +9,7 @@
 <script>
 export default {
   name: "app-home",
-  middleware: ['authz'],
-  asyncData(ctx) {
-
-  },
+  middleware: ['authenticated'],
   mounted() {
     setTimeout(() => {
       this.$router.push('/admin');
