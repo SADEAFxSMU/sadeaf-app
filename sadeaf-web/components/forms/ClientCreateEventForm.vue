@@ -306,7 +306,7 @@ export default {
 
   computed: {
     client() {
-      return this.$store.state.auth.client;
+      return this.$store.state.auth.user.client;
     },
     isUpdate() {
       return this.event !== null;
