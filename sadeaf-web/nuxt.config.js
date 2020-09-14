@@ -17,6 +17,7 @@ export default {
   ],
   plugins: [
     '@/plugins/element-ui',
+    '@/plugins/dayjs',
     {src: '@/plugins/amplify-cognito', ssr: false},
   ],
   components: true,
@@ -30,6 +31,7 @@ export default {
     '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
+    '@nuxtjs/dayjs',
   ],
   serverMiddleware: [
     {prefix: false, handler: '~/api'}

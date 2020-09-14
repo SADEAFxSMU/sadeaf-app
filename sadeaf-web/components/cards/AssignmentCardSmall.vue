@@ -12,7 +12,7 @@
 <script>
 import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 export default {
-  name: "AssignmentCard",
+  name: "AssignmentCardSmall",
   components: {UserCardHorizontalSmall},
   props: {
     assignment: {

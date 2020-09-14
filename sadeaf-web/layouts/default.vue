@@ -1,37 +1,48 @@
 <template>
-  <el-container class="container">
-    <el-header height="60">
-      <admin-navbar v-if="userType === 'admin'"/>
-      <client-navbar v-else-if="userType === 'client'"/>
-      <volunteer-navbar v-else-if="userType === 'volunteer'"/>
-    </el-header>
-    <el-main>
-      <main>
+  <div>
+    <user-switcher v-if="isDev" v-model="userType"/>
+    <el-container>
+      <el-header>
+        <admin-navbar v-if="userType === 'admin'"/>
+        <client-navbar v-else-if="userType === 'client'"/>
+        <volunteer-navbar v-else-if="userType === 'volunteer'"/>
+        <service-requestor-navbar v-else-if="userType === 'service_requestor'"/>
+      </el-header>
+      <el-main class="main">
         <nuxt/>
-      </main>
-    </el-main>
-  </el-container>
+      </el-main>
+    </el-container>
+  </div>
 </template>
 
 <script>
-import AdminNavbar from "./navbar/admin";
-import ClientNavbar from "./navbar/client";
-import VolunteerNavbar from "./navbar/volunteer";
+import AdminNavbar from "../components/navbar/admin";
+import ClientNavbar from "../components/navbar/client";
+import VolunteerNavbar from "../components/navbar/volunteer";
+import UserSwitcher from "../components/dev_only/UserSwitcher";
+import ServiceRequestorNavbar from "../components/navbar/service-requestor";
 
 export default {
-  components: {AdminNavbar, ClientNavbar, VolunteerNavbar},
-  computed: {
-    userType() {
-      // TODO: Set navbar based on user type / role
-      return 'admin';
+  components: {ServiceRequestorNavbar, UserSwitcher, AdminNavbar, ClientNavbar, VolunteerNavbar},
+
+  data() {
+    return {
+      userType: 'admin',
     }
-  }
+  },
+
+  computed: {
+    isDev() {
+      return process.env.NODE_ENV !== 'production';
+    }
+  },
 };
 </script>
 
 <style>
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -47,11 +58,9 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
-</style>
 
-<style scoped>
-main {
+.main {
   background: #f4f5ff;
-  min-height: calc(100vh - 60px);
+  min-height: 95vh;
 }
 </style>

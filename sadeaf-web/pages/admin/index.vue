@@ -35,7 +35,7 @@ import AdminEventsTable from "../../components/tables/AdminEventsTable";
 import StatCard from "../../components/StatCard";
 import DoughnutChart from "../../components/charts/Doughnut";
 export default {
-  name: "client-home",
+  name: "admin-home",
   components: {DoughnutChart, StatCard, AdminEventsTable},
   data() {
     return {

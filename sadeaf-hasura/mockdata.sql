@@ -173,19 +173,19 @@ INSERT INTO assignment (
     address_line_one, address_line_two, postal, room_number, latitude, longitude,
     volunteer_id, honorarium_amount
 ) VALUES
-(1, 1, 'MATCHED', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + interval '10 day',
+(1, 1, 'MATCHED', CURRENT_TIMESTAMP + interval '2 hour', CURRENT_TIMESTAMP + interval '10 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  1, 100),
 
-(2, 1, 'OPEN', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + interval '4 day',
+(2, 1, 'PENDING', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  null, 100),
 
-(3, 1, 'MATCHED', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + interval '10 day',
+(3, 1, 'MATCHED', CURRENT_TIMESTAMP + interval '24 hour', CURRENT_TIMESTAMP + interval '10 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  1, 100),
 
-(4, 1, 'OPEN', CURRENT_TIMESTAMP - interval '1 day', CURRENT_TIMESTAMP,
+(4, 1, 'CANCELLED', CURRENT_TIMESTAMP - interval '1 day', CURRENT_TIMESTAMP,
  '12 Geyland St', '#03-54', '603482', 'Room 2C', 1.93821, 2.3247,
  null, 200),
 
@@ -201,7 +201,7 @@ INSERT INTO assignment (
 '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
 1, 500),
 
-(8, 3, 'OPEN', '2020-08-12T15:00:00.000Z', '2020-08-12T18:30:00.000Z',
+(8, 3, 'PENDING', '2020-08-12T15:00:00.000Z', '2020-08-12T18:30:00.000Z',
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
  null, 500);
 
@@ -221,3 +221,22 @@ INSERT INTO interpretation_details (
     number_of_hearing,event_id
 ) VALUES
 (1, 'home system', true, true, 5, 100, 1);
+
+SELECT setval(pg_get_serial_sequence('telegram_information', 'id'), coalesce(max(id) + 1, 1), false) FROM telegram_information;
+SELECT setval(pg_get_serial_sequence('email_information', 'id'), coalesce(max(id) + 1, 1), false) FROM email_information;
+SELECT setval(pg_get_serial_sequence('attendance', 'id'), coalesce(max(id) + 1, 1), false) FROM attendance;
+SELECT setval(pg_get_serial_sequence('assignment', 'id'), coalesce(max(id) + 1, 1), false) FROM assignment;
+SELECT setval(pg_get_serial_sequence('invoice', 'id'), coalesce(max(id) + 1, 1), false) FROM invoice;
+SELECT setval(pg_get_serial_sequence('feedback', 'id'), coalesce(max(id) + 1, 1), false) FROM feedback;
+SELECT setval(pg_get_serial_sequence('interpretation_details', 'id'), coalesce(max(id) + 1, 1), false) FROM interpretation_details;
+SELECT setval(pg_get_serial_sequence('event', 'id'), coalesce(max(id) + 1, 1), false) FROM event;
+SELECT setval(pg_get_serial_sequence('notification_setting', 'id'), coalesce(max(id) + 1, 1), false) FROM notification_setting;
+SELECT setval(pg_get_serial_sequence('volunteer', 'id'), coalesce(max(id) + 1, 1), false) FROM volunteer;
+SELECT setval(pg_get_serial_sequence('client', 'id'), coalesce(max(id) + 1, 1), false) FROM client;
+SELECT setval(pg_get_serial_sequence('service_requestor', 'id'), coalesce(max(id) + 1, 1), false) FROM service_requestor;
+SELECT setval(pg_get_serial_sequence('admin', 'id'), coalesce(max(id) + 1, 1), false) FROM admin;
+SELECT setval(pg_get_serial_sequence('membership_renewals', 'id'), coalesce(max(id) + 1, 1), false) FROM membership_renewals;
+SELECT setval(pg_get_serial_sequence('membership', 'id'), coalesce(max(id) + 1, 1), false) FROM membership;
+SELECT setval(pg_get_serial_sequence('membership_type', 'id'), coalesce(max(id) + 1, 1), false) FROM membership_type;
+SELECT setval(pg_get_serial_sequence('account', 'id'), coalesce(max(id) + 1, 1), false) FROM account;
+SELECT setval(pg_get_serial_sequence('quotation', 'id'), coalesce(max(id) + 1, 1), false) FROM quotation;
