@@ -50,6 +50,7 @@ export default ({app}, inject) => {
     uri: 'ws://localhost:3000/api/graphql',
     options: {
       reconnect: true,
+      lazy: true,
       connectionParams: async () => {
         const token = await getToken() || undefined
 
