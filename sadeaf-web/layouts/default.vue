@@ -23,7 +23,7 @@ export default {
   computed: {
     userType() {
       // TODO: Set navbar based on user type / role
-      return 'admin';
+      return 'client';
     }
   }
 };

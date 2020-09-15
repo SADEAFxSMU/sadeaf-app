@@ -9,7 +9,8 @@
           <status-indicator :color="color(assignment)"
                             :text="status(assignment)"
                             :show-ball="false" />
-          <el-button @click="handleUpdateAssignment(assignment)"
+          <el-button v-if="editButton"
+                     @click="handleUpdateAssignment(assignment)"
                      icon="el-icon-edit"
                      size="mini"
                      style="margin-left: 4px;" />
@@ -47,6 +48,10 @@ export default {
   name: "AssignmentsTimeline",
   components: {AssignmentCard, StatusIndicator, SadeafCreateAssignmentForm},
   props: {
+    editButton: {
+      type: Boolean,
+      default: true,
+    },
     event_id: {
       type: Number,
       required: true,

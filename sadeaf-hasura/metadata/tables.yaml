@@ -830,7 +830,6 @@
       - notetaker_conduct
       - notetaker_punctual
       - post_session_comments
-      - post_session_interaction
       - post_session_understanding
       - training_privacy_preference
       - volunteer_id
@@ -853,7 +852,6 @@
       - live_information_understanding
       - live_interaction
       - notetaker_conduct
-      - post_session_interaction
       - post_session_understanding
       filter:
         event:
@@ -872,7 +870,6 @@
       - notetaker_conduct
       - notetaker_punctual
       - post_session_comments
-      - post_session_interaction
       - post_session_understanding
       - training_privacy_preference
       - updated_at
