@@ -5,7 +5,7 @@
         <h2 class="title">{{ assignment.event.name }}</h2>
         <assignment-status :status="assignment.status" />
       </div>
-      <el-button icon="el-icon-edit" size="mini" @click="$emit('editClick', assignment)" />
+      <el-button v-if="showEdit" icon="el-icon-edit" size="mini" @click="$emit('editClick', assignment)" />
     </div>
     <div class="body">
       <div>
@@ -13,6 +13,11 @@
           {{ address }}
           <span class="room-number" v-if="roomNumber"> {{ roomNumber }} </span>
         </h4>
+      </div>
+      <div v-if="showStartDate">
+        <h5>
+          {{ startDate }}
+        </h5>
       </div>
       <div class="assigned-volunteer">
         <user-card-horizontal-small v-if="assignment.volunteer"
@@ -28,6 +33,7 @@
 import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 import StatusIndicator from "../StatusIndicator";
 import AssignmentStatus from "../AssignmentStatus";
+import {DateUtils} from "../../common/date-utils";
 export default {
   name: "AssignmentCard",
   components: {AssignmentStatus, StatusIndicator, UserCardHorizontalSmall},
@@ -36,6 +42,16 @@ export default {
       type: Object,
       required: true,
     },
+    showEdit: {
+      type: Boolean,
+      default: true,
+      required: false
+    },
+    showStartDate: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
   },
   computed: {
     hasVolunteerAssigned() {
@@ -53,6 +69,9 @@ export default {
     },
     roomNumber() {
       return this.assignment.room_number;
+    },
+    startDate() {
+      return DateUtils.humanReadableDt(this.assignment.start_dt);
     }
   }
 };

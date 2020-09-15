@@ -12,6 +12,14 @@ export const state = () => ({
         email: 'jonlee@gmail.com',
       }
     },
+    volunteer: {
+      id: 1,
+      account: {
+        name: 'Toh Jin Wee Wayne',
+        username: 'waynetoh',
+        email: 'waynetoh@gmail.com',
+      }
+    }
   }
 })
 
