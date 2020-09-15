@@ -6,3 +6,4 @@ show_update_notification: false
 actions:
   kind: synchronous
   handler_webhook_baseurl: http://localhost:3000
+admin_secret: sadeaf-hasura-console
