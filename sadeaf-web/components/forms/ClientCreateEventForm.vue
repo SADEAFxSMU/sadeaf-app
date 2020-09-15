@@ -139,6 +139,7 @@ import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 import UserCard from "../user/UserCard";
 import SmallDeleteButton from "../buttons/SmallDeleteButton";
 import gql from 'graphql-tag';
+import dayjs from 'dayjs';
 
 const INSERT_EVENT = gql`
   mutation InsertEvent(
@@ -209,8 +210,8 @@ export default {
           {
             validator: (_, __, callback) => {
               let { start_time, end_time } = this.form;
-              start_time = this.$dayjs(start_time);
-              end_time   = this.$dayjs(end_time);
+              start_time = dayjs(start_time);
+              end_time   = dayjs(end_time);
 
               const diff_hours = end_time.diff(start_time, 'hour', false);
               if (diff_hours < 2) {
@@ -312,7 +313,7 @@ export default {
       return this.event !== null;
     },
     day() {
-      return this.$dayjs(this.date).format('dddd');
+      return dayjs(this.date).format('dddd');
     },
     assignments() {
       let {
@@ -335,11 +336,11 @@ export default {
         repeatCount = 1;
       }
 
-      let start_dt = this.$dayjs(date)
+      let start_dt = dayjs(date)
         .set('hour', start_time.getHours())
         .set('minute', start_time.getMinutes())
         .set('second', start_time.getSeconds());
-      let end_dt = this.$dayjs(date)
+      let end_dt = dayjs(date)
         .set('hour', end_time.getHours())
         .set('minute', end_time.getMinutes())
         .set('second', end_time.getSeconds());

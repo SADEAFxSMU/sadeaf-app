@@ -56,6 +56,8 @@ import ClientCreateEventForm from "../forms/ClientCreateEventForm";
 import UserCard from "../user/UserCard";
 import AssignmentCard from "../cards/AssignmentCard";
 import ClientUpsertAssignmentForm from "../forms/ClientUpsertAssignmentForm";
+import {DateUtils} from "../../common/date-utils";
+import dayjs from 'dayjs';
 
 export default {
   name: "ClientEventCalendar",
@@ -119,17 +121,14 @@ export default {
     },
 
     getAssignmentsOnDate(date) {
-      const dateKey = this.$dayjs(date).format('YYYYMMDD');
+      const dateKey = dayjs(date).format('YYYYMMDD');
       return this.assignmentsByDateTime[dateKey];
     },
     isBeforeToday(date) {
-      // Necessary to set h, m and s to 00:00:00
-      const today = new Date(new Date().toDateString());
-      return date < today;
+      return DateUtils.isBeforeToday(date);
     },
     isAfterToday(date) {
-      const today = new Date(new Date().toDateString());
-      return date > today;
+      return DateUtils.isAfterToday(date);
     },
   },
 
@@ -178,16 +177,7 @@ export default {
         },
         result({ data }) {
           this.assignments = data.assignments;
-
-          const assignmentsByDateTime = {};
-          data.assignments.forEach(assignment => {
-            const [dateKey, timeKey] = this.$dayjs(assignment.start_dt).format('YYYYMMDD HH:mm').split(' ');
-            if (!assignmentsByDateTime.hasOwnProperty(dateKey)) {
-              assignmentsByDateTime[dateKey] = {};
-            }
-            assignmentsByDateTime[dateKey][timeKey] = assignment;
-          });
-          this.assignmentsByDateTime = assignmentsByDateTime;
+          this.assignmentsByDateTime = DateUtils.groupAssignmentsByDateTime(data.assignments);
         }
       }
     }
