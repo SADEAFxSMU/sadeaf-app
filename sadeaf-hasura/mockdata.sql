@@ -208,14 +208,14 @@ INSERT INTO assignment (
 -- TODO: Add more assignments for the other clients + volunteers
 
 INSERT INTO volunteer_assignment_opt_in (
-    id, volunteer_id, assignment_id
+    id, volunteer_id, assignment_id, status
 ) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 2, 2),
-(4, 3, 2),
-(5, 3, 3),
-(6, 4, 4);
+(1, 1, 1, 'OPTED_IN'),
+(2, 1, 2, 'OPTED_IN'),
+(3, 2, 2, 'OPTED_IN'),
+(4, 3, 2, 'OPTED_IN'),
+(5, 3, 3, 'OPTED_IN'),
+(6, 4, 4, 'OPTED_IN');
 
 INSERT INTO feedback (
     id, event_id, volunteer_id, notetaker_punctual, notetaker_conduct, live_comments, live_information_understanding,
