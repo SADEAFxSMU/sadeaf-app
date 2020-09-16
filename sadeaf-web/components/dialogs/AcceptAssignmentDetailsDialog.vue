@@ -53,14 +53,13 @@
       </el-row>
     </div>
     <div slot="footer">
-      <el-button type="primary" @click="acceptAssignment">Accept</el-button>
+      <el-button type="primary" @click="optInForAssignment">Accept</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
   import gql from "graphql-tag";
-  import {ASSIGNMENT_STATUSES} from "../../common/types/constants";
   import {DateUtils} from "../../common/date-utils";
 
   export default {
@@ -84,30 +83,28 @@
       },
       // need to await mutation so that parent will only refetch assignment
       // data after mutation is complete
-      async acceptAssignment() {
+      async optInForAssignment() {
         await this.$apollo.mutate({
           mutation: gql`
             mutation(
-              $id: Int!
-              $volunteer_id: Int!
-              $new_status: String!
+              $volunteer_id: Int!,
+              $assignment_id: Int!
             ) {
-              update_assignment_by_pk(
-                pk_columns: {id: $id}
-                _set: {
-                  volunteer_id: $volunteer_id
-                  status: $new_status
-                }
-              ) {
-                volunteer_id
+              insert_volunteer_assignment_opt_in_one(object: {
+                assignment_id: $assignment_id,
+                volunteer_id: $volunteer_id,
+                status: "OPTED_IN",
+              }) {
+                id
                 status
+                volunteer_id
+                assignment_id
               }
             }
           `,
           variables: {
-            id: this.assignment.id,
             volunteer_id: this.$store.state.auth.user.volunteer.id,
-            new_status: ASSIGNMENT_STATUSES.MATCHED
+            assignment_id: this.assignment.id
           }
         }).then(_ => {
           this.$notify.success('Assignment Accepted');

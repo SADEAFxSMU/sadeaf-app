@@ -25,7 +25,7 @@
             <div class="assignment-cards">
               <assignment-card v-for="assignment in getAssignmentsOnDate(selectedDate)"
                                :key="'as-' + assignment.id"
-                               :assignment="assignment"
+                               :details="assignment"
                                @editClick="handleEditAssignmentClick" />
             </div>
           </el-tab-pane>

@@ -21,21 +21,34 @@
       <el-tabs v-model="tab">
         <el-tab-pane v-if="getAssignmentsOnDate(selectedDate)"
                      :label="selectedDate.toDateString() + ' Session'"
-                     name="acceptedAssignments" >
+                     name="acceptedAssignments">
           <div class="assignment-cards">
             <assignment-card v-for="assignment in getAssignmentsOnDate(selectedDate)"
                              :key="'as-' + assignment.id"
                              :show-edit="false"
-                             :assignment="assignment"/>
+                             :details="assignment"/>
           </div>
         </el-tab-pane>
         <el-tab-pane label="Available Assignments" name="pendingAssignments">
           <div>
             <assignment-card v-for="assignment in lastestPendingAssignmentsFromHasura"
                              :key="'pend-as-' + assignment.id"
-                             :assignment="assignment"
+                             :details="assignment"
                              :show-start-date="true"
                              @editClick="showAcceptPendingAssignmentDialog"/>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="Opt-In History" name="optInHistory">
+          <div>
+            <div v-if="volunteerOptedInAssignments.length === 0">
+              <span>You haven't opted in for any assignments!</span>
+            </div>
+            <assignment-card v-for="assignment in volunteerOptedInAssignments"
+                             :key="'optin-as-' + assignment.id"
+                             :details="assignment"
+                             :show-edit="false"
+                             :is-opt-in="true"
+                             :show-start-date="true"/>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -55,6 +68,85 @@
   import AssignmentCard from "../cards/AssignmentCard";
   import AcceptAssignmentDetailsDialog from "../dialogs/AcceptAssignmentDetailsDialog";
 
+  const assignmentQuery = gql`
+    query($volunteer_id: Int!) {
+      assignments: assignment(where: {volunteer_id: {_eq: $volunteer_id}}) {
+        id
+        latitude
+        longitude
+        postal
+        room_number
+        start_dt
+        status
+        address_line_one
+        address_line_two
+        end_dt
+        event {
+          id
+          name
+          description
+          purpose
+        }
+        honorarium_amount
+      }
+
+    pendingAssignments: assignment(
+        where: {
+          _and: [
+            {status: {_eq: "PENDING"}},
+            {_not: {volunteer_assignment_opt_ins: {volunteer_id: {_eq: $volunteer_id}}}}
+          ]
+        }
+    ) {
+      id
+      latitude
+      longitude
+      postal
+      room_number
+      start_dt
+      status
+      address_line_one
+      address_line_two
+      end_dt
+      event {
+        id
+        name
+        description
+        purpose
+      }
+      honorarium_amount
+    }
+  }`
+
+  const volunteerOptInQuery = gql`
+    query VolunteerOptIns($volunteer_id: Int!) {
+      volunteer_assignment_opt_in(where: {volunteer_id: {_eq: $volunteer_id}}){
+        id
+        assignment_id
+        volunteer_id
+        status
+        assignment {
+          id
+          latitude
+          longitude
+          postal
+          room_number
+          start_dt
+          status
+          address_line_one
+          address_line_two
+          end_dt
+          event {
+            id
+            name
+            description
+            purpose
+          }
+        }
+      }
+    }
+  `
+
   export default {
     name: "VolunteerEventCalendar",
     components: {AcceptAssignmentDetailsDialog, AssignmentCard},
@@ -62,11 +154,11 @@
       return {
         assignments: [],
         pendingAssignments: [],
-        // assignmentsByDateTime: {},
         selectedDate: null,
         tab: "pendingAssignments",
         showAcceptDialog: false,
-        selectedAssignment: undefined
+        selectedAssignment: undefined,
+        volunteerOptedInAssignments: []
       }
     },
     methods: {
@@ -96,6 +188,7 @@
         // to minimise the number of queries
         if (status === 'accepted') {
           this.$apollo.queries.assignments.refetch();
+          this.$apollo.queries.volunteer_assignment_opt_in.refetch();
         }
       }
     },
@@ -112,56 +205,26 @@
         /* TODO(wy): Ideally, this should be a subscribe - need to see what happens after
             auth implementation and how subscriptions factor into the apps
          */
-        query: gql` query($volunteer_id: Int!) {
-          assignments: assignment(where: {volunteer_id: {_eq: $volunteer_id}}) {
-            id
-            latitude
-            longitude
-            postal
-            room_number
-            start_dt
-            status
-            address_line_one
-            address_line_two
-            end_dt
-            event {
-              id
-              name
-              description
-              purpose
-            }
-            honorarium_amount
-          }
-
-          pendingAssignments: assignment(where: {status: {_eq: "PENDING"}}) {
-            id
-            latitude
-            longitude
-            postal
-            room_number
-            start_dt
-            status
-            address_line_one
-            address_line_two
-            end_dt
-            event {
-              id
-              name
-              description
-              purpose
-            }
-            honorarium_amount
-          }
-        }`,
+        query: assignmentQuery,
         variables() {
           return {
             volunteer_id: this.$store.state.auth.user.volunteer.id
           }
         },
         result({data}) {
-          console.log(data.pendingAssignments)
           this.assignments = data.assignments;
           this.pendingAssignments = data.pendingAssignments;
+        }
+      },
+      volunteer_assignment_opt_in: {
+        query: volunteerOptInQuery,
+        variables() {
+          return {
+            volunteer_id: this.$store.state.auth.user.volunteer.id
+          }
+        },
+        result({data}) {
+          this.volunteerOptedInAssignments = data.volunteer_assignment_opt_in;
         }
       }
     }

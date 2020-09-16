@@ -2,8 +2,8 @@
   <div class="assignment-card">
     <div class="header">
       <div class="title-wrapper">
-        <h2 class="title">{{ assignment.event.name }}</h2>
-        <assignment-status :status="assignment.status" />
+        <h2 class="title">{{ eventName }}</h2>
+        <assignment-status :status="status" />
       </div>
       <el-button v-if="showEdit" icon="el-icon-edit" size="mini" @click="$emit('editClick', assignment)" />
     </div>
@@ -38,7 +38,7 @@ export default {
   name: "AssignmentCard",
   components: {AssignmentStatus, StatusIndicator, UserCardHorizontalSmall},
   props: {
-    assignment: {
+    details: {
       type: Object,
       required: true,
     },
@@ -51,9 +51,23 @@ export default {
       type: Boolean,
       default: false,
       required: false
+    },
+    isOptIn: {
+      type: Boolean,
+      default: false,
+      require: false
     }
   },
   computed: {
+    // we need to make a distinction since an opt-in object or assignment object
+    // can be passed into this component
+    assignment() {
+      return this.isOptIn ? this.details.assignment : this.details;
+    },
+    eventName() {
+      console.log(this.details);
+      return this.assignment.event.name;
+    },
     hasVolunteerAssigned() {
       return this.assignment.volunteer && this.assignment.volunteer.account;
     },
@@ -61,7 +75,7 @@ export default {
       return this.assignment.volunteer;
     },
     status() {
-      return this.assignment.status;
+      return this.isOptIn ? this.details.status : this.assignment.status;
     },
     address() {
       const { address_line_one, address_line_two } = this.assignment;

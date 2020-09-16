@@ -198,8 +198,8 @@ INSERT INTO assignment (
  1, 500),
 
 (7, 3, 'MATCHED', '2020-08-05T15:00:00.000Z', '2020-08-05T18:30:00.000Z',
-'300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
-1, 500),
+ '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
+ 1, 500),
 
 (8, 3, 'PENDING', '2020-08-12T15:00:00.000Z', '2020-08-12T18:30:00.000Z',
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
@@ -210,8 +210,6 @@ INSERT INTO assignment (
 INSERT INTO volunteer_assignment_opt_in (
     id, volunteer_id, assignment_id, status
 ) VALUES
-(1, 1, 1, 'OPTED_IN'),
-(2, 1, 2, 'OPTED_IN'),
 (3, 2, 2, 'OPTED_IN'),
 (4, 3, 2, 'OPTED_IN'),
 (5, 3, 3, 'OPTED_IN'),
@@ -249,3 +247,4 @@ SELECT setval(pg_get_serial_sequence('membership', 'id'), coalesce(max(id) + 1, 
 SELECT setval(pg_get_serial_sequence('membership_type', 'id'), coalesce(max(id) + 1, 1), false) FROM membership_type;
 SELECT setval(pg_get_serial_sequence('account', 'id'), coalesce(max(id) + 1, 1), false) FROM account;
 SELECT setval(pg_get_serial_sequence('quotation', 'id'), coalesce(max(id) + 1, 1), false) FROM quotation;
+SELECT setval(pg_get_serial_sequence('volunteer_assignment_opt_in', 'id'), coalesce(max(id) + 1, 1), false) FROM volunteer_assignment_opt_in;
