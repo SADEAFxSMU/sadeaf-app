@@ -32,31 +32,31 @@ INSERT INTO membership_type(
 (6, 'honorary', 0, -1, 'Honorary membership shall be conferred on individuals who, in the opinion of the Executive Council, have rendered meritorious service to the Deaf of Singapore. Honorary members shall not be required to fill application forms or to pay any subscriptions.');
 
 INSERT INTO account(
-    id, username, password, email, name, contact, role
+    id, username, password, email, name, contact, role, profile_pic_url
 ) VALUES
-(1, 'admin', 'password', 'admin@gmail.com', 'Admin Guy', '88888888', 'admin'),
-(2, 'donnyyen', 'password', 'donnyyen@gmail.com', 'Donny Yen', '88888888', 'svcreq'),
-(3, 'bobbylei', 'password', 'bobbylei@gmail.com', 'Bobby Lei', '88888888', 'svcreq'),
-(4, 'cattywantutree', 'password', 'cattywantutree@gmail.com', 'Catty Wan', '88888888', 'svcreq'),
-(5, 'mammymay', 'password', 'mammymay@gmail.com', 'Mammy May', '88888888', 'svcreq'),
-(6, 'jonlee', 'password', 'jonlee@gmail.com', 'Jon Lee', '88888888', 'client'),
-(7, 'xiaoming', 'password', 'xiaoming@gmail.com', 'Lee Xiao Ming, Jonathan', '88888888', 'client'),
-(8, 'ednatan', 'password', 'ednatan@gmail.com', 'Edna Tan', '88888888', 'client'),
-(9, 'reginald', 'password', 'reginald@gmail.com', 'Reginald James', '88888888', 'client'),
-(10, 'jolinetoh', 'password', 'jolinetoh@gmail.com', 'Joline Toh', '88888888', 'client'),
-(11, 'nathantan', 'password', 'nathantan@gmail.com', 'Nathan Tan', '88888888', 'client'),
-(12, 'nurhafiqa', 'password', 'nurhafiqa@gmail.com', 'Nur Hafiqa Binte Ismail', '88888888', 'client'),
-(13, 'yilai', 'password', 'yilai@gmail.com', 'Yi Lai Wang', '88888888', 'client'),
-(14, 'mohali', 'password', 'mohali@gmail.com', 'Mohamed Ali Bin Shafiq', '88888888', 'client'),
-(15, 'bremnath', 'password', 'bremnath@gmail.com', 'Bremnath Suriyamurthy', '88888888', 'client'),
-(16, 'weiyuan', 'password', 'weiyuan@gmail.com', 'Lee Wei Yuan', '88888888', 'client'),
-(17, 'waynetoh', 'password', 'waynetoh@gmail.com', 'Toh Jin Wee Wayne', '88888888', 'volunteer'),
-(18, 'claudchua', 'password', 'claudchua@gmail.com', 'Claudia Chua Pei Si', '88888888', 'volunteer'),
-(19, 'tedmundtan', 'password', 'tedmundtan@gmail.com', 'Tedmund Tan Zhi Peng', '88888888', 'volunteer'),
-(20, 'austinwoon', 'password', 'austinwoon@gmail.com', 'Austin Woon Quan', '88888888', 'volunteer'),
-(21, 'fuxing', 'password', 'fuxing@gmail.com', 'Loh Fuxing', '88888888', 'volunteer'),
-(22, 'elilim', 'password', 'elilim@gmail.com', 'Eli Lim', '88888888', 'volunteer'),
-(23, 'sunnylim', 'password', 'sunnylim@gmail.com', 'Sunny Lim', '88888888', 'volunteer');
+(1, 'admin', 'password', 'admin@gmail.com', 'Admin Guy', '88888888', 'admin', null),
+(2, 'donnyyen', 'password', 'donnyyen@gmail.com', 'Donny Yen', '88888888', 'service_requestor', null),
+(3, 'bobbylei', 'password', 'bobbylei@gmail.com', 'Bobby Lei', '88888888', 'service_requestor', null),
+(4, 'cattywantutree', 'password', 'cattywantutree@gmail.com', 'Catty Wan', '88888888', 'service_requestor', null),
+(5, 'mammymay', 'password', 'mammymay@gmail.com', 'Mammy May', '88888888', 'service_requestor', null),
+(6, 'jonlee', 'password', 'jonlee@gmail.com', 'Jon Lee', '88888888', 'client', null),
+(7, 'xiaoming', 'password', 'xiaoming@gmail.com', 'Lee Xiao Ming, Jonathan', '88888888', 'client', null),
+(8, 'ednatan', 'password', 'ednatan@gmail.com', 'Edna Tan', '88888888', 'client', null),
+(9, 'reginald', 'password', 'reginald@gmail.com', 'Reginald James', '88888888', 'client', null),
+(10, 'jolinetoh', 'password', 'jolinetoh@gmail.com', 'Joline Toh', '88888888', 'client', null),
+(11, 'nathantan', 'password', 'nathantan@gmail.com', 'Nathan Tan', '88888888', 'client', null),
+(12, 'nurhafiqa', 'password', 'nurhafiqa@gmail.com', 'Nur Hafiqa Binte Ismail', '88888888', 'client', null),
+(13, 'yilai', 'password', 'yilai@gmail.com', 'Yi Lai Wang', '88888888', 'client', null),
+(14, 'mohali', 'password', 'mohali@gmail.com', 'Mohamed Ali Bin Shafiq', '88888888', 'client', null),
+(15, 'bremnath', 'password', 'bremnath@gmail.com', 'Bremnath Suriyamurthy', '88888888', 'client', null),
+(16, 'weiyuan', 'password', 'weiyuan@gmail.com', 'Lee Wei Yuan', '88888888', 'client', 'https://media-exp1.licdn.com/dms/image/C5603AQGQHsAl3P_VDA/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=tqpHXRlBQ4TEMnZcZFH8OF34uBADdSNNcL_WlH1FKg8'),
+(17, 'waynetoh', 'password', 'waynetoh@gmail.com', 'Toh Jin Wee Wayne', '88888888', 'volunteer', 'https://media-exp1.licdn.com/dms/image/C5603AQEoomKi9Ky-1Q/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=pyR-hk8Qhb3l21dZ7i8Ao0KlmW5If4fhWh0lAMusVeE'),
+(18, 'claudchua', 'password', 'claudchua@gmail.com', 'Claudia Chua Pei Si', '88888888', 'volunteer', 'https://media-exp1.licdn.com/dms/image/C5103AQGLM28N3fuaPw/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=r2VaMBTlEcc8feZagzouPFOgUvvsWGn-OKK-zu4CgVk'),
+(19, 'tedmundtan', 'password', 'tedmundtan@gmail.com', 'Tedmund Tan Zhi Peng', '88888888', 'volunteer', 'https://media-exp1.licdn.com/dms/image/C5103AQHlCmi1sznkng/profile-displayphoto-shrink_800_800/0?e=1605744000&v=beta&t=BruGLDUNS4ONFFly2PIV3fw1GjNaRCZJZXx-0ctFUq8'),
+(20, 'austinwoon', 'password', 'austinwoon@gmail.com', 'Austin Woon Quan', '88888888', 'volunteer', 'https://media-exp1.licdn.com/dms/image/C5103AQH9nm5CFMJ9GA/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=IQdOsCf8Ivwni7Fy5Jgj35z6trijEwpCpH6JIw7rNCo'),
+(21, 'fuxing', 'password', 'fuxing@gmail.com', 'Loh Fuxing', '88888888', 'volunteer', 'https://media-exp1.licdn.com/dms/image/C5103AQEOkJn5C0PnoA/profile-displayphoto-shrink_800_800/0?e=1605744000&v=beta&t=9a-IEiG1_YyioaZYpbTxSZyIo0gmS7GRgBKlKQ7F1EY'),
+(22, 'elilim', 'password', 'elilim@gmail.com', 'Eli Lim', '88888888', 'volunteer', 'https://media-exp1.licdn.com/dms/image/C5603AQHl_BixhF9QOw/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=8gkea6Yttezgjn5FA50MMl7DlKLBZ_M0ce-Bzj2E5U8'),
+(23, 'sunnylim', 'password', 'sunnylim@gmail.com', 'Sunny Lim', '88888888', 'volunteer', null);
 
 INSERT INTO membership(
     id, account_id, membership_type_id, status, free_sessions_remaining, created_at, updated_at
@@ -249,3 +249,4 @@ SELECT setval(pg_get_serial_sequence('membership', 'id'), coalesce(max(id) + 1, 
 SELECT setval(pg_get_serial_sequence('membership_type', 'id'), coalesce(max(id) + 1, 1), false) FROM membership_type;
 SELECT setval(pg_get_serial_sequence('account', 'id'), coalesce(max(id) + 1, 1), false) FROM account;
 SELECT setval(pg_get_serial_sequence('quotation', 'id'), coalesce(max(id) + 1, 1), false) FROM quotation;
+SELECT setval(pg_get_serial_sequence('volunteer_assignment_opt_in', 'id'), coalesce(max(id) + 1, 1), false) FROM volunteer_assignment_opt_in;

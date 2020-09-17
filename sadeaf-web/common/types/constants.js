@@ -35,3 +35,24 @@ export const EVENT_PURPOSE_OPTIONS = [
   'Tours',
   'Others',
 ]
+
+export const ROLES = {
+  admin: 'admin',
+  client: 'client',
+  volunteer: 'volunteer',
+  service_requestor: 'service_requestor',
+}
+
+export const ROLE_EL_TAG_TYPES = {
+  [ROLES.admin]: 'primary',
+  [ROLES.client]: 'danger',
+  [ROLES.volunteer]: 'success',
+  [ROLES.service_requestor]: 'danger',
+}
+
+export const ROLE_PROFILE_PAGE_MAPPING = {
+  admin: '/admin',
+  volunteer: '/volunteer',
+  svcreq: '/org',
+  client: '/client',
+}

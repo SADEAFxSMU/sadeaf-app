@@ -1,15 +1,17 @@
 <template>
   <div class="profile" v-on="$listeners">
     <slot name="avatar">
-      <img v-if="user && user.imgSrc"
-           :src="user.imgSrc"
-           class="image" />
-      <el-avatar v-else
-                 class="el-icon-user-solid"
-                 size="small" />
+      <div class="profile-pic">
+        <img v-if="profile_pic_url"
+             :src="profile_pic_url"
+             class="image" />
+        <el-avatar v-else
+                   class="el-icon-user-solid"
+                   size="small" />
+      </div>
     </slot>
     <slot name="body">
-      <h4 class="name">{{ user && user.name }}</h4>
+      <h4 class="name">{{ name }}</h4>
     </slot>
   </div>
 </template>
@@ -17,12 +19,22 @@
 <script>
 export default {
   name: "UserCardHorizontalSmall",
+
   props: {
     user: {
       type: Object,
       required: true,
     },
   },
+
+  computed: {
+    name() {
+      return this.user.name;
+    },
+    profile_pic_url() {
+      return this.user.profile_pic_url;
+    }
+  }
 }
 </script>
 
@@ -38,6 +50,10 @@ export default {
   align-items: center;
   margin-right: 10px;
 }
+.profile .profile-pic {
+  display: flex;
+  align-items: center;
+}
 
 .profile .image {
   margin: 2px;
@@ -48,5 +64,6 @@ export default {
 .profile .name {
   font-weight: normal;
   padding-left: 4px;
+  margin-bottom: 0;
 }
 </style>

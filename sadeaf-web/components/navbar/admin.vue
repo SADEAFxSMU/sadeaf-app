@@ -9,13 +9,13 @@
         <el-menu-item index="/admin/users">
           All Users
         </el-menu-item>
-        <el-menu-item index="/admin/users?type=clients">
+        <el-menu-item index="/admin/users?type=client">
           Clients
         </el-menu-item>
-        <el-menu-item index="/admin/users?type=service-requestors">
+        <el-menu-item index="/admin/users?type=service_requestor">
           Service Requestors
         </el-menu-item>
-        <el-menu-item index="/admin/users?type=volunteers">
+        <el-menu-item index="/admin/users?type=volunteer">
           Volunteers
         </el-menu-item>
       </el-submenu>
