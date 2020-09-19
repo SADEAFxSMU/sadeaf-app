@@ -9,7 +9,7 @@ export default {
       default: '',
     },
     data: {
-      type: Array,
+      type: Object,
       required: true,
     },
     options: {

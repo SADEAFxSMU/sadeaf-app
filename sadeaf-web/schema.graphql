@@ -267,6 +267,32 @@ type assignment {
   status: String!
   "An object relationship"
   volunteer: volunteer
+  "An array relationship"
+  volunteer_assignment_opt_ins(
+    "distinct select on columns"
+    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [volunteer_assignment_opt_in_order_by!],
+    "filter the rows returned"
+    where: volunteer_assignment_opt_in_bool_exp
+  ): [volunteer_assignment_opt_in!]!
+  "An aggregated array relationship"
+  volunteer_assignment_opt_ins_aggregate(
+    "distinct select on columns"
+    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [volunteer_assignment_opt_in_order_by!],
+    "filter the rows returned"
+    where: volunteer_assignment_opt_in_bool_exp
+  ): volunteer_assignment_opt_in_aggregate!
   volunteer_id: Int
 }
 
@@ -842,6 +868,8 @@ type event {
   invoice: invoice
   name: String!
   purpose: String
+  "A computed field, executes function \"get_uncompleted_status\""
+  uncompleted_status: Boolean
   updated_at: timestamp!
 }
 
@@ -1870,6 +1898,13 @@ type mutation_root {
     "filter the rows which have to be deleted"
     where: volunteer_bool_exp!
   ): volunteer_mutation_response
+  "delete data from the table: \"volunteer_assignment_opt_in\""
+  delete_volunteer_assignment_opt_in(
+    "filter the rows which have to be deleted"
+    where: volunteer_assignment_opt_in_bool_exp!
+  ): volunteer_assignment_opt_in_mutation_response
+  "delete single row from the table: \"volunteer_assignment_opt_in\""
+  delete_volunteer_assignment_opt_in_by_pk(id: Int!): volunteer_assignment_opt_in
   "delete single row from the table: \"volunteer\""
   delete_volunteer_by_pk(id: Int!): volunteer
   "insert data into the table: \"account\""
@@ -2117,6 +2152,20 @@ type mutation_root {
     "on conflict condition"
     on_conflict: volunteer_on_conflict
   ): volunteer_mutation_response
+  "insert data into the table: \"volunteer_assignment_opt_in\""
+  insert_volunteer_assignment_opt_in(
+    "the rows to be inserted"
+    objects: [volunteer_assignment_opt_in_insert_input!]!,
+    "on conflict condition"
+    on_conflict: volunteer_assignment_opt_in_on_conflict
+  ): volunteer_assignment_opt_in_mutation_response
+  "insert a single row into the table: \"volunteer_assignment_opt_in\""
+  insert_volunteer_assignment_opt_in_one(
+    "the row to be inserted"
+    object: volunteer_assignment_opt_in_insert_input!,
+    "on conflict condition"
+    on_conflict: volunteer_assignment_opt_in_on_conflict
+  ): volunteer_assignment_opt_in
   "insert a single row into the table: \"volunteer\""
   insert_volunteer_one(
     "the row to be inserted"
@@ -2406,6 +2455,23 @@ type mutation_root {
     "filter the rows which have to be updated"
     where: volunteer_bool_exp!
   ): volunteer_mutation_response
+  "update data of the table: \"volunteer_assignment_opt_in\""
+  update_volunteer_assignment_opt_in(
+    "increments the integer columns with given value of the filtered values"
+    _inc: volunteer_assignment_opt_in_inc_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: volunteer_assignment_opt_in_set_input,
+    "filter the rows which have to be updated"
+    where: volunteer_assignment_opt_in_bool_exp!
+  ): volunteer_assignment_opt_in_mutation_response
+  "update single row of the table: \"volunteer_assignment_opt_in\""
+  update_volunteer_assignment_opt_in_by_pk(
+    "increments the integer columns with given value of the filtered values"
+    _inc: volunteer_assignment_opt_in_inc_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: volunteer_assignment_opt_in_set_input,
+    pk_columns: volunteer_assignment_opt_in_pk_columns_input!
+  ): volunteer_assignment_opt_in
   "update single row of the table: \"volunteer\""
   update_volunteer_by_pk(
     "increments the integer columns with given value of the filtered values"
@@ -3023,6 +3089,34 @@ type query_root {
     "filter the rows returned"
     where: volunteer_bool_exp
   ): volunteer_aggregate!
+  "fetch data from the table: \"volunteer_assignment_opt_in\""
+  volunteer_assignment_opt_in(
+    "distinct select on columns"
+    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [volunteer_assignment_opt_in_order_by!],
+    "filter the rows returned"
+    where: volunteer_assignment_opt_in_bool_exp
+  ): [volunteer_assignment_opt_in!]!
+  "fetch aggregated fields from the table: \"volunteer_assignment_opt_in\""
+  volunteer_assignment_opt_in_aggregate(
+    "distinct select on columns"
+    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [volunteer_assignment_opt_in_order_by!],
+    "filter the rows returned"
+    where: volunteer_assignment_opt_in_bool_exp
+  ): volunteer_assignment_opt_in_aggregate!
+  "fetch data from the table: \"volunteer_assignment_opt_in\" using primary key columns"
+  volunteer_assignment_opt_in_by_pk(id: Int!): volunteer_assignment_opt_in
   "fetch data from the table: \"volunteer\" using primary key columns"
   volunteer_by_pk(id: Int!): volunteer
 }
@@ -3809,6 +3903,34 @@ type subscription_root {
     "filter the rows returned"
     where: volunteer_bool_exp
   ): volunteer_aggregate!
+  "fetch data from the table: \"volunteer_assignment_opt_in\""
+  volunteer_assignment_opt_in(
+    "distinct select on columns"
+    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [volunteer_assignment_opt_in_order_by!],
+    "filter the rows returned"
+    where: volunteer_assignment_opt_in_bool_exp
+  ): [volunteer_assignment_opt_in!]!
+  "fetch aggregated fields from the table: \"volunteer_assignment_opt_in\""
+  volunteer_assignment_opt_in_aggregate(
+    "distinct select on columns"
+    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [volunteer_assignment_opt_in_order_by!],
+    "filter the rows returned"
+    where: volunteer_assignment_opt_in_bool_exp
+  ): volunteer_assignment_opt_in_aggregate!
+  "fetch data from the table: \"volunteer_assignment_opt_in\" using primary key columns"
+  volunteer_assignment_opt_in_by_pk(id: Int!): volunteer_assignment_opt_in
   "fetch data from the table: \"volunteer\" using primary key columns"
   volunteer_by_pk(id: Int!): volunteer
 }
@@ -3983,6 +4105,32 @@ type volunteer {
     where: feedback_bool_exp
   ): feedback_aggregate!
   id: Int!
+  "An array relationship"
+  volunteer_assignment_opt_ins(
+    "distinct select on columns"
+    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [volunteer_assignment_opt_in_order_by!],
+    "filter the rows returned"
+    where: volunteer_assignment_opt_in_bool_exp
+  ): [volunteer_assignment_opt_in!]!
+  "An aggregated array relationship"
+  volunteer_assignment_opt_ins_aggregate(
+    "distinct select on columns"
+    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [volunteer_assignment_opt_in_order_by!],
+    "filter the rows returned"
+    where: volunteer_assignment_opt_in_bool_exp
+  ): volunteer_assignment_opt_in_aggregate!
 }
 
 "aggregated selection of \"volunteer\""
@@ -4004,6 +4152,119 @@ type volunteer_aggregate_fields {
   var_pop: volunteer_var_pop_fields
   var_samp: volunteer_var_samp_fields
   variance: volunteer_variance_fields
+}
+
+"columns and relationships of \"volunteer_assignment_opt_in\""
+type volunteer_assignment_opt_in {
+  "An object relationship"
+  assignment: assignment!
+  assignment_id: Int!
+  created_at: timestamptz!
+  id: Int!
+  "An object relationship"
+  volunteer: volunteer!
+  volunteer_id: Int!
+}
+
+"aggregated selection of \"volunteer_assignment_opt_in\""
+type volunteer_assignment_opt_in_aggregate {
+  aggregate: volunteer_assignment_opt_in_aggregate_fields
+  nodes: [volunteer_assignment_opt_in!]!
+}
+
+"aggregate fields of \"volunteer_assignment_opt_in\""
+type volunteer_assignment_opt_in_aggregate_fields {
+  avg: volunteer_assignment_opt_in_avg_fields
+  count(columns: [volunteer_assignment_opt_in_select_column!], distinct: Boolean): Int
+  max: volunteer_assignment_opt_in_max_fields
+  min: volunteer_assignment_opt_in_min_fields
+  stddev: volunteer_assignment_opt_in_stddev_fields
+  stddev_pop: volunteer_assignment_opt_in_stddev_pop_fields
+  stddev_samp: volunteer_assignment_opt_in_stddev_samp_fields
+  sum: volunteer_assignment_opt_in_sum_fields
+  var_pop: volunteer_assignment_opt_in_var_pop_fields
+  var_samp: volunteer_assignment_opt_in_var_samp_fields
+  variance: volunteer_assignment_opt_in_variance_fields
+}
+
+"aggregate avg on columns"
+type volunteer_assignment_opt_in_avg_fields {
+  assignment_id: Float
+  id: Float
+  volunteer_id: Float
+}
+
+"aggregate max on columns"
+type volunteer_assignment_opt_in_max_fields {
+  assignment_id: Int
+  created_at: timestamptz
+  id: Int
+  volunteer_id: Int
+}
+
+"aggregate min on columns"
+type volunteer_assignment_opt_in_min_fields {
+  assignment_id: Int
+  created_at: timestamptz
+  id: Int
+  volunteer_id: Int
+}
+
+"response of any mutation on the table \"volunteer_assignment_opt_in\""
+type volunteer_assignment_opt_in_mutation_response {
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [volunteer_assignment_opt_in!]!
+}
+
+"aggregate stddev on columns"
+type volunteer_assignment_opt_in_stddev_fields {
+  assignment_id: Float
+  id: Float
+  volunteer_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type volunteer_assignment_opt_in_stddev_pop_fields {
+  assignment_id: Float
+  id: Float
+  volunteer_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type volunteer_assignment_opt_in_stddev_samp_fields {
+  assignment_id: Float
+  id: Float
+  volunteer_id: Float
+}
+
+"aggregate sum on columns"
+type volunteer_assignment_opt_in_sum_fields {
+  assignment_id: Int
+  id: Int
+  volunteer_id: Int
+}
+
+"aggregate var_pop on columns"
+type volunteer_assignment_opt_in_var_pop_fields {
+  assignment_id: Float
+  id: Float
+  volunteer_id: Float
+}
+
+"aggregate var_samp on columns"
+type volunteer_assignment_opt_in_var_samp_fields {
+  assignment_id: Float
+  id: Float
+  volunteer_id: Float
+}
+
+"aggregate variance on columns"
+type volunteer_assignment_opt_in_variance_fields {
+  assignment_id: Float
+  id: Float
+  volunteer_id: Float
 }
 
 "aggregate avg on columns"
@@ -4816,6 +5077,38 @@ enum telegram_information_update_column {
   user_handle
 }
 
+"unique or primary key constraints on table \"volunteer_assignment_opt_in\""
+enum volunteer_assignment_opt_in_constraint {
+  "unique or primary key constraint"
+  volunteer_assignment_opt_in_pkey
+  "unique or primary key constraint"
+  volunteer_assignment_opt_in_volunteer_id_assignment_id_key
+}
+
+"select columns of table \"volunteer_assignment_opt_in\""
+enum volunteer_assignment_opt_in_select_column {
+  "column name"
+  assignment_id
+  "column name"
+  created_at
+  "column name"
+  id
+  "column name"
+  volunteer_id
+}
+
+"update columns of table \"volunteer_assignment_opt_in\""
+enum volunteer_assignment_opt_in_update_column {
+  "column name"
+  assignment_id
+  "column name"
+  created_at
+  "column name"
+  id
+  "column name"
+  volunteer_id
+}
+
 "unique or primary key constraints on table \"volunteer\""
 enum volunteer_constraint {
   "unique or primary key constraint"
@@ -5258,6 +5551,7 @@ input assignment_bool_exp {
   start_dt: timestamp_comparison_exp
   status: String_comparison_exp
   volunteer: volunteer_bool_exp
+  volunteer_assignment_opt_ins: volunteer_assignment_opt_in_bool_exp
   volunteer_id: Int_comparison_exp
 }
 
@@ -5288,6 +5582,7 @@ input assignment_insert_input {
   start_dt: timestamp
   status: String
   volunteer: volunteer_obj_rel_insert_input
+  volunteer_assignment_opt_ins: volunteer_assignment_opt_in_arr_rel_insert_input
   volunteer_id: Int
 }
 
@@ -5355,6 +5650,7 @@ input assignment_order_by {
   start_dt: order_by
   status: order_by
   volunteer: volunteer_order_by
+  volunteer_assignment_opt_ins_aggregate: volunteer_assignment_opt_in_aggregate_order_by
   volunteer_id: order_by
 }
 
@@ -7936,6 +8232,165 @@ input volunteer_arr_rel_insert_input {
   on_conflict: volunteer_on_conflict
 }
 
+"order by aggregate values of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_aggregate_order_by {
+  avg: volunteer_assignment_opt_in_avg_order_by
+  count: order_by
+  max: volunteer_assignment_opt_in_max_order_by
+  min: volunteer_assignment_opt_in_min_order_by
+  stddev: volunteer_assignment_opt_in_stddev_order_by
+  stddev_pop: volunteer_assignment_opt_in_stddev_pop_order_by
+  stddev_samp: volunteer_assignment_opt_in_stddev_samp_order_by
+  sum: volunteer_assignment_opt_in_sum_order_by
+  var_pop: volunteer_assignment_opt_in_var_pop_order_by
+  var_samp: volunteer_assignment_opt_in_var_samp_order_by
+  variance: volunteer_assignment_opt_in_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_arr_rel_insert_input {
+  data: [volunteer_assignment_opt_in_insert_input!]!
+  on_conflict: volunteer_assignment_opt_in_on_conflict
+}
+
+"order by avg() on columns of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_avg_order_by {
+  assignment_id: order_by
+  id: order_by
+  volunteer_id: order_by
+}
+
+"Boolean expression to filter rows from the table \"volunteer_assignment_opt_in\". All fields are combined with a logical 'AND'."
+input volunteer_assignment_opt_in_bool_exp {
+  _and: [volunteer_assignment_opt_in_bool_exp]
+  _not: volunteer_assignment_opt_in_bool_exp
+  _or: [volunteer_assignment_opt_in_bool_exp]
+  assignment: assignment_bool_exp
+  assignment_id: Int_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: Int_comparison_exp
+  volunteer: volunteer_bool_exp
+  volunteer_id: Int_comparison_exp
+}
+
+"input type for incrementing integer column in table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_inc_input {
+  assignment_id: Int
+  id: Int
+  volunteer_id: Int
+}
+
+"input type for inserting data into table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_insert_input {
+  assignment: assignment_obj_rel_insert_input
+  assignment_id: Int
+  created_at: timestamptz
+  id: Int
+  volunteer: volunteer_obj_rel_insert_input
+  volunteer_id: Int
+}
+
+"order by max() on columns of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_max_order_by {
+  assignment_id: order_by
+  created_at: order_by
+  id: order_by
+  volunteer_id: order_by
+}
+
+"order by min() on columns of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_min_order_by {
+  assignment_id: order_by
+  created_at: order_by
+  id: order_by
+  volunteer_id: order_by
+}
+
+"input type for inserting object relation for remote table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_obj_rel_insert_input {
+  data: volunteer_assignment_opt_in_insert_input!
+  on_conflict: volunteer_assignment_opt_in_on_conflict
+}
+
+"on conflict condition type for table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_on_conflict {
+  constraint: volunteer_assignment_opt_in_constraint!
+  update_columns: [volunteer_assignment_opt_in_update_column!]!
+  where: volunteer_assignment_opt_in_bool_exp
+}
+
+"ordering options when selecting data from \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_order_by {
+  assignment: assignment_order_by
+  assignment_id: order_by
+  created_at: order_by
+  id: order_by
+  volunteer: volunteer_order_by
+  volunteer_id: order_by
+}
+
+"primary key columns input for table: \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_pk_columns_input {
+  id: Int!
+}
+
+"input type for updating data in table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_set_input {
+  assignment_id: Int
+  created_at: timestamptz
+  id: Int
+  volunteer_id: Int
+}
+
+"order by stddev() on columns of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_stddev_order_by {
+  assignment_id: order_by
+  id: order_by
+  volunteer_id: order_by
+}
+
+"order by stddev_pop() on columns of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_stddev_pop_order_by {
+  assignment_id: order_by
+  id: order_by
+  volunteer_id: order_by
+}
+
+"order by stddev_samp() on columns of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_stddev_samp_order_by {
+  assignment_id: order_by
+  id: order_by
+  volunteer_id: order_by
+}
+
+"order by sum() on columns of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_sum_order_by {
+  assignment_id: order_by
+  id: order_by
+  volunteer_id: order_by
+}
+
+"order by var_pop() on columns of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_var_pop_order_by {
+  assignment_id: order_by
+  id: order_by
+  volunteer_id: order_by
+}
+
+"order by var_samp() on columns of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_var_samp_order_by {
+  assignment_id: order_by
+  id: order_by
+  volunteer_id: order_by
+}
+
+"order by variance() on columns of table \"volunteer_assignment_opt_in\""
+input volunteer_assignment_opt_in_variance_order_by {
+  assignment_id: order_by
+  id: order_by
+  volunteer_id: order_by
+}
+
 "order by avg() on columns of table \"volunteer\""
 input volunteer_avg_order_by {
   account_id: order_by
@@ -7953,6 +8408,7 @@ input volunteer_bool_exp {
   assignments: assignment_bool_exp
   feedbacks: feedback_bool_exp
   id: Int_comparison_exp
+  volunteer_assignment_opt_ins: volunteer_assignment_opt_in_bool_exp
 }
 
 "input type for incrementing integer column in table \"volunteer\""
@@ -7969,6 +8425,7 @@ input volunteer_insert_input {
   assignments: assignment_arr_rel_insert_input
   feedbacks: feedback_arr_rel_insert_input
   id: Int
+  volunteer_assignment_opt_ins: volunteer_assignment_opt_in_arr_rel_insert_input
 }
 
 "order by max() on columns of table \"volunteer\""
@@ -8004,6 +8461,7 @@ input volunteer_order_by {
   assignments_aggregate: assignment_aggregate_order_by
   feedbacks_aggregate: feedback_aggregate_order_by
   id: order_by
+  volunteer_assignment_opt_ins_aggregate: volunteer_assignment_opt_in_aggregate_order_by
 }
 
 "primary key columns input for table: \"volunteer\""

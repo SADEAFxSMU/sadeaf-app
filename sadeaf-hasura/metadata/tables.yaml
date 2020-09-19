@@ -86,9 +86,7 @@
       - name
       - updated_at
       - username
-      filter:
-        id:
-          _eq: X-Hasura-User-Id
+      filter: {}
       allow_aggregations: true
   - role: service_requestor
     permission:
@@ -195,6 +193,14 @@
   - name: volunteer
     using:
       foreign_key_constraint_on: volunteer_id
+  array_relationships:
+  - name: volunteer_assignment_opt_ins
+    using:
+      foreign_key_constraint_on:
+        column: assignment_id
+        table:
+          schema: public
+          name: volunteer_assignment_opt_in
   insert_permissions:
   - role: client
     permission:
@@ -1447,6 +1453,13 @@
         table:
           schema: public
           name: feedback
+  - name: volunteer_assignment_opt_ins
+    using:
+      foreign_key_constraint_on:
+        column: volunteer_id
+        table:
+          schema: public
+          name: volunteer_assignment_opt_in
   select_permissions:
   - role: client
     permission:
@@ -1465,4 +1478,35 @@
       - account_id
       - approval_status
       - id
+      filter: {}
+- table:
+    schema: public
+    name: volunteer_assignment_opt_in
+  object_relationships:
+  - name: assignment
+    using:
+      foreign_key_constraint_on: assignment_id
+  - name: volunteer
+    using:
+      foreign_key_constraint_on: volunteer_id
+  insert_permissions:
+  - role: volunteer
+    permission:
+      check: {}
+      columns:
+      - assignment_id
+      - volunteer_id
+      backend_only: false
+  select_permissions:
+  - role: volunteer
+    permission:
+      columns:
+      - assignment_id
+      - id
+      - volunteer_id
+      - created_at
+      filter: {}
+  delete_permissions:
+  - role: volunteer
+    permission:
       filter: {}
