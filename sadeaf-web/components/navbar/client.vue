@@ -4,6 +4,10 @@
       <el-menu-item index="/client">
         Service Requests
       </el-menu-item>
+
+      <el-menu-item index="/client/attendance-feedback">
+        Attendance & Feedback
+      </el-menu-item>
     </template>
   </base-navbar>
 </template>

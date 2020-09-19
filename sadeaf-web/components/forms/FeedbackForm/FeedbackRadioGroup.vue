@@ -22,11 +22,11 @@ export default {
     },
     availableRatings: {
       default: () => ([
-        { title: 'Strongly Disagree', label: 1 },
-        { title: 'Disagree', label: 2 },
+        { title: 'Very Bad', label: 1 },
+        { title: 'Bad', label: 2 },
         { title: 'Neutral', label: 3 },
-        { title: 'Agree', label: 4 },
-        { title: 'Strongly Agree', label: 5 },
+        { title: 'Good', label: 4 },
+        { title: 'Very Good', label: 5 },
       ]),
       type: Array,
     },

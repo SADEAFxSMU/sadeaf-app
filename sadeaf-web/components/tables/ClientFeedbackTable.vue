@@ -38,8 +38,7 @@
       width="70%"
       :visible="eventFeedbackFormVisible"
       @close="closeEventFeedbackForm">
-      <feedback-form>
-
+      <feedback-form :volunteers="this.feedbackVolunteers">
       </feedback-form>
     </el-dialog>
   </div>
@@ -49,8 +48,8 @@
 import BaseTable from './BaseTable';
 import gql from 'graphql-tag';
 import VolunteersCell from '@/components/tables/custom-columns/VolunteersCell';
-import AssignmentsTimeline from '@/components/assignment/AssignmentsTimeline';
 import FeedbackForm from '@/components/forms/FeedbackForm/FeedbackForm';
+import AssignmentsTimeline from '@/components/cards/AssignmentsTimeline';
 
 export default {
   name: 'client-feedback-table',
@@ -63,6 +62,7 @@ export default {
       eventSelected: {},
       // TODO(Austin): Get username from vuex store (nuxt auth)
       username: 'xiaoming',
+      feedbackVolunteers: ["Wayne", "Hello"],
       columns: [
         {
           name: 'name',
@@ -80,7 +80,6 @@ export default {
           name: 'endDate',
           label: 'Last Assignment Date',
         },
-
         {
           name: 'volunteers',
           label: 'Volunteers',
@@ -92,6 +91,7 @@ export default {
     handleEventFeedback(row) {
       this.eventFeedbackFormVisible = true;
       this.eventSelected = row;
+      this.feedbackVolunteers = row.volunteers;
     },
     closeEventFeedbackForm() {
       this.eventFeedbackFormVisible = false;
