@@ -1,5 +1,5 @@
 ----------------------[ DUMMY DATA ]----------------------
-
+DELETE FROM volunteer_assignment_opt_in;
 DELETE FROM telegram_information;
 DELETE FROM email_information;
 DELETE FROM attendance;
@@ -205,8 +205,17 @@ INSERT INTO assignment (
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
  null, 500);
 
-
 -- TODO: Add more assignments for the other clients + volunteers
+
+INSERT INTO volunteer_assignment_opt_in (
+    id, volunteer_id, assignment_id
+) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 2, 2),
+(4, 3, 2),
+(5, 3, 3),
+(6, 4, 4);
 
 INSERT INTO feedback (
     id, event_id, volunteer_id, notetaker_punctual, notetaker_conduct, live_comments, live_information_understanding,
