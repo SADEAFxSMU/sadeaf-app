@@ -164,6 +164,8 @@ export default {
               account {
                 id
                 name
+                role
+                profile_pic_url
               }
             }
           }

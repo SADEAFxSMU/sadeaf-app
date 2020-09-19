@@ -18,22 +18,8 @@
 import debounce from 'debounce';
 import UserCardHorizontalSmall from "./UserCardHorizontalSmall";
 import gql from "graphql-tag";
-import NuxtLinkWrapper from "../link/NuxtLinkWrapper";
 import UserProfileLink from "../link/UserProfileLink";
-
-const accountFieldsFragment = gql`
-  fragment accountFields on account {
-    id
-    username
-    name
-    email
-    role
-    profile_pic_url
-    client { id }
-    volunteer { id }
-    service_requestor { id }
-  }
-`;
+import { accountFieldsWithRolesFragment } from "../../common/graphql/fragments";
 
 const UserSearchWithRoleQuery = gql`
   query UserSearchWithRoleQuery($search: String!, $role: String!) {
@@ -49,10 +35,10 @@ const UserSearchWithRoleQuery = gql`
         }
       ]
     }) {
-      ...accountFields
+      ...accountFieldsWithRoles
     }
   }
-  ${accountFieldsFragment}
+  ${accountFieldsWithRolesFragment}
 `;
 
 const UserSearchQuery = gql`
@@ -64,15 +50,20 @@ const UserSearchQuery = gql`
         { email: { _like: $search } }
       ]
     }) {
-      ...accountFields
+      ...accountFieldsWithRoles
     }
   }
-  ${accountFieldsFragment}
+  ${accountFieldsWithRolesFragment}
 `;
 
 export default {
   name: "UserSearch",
-  components: {UserProfileLink, NuxtLinkWrapper, UserCardHorizontalSmall},
+
+  components: {
+    UserProfileLink,
+    UserCardHorizontalSmall
+  },
+
   props: {
     userRole: {
       type: String,
@@ -84,6 +75,7 @@ export default {
       default: false,
     }
   },
+
   data() {
     return {
       search: "",

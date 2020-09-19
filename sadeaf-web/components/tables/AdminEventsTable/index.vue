@@ -112,10 +112,6 @@ export default {
           label: 'Description',
         },
         {
-          name: 'upcoming',
-          label: 'Upcoming'
-        },
-        {
           name: 'status',
           label: 'Status',
         },
@@ -215,6 +211,8 @@ export default {
                 id
                 name
                 email
+                role
+                profile_pic_url
               }
             }
             statuses: assignments_aggregate(distinct_on: status) {
@@ -227,6 +225,7 @@ export default {
                   account {
                     id
                     name
+                    profile_pic_url
                   }
                 }
               }
@@ -244,6 +243,8 @@ export default {
                 account {
                   id
                   name
+                  role
+                  profile_pic_url
                 }
               }
             }

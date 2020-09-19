@@ -1,11 +1,14 @@
 <template>
-  <div class="assignment-card">
+  <div :class="`assignment-card ${type}`">
     <div class="header">
       <div class="title-wrapper">
         <h2 class="title">{{ assignment.event.name }}</h2>
         <assignment-status :status="assignment.status" />
       </div>
-      <el-button icon="el-icon-edit" size="mini" @click="$emit('editClick', assignment)" />
+      <el-button v-if="!readOnly"
+                 icon="el-icon-edit"
+                 size="mini"
+                 @click="$emit('editClick', assignment)" />
     </div>
     <div class="body">
       <div>
@@ -36,6 +39,15 @@ export default {
       type: Object,
       required: true,
     },
+    readOnly: {
+      type: Boolean,
+      default: false,
+    },
+    type: {
+      type: String,
+      default: 'indent',
+      validator: val => ['indent', 'elevate', 'flat'].includes(val),
+    }
   },
   computed: {
     hasVolunteerAssigned() {
@@ -53,7 +65,7 @@ export default {
     },
     roomNumber() {
       return this.assignment.room_number;
-    }
+    },
   }
 };
 </script>
@@ -62,9 +74,14 @@ export default {
 .assignment-card {
   background: white;
   border-radius: 6px;
-  box-shadow: inset 2px 2px 6px #d5dbe9;
   margin: 8px;
   padding: 16px;
+}
+.assignment-card.indent {
+  box-shadow: inset 2px 2px 6px #d5dbe9;
+}
+.assignment-card.elevate {
+  box-shadow: 2px 2px 6px 1px #d9dfee;
 }
 .assignment-card .header {
   display: flex;

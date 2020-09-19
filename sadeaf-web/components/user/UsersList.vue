@@ -3,7 +3,7 @@
     <div class="users">
       <user-card v-for="user in users"
                  :user="user.account"
-                 linkToPage
+                 link-to-page
                  class="user-card" />
     </div>
   </div>
@@ -13,17 +13,7 @@
 import gql from 'graphql-tag';
 import UserCard from "./UserCard";
 import { ROLES } from "../../common/types/constants";
-
-const accountFieldsFragment = gql`
-  fragment accountFields on account {
-    id
-    name
-    username
-    email
-    role
-    profile_pic_url
-  }
-`;
+import { accountFieldsFragment } from "../../common/graphql/fragments";
 
 const allAdminsQuery = gql`
   query AllAdmins {

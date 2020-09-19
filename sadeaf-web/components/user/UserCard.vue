@@ -19,11 +19,7 @@
           <div class="body">
             <div class="deets">
               <h3 class="name">{{ name }}</h3>
-              <el-tag class="role"
-                      size="mini"
-                      :type="elTagType">
-                {{ role.toUpperCase() }}
-              </el-tag>
+              <role-tag :role="role" />
             </div>
             <div>
               {{ email }}
@@ -40,17 +36,17 @@
 </template>
 
 <script>
-import NuxtLinkWrapper from "../link/NuxtLinkWrapper";
 import UserProfileLink from "../link/UserProfileLink";
 import { getUserProfilePagePath } from "../../common/types/users";
 import { ROLE_EL_TAG_TYPES } from "../../common/types/constants";
+import RoleTag from "../RoleTag";
 
 export default {
   name: 'UserCard',
 
   components: {
     UserProfileLink,
-    NuxtLinkWrapper
+    RoleTag,
   },
 
   props: {
@@ -88,12 +84,12 @@ export default {
     getUserProfilePagePath,
 
     handleMouseOver() {
-      if (this.clickable) {
+      if (this.clickable || this.linkToPage) {
         this.isMouseOver = true;
       }
     },
     handleMouseLeave() {
-      if (this.clickable) {
+      if (this.clickable || this.linkToPage) {
         this.isMouseOver = false;
       }
     },

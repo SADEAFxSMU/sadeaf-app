@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link-wrapper :to="profileLink" should-link>
+  <nuxt-link-wrapper :to="profileLink" :should-link="Boolean(role)">
     <slot />
   </nuxt-link-wrapper>
 </template>

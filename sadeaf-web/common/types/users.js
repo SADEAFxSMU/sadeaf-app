@@ -10,6 +10,10 @@ const ROLE_PROFILE_PAGE_PATH_MAPPING = {
 }
 
 export function getUserProfilePagePath({ role, id }) {
+  if (!role) {
+    console.error('Got undefined role');
+    return '/';
+  }
   role = role.toLowerCase();
   return ROLE_PROFILE_PAGE_PATH_MAPPING[role] + '/' + id;
 }

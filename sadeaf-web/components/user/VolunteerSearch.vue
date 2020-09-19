@@ -39,7 +39,7 @@ export default {
             ]
           }) {
             id
-            account { id, name, username, email }
+            account { id, name, username, email, profile_pic_url }
           }
         }`,
         variables: {
