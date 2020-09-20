@@ -1,13 +1,13 @@
 <template>
   <div>
-    <BaseTable title="Service Requests"
+    <BaseTable title="Event Feedback"
                :rows="tableData"
                :columns="columns"
                expandable-rows
     >
       <template v-slot:volunteers="{row}">
-        <volunteers-cell :volunteers="row.volunteers"
-                         v-if="row.volunteers && row.volunteers.length > 0" />
+        <volunteers-cell :volunteers="row.volunteer"
+                         v-if="row.volunteer && row.volunteer.length > 0" />
       </template>
 
       <template v-slot:expanded="{ row }">
@@ -16,7 +16,7 @@
             <h2 style="opacity: 0.5; margin-right: 8px;">Assignments</h2>
           </div>
           <!-- Show assignments as timeline -->
-          <assignments-timeline :event_id="row.id"
+          <assignments-timeline :event_id="row.eventId"
                                 :client="row.client"
                                 :assignments="row.assignments"
                                 :edit-button="false"
@@ -36,10 +36,12 @@
 
     <el-dialog
       width="70%"
-      :visible="eventFeedbackFormVisible"
+      :visible="formVisible"
       @close="closeEventFeedbackForm">
-      <feedback-form :volunteers="this.feedbackVolunteers">
-      </feedback-form>
+      <feedback-form
+        :feedbackVolunteer="feedbackVolunteer"
+        :eventSelected="eventSelected"
+      />
     </el-dialog>
   </div>
 </template>
@@ -50,6 +52,7 @@ import gql from 'graphql-tag';
 import VolunteersCell from '@/components/tables/custom-columns/VolunteersCell';
 import FeedbackForm from '@/components/forms/FeedbackForm/FeedbackForm';
 import AssignmentsTimeline from '@/components/cards/AssignmentsTimeline';
+import volunteer from '@/components/navbar/volunteer';
 
 export default {
   name: 'client-feedback-table',
@@ -58,11 +61,14 @@ export default {
     return {
       hello: 'hello',
       tableData: [],
-      eventFeedbackFormVisible: true,
       eventSelected: {},
       // TODO(Austin): Get username from vuex store (nuxt auth)
       username: 'xiaoming',
-      feedbackVolunteers: ["Wayne", "Hello"],
+      feedbackVolunteer: {
+        'id': 1,
+        'account': { 'id': 17, 'name': 'Toh Jin Wee Wayne', '__typename': 'account' },
+        '__typename': 'volunteer',
+      },
       columns: [
         {
           name: 'name',
@@ -87,34 +93,40 @@ export default {
       ],
     };
   },
+  computed: {
+    formVisible() {
+      return this.$store.state.feedbackForm.visible;
+    }
+  },
   methods: {
     handleEventFeedback(row) {
-      this.eventFeedbackFormVisible = true;
-      this.eventSelected = row;
-      this.feedbackVolunteers = row.volunteers;
+      this.$store.commit('feedbackForm/clickForm',
+        { volunteer: row.volunteer[0], event: row });
     },
     closeEventFeedbackForm() {
-      this.eventFeedbackFormVisible = false;
-      this.eventSelected = {}
+      this.$store.commit('feedbackForm/hideForm')
+      this.eventSelected = {};
     },
     mapResponseToRows(events) {
       const rows = [];
       if (events) {
         events.forEach(event => {
           if (!event.uncompleted_status) {
-            console.log(event.assignments);
-            rows.push({
-              id: event.id,
-              quotation: event.quotation,
-              purpose: event.purpose,
-              startDate: new Date(event.assignments[0].start_dt).toLocaleString(),
-              endDate: new Date(event.assignments[event.assignments.length - 1].start_dt).toLocaleString(),
-              name: event.name,
-              description: event.description,
-              volunteers: event.volunteers.nodes
-                .filter(node => node.volunteer)
-                .map(node => node.volunteer),
-              assignments: event.assignments,
+            event.volunteers.nodes.forEach(({ volunteer }) => {
+              const volunteerAssignments = event.assignments.filter(e => e.volunteer.id === volunteer.id);
+              rows.push({
+                id: event.id + volunteer.account.name,
+                eventId: event.id,
+                quotation: event.quotation,
+                purpose: event.purpose,
+                client: event.client,
+                startDate: new Date(volunteerAssignments[0].start_dt).toLocaleString(),
+                endDate: new Date(volunteerAssignments[volunteerAssignments.length - 1].start_dt).toLocaleString(),
+                name: event.name,
+                description: event.description,
+                volunteer: [volunteer],
+                assignments: volunteerAssignments,
+              });
             });
           }
         });
