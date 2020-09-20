@@ -13,7 +13,4 @@ app.use(createProxyMiddleware('/api/graphql', {
   },
 }))
 
-// TODO(fuxing): Not required anymore, we will be able to remove routes and use graphql exclusively.
-// app.use(require('./routes'))
-
 export default app

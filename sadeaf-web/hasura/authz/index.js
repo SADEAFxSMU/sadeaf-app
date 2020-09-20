@@ -1,5 +1,4 @@
 import {Router} from "express";
-import bodyParser from "body-parser";
 import CognitoExpress from "cognito-express";
 
 const cognitoExpress = new CognitoExpress({
@@ -23,15 +22,18 @@ function authenticated(req, res, next) {
 
   cognitoExpress.validate(token, function (err, response) {
     if (err) return res.status(401).send(err)
-
-    res.locals.user = response
-    next()
+    next(response)
   })
 }
 
 const router = Router()
-router.use(authenticated)
-router.use(bodyParser.json())
-router.use(require('./me'))
+router.get('/_hasura/jwt/authorize', async function (req, res, next) {
+  authenticated(req, res, (user) => {
+    res.json({
+      "X-Hasura-User-Id": user.sub,
+      "X-Hasura-Role": "client"
+    })
+  })
+})
 
 module.exports = router
