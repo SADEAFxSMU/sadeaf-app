@@ -35,6 +35,7 @@
                              :key="'pend-as-' + assignment.id"
                              :details="assignment"
                              :show-start-date="true"
+                             :to-accept="true"
                              @editClick="showAcceptPendingAssignmentDialog"/>
           </div>
         </el-tab-pane>

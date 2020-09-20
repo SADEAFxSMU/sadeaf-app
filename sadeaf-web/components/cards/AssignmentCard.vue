@@ -5,7 +5,7 @@
         <h2 class="title">{{ eventName }}</h2>
         <assignment-status :status="status" />
       </div>
-      <el-button v-if="showEdit" icon="el-icon-edit" size="mini" @click="$emit('editClick', assignment)" />
+      <el-button v-if="showEdit" :icon="icon" size="mini" @click="$emit('editClick', assignment)" />
     </div>
     <div class="body">
       <div>
@@ -56,6 +56,11 @@ export default {
       type: Boolean,
       default: false,
       require: false
+    },
+    toAccept: {
+      type: Boolean,
+      default: false,
+      require: false
     }
   },
   computed: {
@@ -86,6 +91,9 @@ export default {
     },
     startDate() {
       return DateUtils.humanReadableDt(this.assignment.start_dt);
+    },
+    icon() {
+      return this.toAccept ? "el-icon-check" : "el-icon-edit";
     }
   }
 };
