@@ -2,10 +2,10 @@
   <div class="assignment-card">
     <div class="header">
       <div class="title-wrapper">
-        <h2 class="title">{{ assignment.event.name }}</h2>
-        <assignment-status :status="assignment.status" />
+        <h2 class="title">{{ eventName }}</h2>
+        <assignment-status :status="status" />
       </div>
-      <el-button icon="el-icon-edit" size="mini" @click="$emit('editClick', assignment)" />
+      <el-button v-if="showEdit" :icon="icon" size="mini" @click="$emit('editClick', assignment)" />
     </div>
     <div class="body">
       <div>
@@ -13,6 +13,11 @@
           {{ address }}
           <span class="room-number" v-if="roomNumber"> {{ roomNumber }} </span>
         </h4>
+      </div>
+      <div v-if="showStartDate">
+        <h5>
+          {{ startDate }}
+        </h5>
       </div>
       <div class="assigned-volunteer">
         <user-card-horizontal-small v-if="assignment.volunteer"
@@ -28,16 +33,46 @@
 import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 import StatusIndicator from "../StatusIndicator";
 import AssignmentStatus from "../AssignmentStatus";
+import {DateUtils} from "../../common/date-utils";
 export default {
   name: "AssignmentCard",
   components: {AssignmentStatus, StatusIndicator, UserCardHorizontalSmall},
   props: {
-    assignment: {
+    details: {
       type: Object,
       required: true,
     },
+    showEdit: {
+      type: Boolean,
+      default: true,
+      required: false
+    },
+    showStartDate: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
+    isOptIn: {
+      type: Boolean,
+      default: false,
+      require: false
+    },
+    toAccept: {
+      type: Boolean,
+      default: false,
+      require: false
+    }
   },
   computed: {
+    // we need to make a distinction since an opt-in object or assignment object
+    // can be passed into this component
+    assignment() {
+      return this.isOptIn ? this.details.assignment : this.details;
+    },
+    eventName() {
+      console.log(this.details);
+      return this.assignment.event.name;
+    },
     hasVolunteerAssigned() {
       return this.assignment.volunteer && this.assignment.volunteer.account;
     },
@@ -45,7 +80,7 @@ export default {
       return this.assignment.volunteer;
     },
     status() {
-      return this.assignment.status;
+      return this.isOptIn ? this.details.status : this.assignment.status;
     },
     address() {
       const { address_line_one, address_line_two } = this.assignment;
@@ -53,6 +88,12 @@ export default {
     },
     roomNumber() {
       return this.assignment.room_number;
+    },
+    startDate() {
+      return DateUtils.humanReadableDt(this.assignment.start_dt);
+    },
+    icon() {
+      return this.toAccept ? "el-icon-check" : "el-icon-edit";
     }
   }
 };

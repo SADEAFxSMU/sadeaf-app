@@ -2,7 +2,7 @@ export const state = () => ({
   /**
    * Placeholder while nuxt auth + cognito is under development
    */
-  auth: {
+  user: {
     userType: 'client',
     client: {
       id: 1,
@@ -12,14 +12,22 @@ export const state = () => ({
         email: 'jonlee@gmail.com',
       }
     },
+    volunteer: {
+      id: 1,
+      account: {
+        name: 'Toh Jin Wee Wayne',
+        username: 'waynetoh',
+        email: 'waynetoh@gmail.com',
+      }
+    }
   }
-});
+})
 
 export const mutations = {
-  setUserType(state, {userType}) {
-    state.userType = userType;
+  setUserType(state, userType) {
+    state.user.userType = userType;
   },
   setUser(state, {userType, user}) {
-    state.auth = {userType, [userType]: user};
+    state.user = {userType, [userType]: user};
   },
 }

@@ -4161,6 +4161,7 @@ type volunteer_assignment_opt_in {
   assignment_id: Int!
   created_at: timestamptz!
   id: Int!
+  status: String!
   "An object relationship"
   volunteer: volunteer!
   volunteer_id: Int!
@@ -4199,6 +4200,7 @@ type volunteer_assignment_opt_in_max_fields {
   assignment_id: Int
   created_at: timestamptz
   id: Int
+  status: String
   volunteer_id: Int
 }
 
@@ -4207,6 +4209,7 @@ type volunteer_assignment_opt_in_min_fields {
   assignment_id: Int
   created_at: timestamptz
   id: Int
+  status: String
   volunteer_id: Int
 }
 
@@ -5094,6 +5097,8 @@ enum volunteer_assignment_opt_in_select_column {
   "column name"
   id
   "column name"
+  status
+  "column name"
   volunteer_id
 }
 
@@ -5105,6 +5110,8 @@ enum volunteer_assignment_opt_in_update_column {
   created_at
   "column name"
   id
+  "column name"
+  status
   "column name"
   volunteer_id
 }
@@ -8269,6 +8276,7 @@ input volunteer_assignment_opt_in_bool_exp {
   assignment_id: Int_comparison_exp
   created_at: timestamptz_comparison_exp
   id: Int_comparison_exp
+  status: String_comparison_exp
   volunteer: volunteer_bool_exp
   volunteer_id: Int_comparison_exp
 }
@@ -8286,6 +8294,7 @@ input volunteer_assignment_opt_in_insert_input {
   assignment_id: Int
   created_at: timestamptz
   id: Int
+  status: String
   volunteer: volunteer_obj_rel_insert_input
   volunteer_id: Int
 }
@@ -8295,6 +8304,7 @@ input volunteer_assignment_opt_in_max_order_by {
   assignment_id: order_by
   created_at: order_by
   id: order_by
+  status: order_by
   volunteer_id: order_by
 }
 
@@ -8303,6 +8313,7 @@ input volunteer_assignment_opt_in_min_order_by {
   assignment_id: order_by
   created_at: order_by
   id: order_by
+  status: order_by
   volunteer_id: order_by
 }
 
@@ -8325,6 +8336,7 @@ input volunteer_assignment_opt_in_order_by {
   assignment_id: order_by
   created_at: order_by
   id: order_by
+  status: order_by
   volunteer: volunteer_order_by
   volunteer_id: order_by
 }
@@ -8339,6 +8351,7 @@ input volunteer_assignment_opt_in_set_input {
   assignment_id: Int
   created_at: timestamptz
   id: Int
+  status: String
   volunteer_id: Int
 }
 
