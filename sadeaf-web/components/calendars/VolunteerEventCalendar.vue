@@ -6,8 +6,8 @@
                   slot-scope="{date}">
           <h4 :class="{ 'greyed': isBeforeToday(date) }">{{ date.getDate() }}</h4>
 
-          <div v-if="getAssignmentsOnDate(date)" class="assignment-cell">
-            <div v-for="assignment in getAssignmentsOnDate(date)"
+          <div v-if="getMatchedAssignmentsOnDate(date)" class="assignment-cell">
+            <div v-for="assignment in getMatchedAssignmentsOnDate(date)"
                  class="body">
               <el-tag size="mini">
                 {{ assignment.event.name }}
@@ -25,8 +25,9 @@
           <div class="assignment-cards">
             <assignment-card v-for="assignment in getAssignmentsOnDate(selectedDate)"
                              :key="'as-' + assignment.id"
-                             :show-edit="false"
-                             :details="assignment"/>
+                             :show-cancel="true"
+                             :details="assignment"
+                             @editClick="cancelMatchedAssignment"/>
           </div>
         </el-tab-pane>
         <el-tab-pane label="Available Assignments" name="pendingAssignments">
@@ -68,6 +69,7 @@
   import dayjs from "dayjs";
   import AssignmentCard from "../cards/AssignmentCard";
   import AcceptAssignmentDetailsDialog from "../dialogs/AcceptAssignmentDetailsDialog";
+  import _ from "lodash";
 
   const assignmentQuery = gql`
     query($volunteer_id: Int!) {
@@ -148,6 +150,18 @@
     }
   `
 
+  const cancelAssignmentQuery = gql`
+    mutation cancelAssignment($assignment_id: Int!) {
+      update_assignment_by_pk(
+        pk_columns: {id: $assignment_id},
+        _set: {status: "PENDING"}
+      ) {
+        id
+        status
+      }
+    }
+  `
+
   export default {
     name: "VolunteerEventCalendar",
     components: {AcceptAssignmentDetailsDialog, AssignmentCard},
@@ -165,6 +179,10 @@
     methods: {
       isBeforeToday(date) {
         return DateUtils.isBeforeToday(date);
+      },
+      getMatchedAssignmentsOnDate(date) {
+        const assignmentsByDt = this.getAssignmentsOnDate(date);
+        return assignmentsByDt && _.pickBy(assignmentsByDt, (asg) => asg.status === 'MATCHED');
       },
       getAssignmentsOnDate(date) {
         const dateKey = dayjs(date).format('YYYYMMDD');
@@ -191,6 +209,28 @@
           this.$apollo.queries.assignments.refetch();
           this.$apollo.queries.volunteer_assignment_opt_in.refetch();
         }
+      },
+      cancelMatchedAssignment(assignment) {
+        this.$confirm('This will un-match you from this assignment. Are you sure?', 'Warning', {
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.$apollo.mutate({
+            mutation: cancelAssignmentQuery,
+            variables: {
+              assignment_id: assignment.id
+            }
+          }).then((_) => {
+            this.$notify.success('Assignment Cancelled');
+            this.$apollo.queries.assignments.refetch();
+          }).catch((error) => {
+            this.$notify.error('Something went wrong with cancelling the assignment')
+            console.log(error)
+          })
+        }).catch(() => {
+          // do nothing if the user pressed cancel
+        })
       }
     },
     computed: {

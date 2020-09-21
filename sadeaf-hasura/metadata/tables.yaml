@@ -347,6 +347,7 @@
       - postal
       - room_number
       - start_dt
+      - status
       filter:
         volunteer_id:
           _eq: X-Hasura-User-Id

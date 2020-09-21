@@ -47,6 +47,11 @@ export default {
       default: true,
       required: false
     },
+    showCancel: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
     showStartDate: {
       type: Boolean,
       default: false,
@@ -70,7 +75,6 @@ export default {
       return this.isOptIn ? this.details.assignment : this.details;
     },
     eventName() {
-      console.log(this.details);
       return this.assignment.event.name;
     },
     hasVolunteerAssigned() {
@@ -93,7 +97,13 @@ export default {
       return DateUtils.humanReadableDt(this.assignment.start_dt);
     },
     icon() {
-      return this.toAccept ? "el-icon-check" : "el-icon-edit";
+      if (this.toAccept) {
+        return "el-icon-check";
+      }
+      if (this.showCancel) {
+        return "el-icon-close";
+      }
+      return "el-icon-edit";
     }
   }
 };
