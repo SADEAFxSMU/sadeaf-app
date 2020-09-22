@@ -1510,6 +1510,13 @@
       - volunteer_id
       - created_at
       filter: {}
+  update_permissions:
+  - role: volunteer
+    permission:
+      columns:
+      - status
+      filter: {}
+      check: null
   delete_permissions:
   - role: volunteer
     permission:

@@ -19,7 +19,7 @@
     </div>
     <div class="assignment-command-panel">
       <el-tabs v-model="tab">
-        <el-tab-pane v-if="getAssignmentsOnDate(selectedDate)"
+        <el-tab-pane v-if="getMatchedAssignmentsOnDate(selectedDate)"
                      :label="selectedDate.toDateString() + ' Session'"
                      name="acceptedAssignments">
           <div class="assignment-cards">
@@ -35,7 +35,6 @@
             <assignment-card v-for="assignment in lastestPendingAssignmentsFromHasura"
                              :key="'pend-as-' + assignment.id"
                              :details="assignment"
-                             :show-start-date="true"
                              :to-accept="true"
                              @editClick="showAcceptPendingAssignmentDialog"/>
           </div>
@@ -45,12 +44,13 @@
             <div v-if="volunteerOptedInAssignments.length === 0">
               <span>You haven't opted in for any assignments!</span>
             </div>
-            <assignment-card v-for="assignment in volunteerOptedInAssignments"
-                             :key="'optin-as-' + assignment.id"
-                             :details="assignment"
-                             :show-edit="false"
+            <assignment-card v-for="optInDetails in volunteerOptedInAssignments"
+                             :key="'optin-as-' + optInDetails.id"
+                             :details="optInDetails"
+                             :show-edit="optInDetails.status === 'OPTED_IN'"
                              :is-opt-in="true"
-                             :show-start-date="true"/>
+                             :show-cancel="true"
+                             @editClick="optOutOfAssignment"/>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -95,10 +95,10 @@
 
     pendingAssignments: assignment(
         where: {
-          _and: [
-            {status: {_eq: "PENDING"}},
-            {_not: {volunteer_assignment_opt_ins: {volunteer_id: {_eq: $volunteer_id}}}}
-          ]
+          _and: {
+            status: {_eq: "PENDING"},
+            _not: {volunteer_assignment_opt_ins: {volunteer_id: {_eq: $volunteer_id}}},
+          }
         }
     ) {
       id
@@ -123,7 +123,11 @@
 
   const volunteerOptInQuery = gql`
     query VolunteerOptIns($volunteer_id: Int!) {
-      volunteer_assignment_opt_in(where: {volunteer_id: {_eq: $volunteer_id}}){
+      volunteer_assignment_opt_in(
+        where: {
+            volunteer_id: {_eq: $volunteer_id}
+        }
+      ){
         id
         assignment_id
         volunteer_id
@@ -162,6 +166,18 @@
     }
   `
 
+  const optOutOfOptedInAssignmentQuery = gql`
+    mutation optOutOfOptedInAssignment($opt_in_assignment_id: Int!) {
+      update_volunteer_assignment_opt_in_by_pk(
+        pk_columns: {id: $opt_in_assignment_id},
+        _set: {status: "OPTED_OUT"}
+      ) {
+        id,
+        status
+      }
+    }
+  `
+
   export default {
     name: "VolunteerEventCalendar",
     components: {AcceptAssignmentDetailsDialog, AssignmentCard},
@@ -182,7 +198,15 @@
       },
       getMatchedAssignmentsOnDate(date) {
         const assignmentsByDt = this.getAssignmentsOnDate(date);
-        return assignmentsByDt && _.pickBy(assignmentsByDt, (asg) => asg.status === 'MATCHED');
+        let matchedAssignments;
+
+        if (assignmentsByDt) {
+          matchedAssignments = _.pickBy(assignmentsByDt, (asg) => asg.status === 'MATCHED');
+        }
+        // Need to check for empty object since pickBy returns an empty object
+        // if there are no matches. Return undefined since {} evaluates to true in js
+        // which is undesirable behaviour for v-if
+        return _.isEmpty(matchedAssignments) ? undefined : matchedAssignments;
       },
       getAssignmentsOnDate(date) {
         const dateKey = dayjs(date).format('YYYYMMDD');
@@ -190,7 +214,7 @@
       },
       handleCalendarClick(date) {
         this.selectedDate = date;
-        if (this.getAssignmentsOnDate(date)) {
+        if (this.getMatchedAssignmentsOnDate(date)) {
           this.tab = "acceptedAssignments"
         } else {
           this.tab = "pendingAssignments"
@@ -210,6 +234,30 @@
           this.$apollo.queries.volunteer_assignment_opt_in.refetch();
         }
       },
+      optOutOfAssignment(optInDetails) {
+        const text = 'This will opt you out from this assignment. You will not be able to opt in again. Are you sure?';
+        this.$confirm(text, 'Warning', {
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          console.log(optInDetails)
+          this.$apollo.mutate({
+            mutation: optOutOfOptedInAssignmentQuery,
+            variables: {
+              opt_in_assignment_id: optInDetails.id
+            }
+          }).then((_) => {
+            this.$notify.success('Opted out for Assignment');
+            this.$apollo.queries.assignments.refetch();
+          }).catch((error) => {
+            this.$notify.error('Something went wrong with opting out of the assignment')
+            console.log(error)
+          })
+        }).catch(() => {
+          // do nothing if the user pressed cancel
+        })
+      },
       cancelMatchedAssignment(assignment) {
         this.$confirm('This will un-match you from this assignment. Are you sure?', 'Warning', {
           confirmButtonText: 'Yes',
@@ -223,6 +271,7 @@
             }
           }).then((_) => {
             this.$notify.success('Assignment Cancelled');
+            this.tab = 'pendingAssignments'
             this.$apollo.queries.assignments.refetch();
           }).catch((error) => {
             this.$notify.error('Something went wrong with cancelling the assignment')

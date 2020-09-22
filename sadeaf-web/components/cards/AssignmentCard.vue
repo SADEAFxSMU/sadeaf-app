@@ -5,7 +5,12 @@
         <h2 class="title">{{ eventName }}</h2>
         <assignment-status :status="status" />
       </div>
-      <el-button v-if="showEdit" :icon="icon" size="mini" @click="$emit('editClick', assignment)" />
+      <el-button
+        v-if="showEdit"
+        :icon="icon"
+        size="mini"
+        :disabled="editButtonDisabled"
+        @click="$emit('editClick', details)" />
     </div>
     <div class="body">
       <div>
@@ -14,11 +19,9 @@
           <span class="room-number" v-if="roomNumber"> {{ roomNumber }} </span>
         </h4>
       </div>
-      <div v-if="showStartDate">
-        <h5>
-          {{ startDate }}
-        </h5>
-      </div>
+      <h5>
+        {{ startDate }}
+      </h5>
       <div class="assigned-volunteer">
         <user-card-horizontal-small v-if="assignment.volunteer"
                                     :user="assignment.volunteer.account"/>
@@ -34,6 +37,8 @@ import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 import StatusIndicator from "../StatusIndicator";
 import AssignmentStatus from "../AssignmentStatus";
 import {DateUtils} from "../../common/date-utils";
+import dayjs from 'dayjs';
+
 export default {
   name: "AssignmentCard",
   components: {AssignmentStatus, StatusIndicator, UserCardHorizontalSmall},
@@ -48,11 +53,6 @@ export default {
       required: false
     },
     showCancel: {
-      type: Boolean,
-      default: false,
-      required: false
-    },
-    showStartDate: {
       type: Boolean,
       default: false,
       required: false
@@ -104,6 +104,10 @@ export default {
         return "el-icon-close";
       }
       return "el-icon-edit";
+    },
+    editButtonDisabled() {
+      // disable edit button if assignment start datetime is before current datetime
+      return dayjs(this.assignment.start_dt).isBefore(dayjs());
     }
   }
 };
