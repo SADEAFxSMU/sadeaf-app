@@ -12,8 +12,8 @@
         <h1>Assignments</h1>
         <div class="assignments">
           <assignment-card v-for="assignment in assignments"
-                           :assignment="assignment"
-                           read-only
+                           :details="assignment"
+                           :show-edit="false"
                            type="elevate" />
         </div>
       </div>

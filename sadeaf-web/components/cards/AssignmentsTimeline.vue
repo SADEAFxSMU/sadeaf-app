@@ -13,14 +13,14 @@
                      size="mini"
                      style="margin-left: 4px;" />
         </div>
-        <assignment-card :assignment="assignment" />
+        <assignment-card-small :assignment="assignment" />
       </el-timeline-item>
     </el-timeline>
   </div>
 </template>
 
 <script>
-import AssignmentCard from "./AssignmentCardSmall";
+import AssignmentCardSmall from "./AssignmentCardSmall";
 import AssignmentStatus from "../AssignmentStatus";
 import SadeafCreateAssignmentForm from "../forms/SadeafCreateAssignmentForm";
 import { ASSIGNMENT_STATUS_COLORS } from "../../common/types/constants";
@@ -29,7 +29,7 @@ import dayjs from 'dayjs';
 export default {
   name: "AssignmentsTimeline",
   components: {
-    AssignmentCard,
+    AssignmentCardSmall,
     AssignmentStatus,
     SadeafCreateAssignmentForm
   },

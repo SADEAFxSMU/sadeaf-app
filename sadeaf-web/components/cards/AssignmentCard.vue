@@ -38,6 +38,12 @@ export default {
   name: "AssignmentCard",
   components: {AssignmentStatus, StatusIndicator, UserCardHorizontalSmall},
   props: {
+    type: {
+      type: String,
+      required: false,
+      default: 'elevate',
+      validator: val => ['elevate', 'indent'].includes(val)
+    },
     details: {
       type: Object,
       required: true,
@@ -70,7 +76,6 @@ export default {
       return this.isOptIn ? this.details.assignment : this.details;
     },
     eventName() {
-      console.log(this.details);
       return this.assignment.event.name;
     },
     hasVolunteerAssigned() {
