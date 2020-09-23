@@ -110,7 +110,7 @@
           this.$notify.success('Assignment Accepted');
           this.$emit('onClose', 'accepted')
         }).catch((error) => {
-          this.$notify.error('Something went wrong with accepted the assignment')
+          this.$notify.error('Something went wrong with accepting the assignment')
           console.log(error);
           this.closeDialog();
         })
