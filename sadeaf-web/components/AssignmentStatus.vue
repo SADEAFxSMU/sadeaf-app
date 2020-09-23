@@ -1,6 +1,6 @@
 <template>
   <status-indicator :color="color"
-                    :text="status"
+                    :text="statusText"
                     v-bind="$attrs" />
 </template>
 
@@ -30,6 +30,9 @@ export default {
     color() {
       return ASSIGNMENT_STATUS_COLORS[this.status];
     },
+    statusText() {
+      return this.status.split("_").join(" ");
+    }
   }
 };
 </script>

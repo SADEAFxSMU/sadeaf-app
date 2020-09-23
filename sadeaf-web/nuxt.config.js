@@ -18,8 +18,7 @@ export default {
   plugins: [
     '@/plugins/amplify-cognito',
     '@/plugins/apollo',
-    '@/plugins/dayjs',
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
   ],
   components: true,
   buildModules: [],
@@ -30,7 +29,6 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
-    '@nuxtjs/dayjs',
   ],
   serverMiddleware: [
     {prefix: false, handler: '~/api'}

@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     handleSelect(value) {
+      this.$store.commit('auth/setUserType', value);
       this.$emit('input', value);
     }
   }
