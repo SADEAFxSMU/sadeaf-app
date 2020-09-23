@@ -6,7 +6,7 @@ export default {
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
+      {hid: 'description', name: 'description', content: 'SADEAF'}
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
@@ -24,11 +24,8 @@ export default {
   buildModules: [],
   modules: [
     '~/hasura',
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt/content
-    '@nuxt/content',
   ],
   serverMiddleware: [
     {prefix: false, handler: '~/api'}
