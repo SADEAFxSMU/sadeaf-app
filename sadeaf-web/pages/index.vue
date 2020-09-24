@@ -7,7 +7,6 @@
 <script>
 export default {
   name: "app-home",
-  middleware: ['authenticated'],
   mounted() {
     if (this.userType) {
       this.navigateToRoleHome();
