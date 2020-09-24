@@ -1,6 +1,7 @@
 import {Router} from "express";
 import CognitoExpress from "cognito-express";
 import fetch from 'node-fetch';
+import {HASURA} from '../../config';
 
 const cognitoExpress = new CognitoExpress({
   region: process.env.AWS_REGION || "ap-southeast-1",
@@ -42,9 +43,9 @@ router.get('/_hasura/jwt/authorize', async function (req, res, next) {
 })
 
 async function getHasuraUserRole(cognitoId) {
-  const response = await fetch("http://localhost:3000/api/graphql", {
+  const response = await fetch(HASURA.GRAPHQL_API_URL, {
     headers: {
-      'X-Hasura-Admin-Secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET || 'sadeaf-hasura-console'
+      'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET
     },
     "body": `{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ role }}"}`,
     method: "POST",
