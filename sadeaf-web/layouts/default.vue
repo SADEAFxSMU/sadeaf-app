@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="layout">
     <user-switcher v-if="isDev" v-model="userType"/>
-    <el-container>
-      <el-header>
+    <el-container style="height: 100%">
+      <el-header v-if="user">
         <admin-navbar v-if="userType === 'admin'"/>
         <client-navbar v-else-if="userType === 'client'"/>
         <volunteer-navbar v-else-if="userType === 'volunteer'"/>
@@ -25,13 +25,13 @@ import ServiceRequestorNavbar from "../components/navbar/service-requestor";
 export default {
   components: {ServiceRequestorNavbar, UserSwitcher, AdminNavbar, ClientNavbar, VolunteerNavbar},
 
-  data() {
-    return {
-      userType: 'admin',
-    }
-  },
-
   computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
+    userType() {
+      return this.user && this.user.userType;
+    },
     isDev() {
       return process.env.NODE_ENV !== 'production';
     }
@@ -63,8 +63,12 @@ h1 { color: #47476b; }
 h2 { color: #686880; }
 h3 { color: #7f7f92; }
 
+.layout {
+  height: 100vh;
+  width: 100vw;
+}
+
 .main {
   background: #f4f5ff;
-  min-height: 95vh;
 }
 </style>
