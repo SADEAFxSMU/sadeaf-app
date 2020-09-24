@@ -59,6 +59,10 @@ html {
   margin: 0;
 }
 
+h1 { color: #47476b; }
+h2 { color: #686880; }
+h3 { color: #7f7f92; }
+
 .main {
   background: #f4f5ff;
   min-height: 95vh;

@@ -6,7 +6,8 @@
       "Default GraphQL Endpoint": {
         "url": "http://localhost:3000/api/graphql",
         "headers": {
-          "user-agent": "JS GraphQL"
+          "user-agent": "JS GraphQL",
+          "X-Hasura-Admin-Secret": "sadeaf-hasura-console"
         },
         "introspect": false
       }

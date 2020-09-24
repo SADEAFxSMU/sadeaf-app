@@ -18,6 +18,7 @@ export default {
   plugins: [
     '@/plugins/amplify-cognito',
     '@/plugins/apollo',
+    '@/plugins/hasura-role',
     '@/plugins/element-ui',
   ],
   components: true,

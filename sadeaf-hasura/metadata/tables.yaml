@@ -79,11 +79,14 @@
   - role: client
     permission:
       columns:
+      - cognito_id
       - contact
       - created_at
       - email
       - id
       - name
+      - profile_pic_url
+      - role
       - updated_at
       - username
       filter: {}
@@ -91,11 +94,14 @@
   - role: service_requestor
     permission:
       columns:
+      - cognito_id
       - contact
       - created_at
       - email
       - id
       - name
+      - profile_pic_url
+      - role
       - updated_at
       - username
       filter:
@@ -109,11 +115,14 @@
   - role: volunteer
     permission:
       columns:
+      - cognito_id
       - contact
       - created_at
       - email
       - id
       - name
+      - profile_pic_url
+      - role
       - updated_at
       - username
       filter: {}
@@ -1502,6 +1511,14 @@
       - volunteer_id
       backend_only: false
   select_permissions:
+  - role: client
+    permission:
+      columns:
+      - assignment_id
+      - created_at
+      - id
+      - volunteer_id
+      filter: {}
   - role: volunteer
     permission:
       columns:
