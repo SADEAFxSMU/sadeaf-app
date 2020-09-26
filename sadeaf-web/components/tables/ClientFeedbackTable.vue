@@ -37,7 +37,9 @@
     <el-dialog
       width="70%"
       :visible="formVisible"
-      @close="closeEventFeedbackForm">
+      @close="closeEventFeedbackForm"
+      destroy-on-close
+    >
       <feedback-form
         :feedbackVolunteer="feedbackVolunteer"
         :eventSelected="eventSelected"

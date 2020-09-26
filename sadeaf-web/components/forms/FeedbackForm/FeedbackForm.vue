@@ -77,7 +77,7 @@
       </el-form-item>
 
       <el-form-item v-model="feedbackForm.live_comments" label="Live Notes Comments">
-        <el-input type="textarea"></el-input>
+        <el-input type="textarea" v-model="feedbackForm.live_comments"></el-input>
       </el-form-item>
 
       <h3 class="form-header">Post-Session Notes Rating</h3>
@@ -99,14 +99,14 @@
       </el-form-item>
 
       <el-form-item v-model="feedbackForm.post_session_comments" label="Post-Session Notes Comments">
-        <el-input type="textarea"></el-input>
+        <el-input type="textarea" v-model="feedbackForm.post_session_comments"></el-input>
       </el-form-item>
 
       <h3 class="form-header">Additional Comments</h3>
       <el-divider />
 
       <el-form-item v-model="feedbackForm.general_feedback" label="Additional General Comments">
-        <el-input type="textarea"></el-input>
+        <el-input type="textarea" v-model="feedbackForm.general_feedback"></el-input>
       </el-form-item>
 
       <h3 class="form-header">Consent</h3>
@@ -189,7 +189,7 @@ export default {
         { title: 'Neutral', label: '3' },
         { title: 'Good', label: '4' },
         { title: 'Very Good', label: '5' },
-        { title: 'N/A', label: '6' },
+        { title: 'N/A', label: 'n.a.' },
       ],
       TRAINING_PRIVACY_OPTIONS: [
         { title: 'Yes, I allow my comments, including name and school/institute to be quoted', label: 'public' },
@@ -208,7 +208,7 @@ export default {
         },
       ],
       feedbackForm: {
-        // for ratings very bad - bad - neutral - good - very good are mapped from a range of 1 - 5 respectively
+        // for ratings very bad - bad - neutral - good - very good are mapped from a range of 1 - 5 or n.a. respectively
         notetaker_punctual: '',
         notetaker_conduct: '',
         live_information_understanding: '',
@@ -246,10 +246,6 @@ export default {
         ],
       },
     };
-  },
-  mounted() {
-    console.log('hello')
-    this.$refs['feedbackForm'].resetFields();
   },
   computed: {
     volunteerSelected() {
