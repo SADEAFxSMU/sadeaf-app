@@ -65,7 +65,8 @@ export default {
       tableData: [],
       eventSelected: {},
       // TODO(Austin): Get username from vuex store (nuxt auth)
-      username: 'xiaoming',
+      username: 'austinwoon',
+      client_id: 12,
       feedbackVolunteer: {
         'id': 1,
         'account': { 'id': 17, 'name': 'Toh Jin Wee Wayne', '__typename': 'account' },
@@ -98,39 +99,37 @@ export default {
   computed: {
     formVisible() {
       return this.$store.state.feedbackForm.visible;
-    }
+    },
   },
   methods: {
     handleEventFeedback(row) {
       this.$store.commit('feedbackForm/clickForm',
-        { volunteer: row.volunteer[0], event: row });
+        { volunteer: row.volunteer[0], event: row, feedbackId: row.feedback_id });
     },
     closeEventFeedbackForm() {
-      this.$store.commit('feedbackForm/hideForm')
+      this.$store.commit('feedbackForm/hideForm');
       this.eventSelected = {};
     },
-    mapResponseToRows(events) {
+    mapResponseToRows(feedbacksToGive) {
       const rows = [];
-      if (events) {
-        events.forEach(event => {
-          if (!event.uncompleted_status) {
-            event.volunteers.nodes.forEach(({ volunteer }) => {
-              const volunteerAssignments = event.assignments.filter(e => e.volunteer.id === volunteer.id);
-              rows.push({
-                id: event.id + volunteer.account.name,
-                eventId: event.id,
-                quotation: event.quotation,
-                purpose: event.purpose,
-                client: event.client,
-                startDate: new Date(volunteerAssignments[0].start_dt).toLocaleString(),
-                endDate: new Date(volunteerAssignments[volunteerAssignments.length - 1].start_dt).toLocaleString(),
-                name: event.name,
-                description: event.description,
-                volunteer: [volunteer],
-                assignments: volunteerAssignments,
-              });
-            });
-          }
+      if (feedbacksToGive) {
+        feedbacksToGive.forEach((feedback) => {
+          const { event, volunteer } = feedback;
+          const volunteerAssignments = event.assignments.filter(a => a.volunteer.id === volunteer.id);
+          rows.push({
+            feedback_id: feedback.id,
+            id: event.id + volunteer.account.name,
+            eventId: event.id,
+            quotation: event.quotation,
+            purpose: event.purpose,
+            client: event.client,
+            startDate: new Date(volunteerAssignments[0].start_dt).toLocaleString(),
+            endDate: new Date(volunteerAssignments[volunteerAssignments.length - 1].start_dt).toLocaleString(),
+            name: event.name,
+            description: event.description,
+            volunteer: [volunteer],
+            assignments: volunteerAssignments,
+          });
         });
       }
       this.tableData = rows;
@@ -139,13 +138,14 @@ export default {
   apollo: {
     $subscribe: {
       event: {
-        query: gql`subscription ClientCompletedEventsSubscription($client_username: String!) {
-          events: event(where: {client: {account: {username: {_eq: $client_username}}}}, order_by: {assignments_aggregate: {max: {start_dt: desc_nulls_last}}}) {
+        query: gql`
+        subscription ClientCompletedEventsSubscription($client_id: Int!, $feedback_given: Int!) {
+          feedback(where: {event: {client_id: {_eq: $client_id}}, feedback_given: {_eq: $feedback_given}}) {
+          id
+          event {
             id
             name
-            uncompleted_status
             description
-            purpose
             client {
               id
               account {
@@ -155,43 +155,37 @@ export default {
                 email
               }
             }
-            volunteers: assignments_aggregate(distinct_on: volunteer_id) {
-              nodes {
-                volunteer {
-                  id
-                  account {
-                    id
-                    name
-                  }
-                }
-              }
-            }
             assignments(order_by: {start_dt: desc}) {
-              id
               address_line_one
               address_line_two
-              postal
-              start_dt
               end_dt
+              start_dt
               status
               volunteer {
-                id
                 account {
-                  id
                   name
                 }
+                id
               }
             }
           }
+          volunteer {
+            account {
+              name
+            }
+            id
+          }
         }
+      }
       `,
         variables() {
           return {
-            client_username: this.username,
+            client_id: this.client_id,
+            feedback_given: 0,
           };
         },
         result({ data }) {
-          this.mapResponseToRows(data.events);
+          this.mapResponseToRows(data.feedback);
         },
       },
     },

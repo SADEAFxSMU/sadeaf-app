@@ -31,23 +31,24 @@ function authenticated(req, res, next) {
 const router = Router()
 router.get('/_hasura/jwt/authorize', async function (req, res, next) {
   authenticated(req, res, async (user) => {
-    const role = await getHasuraUserRole(user.sub);
-    if (!role) {
+    const { role, id } = await getHasuraUserRoleAndId(user.email);
+    if (!role || !id) {
       return res.status(401).send();
     }
     res.json({
-      "X-Hasura-User-Id": user.sub,
+      "X-Hasura-User-Id": id,
       "X-Hasura-Role": role
     })
   })
 })
 
-async function getHasuraUserRole(cognitoId) {
+// TODO(Austin): Remove getHasuraRoleAndId after eli has commited his stuff
+async function getHasuraUserRoleAndId(cognitoId) {
   const response = await fetch(HASURA.GRAPHQL_API_URL, {
     headers: {
       'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET
     },
-    "body": `{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ role }}"}`,
+    "body": `{"query":"{account(where:{email:{_eq:\\"${cognitoId}\\"}}){ role, id }}"}`,
     method: "POST",
   });
   const { data } = await response.json();
@@ -59,7 +60,7 @@ async function getHasuraUserRole(cognitoId) {
     // No results -- cognito id does not exist in the `account` table
     return null;
   }
-  return data.account[0].role;
+  return { role: data.account[0].role, id: ""+data.account[0].id };
 }
 
 module.exports = router

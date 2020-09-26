@@ -259,6 +259,7 @@
           client:
             account_id:
               _eq: X-Hasura-User-Id
+      allow_aggregations: true
   - role: service_requestor
     permission:
       columns:
@@ -830,6 +831,7 @@
       columns:
       - confidentiality_privacy_preference
       - event_id
+      - feedback_given
       - general_feedback
       - live_comments
       - live_information_understanding
@@ -846,20 +848,21 @@
     permission:
       columns:
       - confidentiality_privacy_preference
-      - notetaker_punctual
-      - training_privacy_preference
-      - event_id
-      - id
-      - volunteer_id
-      - general_feedback
-      - live_comments
-      - post_session_comments
       - created_at
-      - updated_at
+      - event_id
+      - feedback_given
+      - general_feedback
+      - id
+      - live_comments
       - live_information_understanding
       - live_interaction
       - notetaker_conduct
+      - notetaker_punctual
+      - post_session_comments
       - post_session_understanding
+      - training_privacy_preference
+      - updated_at
+      - volunteer_id
       filter:
         event:
           client:
@@ -870,6 +873,7 @@
     permission:
       columns:
       - confidentiality_privacy_preference
+      - feedback_given
       - general_feedback
       - live_comments
       - live_information_understanding
@@ -882,16 +886,10 @@
       - updated_at
       - volunteer_id
       filter:
-        _and:
-        - event:
-            client:
-              account_id:
-                _eq: X-Hasura-User-Id
-        - volunteer:
-            assignments:
-              event:
-                client_id:
-                  _eq: X-Hasura-User-Id
+        event:
+          client:
+            account_id:
+              _eq: X-Hasura-User-Id
       check: {}
 - table:
     schema: public
@@ -1468,6 +1466,7 @@
       - account_id
       - id
       filter: {}
+      allow_aggregations: true
   - role: service_requestor
     permission:
       columns:

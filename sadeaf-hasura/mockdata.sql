@@ -53,7 +53,7 @@ INSERT INTO account(
 (17, 'waynetoh', 'password', 'waynetoh@gmail.com', 'Toh Jin Wee Wayne', '88888888', 'volunteer'),
 (18, 'claudchua', 'password', 'claudchua@gmail.com', 'Claudia Chua Pei Si', '88888888', 'volunteer'),
 (19, 'tedmundtan', 'password', 'tedmundtan@gmail.com', 'Tedmund Tan Zhi Peng', '88888888', 'volunteer'),
-(20, 'austinwoon', 'password', 'austinwoon@gmail.com', 'Austin Woon Quan', '88888888', 'volunteer'),
+(20, 'austinwoon', 'austin123', 'austinwoonquan@gmail.com', 'Austin Woon Quan', '88888888', 'client'),
 (21, 'fuxing', 'password', 'fuxing@gmail.com', 'Loh Fuxing', '88888888', 'volunteer'),
 (22, 'elilim', 'password', 'elilim@gmail.com', 'Eli Lim', '88888888', 'volunteer'),
 (23, 'sunnylim', 'password', 'sunnylim@gmail.com', 'Sunny Lim', '88888888', 'volunteer');
@@ -117,7 +117,8 @@ INSERT INTO client(
 (8, 'DBS Pte Ltd', 'vice president', 'Sign Language', null, 4, 13, 9),
 (9, 'CreditSuisse Pte Ltd', 'analyst', 'Speech', null, null, 14, 9),
 (10, null, 'self-employed', 'Sign Language', null, null, 15, 3),
-(11, 'Shopee Pte Ltd', 'intern', 'Speech', null, null, 16, 9);
+(11, 'Shopee Pte Ltd', 'intern', 'Speech', null, null, 16, 9),
+(12, 'Shopee Pte Ltd', 'intern', 'Speech', null, null, 20, 9);
 
 INSERT INTO volunteer(
     id, approval_status, account_id
@@ -161,8 +162,8 @@ INSERT INTO event (
     id, name, client_id, description, purpose
 ) VALUES
 (1, 'IS111 - Intro to Programming', 1, 'Introductory programming class - very hands-on', 'School'),
-(2, 'IS113 - Web Application Development', 2, 'Introductory programming class - very hands-on', 'School'),
-(3, 'JPMorgan Winning Women', 1, 'Event promoting gender equality at JPMorgan', 'Workshop'),
+(2, 'IS113 - Web Application Development', 12, 'Introductory programming class - very hands-on', 'School'),
+(3, 'JPMorgan Winning Women', 3, 'Event promoting gender equality at JPMorgan', 'Workshop'),
 (4, 'CodeIT Suisse', 3, 'Annual hackathon for recruitment and campus outreach', 'Workshop'),
 (5, 'COMM169 - Management Communication', 3, 'CORE SMU module', 'School'),
 (6, 'COMM169 - Management Communication', 4, 'CORE SMU module', 'School'),
@@ -181,6 +182,8 @@ INSERT INTO assignment (
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  null, 100),
 
+
+
 (3, 1, 'MATCHED', CURRENT_TIMESTAMP + interval '24 hour', CURRENT_TIMESTAMP + interval '10 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  1, 100),
@@ -192,6 +195,10 @@ INSERT INTO assignment (
 (5, 2, 'COMPLETE', '2020-07-30T12:30:00.000Z', '2020-07-30T18:30:00.000Z',
  '11 Jalan Run St', '#01-23', '603482', 'Room 2B', 1.0123, 2.5962,
  1, 100),
+
+  (9, 2, 'CANCELLED', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+ '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+ 3, 100),
 
 (6, 3, 'COMPLETE', '2020-08-05T15:00:00.000Z', '2020-08-05T18:30:00.000Z',
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,

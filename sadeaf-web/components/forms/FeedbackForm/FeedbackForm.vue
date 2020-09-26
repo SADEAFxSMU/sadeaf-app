@@ -21,6 +21,7 @@
         <el-radio-group v-model="feedbackForm.notetaker_conduct">
           <el-radio
             v-for="rating in AVAILABLE_RATINGS.slice(0, 5)"
+            :key="volunteerSelected + rating.label + 'notetaker_conduct'"
             :label="rating.label"
           >
             {{ rating.title }}
@@ -36,6 +37,7 @@
         <el-radio-group v-model="feedbackForm.notetaker_punctual">
           <el-radio
             v-for="rating in AVAILABLE_RATINGS.slice(0, 5)"
+            :key="volunteerSelected + rating.label + 'notetaker_punctual'"
             :label="rating.label"
           >
             {{ rating.title }}
@@ -54,6 +56,7 @@
         <el-radio-group v-model="feedbackForm.live_information_understanding">
           <el-radio
             v-for="rating in AVAILABLE_RATINGS"
+            :key="volunteerSelected + rating.label + 'live_information_understanding'"
             :label="rating.label"
           >
             {{ rating.title }}
@@ -69,6 +72,7 @@
         <el-radio-group v-model="feedbackForm.live_interaction">
           <el-radio
             v-for="rating in AVAILABLE_RATINGS"
+            :key="volunteerSelected + rating.label + 'live_interaction'"
             :label="rating.label"
           >
             {{ rating.title }}
@@ -91,6 +95,7 @@
         <el-radio-group v-model="feedbackForm.post_session_understanding">
           <el-radio
             v-for="rating in AVAILABLE_RATINGS"
+            :key="volunteerSelected + rating.label + 'post_session_understanding'"
             :label="rating.label"
           >
             {{ rating.title }}
@@ -121,7 +126,10 @@
         </el-row>
 
         <el-radio-group v-model="feedbackForm.training_privacy_preference">
-          <el-row v-for="privacyOption in TRAINING_PRIVACY_OPTIONS">
+          <el-row
+            v-for="privacyOption in TRAINING_PRIVACY_OPTIONS"
+            :key="volunteerSelected + privacyOption.label + 'training_prvcy'"
+          >
             <el-radio :label="privacyOption.label">{{privacyOption.title}}</el-radio>
           </el-row>
         </el-radio-group>
@@ -135,7 +143,10 @@
           </el-alert>
         </el-row>
         <el-radio-group v-model="feedbackForm.confidentiality_privacy_preference">
-          <el-row v-for="privacyOption in CONFIDENTIALITY_PRIVACY_OPTIONS">
+          <el-row
+            v-for="privacyOption in CONFIDENTIALITY_PRIVACY_OPTIONS"
+            :key="volunteerSelected + privacyOption.label + 'confidentality'"
+          >
             <el-radio :label="privacyOption.label">{{privacyOption.title}}</el-radio>
           </el-row>
         </el-radio-group>
@@ -155,27 +166,30 @@ import TooltipLabel from '@/components/forms/FeedbackForm/TooltipLabel';
 import FeedbackCard from '@/components/forms/FeedbackForm/FeedbackCard';
 import gql from 'graphql-tag';
 
-const INSERT_FEEDBACK = gql`mutation InsertFeedback($live_comments: String!, $live_information_understanding: rating_enum = "", $live_interaction: rating_enum = "", $notetaker_conduct: rating_enum = "", $notetaker_punctual: rating_enum = "", $post_session_comments: String = "", $post_session_understanding: rating_enum = "", $training_privacy_preference: privacy_enum = "", $event_id: Int!, $confidentiality_privacy_preference: privacy_enum = "", $general_feedback: String = "", $volunteer_id: Int!) {
-  insert_feedback(objects: {volunteer_id: $volunteer_id, confidentiality_privacy_preference: $confidentiality_privacy_preference, event_id: $event_id, live_comments: $live_comments, live_information_understanding: $live_information_understanding, live_interaction: $live_interaction, notetaker_conduct: $notetaker_conduct, notetaker_punctual: $notetaker_punctual, post_session_comments: $post_session_comments, post_session_understanding: $post_session_understanding, training_privacy_preference: $training_privacy_preference, general_feedback: $general_feedback}) {
-    returning {
-      confidentiality_privacy_preference
-      created_at
-      event_id
-      general_feedback
-      id
-      live_information_understanding
-      live_comments
-      live_interaction
-      notetaker_punctual
-      post_session_comments
-      post_session_understanding
-      updated_at
-      training_privacy_preference
-      volunteer_id
-    }
-  }
-}
- `;
+const UPDATE_FEEDBACK = gql`mutation UPDATE_FEEDBACK($feedback_id: Int!, $live_comments: String!, $live_information_understanding: rating_enum = "",
+                                                    $live_interaction: rating_enum = "", $notetaker_conduct: rating_enum = "", $notetaker_punctual: rating_enum = "",
+                                                    $post_session_comments: String = "", $post_session_understanding: rating_enum = "", $training_privacy_preference: privacy_enum = "",
+                                                    $confidentiality_privacy_preference: privacy_enum = "", $general_feedback: String = "") {
+                                                      update_feedback(_set: {feedback_given: 1, confidentiality_privacy_preference: $confidentiality_privacy_preference, live_comments: $live_comments, live_information_understanding: $live_information_understanding, live_interaction: $live_interaction, notetaker_conduct: $notetaker_conduct, notetaker_punctual: $notetaker_punctual, post_session_comments: $post_session_comments, post_session_understanding: $post_session_understanding, training_privacy_preference: $training_privacy_preference, general_feedback: $general_feedback},
+                                                      where: {id: {_eq: $feedback_id}}) {
+                                                        returning {
+                                                          confidentiality_privacy_preference
+                                                          created_at
+                                                          general_feedback
+                                                          id
+                                                          live_information_understanding
+                                                          live_comments
+                                                          live_interaction
+                                                          notetaker_punctual
+                                                          post_session_comments
+                                                          post_session_understanding
+                                                          updated_at
+                                                          training_privacy_preference
+                                                          volunteer_id
+                                                        }
+                                                      }
+                                                    }
+                                                     `;
 
 export default {
   // TODO(Austin): Add feedback_completed computed field in event table
@@ -254,6 +268,9 @@ export default {
     eventSelected() {
       return this.$store.state.feedbackForm.event;
     },
+    feedbackId() {
+      return this.$store.state.feedbackForm.feedbackId;
+    }
   },
   methods: {
     validateRadioGroup(rule, value, callback) {
@@ -267,11 +284,10 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$apollo.mutate({
-            mutation: INSERT_FEEDBACK,
+            mutation: UPDATE_FEEDBACK,
             variables: {
+              feedback_id: this.feedbackId,
               ...this.feedbackForm,
-              volunteer_id: this.volunteerSelected.id,
-              event_id: this.eventSelected.eventId,
             },
           })
             .then(r => {
