@@ -25,6 +25,7 @@ import AssignmentCard from "./AssignmentCardSmall";
 import AssignmentStatus from "../AssignmentStatus";
 import SadeafCreateAssignmentForm from "../forms/SadeafCreateAssignmentForm";
 import { ASSIGNMENT_STATUS_COLORS } from "../../common/types/constants";
+import dayjs from 'dayjs';
 
 export default {
   name: "AssignmentsTimeline",
@@ -65,7 +66,7 @@ export default {
       this.$emit('updateAssignment', assignment);
     },
     formatTimestamp(timestamp) {
-      return this.$dayjs(timestamp).format('ddd, DD MMM, HH:mm');
+      return dayjs(timestamp).format('ddd, DD MMM, HH:mm');
     },
     color(assignment) {
       return ASSIGNMENT_STATUS_COLORS[assignment.status];

@@ -347,6 +347,7 @@
       - postal
       - room_number
       - start_dt
+      - status
       filter:
         volunteer_id:
           _eq: X-Hasura-User-Id
@@ -1506,6 +1507,13 @@
       - volunteer_id
       - created_at
       filter: {}
+  update_permissions:
+  - role: volunteer
+    permission:
+      columns:
+      - status
+      filter: {}
+      check: null
   delete_permissions:
   - role: volunteer
     permission:

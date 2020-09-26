@@ -9,6 +9,7 @@
 <script>
 export default {
   name: "app-home",
+  middleware: ['authenticated'],
   mounted() {
     setTimeout(() => {
       this.$router.push('/admin');

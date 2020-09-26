@@ -2,10 +2,15 @@
   <div class="assignment-card">
     <div class="header">
       <div class="title-wrapper">
-        <h2 class="title">{{ assignment.event.name }}</h2>
-        <assignment-status :status="assignment.status" />
+        <h2 class="title">{{ eventName }}</h2>
+        <assignment-status :status="status" />
       </div>
-      <el-button icon="el-icon-edit" size="mini" @click="$emit('editClick', assignment)" />
+      <el-button
+        v-if="showEdit"
+        :icon="icon"
+        size="mini"
+        :disabled="editButtonDisabled"
+        @click="$emit('editClick', details)" />
     </div>
     <div class="body">
       <div>
@@ -14,6 +19,9 @@
           <span class="room-number" v-if="roomNumber"> {{ roomNumber }} </span>
         </h4>
       </div>
+      <h5>
+        {{ startDate }}
+      </h5>
       <div class="assigned-volunteer">
         <user-card-horizontal-small v-if="assignment.volunteer"
                                     :user="assignment.volunteer.account"/>
@@ -28,16 +36,47 @@
 import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 import StatusIndicator from "../StatusIndicator";
 import AssignmentStatus from "../AssignmentStatus";
+import {DateUtils} from "../../common/date-utils";
+import dayjs from 'dayjs';
+
 export default {
   name: "AssignmentCard",
   components: {AssignmentStatus, StatusIndicator, UserCardHorizontalSmall},
   props: {
-    assignment: {
+    details: {
       type: Object,
       required: true,
     },
+    showEdit: {
+      type: Boolean,
+      default: true,
+      required: false
+    },
+    showCancel: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
+    isOptIn: {
+      type: Boolean,
+      default: false,
+      require: false
+    },
+    toAccept: {
+      type: Boolean,
+      default: false,
+      require: false
+    }
   },
   computed: {
+    // we need to make a distinction since an opt-in object or assignment object
+    // can be passed into this component
+    assignment() {
+      return this.isOptIn ? this.details.assignment : this.details;
+    },
+    eventName() {
+      return this.assignment.event.name;
+    },
     hasVolunteerAssigned() {
       return this.assignment.volunteer && this.assignment.volunteer.account;
     },
@@ -45,7 +84,7 @@ export default {
       return this.assignment.volunteer;
     },
     status() {
-      return this.assignment.status;
+      return this.isOptIn ? this.details.status : this.assignment.status;
     },
     address() {
       const { address_line_one, address_line_two } = this.assignment;
@@ -53,6 +92,22 @@ export default {
     },
     roomNumber() {
       return this.assignment.room_number;
+    },
+    startDate() {
+      return DateUtils.humanReadableDt(this.assignment.start_dt);
+    },
+    icon() {
+      if (this.toAccept) {
+        return "el-icon-check";
+      }
+      if (this.showCancel) {
+        return "el-icon-close";
+      }
+      return "el-icon-edit";
+    },
+    editButtonDisabled() {
+      // disable edit button if assignment start datetime is before current datetime
+      return dayjs(this.assignment.start_dt).isBefore(dayjs());
     }
   }
 };
