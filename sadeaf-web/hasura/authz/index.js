@@ -1,7 +1,7 @@
 import {Router} from "express";
 import CognitoExpress from "cognito-express";
 import fetch from 'node-fetch';
-import {HASURA} from '../../config';
+import {PRODUCTION, HASURA} from '../../config';
 
 const cognitoExpress = new CognitoExpress({
   region: process.env.AWS_REGION || "ap-southeast-1",
@@ -9,6 +9,30 @@ const cognitoExpress = new CognitoExpress({
   tokenUse: "id",
   tokenExpiration: 3600000,
 })
+
+function handleDevAuthzRequest(req, res) {
+  const expectedHeaders = [
+    HASURA.FAEDAS_DEV_ADMIN_SECRET_HEADER,
+    HASURA.FAEDAS_DEV_USER_ID_HEADER,
+    HASURA.FAEDAS_DEV_USER_ROLE_HEADER
+  ]
+  const missing_headers = expectedHeaders.filter(h => !(h in req.headers) || req.headers[h] === '')
+  if (missing_headers.length > 0) {
+    return res.status(401).send('Missing headers: ' + missing_headers.join(', '))
+  }
+
+  const adminSecret = req.headers[HASURA.FAEDAS_DEV_ADMIN_SECRET_HEADER]
+  const userId = req.headers[HASURA.FAEDAS_DEV_USER_ID_HEADER]
+  const role = req.headers[HASURA.FAEDAS_DEV_USER_ROLE_HEADER]
+
+  if (adminSecret === HASURA.GRAPHQL_ADMIN_SECRET) {
+    return res.json({
+      "X-Hasura-User-Id": userId,
+      "X-Hasura-Role": role,
+    })
+  }
+  return res.status(401).send('Provided admin secret is incorrect')
+}
 
 /**
  * Cognito Authenticated
@@ -19,6 +43,9 @@ function authenticated(req, res, next) {
   const token = parts && parts[1]
 
   if (!token) {
+    if (!PRODUCTION) {
+      return handleDevAuthzRequest(req, res)
+    }
     return res.status(401).send()
   }
 
@@ -33,7 +60,10 @@ router.get('/_hasura/jwt/authorize', async function (req, res, next) {
   authenticated(req, res, async (user) => {
     const role = await getHasuraUserRole(user.sub);
     if (!role) {
-      return res.status(401).send();
+      if (!PRODUCTION) {
+        return handleDevAuthzRequest(req, res)
+      }
+      return res.status(401).send()
     }
     res.json({
       "X-Hasura-User-Id": user.sub,

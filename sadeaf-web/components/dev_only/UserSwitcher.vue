@@ -4,13 +4,13 @@
       <el-submenu index="">
         <template v-slot:title>
           <div>
-            <el-icon name="user" /> {{ value }}
+            <el-icon name="user" /> {{ userType }}
           </div>
         </template>
         <el-menu-item v-for="user in userTypes"
                       :key="'user-' + user.type"
                       :index="user.home"
-                      @click="handleSelect(user.type)">
+                      @click="handleSelect(user)">
           {{ user.type }}
         </el-menu-item>
       </el-submenu>
@@ -25,26 +25,78 @@
  */
 export default {
   name: "UserSwitcher",
-  props: {
-    value: {
-      type: String,
-      required: false,
-    }
-  },
   data() {
     return {
       userTypes: [
-        { type: 'admin', home: '/admin' },
-        { type: 'client', home: '/client' },
-        { type: 'volunteer', home: '/volunteer' },
-        { type: 'service_requestor', home: '/org' },
+        {
+          type: 'admin',
+          home: '/admin',
+          user: {
+            id: 1,
+            name: 'Admin Guy',
+            email: 'admin@gmail.com',
+            userType: 'admin',
+            admin: {
+              id: 1,
+            }
+          }
+        },
+        {
+          type: 'client',
+          home: '/client',
+          user: {
+            id: 6,
+            name: 'Jon Lee',
+            email: 'jonlee@gmail.com',
+            userType: 'client',
+            client: {
+              id: 1,
+            }
+          }
+        },
+        {
+          type: 'volunteer',
+          home: '/volunteer',
+          user: {
+            id: 17,
+            name: 'Wayne Toh',
+            email: 'waynetoh@gmail.com',
+            userType: 'volunteer',
+            volunteer: {
+              id: 1,
+            },
+          }
+        },
+        {
+          type: 'service_requestor',
+          home: '/org',
+          user: {
+            id: 2,
+            name: 'Donny Yen',
+            email: 'donnyyen@gmail.com',
+            userType: 'service_requestor',
+            service_requestor: {
+              id: 1,
+            },
+          }
+        },
       ],
     }
   },
   methods: {
     handleSelect(value) {
-      this.$store.commit('auth/setUserType', value);
-      this.$emit('input', value);
+      const { type, user } = value;
+      this.$store.commit('auth/setUser', {
+        userType: type,
+        user,
+      });
+      this.$apolloHelpers.restartWebsockets();
+    }
+  },
+  computed: {
+    userType() {
+      const { user } = this.$store.state.auth;
+      return user && user.userType;
     }
   }
 };

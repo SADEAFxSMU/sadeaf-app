@@ -21,5 +21,8 @@ module.exports = {
   HASURA: {
     GRAPHQL_ADMIN_SECRET: process.env.HASURA_GRAPHQL_ADMIN_SECRET || 'sadeaf-hasura-console',
     GRAPHQL_API_URL: process.env.HASURA_GRAPHQL_API_URL || 'http://localhost:8080/v1/graphql',
+    FAEDAS_DEV_ADMIN_SECRET_HEADER: process.env.HASURA_FAEDAS_DEV_ADMIN_SECRET_HEADER || 'faedas-dev-admin-secret',
+    FAEDAS_DEV_USER_ID_HEADER: process.env.HASURA_FAEDAS_DEV_USER_ID_HEADER || 'faedas-dev-user-id',
+    FAEDAS_DEV_USER_ROLE_HEADER: process.env.HASURA_FAEDAS_DEV_USER_ROLE_HEADER || 'faedas-dev-user-role',
   }
 }
