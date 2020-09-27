@@ -11,9 +11,15 @@ export default {
   name: "volunteer-home",
   components: {VolunteerEventCalendar},
   computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
+    volunteer() {
+      return this.user.volunteer;
+    },
     userName() {
-      return this.$store.state.auth.user.volunteer.account.name;
-    }
+      return this.user.name;
+    },
   }
 };
 </script>
