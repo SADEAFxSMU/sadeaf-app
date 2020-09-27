@@ -1,5 +1,7 @@
 import Amplify, {Auth} from 'aws-amplify';
+import {onAuthUIStateChange, AuthState} from '@aws-amplify/ui-components'
 import '@aws-amplify/ui-vue';
+
 
 Amplify.configure({
   Auth: {
@@ -9,7 +11,28 @@ Amplify.configure({
   }
 })
 
+function getPath(authState) {
+  switch (authState) {
+    case AuthState.SignIn:
+      return '/sign-in'
+    case AuthState.SignUp:
+      return '/sign-up'
+    case AuthState.ForgotPassword:
+      return '/forget-password'
+    case AuthState.ConfirmSignUp:
+      return '/confirm-sign-up'
+  }
+}
+
 export default function (context, inject) {
+  onAuthUIStateChange((authState, authData) => {
+    const path = getPath(authState)
+
+    if (path) {
+      window.history.replaceState({}, document.title, path)
+    }
+  })
+
   inject('auth', {
     /**
      * @return {Promise<>}
@@ -31,4 +54,6 @@ export default function (context, inject) {
       return Auth.signOut()
     }
   })
+
+  // TODO(fuxing): handleAuthState
 }
