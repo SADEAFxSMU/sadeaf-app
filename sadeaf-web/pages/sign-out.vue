@@ -1,3 +1,5 @@
+<!--suppress JSUnresolvedVariable -->
+
 <template>
   <div/>
 </template>
