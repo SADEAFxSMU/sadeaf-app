@@ -85,7 +85,6 @@
       - email
       - id
       - name
-      - profile_pic_url
       - role
       - updated_at
       - username
@@ -100,7 +99,6 @@
       - email
       - id
       - name
-      - profile_pic_url
       - role
       - updated_at
       - username
@@ -121,7 +119,6 @@
       - email
       - id
       - name
-      - profile_pic_url
       - role
       - updated_at
       - username
