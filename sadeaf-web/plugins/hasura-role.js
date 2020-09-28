@@ -35,11 +35,6 @@ async function queryAndSetUserInfo(apolloClient, vuexStore) {
     }`
   })
   let user = data.user[0];
-  for (const role of ['volunteer', 'client', 'service_requestor']) {
-    if (user[role] === null) {
-      delete user[role];
-    }
-  }
   vuexStore.commit('auth/setUser', { userType: user.role, user });
 }
 
