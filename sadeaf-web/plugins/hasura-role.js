@@ -31,6 +31,9 @@ async function queryAndSetUserInfo(apolloClient, vuexStore) {
         name
         email
         role
+        volunteer { id }
+        client { id }
+        service_requestor { id }
       }
     }`
   })

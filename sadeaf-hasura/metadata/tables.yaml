@@ -1291,6 +1291,14 @@
       filter:
         account_id:
           _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      columns:
+      - account_id
+      - id
+      - membership_id
+      - organisation
+      filter: {}
   update_permissions:
   - role: service_requestor
     permission:
