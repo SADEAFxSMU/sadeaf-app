@@ -2,15 +2,7 @@ export const state = () => ({
   /**
    * Placeholder while nuxt auth + cognito is under development
    */
-  user: {
-    name: 'Jon',
-    username: 'JonLee1995',
-    email: 'jonlee@gmail.com',
-    userType: 'client',
-    client: {
-      id: 1,
-    },
-  }
+  user: {}
 })
 
 export const mutations = {

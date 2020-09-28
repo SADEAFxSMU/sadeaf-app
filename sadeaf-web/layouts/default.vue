@@ -1,6 +1,5 @@
 <template>
   <div class="layout">
-    <user-switcher v-if="isDev" v-model="userType"/>
     <el-container style="height: 100%">
       <el-header v-if="user">
         <admin-navbar v-if="userType === 'admin'"/>
@@ -32,9 +31,6 @@ export default {
     userType() {
       return this.user && this.user.userType;
     },
-    isDev() {
-      return process.env.NODE_ENV !== 'production';
-    }
   },
 };
 </script>
