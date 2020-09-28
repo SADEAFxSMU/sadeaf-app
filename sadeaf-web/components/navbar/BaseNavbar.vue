@@ -20,14 +20,18 @@
         Notification Preferences
       </el-menu-item>
     </el-submenu>
+    <el-menu-item>
+      <logout-button />
+    </el-menu-item>
   </el-menu>
 </template>
 
 <script>
 import StatusIndicator from "../StatusIndicator";
+import LogoutButton from "../buttons/LogoutButton";
 export default {
   name: "BaseNavbar",
-  components: {StatusIndicator},
+  components: {LogoutButton, StatusIndicator},
 };
 </script>
 

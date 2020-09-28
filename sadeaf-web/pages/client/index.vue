@@ -34,11 +34,14 @@ export default {
   },
 
   computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
     client() {
-      return this.$store.state.auth.user.client;
+      return this.user.client;
     },
     userName() {
-      return this.client.account.name;
+      return this.user.name;
     },
     lastUpdatedFormatted() {
       const lastUpdated = this.lastUpdated.toString();
