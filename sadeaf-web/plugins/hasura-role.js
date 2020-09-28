@@ -38,7 +38,9 @@ async function queryAndSetUserInfo(apolloClient, vuexStore) {
     }`
   })
   let user = data.user[0];
-  vuexStore.commit('auth/setUser', { userType: user.role, user });
+  if (user) {
+    vuexStore.commit('auth/setUser', { userType: user.role, user });
+  }
 }
 
 export default ({ app, store }, inject) => {
