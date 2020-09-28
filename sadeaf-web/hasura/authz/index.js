@@ -31,12 +31,12 @@ function authenticated(req, res, next) {
 const router = Router()
 router.get('/_hasura/jwt/authorize', async function (req, res, next) {
   authenticated(req, res, async (user) => {
-    const role = await getHasuraUserRole(user.sub);
-    if (!role) {
+    const { id, role } = await getHasuraUserRole(user.sub);
+    if (!id || !role) {
       return res.status(401).send();
     }
     res.json({
-      "X-Hasura-User-Id": user.sub,
+      "X-Hasura-User-Id": id.toString(),
       "X-Hasura-Role": role
     })
   })
@@ -47,7 +47,7 @@ async function getHasuraUserRole(cognitoId) {
     headers: {
       'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET
     },
-    "body": `{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ role }}"}`,
+    "body": `{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ id role }}"}`,
     method: "POST",
   });
   const { data } = await response.json();
@@ -55,11 +55,14 @@ async function getHasuraUserRole(cognitoId) {
     console.error('Did not receive expected json response from Hasura');
     return null;
   }
+  console.log(`{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ role }}"}`)
+  console.log('>>>', data.account);
   if (!data.account[0]) {
     // No results -- cognito id does not exist in the `account` table
     return null;
   }
-  return data.account[0].role;
+  const { id, role } = data.account[0];
+  return { id, role };
 }
 
 module.exports = router
