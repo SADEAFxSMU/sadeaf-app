@@ -55,8 +55,6 @@ async function getHasuraUserRole(cognitoId) {
     console.error('Did not receive expected json response from Hasura');
     return null;
   }
-  console.log(`{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ role }}"}`)
-  console.log('>>>', data.account);
   if (!data.account[0]) {
     // No results -- cognito id does not exist in the `account` table
     return null;
