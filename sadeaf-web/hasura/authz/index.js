@@ -31,7 +31,7 @@ function authenticated(req, res, next) {
 const router = Router()
 router.get('/_hasura/jwt/authorize', async function (req, res, next) {
   authenticated(req, res, async (user) => {
-    const { id, role } = await getHasuraUserRole(user.sub);
+    const { id, role } = await getHasuraUserIdAndRole(user.sub);
     if (!id || !role) {
       return res.status(401).send();
     }
@@ -42,7 +42,7 @@ router.get('/_hasura/jwt/authorize', async function (req, res, next) {
   })
 })
 
-async function getHasuraUserRole(cognitoId) {
+async function getHasuraUserIdAndRole(cognitoId) {
   const response = await fetch(HASURA.GRAPHQL_API_URL, {
     headers: {
       'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET
