@@ -87,6 +87,16 @@
       - updated_at
       filter: {}
       allow_aggregations: true
+  - role: pending
+    permission:
+      columns:
+      - cognito_id
+      - contact
+      - email
+      - id
+      - name
+      - role
+      filter: {}
   - role: service_requestor
     permission:
       columns:
@@ -501,6 +511,12 @@
         account_id:
           _eq: X-Hasura-User-Id
       allow_aggregations: true
+  - role: pending
+    permission:
+      columns:
+      - account_id
+      - id
+      filter: {}
   - role: service_requestor
     permission:
       columns:
@@ -1270,6 +1286,12 @@
         clients:
           account_id:
             _eq: X-Hasura-User-Id
+  - role: pending
+    permission:
+      columns:
+      - account_id
+      - id
+      filter: {}
   - role: service_requestor
     permission:
       columns:
@@ -1469,6 +1491,12 @@
           name: volunteer_assignment_opt_in
   select_permissions:
   - role: client
+    permission:
+      columns:
+      - account_id
+      - id
+      filter: {}
+  - role: pending
     permission:
       columns:
       - account_id
