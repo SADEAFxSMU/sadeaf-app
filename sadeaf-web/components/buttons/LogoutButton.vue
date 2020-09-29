@@ -1,18 +1,14 @@
 <template>
-  <el-button @click="logout">
-    Logout
-  </el-button>
+  <nuxt-link to="/sign-out">
+    <el-button>
+      Logout
+    </el-button>
+  </nuxt-link>
 </template>
 
 <script>
 export default {
   name: "LogoutButton",
-  methods: {
-    logout() {
-      this.$auth.signOut();
-      this.$router.replace('/sign-in');
-    }
-  }
 };
 </script>
 
