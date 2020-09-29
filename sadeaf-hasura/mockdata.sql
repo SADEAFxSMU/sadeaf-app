@@ -32,31 +32,31 @@ INSERT INTO membership_type(
 (6, 'honorary', 0, -1, 'Honorary membership shall be conferred on individuals who, in the opinion of the Executive Council, have rendered meritorious service to the Deaf of Singapore. Honorary members shall not be required to fill application forms or to pay any subscriptions.');
 
 INSERT INTO account(
-    id, username, password, email, name, contact, role, cognito_id
+    id, email, name, contact, role, cognito_id
 ) VALUES
-(1, 'admin', 'password', 'admin@gmail.com', 'Admin Guy', '88888888', 'admin', null),
-(2, 'donnyyen', 'password', 'donnyyen@gmail.com', 'Donny Yen', '88888888', 'svcreq', null),
-(3, 'bobbylei', 'password', 'bobbylei@gmail.com', 'Bobby Lei', '88888888', 'svcreq', null),
-(4, 'cattywantutree', 'password', 'cattywantutree@gmail.com', 'Catty Wan', '88888888', 'svcreq', null),
-(5, 'mammymay', 'password', 'mammymay@gmail.com', 'Mammy May', '88888888', 'svcreq', null),
-(6, 'jonlee', 'password', 'jonlee@gmail.com', 'Jon Lee', '88888888', 'client', null),
-(7, 'xiaoming', 'password', 'xiaoming@gmail.com', 'Lee Xiao Ming, Jonathan', '88888888', 'client', null),
-(8, 'ednatan', 'password', 'ednatan@gmail.com', 'Edna Tan', '88888888', 'client', null),
-(9, 'reginald', 'password', 'reginald@gmail.com', 'Reginald James', '88888888', 'client', null),
-(10, 'jolinetoh', 'password', 'jolinetoh@gmail.com', 'Joline Toh', '88888888', 'client', null),
-(11, 'nathantan', 'password', 'nathantan@gmail.com', 'Nathan Tan', '88888888', 'client', null),
-(12, 'nurhafiqa', 'password', 'nurhafiqa@gmail.com', 'Nur Hafiqa Binte Ismail', '88888888', 'client', null),
-(13, 'yilai', 'password', 'yilai@gmail.com', 'Yi Lai Wang', '88888888', 'client', null),
-(14, 'mohali', 'password', 'mohali@gmail.com', 'Mohamed Ali Bin Shafiq', '88888888', 'client', null),
-(15, 'bremnath', 'password', 'bremnath@gmail.com', 'Bremnath Suriyamurthy', '88888888', 'client', null),
-(16, 'weiyuan', 'password', 'weiyuan@gmail.com', 'Lee Wei Yuan', '88888888', 'client', null),
-(17, 'waynetoh', 'password', 'waynetoh@gmail.com', 'Toh Jin Wee Wayne', '88888888', 'volunteer', null),
-(18, 'claudchua', 'password', 'claudchua@gmail.com', 'Claudia Chua Pei Si', '88888888', 'volunteer', null),
-(19, 'tedmundtan', 'password', 'tedmundtan@gmail.com', 'Tedmund Tan Zhi Peng', '88888888', 'volunteer', null),
-(20, 'austinwoon', 'password', 'austinwoon@gmail.com', 'Austin Woon Quan', '88888888', 'volunteer', null),
-(21, 'fuxing', 'password', 'fuxing@gmail.com', 'Loh Fuxing', '88888888', 'volunteer', null),
-(22, 'elilim', 'password', 'elilim@gmail.com', 'Eli Lim', '88888888', 'volunteer', '1b56339d-bb43-4089-a896-c31336c682f9'),
-(23, 'sunnylim', 'password', 'sunnylim@gmail.com', 'Sunny Lim', '88888888', 'volunteer', null);
+(1, 'admin@gmail.com', 'Admin Guy', '88888888', 'admin', null),
+(2, 'donnyyen@gmail.com', 'Donny Yen', '88888888', 'svcreq', null),
+(3, 'bobbylei@gmail.com', 'Bobby Lei', '88888888', 'svcreq', null),
+(4, 'cattywantutree@gmail.com', 'Catty Wan', '88888888', 'svcreq', null),
+(5, 'mammymay@gmail.com', 'Mammy May', '88888888', 'svcreq', null),
+(6, 'jonlee@gmail.com', 'Jon Lee', '88888888', 'client', null),
+(7, 'xiaoming@gmail.com', 'Lee Xiao Ming, Jonathan', '88888888', 'client', null),
+(8, 'ednatan@gmail.com', 'Edna Tan', '88888888', 'client', null),
+(9, 'reginald@gmail.com', 'Reginald James', '88888888', 'client', null),
+(10, 'jolinetoh@gmail.com', 'Joline Toh', '88888888', 'client', null),
+(11, 'nathantan@gmail.com', 'Nathan Tan', '88888888', 'client', null),
+(12, 'nurhafiqa@gmail.com', 'Nur Hafiqa Binte Ismail', '88888888', 'client', null),
+(13, 'yilai@gmail.com', 'Yi Lai Wang', '88888888', 'client', null),
+(14, 'mohali@gmail.com', 'Mohamed Ali Bin Shafiq', '88888888', 'client', null),
+(15, 'bremnath@gmail.com', 'Bremnath Suriyamurthy', '88888888', 'client', null),
+(16, 'weiyuan@gmail.com', 'Lee Wei Yuan', '88888888', 'client', null),
+(17, 'waynetoh@gmail.com', 'Toh Jin Wee Wayne', '88888888', 'volunteer', null),
+(18, 'claudchua@gmail.com', 'Claudia Chua Pei Si', '88888888', 'volunteer', null),
+(19, 'tedmundtan@gmail.com', 'Tedmund Tan Zhi Peng', '88888888', 'volunteer', null),
+(20, 'austinwoon@gmail.com', 'Austin Woon Quan', '88888888', 'volunteer', null),
+(21, 'fuxing@gmail.com', 'Loh Fuxing', '88888888', 'volunteer', null),
+(22, 'elilim@gmail.com', 'Eli Lim', '88888888', 'volunteer', '1b56339d-bb43-4089-a896-c31336c682f9'),
+(23, 'sunnylim@gmail.com', 'Sunny Lim', '88888888', 'volunteer', null);
 
 INSERT INTO membership(
     id, account_id, membership_type_id, status, free_sessions_remaining, created_at, updated_at

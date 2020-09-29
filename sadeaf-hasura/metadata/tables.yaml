@@ -72,8 +72,6 @@
       - contact
       - email
       - name
-      - password
-      - username
       backend_only: false
   select_permissions:
   - role: client
@@ -87,7 +85,6 @@
       - name
       - role
       - updated_at
-      - username
       filter: {}
       allow_aggregations: true
   - role: service_requestor
@@ -101,7 +98,6 @@
       - name
       - role
       - updated_at
-      - username
       filter:
         _or:
         - client:
@@ -121,7 +117,6 @@
       - name
       - role
       - updated_at
-      - username
       filter: {}
   update_permissions:
   - role: client
@@ -130,8 +125,6 @@
       - contact
       - email
       - name
-      - password
-      - username
       filter:
         client:
           id:
@@ -143,8 +136,6 @@
       - contact
       - email
       - name
-      - password
-      - username
       filter:
         _and:
         - service_requestor:
@@ -167,8 +158,6 @@
       - contact
       - email
       - name
-      - password
-      - username
       filter:
         volunteer:
           id:
