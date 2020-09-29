@@ -72,8 +72,6 @@
       - contact
       - email
       - name
-      - password
-      - username
       backend_only: false
   select_permissions:
   - role: client
@@ -87,9 +85,18 @@
       - name
       - role
       - updated_at
-      - username
       filter: {}
       allow_aggregations: true
+  - role: pending
+    permission:
+      columns:
+      - cognito_id
+      - contact
+      - email
+      - id
+      - name
+      - role
+      filter: {}
   - role: service_requestor
     permission:
       columns:
@@ -101,7 +108,6 @@
       - name
       - role
       - updated_at
-      - username
       filter:
         _or:
         - client:
@@ -121,7 +127,6 @@
       - name
       - role
       - updated_at
-      - username
       filter: {}
   update_permissions:
   - role: client
@@ -130,8 +135,6 @@
       - contact
       - email
       - name
-      - password
-      - username
       filter:
         client:
           id:
@@ -143,8 +146,6 @@
       - contact
       - email
       - name
-      - password
-      - username
       filter:
         _and:
         - service_requestor:
@@ -167,8 +168,6 @@
       - contact
       - email
       - name
-      - password
-      - username
       filter:
         volunteer:
           id:
@@ -512,6 +511,12 @@
         account_id:
           _eq: X-Hasura-User-Id
       allow_aggregations: true
+  - role: pending
+    permission:
+      columns:
+      - account_id
+      - id
+      filter: {}
   - role: service_requestor
     permission:
       columns:
@@ -1281,6 +1286,12 @@
         clients:
           account_id:
             _eq: X-Hasura-User-Id
+  - role: pending
+    permission:
+      columns:
+      - account_id
+      - id
+      filter: {}
   - role: service_requestor
     permission:
       columns:
@@ -1480,6 +1491,12 @@
           name: volunteer_assignment_opt_in
   select_permissions:
   - role: client
+    permission:
+      columns:
+      - account_id
+      - id
+      filter: {}
+  - role: pending
     permission:
       columns:
       - account_id

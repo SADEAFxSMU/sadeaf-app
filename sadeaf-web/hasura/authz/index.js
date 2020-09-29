@@ -1,7 +1,6 @@
 import {Router} from "express";
 import CognitoExpress from "cognito-express";
-import fetch from 'node-fetch';
-import {HASURA} from '../../config';
+import {getHasuraUserIdAndRole} from "./hasura-helpers";
 
 const cognitoExpress = new CognitoExpress({
   region: process.env.AWS_REGION || "ap-southeast-1",
@@ -31,36 +30,18 @@ function authenticated(req, res, next) {
 const router = Router()
 router.get('/_hasura/jwt/authorize', async function (req, res, next) {
   authenticated(req, res, async (user) => {
-    const { id, role } = await getHasuraUserIdAndRole(user.sub);
-    if (!id || !role) {
+    const userInfo = await getHasuraUserIdAndRole(user);
+    if (!userInfo) {
       return res.status(401).send();
     }
+
+    const { id, role } = userInfo;
+
     res.json({
       "X-Hasura-User-Id": id.toString(),
       "X-Hasura-Role": role
     })
   })
 })
-
-async function getHasuraUserIdAndRole(cognitoId) {
-  const response = await fetch(HASURA.GRAPHQL_API_URL, {
-    headers: {
-      'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET
-    },
-    "body": `{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ id role }}"}`,
-    method: "POST",
-  });
-  const { data } = await response.json();
-  if (!data || !data.account) {
-    console.error('Did not receive expected json response from Hasura');
-    return null;
-  }
-  if (!data.account[0]) {
-    // No results -- cognito id does not exist in the `account` table
-    return null;
-  }
-  const { id, role } = data.account[0];
-  return { id, role };
-}
 
 module.exports = router
