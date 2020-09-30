@@ -52,7 +52,6 @@ export default {
               { role: { _eq: $role } },
               {
                 _or: [
-                  { username: { _like: $search } }
                   { name: { _like: $search } }
                   { email: { _like: $search } }
                 ]
@@ -60,7 +59,6 @@ export default {
             ]
           }) {
             id
-            username
             name
             email
             client { id }
