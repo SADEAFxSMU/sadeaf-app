@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="users">
-      <user-card v-for="user in users"
-                 :key="'user-card-' + user.id"
+      <user-card v-for="(user, i) in users"
+                 :key="'user-card-' + i"
                  :user="user.account"
                  link-to-page
                  class="user-card" />

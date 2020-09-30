@@ -1,42 +1,194 @@
 <template>
-  <div>
-    <h1>Pending</h1>
+  <div class="page">
+    <h1 class="heading">New Users</h1>
+    <div>
+      <user-card v-for="user in pendingUsers"
+                 :key="'user-' + user.id"
+                 :link-to-page="false"
+                 :clickable="false"
+                 :user="user">
+        <template v-slot:footer>
+          <div>
+            <el-button type="danger" @click="handleReject(user)">Reject</el-button>
+            <span class="button-divider"> or </span>
+            <el-select placeholder="Accept As" v-model="selectedRoleByUserId[user.id]">
+              <el-option v-for="role in ROLES"
+                         :label="'Accept as ' + role"
+                         :value="role">
+                {{ role }}
+              </el-option>
+            </el-select>
+            <el-button v-if="selectedRoleByUserId[user.id]"
+                       :loading="confirmButtonLoadingByUserId[user.id]"
+                       type="success"
+                       @click="handleApprove(user)">
+              Confirm
+            </el-button>
+          </div>
+        </template>
+      </user-card>
+    </div>
+    <el-dialog title="Delete User"
+               :visible="deleteUserDialogVisible"
+               @close="deleteUserDialogVisible = false"
+               @closed="userToDelete = null">
+      <div v-if="userToDelete">
+        <div class="delete-user-info">
+          <h1>{{ userToDelete.name }}</h1>
+          <h3>{{ userToDelete.email }}</h3>
+          <p>
+            Registered on {{ humanReadableDt(userToDelete.created_at) }}
+          </p>
+        </div>
+        <el-button type="danger"
+                   style="width: 100%;"
+                   size="mini"
+                   :loading="deleteUserButtonLoading"
+                   @click="handleConfirmDeleteUser(userToDelete)">
+          Confirm Rejection
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag';
 import { accountFieldsFragment } from "../../../common/graphql/fragments";
+import UserCard from "../../../components/user/UserCard";
+import { ROLES } from "../../../common/types/constants";
+import { DateUtils } from "../../../common/date-utils";
+
+const { humanReadableDt } = DateUtils;
+
 /**
  * Page for sadeaf admins to handle pending users
  */
 export default {
   name: "pending",
 
+  components: {
+    UserCard
+  },
+
   data() {
     return {
       pendingUsers: [],
+      selectedRoleByUserId: {},
+      confirmButtonLoadingByUserId: {},
+      deleteUserDialogVisible: false,
+      deleteUserButtonLoading: false,
+      userToDelete: null,
+      ROLES,
     }
   },
 
-  apollo: {
-    pendingUsers: {
-      query: gql`
-        query AllPendingUsers {
-          pendingUsers: account(
-            where: {role:{_eq: "pending"}}
+  methods: {
+    humanReadableDt,
+
+    async handleApprove(user) {
+      this.confirmButtonLoadingByUserId[user.id] = true;
+      try {
+        await this.graphqlOnboardUser(user);
+        this.confirmButtonLoadingByUserId[user.id] = false;
+        this.$notify.success(`Successfully on-boarded ${user.name}'s as a ${this.selectedRoleByUserId[user.id]}`);
+      } catch(err) {
+        this.confirmButtonLoadingByUserId[user.id] = false;
+        this.$notify.error(`Something went wrong while attempting to update User "${user.name}"`);
+      }
+    },
+
+    handleReject(user) {
+      this.userToDelete = user;
+      this.deleteUserDialogVisible = true;
+    },
+
+    async handleConfirmDeleteUser(user) {
+      this.deleteUserButtonLoading = true;
+      try {
+        await this.graphqlDeleteUser(user);
+        this.deleteUserButtonLoading = false;
+        this.deleteUserDialogVisible = false;
+        this.$notify.success(`Rejected user ${user.name}...`);
+      } catch (err) {
+        console.error(err);
+        this.deleteUserButtonLoading = false;
+        this.$notify.error(`Something went wrong while attempting to delete User "${user.name}"`);
+      }
+    },
+
+    graphqlOnboardUser(user) {
+      return this.$apollo.mutate({
+        mutation: gql`mutation UpdateUserRole($id: Int!, $role: String!) {
+          update_account_by_pk(
+            pk_columns: { id: $id },
+            _set: {
+              role: $role
+            }
           ) {
             id
-            ...accountFields
+            role
           }
+        }`,
+        variables: {
+          id: user.id,
+          role: this.selectedRoleByUserId[user.id],
         }
-        ${accountFieldsFragment}
-      `
+      })
+    },
+
+    graphqlDeleteUser(user) {
+      return this.$apollo.mutate({
+        mutation: gql`mutation DeleteUser($id: Int!) {
+          delete_account_by_pk(id: $id) {
+            id
+          }
+        }`,
+        variables: {
+          id: user.id
+        }
+      });
+    },
+  },
+
+  apollo: {
+    $subscribe: {
+      pendingUsers: {
+        query: gql`
+          subscription AllPendingUsers {
+            pendingUsers: account(
+              where: {role:{_eq: "pending"}}
+            ) {
+              id
+              ...accountFields
+              created_at
+            }
+          }
+          ${accountFieldsFragment}
+        `,
+        result({ data }) {
+          this.pendingUsers = data.pendingUsers;
+        }
+      },
     }
   }
 };
 </script>
 
 <style scoped>
-
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.page .heading {
+  margin-bottom: 12px;
+}
+.delete-user-info {
+  margin-bottom: 18px;
+}
+.button-divider {
+  color: #b1b1db;
+  padding: 0 8px 0 8px;
+}
 </style>

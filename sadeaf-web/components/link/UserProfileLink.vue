@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link-wrapper :to="profileLink" :should-link="Boolean(role)">
+  <nuxt-link-wrapper :to="profileLink" :should-link="shouldLink">
     <slot />
   </nuxt-link-wrapper>
 </template>
@@ -15,6 +15,11 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+    shouldLink: {
+      type: Boolean,
+      required: false,
+      default: true,
     }
   },
 

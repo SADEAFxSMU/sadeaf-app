@@ -3,7 +3,7 @@
        @mouseover="handleMouseOver"
        @mouseleave="handleMouseLeave"
        @click="handleClick">
-    <user-profile-link :user="user">
+    <user-profile-link :user="user" :should-link="linkToPage">
       <div :style="cardStyle" class="body-wrapper">
         <slot name="avatar">
           <div>
@@ -37,7 +37,6 @@
 
 <script>
 import UserProfileLink from "../link/UserProfileLink";
-import { getUserProfilePagePath } from "../../common/types/users";
 import { ROLE_EL_TAG_TYPES } from "../../common/types/constants";
 import RoleTag from "../RoleTag";
 
@@ -53,6 +52,11 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     linkToPage: {
       type: Boolean,
@@ -81,8 +85,6 @@ export default {
   },
 
   methods: {
-    getUserProfilePagePath,
-
     handleMouseOver() {
       if (this.clickable || this.linkToPage) {
         this.isMouseOver = true;
@@ -130,6 +132,7 @@ export default {
 
 <style scoped>
 .card {
+  background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 2px 6px 1px #d5d8ec;
   margin: 8px;
