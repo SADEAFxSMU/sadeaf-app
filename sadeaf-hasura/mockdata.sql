@@ -56,7 +56,12 @@ INSERT INTO account(
 (20, 'austinwoon@gmail.com', 'Austin Woon Quan', '88888888', 'volunteer', null, 'https://media-exp1.licdn.com/dms/image/C5103AQH9nm5CFMJ9GA/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=IQdOsCf8Ivwni7Fy5Jgj35z6trijEwpCpH6JIw7rNCo'),
 (21, 'fuxing@gmail.com', 'Loh Fuxing', '88888888', 'volunteer', null, 'https://media-exp1.licdn.com/dms/image/C5103AQEOkJn5C0PnoA/profile-displayphoto-shrink_800_800/0?e=1605744000&v=beta&t=9a-IEiG1_YyioaZYpbTxSZyIo0gmS7GRgBKlKQ7F1EY'),
 (22, 'elilim@gmail.com', 'Eli Lim', '88888888', 'volunteer', '1b56339d-bb43-4089-a896-c31336c682f9', 'https://media-exp1.licdn.com/dms/image/C5603AQHl_BixhF9QOw/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=8gkea6Yttezgjn5FA50MMl7DlKLBZ_M0ce-Bzj2E5U8'),
-(23, 'sadeaf-admin@huansen.dev', 'admin2', '88888888', 'admin', '3bf5eeb7-a4d1-40f7-a7a8-1a05e28c41e9', null);
+(23, 'sunnylim@gmail.com', 'Sunny Lim', '88888888', 'volunteer', null, null),
+(24, 'sadeaf-admin@huansen.dev', 'Test Admin', '81118111', 'admin', '3bf5eeb7-a4d1-40f7-a7a8-1a05e28c41e9', null),
+(25, 'sadeaf-volunteer@huansen.dev', 'Test Volunteer', '98889000', 'volunteer', 'd99c8f77-68bf-4724-aa5e-bfd74316b6a3', null),
+(26, 'sadeaf-client@huansen.dev', 'Test Client', '99990000', 'client', '650af7cc-7dc7-40f0-a18c-76093da8444e', null),
+(27, 'sadeaf-servicerequestor@huansen.dev', 'Test ServiceRequestor', '91239123', 'svcreq', '610256ce-6120-4cd2-867b-385d719deab1', null),
+(28, 'sadeaf-user@huansen.dev', 'Test Pending', '92349234', 'pending', '0fd7f5f6-1f53-4c8e-9588-dd3f1d8bf29f', null);
 
 INSERT INTO membership(
     id, account_id, membership_type_id, status, free_sessions_remaining, created_at, updated_at
@@ -79,7 +84,7 @@ INSERT INTO admin(
     id, account_id
 ) VALUES
 (1, 1),
-(2, 23);
+(2, 24);
 
 INSERT INTO service_requestor(
     id, organisation, membership_id, account_id
@@ -87,7 +92,8 @@ INSERT INTO service_requestor(
 (1, 'SMU', 1, 2),
 (2, 'NTU', 1, 3),
 (3, 'NUS', 1, 4),
-(4, 'DBS', 1, 5);
+(4, 'DBS', 1, 5),
+(5, 'SMU', 1, 27);
 
 INSERT INTO quotation(
     id,  requestor_type, first_block_duration_m, fee_for_first_block, subsequent_block_duration_m, fee_per_subsequent_block
@@ -118,7 +124,8 @@ INSERT INTO client(
 (8, 'DBS Pte Ltd', 'vice president', 'Sign Language', null, 4, 13, 9),
 (9, 'CreditSuisse Pte Ltd', 'analyst', 'Speech', null, null, 14, 9),
 (10, null, 'self-employed', 'Sign Language', null, null, 15, 3),
-(11, 'Shopee Pte Ltd', 'intern', 'Speech', null, null, 16, 9);
+(11, 'Shopee Pte Ltd', 'intern', 'Speech', null, null, 16, 9),
+(12, 'Singapore Management University', 'student', 'Speech', null, null, 26, 5);
 
 INSERT INTO volunteer(
     id, approval_status, account_id
@@ -128,7 +135,9 @@ INSERT INTO volunteer(
 (3, TRUE, 19),
 (4, TRUE, 20),
 (5, TRUE, 21),
-(6, TRUE, 22);
+(6, TRUE, 22),
+(7, TRUE, 23),
+(8, TRUE, 25);
 
 -- INSERT INTO profile(
 --     id, account_id
