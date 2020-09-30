@@ -106,6 +106,7 @@ export default {
           duration: 5000,
         });
       } catch(err) {
+        console.error(err);
         this.confirmButtonLoadingByUserId[user.id] = false;
         this.$notify.error({
           title: 'Update Error',
@@ -140,23 +141,103 @@ export default {
     },
 
     graphqlOnboardUser(user) {
-      return this.$apollo.mutate({
-        mutation: gql`mutation UpdateUserRole($id: Int!, $role: String!) {
-          update_account_by_pk(
-            pk_columns: { id: $id },
-            _set: {
-              role: $role
+      const id = user.id;
+      const role = this.selectedRoleByUserId[id];
+      switch (role) {
+        case ROLES.admin:
+          return this.$apollo.mutate({
+            mutation: gql`
+              mutation InsertAdmin($account_id: Int!) {
+                insert_admin_one(object: {
+                  account_id: $account_id
+                }) {
+                  id
+                }
+                update_account_by_pk(
+                  pk_columns: { id: $account_id },
+                  _set: { role: "admin" }
+                ) {
+                  id
+                  role
+                }
+              }
+            `,
+            variables: {
+              account_id: id
             }
-          ) {
-            id
-            role
-          }
-        }`,
-        variables: {
-          id: user.id,
-          role: this.selectedRoleByUserId[user.id],
-        }
-      })
+          });
+
+        case ROLES.volunteer:
+          return this.$apollo.mutate({
+            mutation: gql`
+              mutation InsertVolunteer($account_id: Int!) {
+                insert_volunteer_one(object: {
+                  account_id: $account_id
+                  approval_status: true
+                }) {
+                  id
+                }
+                update_account_by_pk(
+                  pk_columns: { id: $account_id },
+                  _set: { role: "volunteer" }
+                ) {
+                  id
+                  role
+                }
+              }
+            `,
+            variables: {
+              account_id: id
+            }
+          });
+
+        case ROLES.client:
+          return this.$apollo.mutate({
+            mutation: gql`
+              mutation InsertClient($account_id: Int!) {
+                insert_client_one(object: {
+                  account_id: $account_id
+                  preferred_comm_mode: "speech"
+                }) {
+                  id
+                }
+                update_account_by_pk(
+                  pk_columns: { id: $account_id },
+                  _set: { role: "client" }
+                ) {
+                  id
+                  role
+                }
+              }
+            `,
+            variables: {
+              account_id: id
+            }
+          });
+
+        case ROLES.service_requestor:
+          return this.$apollo.mutate({
+            mutation: gql`
+              mutation InsertServiceRequestor($account_id: Int!) {
+                insert_service_requestor_one(object: {
+                  account_id: $account_id
+                }) {
+                  id
+                }
+                update_account_by_pk(
+                  pk_columns: { id: $account_id },
+                  _set: { role: "service_requestor" }
+                ) {
+                  id
+                  role
+                }
+              }
+            `,
+            variables: {
+              account_id: id
+            }
+          });
+      }
     },
 
     graphqlDeleteUser(user) {
