@@ -24,7 +24,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build sadeaf-hasura and push to ECR
+      - name: Build sadeaf-hasura and push into ECR
         uses: docker/build-push-action@v1
         with:
           path: sadeaf-hasura
@@ -34,7 +34,7 @@ jobs:
           repository: sadeafxsmu/sadeaf-hasura
           tag_with_ref: true
 
-      - name: Build sadeaf-web and push to ECR
+      - name: Build sadeaf-web and push into ECR
         uses: docker/build-push-action@v1
         with:
           path: sadeaf-web
@@ -48,7 +48,7 @@ jobs:
         run: |
           aws ecs describe-task-definition --task-definition ${{ secrets.AWS_ECS_TASK_DEFINITION_FAMILY }} --query taskDefinition > task-definition.json
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
+      - name: Fill new web image ID
         id: task-def-web
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
@@ -56,7 +56,7 @@ jobs:
           container-name: web
           image: ${{ steps.login-ecr.outputs.registry }}/sadeafxsmu/sadeaf-web:${{ env.GIT_TAG_NAME }}
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
+      - name: Fill new hasura image ID
         id: task-def-hasura
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
