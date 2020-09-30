@@ -40,13 +40,20 @@
             Registered on {{ humanReadableDt(userToDelete.created_at) }}
           </p>
         </div>
-        <el-button type="danger"
-                   style="width: 100%;"
-                   size="mini"
-                   :loading="deleteUserButtonLoading"
-                   @click="handleConfirmDeleteUser(userToDelete)">
-          Confirm Rejection
-        </el-button>
+        <danger-zone>
+          <p>
+            <strong>Warning:</strong>
+            Rejecting the new user is permanent and cannot be undone.
+          </p>
+          <br/>
+          <el-button type="danger"
+                     style="width: 100%;"
+                     size="mini"
+                     :loading="deleteUserButtonLoading"
+                     @click="handleConfirmDeleteUser(userToDelete)">
+            Confirm Rejection
+          </el-button>
+        </danger-zone>
       </div>
     </el-dialog>
   </div>
@@ -58,6 +65,7 @@ import { accountFieldsFragment } from "../../../common/graphql/fragments";
 import UserCard from "../../../components/user/UserCard";
 import { ROLES } from "../../../common/types/constants";
 import { DateUtils } from "../../../common/date-utils";
+import DangerZone from "../../../components/forms/DangerZone";
 
 const { humanReadableDt } = DateUtils;
 
@@ -68,6 +76,7 @@ export default {
   name: "pending",
 
   components: {
+    DangerZone,
     UserCard
   },
 
@@ -91,10 +100,17 @@ export default {
       try {
         await this.graphqlOnboardUser(user);
         this.confirmButtonLoadingByUserId[user.id] = false;
-        this.$notify.success(`Successfully on-boarded ${user.name}'s as a ${this.selectedRoleByUserId[user.id]}`);
+        this.$notify.success({
+          title: `Successfully on-boarded ${user.name}`,
+          message: `${user.name} (user id: ${user.id}) has been on-boarded as a ${this.selectedRoleByUserId[user.id]}!`,
+          duration: 5000,
+        });
       } catch(err) {
         this.confirmButtonLoadingByUserId[user.id] = false;
-        this.$notify.error(`Something went wrong while attempting to update User "${user.name}"`);
+        this.$notify.error({
+          title: 'Update Error',
+          message: `Something went wrong while attempting to update User "${user.name}" (user id: ${user.id})`,
+        });
       }
     },
 
@@ -109,11 +125,17 @@ export default {
         await this.graphqlDeleteUser(user);
         this.deleteUserButtonLoading = false;
         this.deleteUserDialogVisible = false;
-        this.$notify.success(`Rejected user ${user.name}...`);
+        this.$notify.success({
+          title: `Rejected user ${user.name}`,
+          message: `User "${user.name}" has been removed from the database`,
+        });
       } catch (err) {
         console.error(err);
         this.deleteUserButtonLoading = false;
-        this.$notify.error(`Something went wrong while attempting to delete User "${user.name}"`);
+        this.$notify.error({
+          title: 'Delete Error',
+          message: `Something went wrong while attempting to delete User "${user.name}"`
+        });
       }
     },
 
