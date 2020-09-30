@@ -18,6 +18,9 @@
         <el-menu-item index="/admin/users?type=volunteer">
           Volunteers
         </el-menu-item>
+        <el-menu-item index="/admin/users/pending">
+          Pending
+        </el-menu-item>
       </el-submenu>
     </template>
   </base-navbar>

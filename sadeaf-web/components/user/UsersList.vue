@@ -2,6 +2,7 @@
   <div>
     <div class="users">
       <user-card v-for="user in users"
+                 :key="'user-card-' + user.id"
                  :user="user.account"
                  link-to-page
                  class="user-card" />
