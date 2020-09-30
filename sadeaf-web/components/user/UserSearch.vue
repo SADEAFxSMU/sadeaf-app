@@ -28,7 +28,6 @@ const UserSearchWithRoleQuery = gql`
         { role: { _eq: $role } },
         {
           _or: [
-            { username: { _like: $search } }
             { name: { _like: $search } }
             { email: { _like: $search } }
           ]
@@ -45,7 +44,6 @@ const UserSearchQuery = gql`
   query UserSearchQuery($search: String!) {
     users: account(where: {
       _or: [
-        { username: { _like: $search } }
         { name: { _like: $search } }
         { email: { _like: $search } }
       ]

@@ -43,16 +43,14 @@ type account {
     "filter the rows returned"
     where: membership_bool_exp
   ): membership_aggregate!
-  name: String!
+  name: String
   "An object relationship"
   notification_setting: notification_setting
-  password: String!
   profile_pic_url: String
   role: String!
   "An object relationship"
   service_requestor: service_requestor
   updated_at: timestamp!
-  username: String!
   "An object relationship"
   volunteer: volunteer
 }
@@ -91,11 +89,9 @@ type account_max_fields {
   email: String
   id: Int
   name: String
-  password: String
   profile_pic_url: String
   role: String
   updated_at: timestamp
-  username: String
 }
 
 "aggregate min on columns"
@@ -106,11 +102,9 @@ type account_min_fields {
   email: String
   id: Int
   name: String
-  password: String
   profile_pic_url: String
   role: String
   updated_at: timestamp
-  username: String
 }
 
 "response of any mutation on the table \"account\""
@@ -4352,8 +4346,6 @@ enum account_constraint {
   account_email_key
   "unique or primary key constraint"
   account_pkey
-  "unique or primary key constraint"
-  account_username_key
 }
 
 "select columns of table \"account\""
@@ -4371,15 +4363,11 @@ enum account_select_column {
   "column name"
   name
   "column name"
-  password
-  "column name"
   profile_pic_url
   "column name"
   role
   "column name"
   updated_at
-  "column name"
-  username
 }
 
 "update columns of table \"account\""
@@ -4397,15 +4385,11 @@ enum account_update_column {
   "column name"
   name
   "column name"
-  password
-  "column name"
   profile_pic_url
   "column name"
   role
   "column name"
   updated_at
-  "column name"
-  username
 }
 
 "unique or primary key constraints on table \"admin\""
@@ -5246,12 +5230,10 @@ input account_bool_exp {
   memberships: membership_bool_exp
   name: String_comparison_exp
   notification_setting: notification_setting_bool_exp
-  password: String_comparison_exp
   profile_pic_url: String_comparison_exp
   role: String_comparison_exp
   service_requestor: service_requestor_bool_exp
   updated_at: timestamp_comparison_exp
-  username: String_comparison_exp
   volunteer: volunteer_bool_exp
 }
 
@@ -5272,12 +5254,10 @@ input account_insert_input {
   memberships: membership_arr_rel_insert_input
   name: String
   notification_setting: notification_setting_obj_rel_insert_input
-  password: String
   profile_pic_url: String
   role: String
   service_requestor: service_requestor_obj_rel_insert_input
   updated_at: timestamp
-  username: String
   volunteer: volunteer_obj_rel_insert_input
 }
 
@@ -5289,11 +5269,9 @@ input account_max_order_by {
   email: order_by
   id: order_by
   name: order_by
-  password: order_by
   profile_pic_url: order_by
   role: order_by
   updated_at: order_by
-  username: order_by
 }
 
 "order by min() on columns of table \"account\""
@@ -5304,11 +5282,9 @@ input account_min_order_by {
   email: order_by
   id: order_by
   name: order_by
-  password: order_by
   profile_pic_url: order_by
   role: order_by
   updated_at: order_by
-  username: order_by
 }
 
 "input type for inserting object relation for remote table \"account\""
@@ -5336,12 +5312,10 @@ input account_order_by {
   memberships_aggregate: membership_aggregate_order_by
   name: order_by
   notification_setting: notification_setting_order_by
-  password: order_by
   profile_pic_url: order_by
   role: order_by
   service_requestor: service_requestor_order_by
   updated_at: order_by
-  username: order_by
   volunteer: volunteer_order_by
 }
 
@@ -5358,11 +5332,9 @@ input account_set_input {
   email: String
   id: Int
   name: String
-  password: String
   profile_pic_url: String
   role: String
   updated_at: timestamp
-  username: String
 }
 
 "order by stddev() on columns of table \"account\""

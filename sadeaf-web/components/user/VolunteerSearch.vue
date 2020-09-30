@@ -33,13 +33,12 @@ export default {
         query: gql`query VolunteerQuery($search: String!) {
           volunteers: volunteer(where: {
             _or: [
-              {account: {username: {_like: $search}}},
               {account: {name: {_like: $search}}},
               {account: {email: {_like: $search}}}
             ]
           }) {
             id
-            account { id, name, username, email, profile_pic_url }
+            account { id, name, email, profile_pic_url }
           }
         }`,
         variables: {
