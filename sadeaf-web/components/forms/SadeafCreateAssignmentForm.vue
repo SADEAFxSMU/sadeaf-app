@@ -157,7 +157,6 @@ const INSERT_ASSIGNMENT = gql`mutation InsertAssignment(
        account {
          id
          name
-         username
          email
        }
      }

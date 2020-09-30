@@ -31,6 +31,11 @@ export default {
   serverMiddleware: [
     {prefix: false, handler: '~/api'}
   ],
+  router: {
+    middleware: [
+      'authz-role',
+    ]
+  },
   build: {
     transpile: [/^element-ui/],
     extend(config, ctx) {
