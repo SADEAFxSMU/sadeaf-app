@@ -7,14 +7,7 @@
 </template>
 
 <script>
-import { ROLES } from "../common/types/constants";
-
-export const ROLE_EL_TAG_TYPES = {
-  [ROLES.admin]: 'primary',
-  [ROLES.client]: 'danger',
-  [ROLES.volunteer]: 'success',
-  [ROLES.service_requestor]: 'danger',
-}
+import { ROLE_EL_TAG_TYPES } from "../common/types/constants";
 
 export default {
   name: "RoleTag",

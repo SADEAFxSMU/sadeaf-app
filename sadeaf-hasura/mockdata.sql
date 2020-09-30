@@ -35,10 +35,10 @@ INSERT INTO account(
     id, email, name, contact, role, cognito_id, profile_pic_url
 ) VALUES
 (1, 'admin@gmail.com', 'Admin Guy', '88888888', 'admin', null, null),
-(2, 'donnyyen@gmail.com', 'Donny Yen', '88888888', 'svcreq', null, null),
-(3, 'bobbylei@gmail.com', 'Bobby Lei', '88888888', 'svcreq', null, null),
-(4, 'cattywantutree@gmail.com', 'Catty Wan', '88888888', 'svcreq', null, null),
-(5, 'mammymay@gmail.com', 'Mammy May', '88888888', 'svcreq', null, null),
+(2, 'donnyyen@gmail.com', 'Donny Yen', '88888888', 'service_requestor', null, null),
+(3, 'bobbylei@gmail.com', 'Bobby Lei', '88888888', 'service_requestor', null, null),
+(4, 'cattywantutree@gmail.com', 'Catty Wan', '88888888', 'service_requestor', null, null),
+(5, 'mammymay@gmail.com', 'Mammy May', '88888888', 'service_requestor', null, null),
 (6, 'jonlee@gmail.com', 'Jon Lee', '88888888', 'client', null, null),
 (7, 'xiaoming@gmail.com', 'Lee Xiao Ming, Jonathan', '88888888', 'client', null, null),
 (8, 'ednatan@gmail.com', 'Edna Tan', '88888888', 'client', null, null),
@@ -60,7 +60,7 @@ INSERT INTO account(
 (24, 'sadeaf-admin@huansen.dev', 'Test Admin', '81118111', 'admin', '3bf5eeb7-a4d1-40f7-a7a8-1a05e28c41e9', null),
 (25, 'sadeaf-volunteer@huansen.dev', 'Test Volunteer', '98889000', 'volunteer', 'd99c8f77-68bf-4724-aa5e-bfd74316b6a3', null),
 (26, 'sadeaf-client@huansen.dev', 'Test Client', '99990000', 'client', '650af7cc-7dc7-40f0-a18c-76093da8444e', null),
-(27, 'sadeaf-servicerequestor@huansen.dev', 'Test ServiceRequestor', '91239123', 'svcreq', '610256ce-6120-4cd2-867b-385d719deab1', null),
+(27, 'sadeaf-servicerequestor@huansen.dev', 'Test ServiceRequestor', '91239123', 'service_requestor', '610256ce-6120-4cd2-867b-385d719deab1', null),
 (28, 'sadeaf-user@huansen.dev', 'Test Pending', '92349234', 'pending', '0fd7f5f6-1f53-4c8e-9588-dd3f1d8bf29f', null);
 
 INSERT INTO membership(
