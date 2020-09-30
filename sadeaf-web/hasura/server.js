@@ -14,6 +14,8 @@ export default {
       res.json({})
     })
 
+    app.use(require('./authz'))
+
     return new Promise((resolve, reject) => {
       app.listen(port, (err) => {
         if (err) reject(err)

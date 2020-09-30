@@ -1,9 +1,9 @@
-import express from "express";
-import bodyParser from "body-parser";
-import {createProxyMiddleware} from "http-proxy-middleware";
+import express from "express"
+import {createProxyMiddleware} from "http-proxy-middleware"
 
 const app = express()
 
+// Authorization will be handled by Hasura due to WebSocket Header restrictions.
 app.use(createProxyMiddleware('/api/graphql', {
   target: process.env.SVC_SADEAF_HASURA_URL || 'http://localhost:8080',
   ws: true,
@@ -12,8 +12,5 @@ app.use(createProxyMiddleware('/api/graphql', {
     '^/api/graphql': '/v1/graphql'
   },
 }))
-
-app.use(bodyParser.json())
-app.use(require('./routes/accounts'))
 
 export default app

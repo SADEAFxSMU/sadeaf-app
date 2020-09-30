@@ -17,5 +17,9 @@ module.exports = {
   },
   POSTGRES: {
     QUEUE_DATABASE_URL: process.env.POSTGRES_QUEUE_DATABASE_URL || 'postgres://postgres:postgrespassword@localhost:5432/sadeaf_app'
+  },
+  HASURA: {
+    GRAPHQL_ADMIN_SECRET: process.env.HASURA_GRAPHQL_ADMIN_SECRET || 'sadeaf-hasura-console',
+    GRAPHQL_API_URL: process.env.HASURA_GRAPHQL_API_URL || 'http://localhost:8080/v1/graphql',
   }
 }

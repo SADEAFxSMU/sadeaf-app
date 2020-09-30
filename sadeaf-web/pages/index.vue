@@ -1,22 +1,42 @@
 <template>
-  <div>
-    <h1>App Home Page</h1>
-    <p>Based on user's <code>type</code>, redirect to appropriate home page.</p>
-    <p>For now, redirecting to /admin in 3 secs...</p>
+  <div class="loading-page">
+    <el-spinner />
   </div>
 </template>
 
 <script>
 export default {
   name: "app-home",
+  middleware: ['authenticated'],
   mounted() {
-    setTimeout(() => {
-      this.$router.push('/admin');
-    }, 3000);
+    if (this.userType) {
+      this.navigateToRoleHome();
+    }
+  },
+  methods: {
+    navigateToRoleHome() {
+      this.$router.replace('/' + this.userType);
+    }
+  },
+  computed: {
+    userType() {
+      return this.$store.state.auth.user.userType;
+    }
+  },
+  watch: {
+    userType() {
+      this.navigateToRoleHome();
+    },
   }
 }
 </script>
 
 <style>
-
+.loading-page {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
