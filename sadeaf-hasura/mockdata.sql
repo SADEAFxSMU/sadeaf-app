@@ -32,31 +32,31 @@ INSERT INTO membership_type(
 (6, 'honorary', 0, -1, 'Honorary membership shall be conferred on individuals who, in the opinion of the Executive Council, have rendered meritorious service to the Deaf of Singapore. Honorary members shall not be required to fill application forms or to pay any subscriptions.');
 
 INSERT INTO account(
-    id, email, name, contact, role, cognito_id
+    id, email, name, contact, role, cognito_id, profile_pic_url
 ) VALUES
-(1, 'admin@gmail.com', 'Admin Guy', '88888888', 'admin', null),
-(2, 'donnyyen@gmail.com', 'Donny Yen', '88888888', 'svcreq', null),
-(3, 'bobbylei@gmail.com', 'Bobby Lei', '88888888', 'svcreq', null),
-(4, 'cattywantutree@gmail.com', 'Catty Wan', '88888888', 'svcreq', null),
-(5, 'mammymay@gmail.com', 'Mammy May', '88888888', 'svcreq', null),
-(6, 'jonlee@gmail.com', 'Jon Lee', '88888888', 'client', null),
-(7, 'xiaoming@gmail.com', 'Lee Xiao Ming, Jonathan', '88888888', 'client', null),
-(8, 'ednatan@gmail.com', 'Edna Tan', '88888888', 'client', null),
-(9, 'reginald@gmail.com', 'Reginald James', '88888888', 'client', null),
-(10, 'jolinetoh@gmail.com', 'Joline Toh', '88888888', 'client', null),
-(11, 'nathantan@gmail.com', 'Nathan Tan', '88888888', 'client', null),
-(12, 'nurhafiqa@gmail.com', 'Nur Hafiqa Binte Ismail', '88888888', 'client', null),
-(13, 'yilai@gmail.com', 'Yi Lai Wang', '88888888', 'client', null),
-(14, 'mohali@gmail.com', 'Mohamed Ali Bin Shafiq', '88888888', 'client', null),
-(15, 'bremnath@gmail.com', 'Bremnath Suriyamurthy', '88888888', 'client', null),
-(16, 'weiyuan@gmail.com', 'Lee Wei Yuan', '88888888', 'client', null),
-(17, 'waynetoh@gmail.com', 'Toh Jin Wee Wayne', '88888888', 'volunteer', null),
-(18, 'claudchua@gmail.com', 'Claudia Chua Pei Si', '88888888', 'volunteer', null),
-(19, 'tedmundtan@gmail.com', 'Tedmund Tan Zhi Peng', '88888888', 'volunteer', null),
-(20, 'austinwoon@gmail.com', 'Austin Woon Quan', '88888888', 'volunteer', null),
-(21, 'fuxing@gmail.com', 'Loh Fuxing', '88888888', 'volunteer', null),
-(22, 'elilim@gmail.com', 'Eli Lim', '88888888', 'volunteer', '1b56339d-bb43-4089-a896-c31336c682f9'),
-(23, 'sunnylim@gmail.com', 'Sunny Lim', '88888888', 'volunteer', null);
+(1, 'admin@gmail.com', 'Admin Guy', '88888888', 'admin', null, null),
+(2, 'donnyyen@gmail.com', 'Donny Yen', '88888888', 'svcreq', null, null),
+(3, 'bobbylei@gmail.com', 'Bobby Lei', '88888888', 'svcreq', null, null),
+(4, 'cattywantutree@gmail.com', 'Catty Wan', '88888888', 'svcreq', null, null),
+(5, 'mammymay@gmail.com', 'Mammy May', '88888888', 'svcreq', null, null),
+(6, 'jonlee@gmail.com', 'Jon Lee', '88888888', 'client', null, null),
+(7, 'xiaoming@gmail.com', 'Lee Xiao Ming, Jonathan', '88888888', 'client', null, null),
+(8, 'ednatan@gmail.com', 'Edna Tan', '88888888', 'client', null, null),
+(9, 'reginald@gmail.com', 'Reginald James', '88888888', 'client', null, null),
+(10, 'jolinetoh@gmail.com', 'Joline Toh', '88888888', 'client', null, null),
+(11, 'nathantan@gmail.com', 'Nathan Tan', '88888888', 'client', null, null),
+(12, 'nurhafiqa@gmail.com', 'Nur Hafiqa Binte Ismail', '88888888', 'client', null, null),
+(13, 'yilai@gmail.com', 'Yi Lai Wang', '88888888', 'client', null, null),
+(14, 'mohali@gmail.com', 'Mohamed Ali Bin Shafiq', '88888888', 'client', null, null),
+(15, 'bremnath@gmail.com', 'Bremnath Suriyamurthy', '88888888', 'client', null, null),
+(16, 'weiyuan@gmail.com', 'Lee Wei Yuan', '88888888', 'client', '3e2c1e46-d461-4a42-91e9-a11e8a240adb', 'https://media-exp1.licdn.com/dms/image/C5603AQGQHsAl3P_VDA/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=tqpHXRlBQ4TEMnZcZFH8OF34uBADdSNNcL_WlH1FKg8'),
+(17, 'waynetoh@gmail.com', 'Toh Jin Wee Wayne', '88888888', 'volunteer', null, 'https://media-exp1.licdn.com/dms/image/C5603AQEoomKi9Ky-1Q/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=pyR-hk8Qhb3l21dZ7i8Ao0KlmW5If4fhWh0lAMusVeE'),
+(18, 'claudchua@gmail.com', 'Claudia Chua Pei Si', '88888888', 'volunteer', null, 'https://media-exp1.licdn.com/dms/image/C5103AQGLM28N3fuaPw/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=r2VaMBTlEcc8feZagzouPFOgUvvsWGn-OKK-zu4CgVk'),
+(19, 'tedmundtan@gmail.com', 'Tedmund Tan Zhi Peng', '88888888', 'volunteer', null, 'https://media-exp1.licdn.com/dms/image/C5103AQHlCmi1sznkng/profile-displayphoto-shrink_800_800/0?e=1605744000&v=beta&t=BruGLDUNS4ONFFly2PIV3fw1GjNaRCZJZXx-0ctFUq8'),
+(20, 'austinwoon@gmail.com', 'Austin Woon Quan', '88888888', 'volunteer', null, 'https://media-exp1.licdn.com/dms/image/C5103AQH9nm5CFMJ9GA/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=IQdOsCf8Ivwni7Fy5Jgj35z6trijEwpCpH6JIw7rNCo'),
+(21, 'fuxing@gmail.com', 'Loh Fuxing', '88888888', 'volunteer', null, 'https://media-exp1.licdn.com/dms/image/C5103AQEOkJn5C0PnoA/profile-displayphoto-shrink_800_800/0?e=1605744000&v=beta&t=9a-IEiG1_YyioaZYpbTxSZyIo0gmS7GRgBKlKQ7F1EY'),
+(22, 'elilim@gmail.com', 'Eli Lim', '88888888', 'volunteer', '1b56339d-bb43-4089-a896-c31336c682f9', 'https://media-exp1.licdn.com/dms/image/C5603AQHl_BixhF9QOw/profile-displayphoto-shrink_400_400/0?e=1605744000&v=beta&t=8gkea6Yttezgjn5FA50MMl7DlKLBZ_M0ce-Bzj2E5U8'),
+(23, 'sadeaf-admin@huansen.dev', 'admin2', '88888888', 'admin', '3bf5eeb7-a4d1-40f7-a7a8-1a05e28c41e9', null);
 
 INSERT INTO membership(
     id, account_id, membership_type_id, status, free_sessions_remaining, created_at, updated_at
@@ -78,7 +78,8 @@ INSERT INTO membership_renewals(
 INSERT INTO admin(
     id, account_id
 ) VALUES
-(1, 1);
+(1, 1),
+(2, 23);
 
 INSERT INTO service_requestor(
     id, organisation, membership_id, account_id
@@ -127,8 +128,7 @@ INSERT INTO volunteer(
 (3, TRUE, 19),
 (4, TRUE, 20),
 (5, TRUE, 21),
-(6, TRUE, 22),
-(7, TRUE, 23);
+(6, TRUE, 22);
 
 -- INSERT INTO profile(
 --     id, account_id
