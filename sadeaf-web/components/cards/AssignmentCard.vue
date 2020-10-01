@@ -1,5 +1,5 @@
 <template>
-  <div class="assignment-card">
+  <div :class="`assignment-card ${type}`">
     <div class="header">
       <div class="title-wrapper">
         <h2 class="title">{{ eventName }}</h2>
@@ -43,6 +43,12 @@ export default {
   name: "AssignmentCard",
   components: {AssignmentStatus, StatusIndicator, UserCardHorizontalSmall},
   props: {
+    type: {
+      type: String,
+      required: false,
+      default: 'elevate',
+      validator: val => ['elevate', 'indent'].includes(val)
+    },
     details: {
       type: Object,
       required: true,
@@ -117,9 +123,14 @@ export default {
 .assignment-card {
   background: white;
   border-radius: 6px;
-  box-shadow: inset 2px 2px 6px #d5dbe9;
   margin: 8px;
   padding: 16px;
+}
+.assignment-card.indent {
+  box-shadow: inset 2px 2px 6px #d5dbe9;
+}
+.assignment-card.elevate {
+  box-shadow: 2px 2px 6px 1px #d9dfee;
 }
 .assignment-card .header {
   display: flex;
