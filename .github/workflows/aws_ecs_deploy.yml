@@ -25,7 +25,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           path: sadeaf-hasura
-          registry: ${{ steps.login-ecr.outputs.registry }}
+          registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
           repository: sadeafxsmu/sadeaf-hasura
           tag_with_ref: true
       -
@@ -33,7 +33,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           path: sadeaf-web
-          registry: ${{ steps.login-ecr.outputs.registry }}
+          registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
           repository: sadeafxsmu/sadeaf-web
           tag_with_ref: true
       -
