@@ -163,8 +163,6 @@ export default {
               event {
                 id
                 name
-                role
-                profile_pic_url
               }
               volunteer {
                 id
