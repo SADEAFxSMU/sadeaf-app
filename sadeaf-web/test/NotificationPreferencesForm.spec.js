@@ -180,7 +180,9 @@ describe("Volunteer Form", () => {
     expect(preferenceExplanationWrappers).toHaveLength(4);
 
     for (let i = 0; i < volunteerPreferencesExplanation.length; i++) {
-      expect(preferenceExplanationWrappers[i].text()).toBe(volunteerPreferencesExplanation[i]);
+      // due to formatting, there could be some unnecessary whitespaces between text
+      let trimmedText = preferenceExplanationWrappers[i].text().replace(/\s+/g, " ");
+      expect(trimmedText).toBe(volunteerPreferencesExplanation[i]);
     }
   });
 });
