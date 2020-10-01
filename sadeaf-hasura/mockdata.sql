@@ -279,12 +279,3 @@ SELECT setval(pg_get_serial_sequence('membership_type', 'id'), coalesce(max(id) 
 SELECT setval(pg_get_serial_sequence('account', 'id'), coalesce(max(id) + 1, 1), false) FROM account;
 SELECT setval(pg_get_serial_sequence('quotation', 'id'), coalesce(max(id) + 1, 1), false) FROM quotation;
 SELECT setval(pg_get_serial_sequence('volunteer_assignment_opt_in', 'id'), coalesce(max(id) + 1, 1), false) FROM volunteer_assignment_opt_in;
-
----
-SELECT id from assignment
-        WHERE
-        event_id = 2
-        GROUP BY
-        assignment.id, status
-        HAVING
-        status = 'COMPLETE'

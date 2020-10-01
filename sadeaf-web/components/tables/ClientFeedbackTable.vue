@@ -72,24 +72,27 @@ const FEEDBACK_SUBSRCRIBE_QUERY = gql`subscription ClientCompletedEventsSubscrip
                 }
               }
               assignments(order_by: {start_dt: desc}) {
+                id
                 address_line_one
                 address_line_two
                 end_dt
                 start_dt
                 status
                 volunteer {
+                  id
                   account {
+                    id
                     name
                   }
-                  id
                 }
               }
             }
             volunteer {
+              id
               account {
+                id
                 name
               }
-              id
             }
           }
         }

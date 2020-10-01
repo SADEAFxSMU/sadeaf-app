@@ -1,6 +1,6 @@
 <template>
   <div>
-    <client-feedback-table></client-feedback-table>
+    <client-feedback-table />
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import ClientFeedbackTable from '@/components/tables/ClientFeedbackTable';
 
 export default {
-  name: 'attendance-feedback',
+  name: 'feedback',
   components: { ClientFeedbackTable },
 };
 </script>

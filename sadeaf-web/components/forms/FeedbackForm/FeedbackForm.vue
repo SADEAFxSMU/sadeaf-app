@@ -130,13 +130,16 @@
             v-for="privacyOption in TRAINING_PRIVACY_OPTIONS"
             :key="volunteerSelected + privacyOption.label + 'training_prvcy'"
           >
-            <el-radio :label="privacyOption.label">{{privacyOption.title}}</el-radio>
+            <el-radio class="privacy-radio-label__wrap"
+                      :label="privacyOption.label"
+            >
+              {{privacyOption.title}}
+            </el-radio>
           </el-row>
         </el-radio-group>
       </el-form-item>
 
       <el-form-item class="consent-label" prop="confidentiality_privacy_preference" label="Confidentiality Preference">
-        <!--        TODO (Austin): Fix disclaimer styles-->
         <el-row>
           <el-alert title="Disclaimer" show-icon :closable="false" class="feedback-form-disclaimer">
             Would you allow your comments to be used in SADeaf's publicity and/or training materials?
@@ -147,7 +150,11 @@
             v-for="privacyOption in CONFIDENTIALITY_PRIVACY_OPTIONS"
             :key="volunteerSelected + privacyOption.label + 'confidentality'"
           >
-            <el-radio :label="privacyOption.label">{{privacyOption.title}}</el-radio>
+            <el-radio class="privacy-radio-label__wrap"
+                      :label="privacyOption.label"
+            >
+              {{privacyOption.title}}
+            </el-radio>
           </el-row>
         </el-radio-group>
       </el-form-item>
@@ -166,33 +173,32 @@ import TooltipLabel from '@/components/forms/FeedbackForm/TooltipLabel';
 import FeedbackCard from '@/components/forms/FeedbackForm/FeedbackCard';
 import gql from 'graphql-tag';
 
-const UPDATE_FEEDBACK = gql`mutation UPDATE_FEEDBACK($feedback_id: Int!, $live_comments: String!, $live_information_understanding: rating_enum = "",
-                                                    $live_interaction: rating_enum = "", $notetaker_conduct: rating_enum = "", $notetaker_punctual: rating_enum = "",
-                                                    $post_session_comments: String = "", $post_session_understanding: rating_enum = "", $training_privacy_preference: privacy_enum = "",
-                                                    $confidentiality_privacy_preference: privacy_enum = "", $general_feedback: String = "") {
-                                                      update_feedback(_set: {feedback_given: 1, confidentiality_privacy_preference: $confidentiality_privacy_preference, live_comments: $live_comments, live_information_understanding: $live_information_understanding, live_interaction: $live_interaction, notetaker_conduct: $notetaker_conduct, notetaker_punctual: $notetaker_punctual, post_session_comments: $post_session_comments, post_session_understanding: $post_session_understanding, training_privacy_preference: $training_privacy_preference, general_feedback: $general_feedback},
-                                                      where: {id: {_eq: $feedback_id}}) {
-                                                        returning {
-                                                          confidentiality_privacy_preference
-                                                          created_at
-                                                          general_feedback
-                                                          id
-                                                          live_information_understanding
-                                                          live_comments
-                                                          live_interaction
-                                                          notetaker_punctual
-                                                          post_session_comments
-                                                          post_session_understanding
-                                                          updated_at
-                                                          training_privacy_preference
-                                                          volunteer_id
-                                                        }
-                                                      }
-                                                    }
-                                                     `;
+const UPDATE_FEEDBACK = gql`
+mutation UPDATE_FEEDBACK($feedback_id: Int!, $live_comments: String!, $live_information_understanding: rating_enum = "",
+$live_interaction: rating_enum = "", $notetaker_conduct: rating_enum = "", $notetaker_punctual: rating_enum = "",
+$post_session_comments: String = "", $post_session_understanding: rating_enum = "", $training_privacy_preference: privacy_enum = "",
+$confidentiality_privacy_preference: privacy_enum = "", $general_feedback: String = "") {
+  update_feedback(_set: {feedback_given: 1, confidentiality_privacy_preference: $confidentiality_privacy_preference, live_comments: $live_comments, live_information_understanding: $live_information_understanding, live_interaction: $live_interaction, notetaker_conduct: $notetaker_conduct, notetaker_punctual: $notetaker_punctual, post_session_comments: $post_session_comments, post_session_understanding: $post_session_understanding, training_privacy_preference: $training_privacy_preference, general_feedback: $general_feedback},
+  where: {id: {_eq: $feedback_id}}) {
+    returning {
+      confidentiality_privacy_preference
+      created_at
+      general_feedback
+      id
+      live_information_understanding
+      live_comments
+      live_interaction
+      notetaker_punctual
+      post_session_comments
+      post_session_understanding
+      updated_at
+      training_privacy_preference
+      volunteer_id
+    }
+  }
+}`;
 
 export default {
-  // TODO(Austin): Add feedback_completed computed field in event table
   name: 'feedback-form',
   components: { FeedbackCard, TooltipLabel, FeedbackRadioGroup },
   data() {
@@ -208,7 +214,7 @@ export default {
       TRAINING_PRIVACY_OPTIONS: [
         { title: 'Yes, I allow my comments, including name and school/institute to be quoted', label: 'public' },
         {
-          title: 'Yes, I allow ONLY my comments but not my name or school/institute to be' +
+          title: 'Yes, I allow ONLY my comments but not my name or school/institute to be ' +
             'quoted I\'d like to remain anonymous.',
           label: 'anonymous',
         },
@@ -299,7 +305,6 @@ export default {
               });
             })
             .catch(e => {
-              console.log(e);
               this.$message({
                 message: `Failed to submit feedback! Please try again.`,
                 type: 'error',
@@ -319,7 +324,6 @@ export default {
         ...this.feedbackForm,
         [formKey]: value,
       };
-      console.log(this.feedbackForm[formKey]);
     },
   },
 };
@@ -329,6 +333,13 @@ export default {
 .feedback-form {
   .el-form-item__content {
     line-height: 20px;
+  }
+
+  .privacy-radio-label__wrap {
+    span {
+      white-space: normal;
+      word-break: keep-all;
+    }
   }
 
   .consent-label .el-form-item__label {
