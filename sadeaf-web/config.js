@@ -1,9 +1,26 @@
 module.exports = {
   PRODUCTION: process.env.NODE_ENV === "production",
+  LOCALSTACK: {
+    AWS: {
+      REGION: 'us-east-1',
+      ACCESS_KEY_ID: "accessKeyId",
+      SECRET_ACCESS_KEY: "secretAccessKey",
+    },
+  },
   AWS: {
-    REGION: process.env.AWS_REGION || 'us-east-1',
-    ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || "accessKeyId",
-    SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "secretAccessKey",
+    S3: {
+      INVOICE: {
+        BUCKET: {
+          REGION: process.env.AWS_S3_INVOICE_BUCKET_REGION || "",
+          NAME: process.env.AWS_S3_INVOICE_BUCKET_NAME || "",
+        },
+      },
+    },
+    COGNITO: {
+      REGION: process.env.AWS_COGNITO_REGION || "ap-southeast-1",
+      USER_POOL_ID: process.env.AWS_COGNITO_USER_POOL_ID || "ap-southeast-1_n6W18LYYn",
+      USER_POOL_WEB_CLIENT_ID: process.env.AWS_COGNITO_USER_POOL_WEB_CLIENT_ID || "1m91mgkmmhi4bqchc5uecbg7t4",
+    },
   },
   SMTP: {
     USERNAME: process.env.SMTP_USERNAME,
@@ -20,6 +37,9 @@ module.exports = {
   },
   HASURA: {
     GRAPHQL_ADMIN_SECRET: process.env.HASURA_GRAPHQL_ADMIN_SECRET || 'sadeaf-hasura-console',
-    GRAPHQL_API_URL: process.env.HASURA_GRAPHQL_API_URL || 'http://localhost:8080/v1/graphql',
+    GRAPHQL_ENDPOINT: process.env.HASURA_GRAPHQL_ENDPOINT || 'http://localhost:8080',
+    GRAPHQL_API_URL: process.env.HASURA_GRAPHQL_API_URL
+      || `${process.env.HASURA_GRAPHQL_ENDPOINT}/v1/graphql`
+      || 'http://localhost:8080/v1/graphql',
   }
 }

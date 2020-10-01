@@ -1,10 +1,11 @@
 import {Router} from "express";
 import CognitoExpress from "cognito-express";
 import {getHasuraUserIdAndRole} from "./hasura-helpers";
+const {AWS: {COGNITO}} = require("../../config")
 
 const cognitoExpress = new CognitoExpress({
-  region: process.env.AWS_REGION || "ap-southeast-1",
-  cognitoUserPoolId: process.env.AWS_COGNITO_USER_POOL_ID || "ap-southeast-1_n6W18LYYn",
+  region: COGNITO.REGION,
+  cognitoUserPoolId: COGNITO.USER_POOL_ID,
   tokenUse: "id",
   tokenExpiration: 3600000,
 })
