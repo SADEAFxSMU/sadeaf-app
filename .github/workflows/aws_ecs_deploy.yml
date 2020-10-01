@@ -12,30 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: olegtarasov/get-tag@v2
-
-      -
-        name: Login to ECR
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      -
-        name: Build sadeaf-hasura and push into ECR
-        uses: docker/build-push-action@v1
-        with:
-          path: sadeaf-hasura
-          registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-          repository: sadeafxsmu/sadeaf-hasura
-          tag_with_ref: true
-      -
-        name: Build sadeaf-web and push into ECR
-        uses: docker/build-push-action@v1
-        with:
-          path: sadeaf-web
-          registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-          repository: sadeafxsmu/sadeaf-web
-          tag_with_ref: true
       -
         name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -43,6 +19,33 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+      -
+        name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      -
+        name: Build sadeaf-hasura docker image
+        uses: docker/build-push-action@v1
+        with:
+          path: sadeaf-hasura
+          registry: ${{ steps.login-ecr.outputs.registry }}
+          repository: sadeafxsmu/sadeaf-hasura
+          tag_with_ref: true
+          push: false
+      -
+        name: Build sadeaf-web docker image
+        uses: docker/build-push-action@v1
+        with:
+          path: sadeaf-web
+          registry: ${{ steps.login-ecr.outputs.registry }}
+          repository: sadeafxsmu/sadeaf-web
+          tag_with_ref: true
+          push: false
+      -
+        name: Push images to ECR
+        run: |
+          docker push ${{ steps.login-ecr.outputs.registry }}/sadeafxsmu/sadeaf-hasura:$GIT_TAG_NAME
+          docker push ${{ steps.login-ecr.outputs.registry }}/sadeafxsmu/sadeaf-web:$GIT_TAG_NAME
       -
         name: Download task definition
         run: |
