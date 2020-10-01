@@ -192,8 +192,6 @@ INSERT INTO assignment (
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  null, 100),
 
-
-
 (3, 1, 'MATCHED', CURRENT_TIMESTAMP + interval '24 hour', CURRENT_TIMESTAMP + interval '10 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  1, 100),
@@ -202,13 +200,9 @@ INSERT INTO assignment (
  '12 Geyland St', '#03-54', '603482', 'Room 2C', 1.93821, 2.3247,
  null, 200),
 
-(5, 2, 'COMPLETE', '2020-07-30T12:30:00.000Z', '2020-07-30T18:30:00.000Z',
+(5, 2, 'CANCELLED', '2020-07-30T12:30:00.000Z', '2020-07-30T18:30:00.000Z',
  '11 Jalan Run St', '#01-23', '603482', 'Room 2B', 1.0123, 2.5962,
- 1, 100),
-
-  (9, 2, 'CANCELLED', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
- '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
- 3, 100),
+ 8, 100),
 
 (6, 3, 'COMPLETE', '2020-08-05T15:00:00.000Z', '2020-08-05T18:30:00.000Z',
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
@@ -220,7 +214,27 @@ INSERT INTO assignment (
 
 (8, 3, 'COMPLETE', '2020-08-12T15:00:00.000Z', '2020-08-12T18:30:00.000Z',
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
- null, 500);
+ null, 500),
+
+(9, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+8, 100),
+
+(10, 2, 'PENDING', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+2, 100),
+
+(11, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+2, 100),
+
+(12, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+2, 100);
+
+UPDATE assignment SET status = 'COMPLETE' WHERE id = 10;
+UPDATE assignment SET status = 'COMPLETE' WHERE id = 9;
+
 
 -- TODO: Add more assignments for the other clients + volunteers
 
@@ -265,3 +279,12 @@ SELECT setval(pg_get_serial_sequence('membership_type', 'id'), coalesce(max(id) 
 SELECT setval(pg_get_serial_sequence('account', 'id'), coalesce(max(id) + 1, 1), false) FROM account;
 SELECT setval(pg_get_serial_sequence('quotation', 'id'), coalesce(max(id) + 1, 1), false) FROM quotation;
 SELECT setval(pg_get_serial_sequence('volunteer_assignment_opt_in', 'id'), coalesce(max(id) + 1, 1), false) FROM volunteer_assignment_opt_in;
+
+---
+SELECT id from assignment
+        WHERE
+        event_id = 2
+        GROUP BY
+        assignment.id, status
+        HAVING
+        status = 'COMPLETE'

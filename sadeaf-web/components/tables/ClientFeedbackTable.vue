@@ -56,17 +56,51 @@ import FeedbackForm from '@/components/forms/FeedbackForm/FeedbackForm';
 import AssignmentsTimeline from '@/components/cards/AssignmentsTimeline';
 import volunteer from '@/components/navbar/volunteer';
 
+const FEEDBACK_SUBSRCRIBE_QUERY = gql`subscription ClientCompletedEventsSubscription($client_account_id: Int!, $feedback_given: Int!) {
+          feedback(where: {event: {client: {account_id: {_eq: $client_account_id}}}, feedback_given: {_eq: $feedback_given}}) {
+            id
+            event {
+              id
+              name
+              description
+              client {
+                id
+                account {
+                  id
+                  name
+                  email
+                }
+              }
+              assignments(order_by: {start_dt: desc}) {
+                address_line_one
+                address_line_two
+                end_dt
+                start_dt
+                status
+                volunteer {
+                  account {
+                    name
+                  }
+                  id
+                }
+              }
+            }
+            volunteer {
+              account {
+                name
+              }
+              id
+            }
+          }
+        }
+`;
 export default {
   name: 'client-feedback-table',
   components: { FeedbackForm, BaseTable, VolunteersCell, AssignmentsTimeline },
   data() {
     return {
-      hello: 'hello',
       tableData: [],
       eventSelected: {},
-      // TODO(Austin): Get username from vuex store (nuxt auth)
-      username: 'austinwoon',
-      client_id: 12,
       feedbackVolunteer: {
         'id': 1,
         'account': { 'id': 17, 'name': 'Toh Jin Wee Wayne', '__typename': 'account' },
@@ -100,6 +134,9 @@ export default {
     formVisible() {
       return this.$store.state.feedbackForm.visible;
     },
+    clientAccountId() {
+      return this.$store.state.auth.user.id;
+    }
   },
   methods: {
     handleEventFeedback(row) {
@@ -138,49 +175,10 @@ export default {
   apollo: {
     $subscribe: {
       event: {
-        query: gql`
-        subscription ClientCompletedEventsSubscription($client_id: Int!, $feedback_given: Int!) {
-          feedback(where: {event: {client_id: {_eq: $client_id}}, feedback_given: {_eq: $feedback_given}}) {
-          id
-          event {
-            id
-            name
-            description
-            client {
-              id
-              account {
-                username
-                id
-                name
-                email
-              }
-            }
-            assignments(order_by: {start_dt: desc}) {
-              address_line_one
-              address_line_two
-              end_dt
-              start_dt
-              status
-              volunteer {
-                account {
-                  name
-                }
-                id
-              }
-            }
-          }
-          volunteer {
-            account {
-              name
-            }
-            id
-          }
-        }
-      }
-      `,
+        query: FEEDBACK_SUBSRCRIBE_QUERY,
         variables() {
           return {
-            client_id: this.client_id,
+            client_account_id: this.clientAccountId,
             feedback_given: 0,
           };
         },
