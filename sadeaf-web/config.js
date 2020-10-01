@@ -39,7 +39,7 @@ module.exports = {
     GRAPHQL_ADMIN_SECRET: process.env.HASURA_GRAPHQL_ADMIN_SECRET || 'sadeaf-hasura-console',
     GRAPHQL_ENDPOINT: process.env.HASURA_GRAPHQL_ENDPOINT || 'http://localhost:8080',
     GRAPHQL_API_URL: process.env.HASURA_GRAPHQL_API_URL
-      || `${process.env.HASURA_GRAPHQL_ENDPOINT}/v1/graphql`
+      || (process.env.HASURA_GRAPHQL_ENDPOINT && `${process.env.HASURA_GRAPHQL_ENDPOINT}/v1/graphql`)
       || 'http://localhost:8080/v1/graphql',
   }
 }
