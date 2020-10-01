@@ -32,7 +32,7 @@ function hasuraRoleAndIdQuery(cognitoId) {
     headers: {
       'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET
     },
-    "body": `{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ id role }}"}`,
+    body: `{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ id role }}"}`,
     method: "POST",
   });
 }
