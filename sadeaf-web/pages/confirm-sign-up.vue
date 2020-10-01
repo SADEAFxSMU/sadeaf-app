@@ -1,5 +1,5 @@
 <template>
-  <amplify-container state="signin"/>
+  <amplify-container state="confirmSignUp"/>
 </template>
 
 <script>

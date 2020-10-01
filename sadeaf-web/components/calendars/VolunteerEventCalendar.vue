@@ -90,7 +90,6 @@
           description
           purpose
         }
-        honorarium_amount
       }
 
     pendingAssignments: assignment(
@@ -117,7 +116,6 @@
         description
         purpose
       }
-      honorarium_amount
     }
   }`
 
@@ -181,6 +179,12 @@
   export default {
     name: "VolunteerEventCalendar",
     components: {AcceptAssignmentDetailsDialog, AssignmentCard},
+    props: {
+      volunteer: {
+        type: Object,
+        required: true,
+      }
+    },
     data() {
       return {
         assignments: [],
@@ -298,7 +302,7 @@
         query: assignmentQuery,
         variables() {
           return {
-            volunteer_id: this.$store.state.auth.user.volunteer.id
+            volunteer_id: this.volunteer.id
           }
         },
         result({data}) {
@@ -310,7 +314,7 @@
         query: volunteerOptInQuery,
         variables() {
           return {
-            volunteer_id: this.$store.state.auth.user.volunteer.id
+            volunteer_id: this.volunteer.id
           }
         },
         result({data}) {

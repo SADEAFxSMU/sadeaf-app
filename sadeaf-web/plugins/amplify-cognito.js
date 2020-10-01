@@ -1,5 +1,4 @@
 import Amplify, {Auth} from 'aws-amplify';
-import '@aws-amplify/ui-vue';
 
 Amplify.configure({
   Auth: {
@@ -9,7 +8,7 @@ Amplify.configure({
   }
 })
 
-export default function (context, inject) {
+export default function ({app: {context: {route}, router}}, inject) {
   inject('auth', {
     /**
      * @return {Promise<>}

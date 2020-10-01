@@ -32,31 +32,37 @@ INSERT INTO membership_type(
 (6, 'honorary', 0, -1, 'Honorary membership shall be conferred on individuals who, in the opinion of the Executive Council, have rendered meritorious service to the Deaf of Singapore. Honorary members shall not be required to fill application forms or to pay any subscriptions.');
 
 INSERT INTO account(
-    id, username, password, email, name, contact, role
+    id, email, name, contact, role, cognito_id
 ) VALUES
-(1, 'admin', 'password', 'admin@gmail.com', 'Admin Guy', '88888888', 'admin'),
-(2, 'donnyyen', 'password', 'donnyyen@gmail.com', 'Donny Yen', '88888888', 'svcreq'),
-(3, 'bobbylei', 'password', 'bobbylei@gmail.com', 'Bobby Lei', '88888888', 'svcreq'),
-(4, 'cattywantutree', 'password', 'cattywantutree@gmail.com', 'Catty Wan', '88888888', 'svcreq'),
-(5, 'mammymay', 'password', 'mammymay@gmail.com', 'Mammy May', '88888888', 'svcreq'),
-(6, 'jonlee', 'password', 'jonlee@gmail.com', 'Jon Lee', '88888888', 'client'),
-(7, 'xiaoming', 'password', 'xiaoming@gmail.com', 'Lee Xiao Ming, Jonathan', '88888888', 'client'),
-(8, 'ednatan', 'password', 'ednatan@gmail.com', 'Edna Tan', '88888888', 'client'),
-(9, 'reginald', 'password', 'reginald@gmail.com', 'Reginald James', '88888888', 'client'),
-(10, 'jolinetoh', 'password', 'jolinetoh@gmail.com', 'Joline Toh', '88888888', 'client'),
-(11, 'nathantan', 'password', 'nathantan@gmail.com', 'Nathan Tan', '88888888', 'client'),
-(12, 'nurhafiqa', 'password', 'nurhafiqa@gmail.com', 'Nur Hafiqa Binte Ismail', '88888888', 'client'),
-(13, 'yilai', 'password', 'yilai@gmail.com', 'Yi Lai Wang', '88888888', 'client'),
-(14, 'mohali', 'password', 'mohali@gmail.com', 'Mohamed Ali Bin Shafiq', '88888888', 'client'),
-(15, 'bremnath', 'password', 'bremnath@gmail.com', 'Bremnath Suriyamurthy', '88888888', 'client'),
-(16, 'weiyuan', 'password', 'weiyuan@gmail.com', 'Lee Wei Yuan', '88888888', 'client'),
-(17, 'waynetoh', 'password', 'waynetoh@gmail.com', 'Toh Jin Wee Wayne', '88888888', 'volunteer'),
-(18, 'claudchua', 'password', 'claudchua@gmail.com', 'Claudia Chua Pei Si', '88888888', 'volunteer'),
-(19, 'tedmundtan', 'password', 'tedmundtan@gmail.com', 'Tedmund Tan Zhi Peng', '88888888', 'volunteer'),
-(20, 'austinwoon', 'austin123', 'austinwoonquan@gmail.com', 'Austin Woon Quan', '88888888', 'client'),
-(21, 'fuxing', 'password', 'fuxing@gmail.com', 'Loh Fuxing', '88888888', 'volunteer'),
-(22, 'elilim', 'password', 'elilim@gmail.com', 'Eli Lim', '88888888', 'volunteer'),
-(23, 'sunnylim', 'password', 'sunnylim@gmail.com', 'Sunny Lim', '88888888', 'volunteer');
+(1, 'admin@gmail.com', 'Admin Guy', '88888888', 'admin', null),
+(2, 'donnyyen@gmail.com', 'Donny Yen', '88888888', 'svcreq', null),
+(3, 'bobbylei@gmail.com', 'Bobby Lei', '88888888', 'svcreq', null),
+(4, 'cattywantutree@gmail.com', 'Catty Wan', '88888888', 'svcreq', null),
+(5, 'mammymay@gmail.com', 'Mammy May', '88888888', 'svcreq', null),
+(6, 'jonlee@gmail.com', 'Jon Lee', '88888888', 'client', null),
+(7, 'xiaoming@gmail.com', 'Lee Xiao Ming, Jonathan', '88888888', 'client', null),
+(8, 'ednatan@gmail.com', 'Edna Tan', '88888888', 'client', null),
+(9, 'reginald@gmail.com', 'Reginald James', '88888888', 'client', null),
+(10, 'jolinetoh@gmail.com', 'Joline Toh', '88888888', 'client', null),
+(11, 'nathantan@gmail.com', 'Nathan Tan', '88888888', 'client', null),
+(12, 'nurhafiqa@gmail.com', 'Nur Hafiqa Binte Ismail', '88888888', 'client', null),
+(13, 'yilai@gmail.com', 'Yi Lai Wang', '88888888', 'client', null),
+(14, 'mohali@gmail.com', 'Mohamed Ali Bin Shafiq', '88888888', 'client', null),
+(15, 'bremnath@gmail.com', 'Bremnath Suriyamurthy', '88888888', 'client', null),
+(16, 'weiyuan@gmail.com', 'Lee Wei Yuan', '88888888', 'client', '3e2c1e46-d461-4a42-91e9-a11e8a240adb'),
+(17, 'waynetoh@gmail.com', 'Toh Jin Wee Wayne', '88888888', 'volunteer', null),
+(18, 'claudchua@gmail.com', 'Claudia Chua Pei Si', '88888888', 'volunteer', null),
+(19, 'tedmundtan@gmail.com', 'Tedmund Tan Zhi Peng', '88888888', 'volunteer', null),
+(20, 'austinwoon@gmail.com', 'Austin Woon Quan', '88888888', 'volunteer', null),
+(21, 'fuxing@gmail.com', 'Loh Fuxing', '88888888', 'volunteer', null),
+(22, 'elilim@gmail.com', 'Eli Lim', '88888888', 'volunteer', '1b56339d-bb43-4089-a896-c31336c682f9'),
+(23, 'sunnylim@gmail.com', 'Sunny Lim', '88888888', 'volunteer', null),
+(24, 'sadeaf-admin@huansen.dev', 'Test Admin', '81118111', 'admin', '3bf5eeb7-a4d1-40f7-a7a8-1a05e28c41e9'),
+(25, 'sadeaf-volunteer@huansen.dev', 'Test Volunteer', '98889000', 'volunteer', 'd99c8f77-68bf-4724-aa5e-bfd74316b6a3'),
+(26, 'sadeaf-client@huansen.dev', 'Test Client', '99990000', 'client', '650af7cc-7dc7-40f0-a18c-76093da8444e'),
+(27, 'sadeaf-servicerequestor@huansen.dev', 'Test ServiceRequestor', '91239123', 'svcreq', '610256ce-6120-4cd2-867b-385d719deab1'),
+(28, 'sadeaf-user@huansen.dev', 'Test Pending', '92349234', 'pending', '0fd7f5f6-1f53-4c8e-9588-dd3f1d8bf29f');
+
 
 INSERT INTO membership(
     id, account_id, membership_type_id, status, free_sessions_remaining, created_at, updated_at
@@ -78,7 +84,8 @@ INSERT INTO membership_renewals(
 INSERT INTO admin(
     id, account_id
 ) VALUES
-(1, 1);
+(1, 1),
+(2, 24);
 
 INSERT INTO service_requestor(
     id, organisation, membership_id, account_id
@@ -86,7 +93,8 @@ INSERT INTO service_requestor(
 (1, 'SMU', 1, 2),
 (2, 'NTU', 1, 3),
 (3, 'NUS', 1, 4),
-(4, 'DBS', 1, 5);
+(4, 'DBS', 1, 5),
+(5, 'SMU', 1, 27);
 
 INSERT INTO quotation(
     id,  requestor_type, first_block_duration_m, fee_for_first_block, subsequent_block_duration_m, fee_per_subsequent_block
@@ -118,7 +126,8 @@ INSERT INTO client(
 (9, 'CreditSuisse Pte Ltd', 'analyst', 'Speech', null, null, 14, 9),
 (10, null, 'self-employed', 'Sign Language', null, null, 15, 3),
 (11, 'Shopee Pte Ltd', 'intern', 'Speech', null, null, 16, 9),
-(12, 'Shopee Pte Ltd', 'intern', 'Speech', null, null, 20, 9);
+(12, 'Singapore Management University', 'student', 'Speech', null, null, 26, 5);
+
 
 INSERT INTO volunteer(
     id, approval_status, account_id
@@ -129,7 +138,8 @@ INSERT INTO volunteer(
 (4, TRUE, 20),
 (5, TRUE, 21),
 (6, TRUE, 22),
-(7, TRUE, 23);
+(7, TRUE, 23),
+(8, TRUE, 25);
 
 -- INSERT INTO profile(
 --     id, account_id

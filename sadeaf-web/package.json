@@ -39,6 +39,7 @@
     "express-healthcheck": "^0.1.0",
     "graphql-tag": "^2.11.0",
     "http-proxy-middleware": "^1.0.5",
+    "jwt-decode": "^3.0.0-beta.2",
     "lodash": "^4.17.20",
     "nuxt": "^2.14.0",
     "pg-boss": "^5.0.8",

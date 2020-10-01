@@ -24,11 +24,12 @@ describe('Common Nav Links', () => {
     const renderedNavLinks = [];
     const navMenu = wrapper.findComponent(Element.Menu);
     _.forOwn(navMenu.vm.$data.items, (navMenuItem, index) => {
-      expect(navMenuItem.$props.index).toEqual(index);
-      expect(commonNavLinks).toContain(index);
-      renderedNavLinks.push(index);
+      if (navMenuItem.$props.index) {
+        expect(navMenuItem.$props.index).toEqual(index);
+        expect(commonNavLinks).toContain(index);
+        renderedNavLinks.push(index);
+      }
     });
-
     expect(renderedNavLinks.sort()).toEqual(commonNavLinks.sort());
   });
 });

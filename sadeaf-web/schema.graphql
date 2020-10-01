@@ -12,6 +12,7 @@ type account {
   admin: admin
   "An object relationship"
   client: client
+  cognito_id: String
   contact: String
   created_at: timestamp!
   email: String!
@@ -83,6 +84,7 @@ type account_avg_fields {
 
 "aggregate max on columns"
 type account_max_fields {
+  cognito_id: String
   contact: String
   created_at: timestamp
   email: String
@@ -96,6 +98,7 @@ type account_max_fields {
 
 "aggregate min on columns"
 type account_min_fields {
+  cognito_id: String
   contact: String
   created_at: timestamp
   email: String
@@ -4341,6 +4344,8 @@ type volunteer_variance_fields {
 "unique or primary key constraints on table \"account\""
 enum account_constraint {
   "unique or primary key constraint"
+  account_cognito_id_key
+  "unique or primary key constraint"
   account_email_key
   "unique or primary key constraint"
   account_pkey
@@ -4350,6 +4355,8 @@ enum account_constraint {
 
 "select columns of table \"account\""
 enum account_select_column {
+  "column name"
+  cognito_id
   "column name"
   contact
   "column name"
@@ -4372,6 +4379,8 @@ enum account_select_column {
 
 "update columns of table \"account\""
 enum account_update_column {
+  "column name"
+  cognito_id
   "column name"
   contact
   "column name"
@@ -5222,6 +5231,7 @@ input account_bool_exp {
   _or: [account_bool_exp]
   admin: admin_bool_exp
   client: client_bool_exp
+  cognito_id: String_comparison_exp
   contact: String_comparison_exp
   created_at: timestamp_comparison_exp
   email: String_comparison_exp
@@ -5246,6 +5256,7 @@ input account_inc_input {
 input account_insert_input {
   admin: admin_obj_rel_insert_input
   client: client_obj_rel_insert_input
+  cognito_id: String
   contact: String
   created_at: timestamp
   email: String
@@ -5263,6 +5274,7 @@ input account_insert_input {
 
 "order by max() on columns of table \"account\""
 input account_max_order_by {
+  cognito_id: order_by
   contact: order_by
   created_at: order_by
   email: order_by
@@ -5276,6 +5288,7 @@ input account_max_order_by {
 
 "order by min() on columns of table \"account\""
 input account_min_order_by {
+  cognito_id: order_by
   contact: order_by
   created_at: order_by
   email: order_by
@@ -5304,6 +5317,7 @@ input account_on_conflict {
 input account_order_by {
   admin: admin_order_by
   client: client_order_by
+  cognito_id: order_by
   contact: order_by
   created_at: order_by
   email: order_by
@@ -5326,6 +5340,7 @@ input account_pk_columns_input {
 
 "input type for updating data in table \"account\""
 input account_set_input {
+  cognito_id: String
   contact: String
   created_at: timestamp
   email: String
