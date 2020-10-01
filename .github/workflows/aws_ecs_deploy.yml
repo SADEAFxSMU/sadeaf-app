@@ -13,54 +13,58 @@ jobs:
       - uses: actions/checkout@v2
       - uses: olegtarasov/get-tag@v2
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      -
+        name: Login to ECR
+        uses: docker/login-action@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build sadeaf-hasura and push into ECR
+          registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      -
+        name: Build sadeaf-hasura and push into ECR
         uses: docker/build-push-action@v1
         with:
           path: sadeaf-hasura
           registry: ${{ steps.login-ecr.outputs.registry }}
           repository: sadeafxsmu/sadeaf-hasura
           tag_with_ref: true
-
-      - name: Build sadeaf-web and push into ECR
+      -
+        name: Build sadeaf-web and push into ECR
         uses: docker/build-push-action@v1
         with:
           path: sadeaf-web
           registry: ${{ steps.login-ecr.outputs.registry }}
           repository: sadeafxsmu/sadeaf-web
           tag_with_ref: true
-
-      - name: Download task definition
+      -
+        name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      -
+        name: Download task definition
         run: |
           aws ecs describe-task-definition --task-definition ${{ secrets.AWS_ECS_TASK_DEFINITION_FAMILY }} --query taskDefinition > task-definition.json
-
-      - name: Fill new web image ID
+      -
+        name: Fill new web image ID
         id: task-def-web
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
           container-name: web
           image: ${{ steps.login-ecr.outputs.registry }}/sadeafxsmu/sadeaf-web:${{ env.GIT_TAG_NAME }}
-
-      - name: Fill new hasura image ID
+      -
+        name: Fill new hasura image ID
         id: task-def-hasura
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ steps.task-def-web.outputs.task-definition }}
           container-name: hasura
           image: ${{ steps.login-ecr.outputs.registry }}/sadeafxsmu/sadeaf-hasura:${{ env.GIT_TAG_NAME }}
-
-      - name: Deploy Amazon ECS task definition
+      -
+        name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def-hasura.outputs.task-definition }}
