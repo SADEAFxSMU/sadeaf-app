@@ -170,8 +170,8 @@ INSERT INTO event (
     id, name, client_id, description, purpose
 ) VALUES
 (1, 'IS111 - Intro to Programming', 1, 'Introductory programming class - very hands-on', 'School'),
-(2, 'IS113 - Web Application Development', 2, 'Introductory programming class - very hands-on', 'School'),
-(3, 'JPMorgan Winning Women', 1, 'Event promoting gender equality at JPMorgan', 'Workshop'),
+(2, 'IS113 - Web Application Development', 12, 'Introductory programming class - very hands-on', 'School'),
+(3, 'JPMorgan Winning Women', 3, 'Event promoting gender equality at JPMorgan', 'Workshop'),
 (4, 'CodeIT Suisse', 3, 'Annual hackathon for recruitment and campus outreach', 'Workshop'),
 (5, 'COMM169 - Management Communication', 3, 'CORE SMU module', 'School'),
 (6, 'COMM169 - Management Communication', 4, 'CORE SMU module', 'School'),
@@ -198,9 +198,9 @@ INSERT INTO assignment (
  '12 Geyland St', '#03-54', '603482', 'Room 2C', 1.93821, 2.3247,
  null, 200),
 
-(5, 2, 'COMPLETE', '2020-07-30T12:30:00.000Z', '2020-07-30T18:30:00.000Z',
+(5, 2, 'CANCELLED', '2020-07-30T12:30:00.000Z', '2020-07-30T18:30:00.000Z',
  '11 Jalan Run St', '#01-23', '603482', 'Room 2B', 1.0123, 2.5962,
- 1, 100),
+ 8, 100),
 
 (6, 3, 'COMPLETE', '2020-08-05T15:00:00.000Z', '2020-08-05T18:30:00.000Z',
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
@@ -212,7 +212,27 @@ INSERT INTO assignment (
 
 (8, 3, 'COMPLETE', '2020-08-12T15:00:00.000Z', '2020-08-12T18:30:00.000Z',
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
- null, 500);
+ null, 500),
+
+(9, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+8, 100),
+
+(10, 2, 'PENDING', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+2, 100),
+
+(11, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+2, 100),
+
+(12, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+2, 100);
+
+UPDATE assignment SET status = 'COMPLETE' WHERE id = 10;
+UPDATE assignment SET status = 'COMPLETE' WHERE id = 9;
+
 
 -- TODO: Add more assignments for the other clients + volunteers
 
@@ -226,11 +246,11 @@ INSERT INTO volunteer_assignment_opt_in (
 
 INSERT INTO feedback (
     id, event_id, volunteer_id, notetaker_punctual, notetaker_conduct, live_comments, live_information_understanding,
-    live_interaction, post_session_comments, post_session_understanding, post_session_interaction,
+    live_interaction, post_session_comments, post_session_understanding,
     general_feedback, training_privacy_preference, confidentiality_privacy_preference
 ) VALUES
-(1, 1, 1, true, 'good', 'very punctual', 'good', 'very good', 'neutral', 'good', 'very good', 'NA',
- true, true);
+(1, 1, 1, '5', '5', 'very good person, kind lad, 10/10', '4', '4', 'great post session notes mate', '4', 'great lad',
+ 'public', 'no');
 
 INSERT INTO interpretation_details (
     id, sign_system, filming_interpreters, allow_trainee_interpreters,number_of_deaf,

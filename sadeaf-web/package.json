@@ -12,8 +12,15 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
+    "format": "yarn prettier --write .",
     "test": "jest",
     "graphql-codegen": "cd tools/codegen && node graphqlQueryBuilder.js"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
   },
   "dependencies": {
     "@aws-amplify/ui-vue": "^0.2.18",
@@ -58,6 +65,8 @@
     "jest": "^24.1.0",
     "js-yaml": "^3.14.0",
     "node-fetch": "^2.6.1",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.1.1",
     "vue-jest": "^4.0.0-0"
   }
 }

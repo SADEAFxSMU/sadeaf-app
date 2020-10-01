@@ -5,8 +5,7 @@
       <h1 class="stat">{{ stat }}</h1>
       <h1 class="title">{{ title }}</h1>
     </div>
-    <div class="statcard-accent"
-         :style="`backgroundColor: ${accentColor}; ${accentPosition || 'left'}: 0`"/>
+    <div class="statcard-accent" :style="`backgroundColor: ${accentColor}; ${accentPosition || 'left'}: 0`" />
   </div>
 </template>
 

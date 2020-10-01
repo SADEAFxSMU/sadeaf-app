@@ -75,7 +75,7 @@ export default {
     imgStyle: {
       type: [String, Object],
       required: false,
-    }
+    },
   },
 
   data() {
@@ -167,8 +167,7 @@ export default {
   white-space: nowrap;
 }
 .role {
-  margin-left:
-    6px;
+  margin-left: 6px;
 }
 
 .footer {
@@ -177,6 +176,6 @@ export default {
   align-items: center;
   margin-top: 12px;
   padding: 8px;
-  background-color: rgba(0,0,50,0.05);
+  background-color: rgba(0, 0, 50, 0.05);
 }
 </style>

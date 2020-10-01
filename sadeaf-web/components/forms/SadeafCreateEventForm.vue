@@ -1,30 +1,26 @@
 <template>
   <div>
-    <el-form :model="form"
-             label-width="150px">
+    <el-form :model="form" label-width="150px">
       <el-form-item label="Event Name" required>
-        <el-input v-model="form.name"
-                  placeholder="IS111 - Introduction to Programming" />
+        <el-input v-model="form.name" placeholder="IS111 - Introduction to Programming" />
       </el-form-item>
       <el-form-item label="Purpose" required>
-        <div style="display: flex;">
-          <el-select v-model="form.purpose"
-                     placeholder="School">
-            <el-option v-for="option in eventPurposeOptions"
-                       :key="'opt-' + option"
-                       :value="option">
+        <div style="display: flex">
+          <el-select v-model="form.purpose" placeholder="School">
+            <el-option v-for="option in eventPurposeOptions" :key="'opt-' + option" :value="option">
               {{ option }}
             </el-option>
           </el-select>
-          <el-input v-if="form.purpose === 'Other'"
-                    style="margin-left: 6px;"
-                    placeholder="Purpose"
-                    v-model="form.purposeOther" />
+          <el-input
+            v-if="form.purpose === 'Other'"
+            style="margin-left: 6px"
+            placeholder="Purpose"
+            v-model="form.purposeOther"
+          />
         </div>
       </el-form-item>
       <el-form-item label="Description">
-        <el-input v-model="form.description"
-                  placeholder="..." />
+        <el-input v-model="form.description" placeholder="..." />
       </el-form-item>
       <el-form-item label="Client">
         <div v-if="client">
@@ -34,27 +30,22 @@
           <client-search @select="replaceClient" />
         </div>
       </el-form-item>
-      <el-form-item >
-        <div style="display: flex; justify-content: space-between;">
+      <el-form-item>
+        <div style="display: flex; justify-content: space-between">
           <el-button-group>
-            <el-button @click="handleConfirm">
-              Confirm
-            </el-button>
-            <el-button @click="handleCancel">
-              Cancel
-            </el-button>
+            <el-button @click="handleConfirm"> Confirm </el-button>
+            <el-button @click="handleCancel"> Cancel </el-button>
           </el-button-group>
-          <el-popconfirm v-if="event"
-                        confirmButtonText='Confirm'
-                        cancelButtonText='Cancel'
-                        icon="el-icon-info"
-                        iconColor="red"
-                        title="Are you sure you want to delete this?"
-                        @onConfirm="handleDelete">
-            <el-button slot="reference"
-                       type="danger">
-              Delete
-            </el-button>
+          <el-popconfirm
+            v-if="event"
+            confirmButtonText="Confirm"
+            cancelButtonText="Cancel"
+            icon="el-icon-info"
+            iconColor="red"
+            title="Are you sure you want to delete this?"
+            @onConfirm="handleDelete"
+          >
+            <el-button slot="reference" type="danger"> Delete </el-button>
           </el-popconfirm>
         </div>
       </el-form-item>
@@ -66,70 +57,52 @@
 import { EVENT_PURPOSE_OPTIONS } from "../../common/types/constants";
 import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 import UserCard from "../user/UserCard";
-import _ from 'lodash';
-import gql from 'graphql-tag';
+import _ from "lodash";
+import gql from "graphql-tag";
 import ClientSearch from "../user/ClientSearch";
 
-const UPDATE_EVENT = gql`mutation UpdateEvent(
-  $client_id: Int
-  $description: String
-  $id: Int!
-  $name: String
-  $purpose: String
-) {
-  update_event_by_pk(
-    pk_columns: { id: $id }
-    _set: {
-      client_id: $client_id
-      description: $description
-      id: $id
-      name: $name
-      purpose: $purpose
+const UPDATE_EVENT = gql`
+  mutation UpdateEvent($client_id: Int, $description: String, $id: Int!, $name: String, $purpose: String) {
+    update_event_by_pk(
+      pk_columns: { id: $id }
+      _set: { client_id: $client_id, description: $description, id: $id, name: $name, purpose: $purpose }
+    ) {
+      client_id
+      created_at
+      description
+      id
+      name
+      purpose
+      updated_at
     }
-  ) {
-    client_id
-    created_at
-    description
-    id
-    name
-    purpose
-    updated_at
   }
-}`;
+`;
 
-const INSERT_EVENT = gql`mutation InsertEvent(
-  $client_id: Int
-  $description: String
-  $name: String
-  $purpose: String
-) {
-  insert_event_one(
-    object: {
-      client_id: $client_id
-      description: $description
-      name: $name
-      purpose: $purpose
+const INSERT_EVENT = gql`
+  mutation InsertEvent($client_id: Int, $description: String, $name: String, $purpose: String) {
+    insert_event_one(object: { client_id: $client_id, description: $description, name: $name, purpose: $purpose }) {
+      client_id
+      created_at
+      description
+      id
+      name
+      purpose
+      updated_at
     }
-  ) {
-    client_id
-    created_at
-    description
-    id
-    name
-    purpose
-    updated_at
   }
-}`;
+`;
 
-const DELETE_EVENT = gql`mutation DeleteEventByPk($id: Int!) {
-  delete_event_by_pk(id: $id) {
-    id
+const DELETE_EVENT = gql`
+  mutation DeleteEventByPk($id: Int!) {
+    delete_event_by_pk(id: $id) {
+      id
+    }
   }
-}`;
+`;
 
 export default {
   name: "SadeafCreateEventForm",
-  components: {ClientSearch, UserCard, UserCardHorizontalSmall},
+  components: { ClientSearch, UserCard, UserCardHorizontalSmall },
   props: {
     event: {
       type: Object,
@@ -142,7 +115,7 @@ export default {
       form: {},
       client: null,
       eventPurposeOptions: EVENT_PURPOSE_OPTIONS,
-    }
+    };
   },
 
   created() {
@@ -163,8 +136,8 @@ export default {
           this.$set(this.form, fieldName, value);
         });
         if (event.purpose && !EVENT_PURPOSE_OPTIONS.includes(event.purpose)) {
-          this.$set(this.form, 'purpose', 'Other');
-          this.$set(this.form, 'purposeOther', event.purpose);
+          this.$set(this.form, "purpose", "Other");
+          this.$set(this.form, "purposeOther", event.purpose);
         }
       } else {
         this.resetState();
@@ -176,10 +149,10 @@ export default {
       } else {
         this.insertEvent();
       }
-      this.$emit('update', this.form);
+      this.$emit("update", this.form);
     },
     handleCancel() {
-      this.$emit('cancel');
+      this.$emit("cancel");
     },
     handleDelete() {
       this.deleteEvent();
@@ -192,11 +165,11 @@ export default {
           description: this.form.description,
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
-        }
+        },
       });
       this.event = data.event;
       this.onOperationSuccess();
-      this.$notify.success('Event created!');
+      this.$notify.success("Event created!");
     },
     async updateEvent() {
       const { data } = await this.$apollo.mutate({
@@ -207,32 +180,32 @@ export default {
           description: this.form.description,
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
-        }
-      })
+        },
+      });
       this.event = data.event;
       this.onOperationSuccess();
-      this.$notify.success('Event updated!');
+      this.$notify.success("Event updated!");
     },
     async deleteEvent() {
       await this.$apollo.mutate({
         mutation: DELETE_EVENT,
         variables: {
-          id: this.event.id
-        }
+          id: this.event.id,
+        },
       });
       this.onOperationSuccess();
-      this.$notify.success('Event deleted!');
+      this.$notify.success("Event deleted!");
     },
 
     onOperationSuccess() {
-      this.$emit('success');
+      this.$emit("success");
       this.resetState();
     },
 
     resetState() {
       this.form = {};
       this.client = null;
-    }
+    },
   },
 
   computed: {
@@ -250,10 +223,9 @@ export default {
         this.setForm(event);
       },
       deep: true,
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

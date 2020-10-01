@@ -3,9 +3,8 @@
     <div style="width: 100%">
       <h1 class="heading">Action Tray</h1>
       <div class="actions">
-        <div v-for="action in currentPageItems"
-             style="padding: 8px; width: 100%;">
-          <action-card :action="action"/>
+        <div v-for="action in currentPageItems" style="padding: 8px; width: 100%">
+          <action-card :action="action" />
         </div>
       </div>
     </div>
@@ -13,7 +12,8 @@
       @current-change="handleActionsPageChange"
       layout="prev, pager, next"
       :page-size="pageSize"
-      :total="this.actions.length">
+      :total="this.actions.length"
+    >
     </el-pagination>
   </div>
 </template>
@@ -24,19 +24,19 @@ import { chunk } from "lodash";
 
 export default {
   name: "ActionsTray",
-  components: {ActionCard},
+  components: { ActionCard },
   props: {
     actions: {
       type: Object,
       required: true,
-    }
+    },
   },
   data() {
     return {
       pages: [],
       pageSize: 8,
       currentPage: 0,
-    }
+    };
   },
   mounted() {
     // Put actions into chunks
@@ -50,8 +50,8 @@ export default {
   methods: {
     handleActionsPageChange(val) {
       this.currentPage = val - 1;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -66,7 +66,7 @@ export default {
   padding: 16px;
   height: 100%;
   min-height: 100%;
-  box-shadow: inset 2px 2px 8px rgba(0,0,0,0.1);
+  box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.1);
 }
 .actions {
   padding-top: 16px;

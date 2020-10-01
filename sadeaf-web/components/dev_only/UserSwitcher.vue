@@ -3,14 +3,14 @@
     <el-menu default-active="/admin" router class="user-menu">
       <el-submenu index="">
         <template v-slot:title>
-          <div>
-            <el-icon name="user" /> {{ value }}
-          </div>
+          <div><el-icon name="user" /> {{ value }}</div>
         </template>
-        <el-menu-item v-for="user in userTypes"
-                      :key="'user-' + user.type"
-                      :index="user.home"
-                      @click="handleSelect(user.type)">
+        <el-menu-item
+          v-for="user in userTypes"
+          :key="'user-' + user.type"
+          :index="user.home"
+          @click="handleSelect(user.type)"
+        >
           {{ user.type }}
         </el-menu-item>
       </el-submenu>
@@ -29,24 +29,24 @@ export default {
     value: {
       type: String,
       required: false,
-    }
+    },
   },
   data() {
     return {
       userTypes: [
-        { type: 'admin', home: '/admin' },
-        { type: 'client', home: '/client' },
-        { type: 'volunteer', home: '/volunteer' },
-        { type: 'service_requestor', home: '/org' },
+        { type: "admin", home: "/admin" },
+        { type: "client", home: "/client" },
+        { type: "volunteer", home: "/volunteer" },
+        { type: "service_requestor", home: "/org" },
       ],
-    }
+    };
   },
   methods: {
     handleSelect(value) {
-      this.$store.commit('auth/setUserType', value);
-      this.$emit('input', value);
-    }
-  }
+      this.$store.commit("auth/setUserType", value);
+      this.$emit("input", value);
+    },
+  },
 };
 </script>
 

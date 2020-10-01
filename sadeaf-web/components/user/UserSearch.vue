@@ -15,7 +15,7 @@
 
 
 <script>
-import debounce from 'debounce';
+import debounce from "debounce";
 import UserCardHorizontalSmall from "./UserCardHorizontalSmall";
 import gql from "graphql-tag";
 import UserProfileLink from "../link/UserProfileLink";
@@ -80,7 +80,7 @@ export default {
       results: [],
       loading: false,
       visible: false,
-    }
+    };
   },
 
   created() {
@@ -118,15 +118,15 @@ export default {
 
     setVisible(visible) {
       this.visible = visible;
-    }
+    },
   },
 
   computed: {
     resultsStyle() {
-      const height = this.visible ? Math.max(this.results.length * 60, 60) + 'px' : 0;
-      const border = this.visible ? null : 'none';
+      const height = this.visible ? Math.max(this.results.length * 60, 60) + "px" : 0;
+      const border = this.visible ? null : "none";
       return { height, border };
-    }
+    },
   },
   watch: {
     search(val) {
@@ -136,8 +136,8 @@ export default {
       } else {
         this.results = [];
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

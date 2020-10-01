@@ -39,7 +39,6 @@ export default {
 </script>
 
 <style scoped>
-
 .cell > :last-child {
   margin-right: 0;
 }
@@ -58,7 +57,7 @@ export default {
 .profile .image {
   margin: 2px;
   height: 30px;
-  border-radius: 500px
+  border-radius: 500px;
 }
 
 .profile .name {

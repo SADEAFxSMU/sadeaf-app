@@ -2,7 +2,7 @@ module.exports = {
   PRODUCTION: process.env.NODE_ENV === "production",
   LOCALSTACK: {
     AWS: {
-      REGION: 'us-east-1',
+      REGION: "us-east-1",
       ACCESS_KEY_ID: "accessKeyId",
       SECRET_ACCESS_KEY: "secretAccessKey",
     },
@@ -25,21 +25,23 @@ module.exports = {
   SMTP: {
     USERNAME: process.env.SMTP_USERNAME,
     PASSWORD: process.env.SMTP_PASSWORD,
-    HOST: process.env.SMTP_HOST || 'localhost',
+    HOST: process.env.SMTP_HOST || "localhost",
     PORT: process.env.SMTP_PORT || 11025,
-    TLS: process.env.SMTP_TLS === 'true'
+    TLS: process.env.SMTP_TLS === "true",
   },
   MAILHOG: {
-    ENDPOINT: process.env.MAILHOG_ENDPOINT || "http://localhost:18025"
+    ENDPOINT: process.env.MAILHOG_ENDPOINT || "http://localhost:18025",
   },
   POSTGRES: {
-    QUEUE_DATABASE_URL: process.env.POSTGRES_QUEUE_DATABASE_URL || 'postgres://postgres:postgrespassword@localhost:5432/sadeaf_app'
+    QUEUE_DATABASE_URL:
+      process.env.POSTGRES_QUEUE_DATABASE_URL || "postgres://postgres:postgrespassword@localhost:5432/sadeaf_app",
   },
   HASURA: {
-    GRAPHQL_ADMIN_SECRET: process.env.HASURA_GRAPHQL_ADMIN_SECRET || 'sadeaf-hasura-console',
-    GRAPHQL_ENDPOINT: process.env.HASURA_GRAPHQL_ENDPOINT || 'http://localhost:8080',
-    GRAPHQL_API_URL: process.env.HASURA_GRAPHQL_API_URL
-      || (process.env.HASURA_GRAPHQL_ENDPOINT && `${process.env.HASURA_GRAPHQL_ENDPOINT}/v1/graphql`)
-      || 'http://localhost:8080/v1/graphql',
-  }
-}
+    GRAPHQL_ADMIN_SECRET: process.env.HASURA_GRAPHQL_ADMIN_SECRET || "sadeaf-hasura-console",
+    GRAPHQL_ENDPOINT: process.env.HASURA_GRAPHQL_ENDPOINT || "http://localhost:8080",
+    GRAPHQL_API_URL:
+      process.env.HASURA_GRAPHQL_API_URL ||
+      (process.env.HASURA_GRAPHQL_ENDPOINT && `${process.env.HASURA_GRAPHQL_ENDPOINT}/v1/graphql`) ||
+      "http://localhost:8080/v1/graphql",
+  },
+};

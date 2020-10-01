@@ -2,13 +2,13 @@
   <div class="layout">
     <el-container style="height: 100%">
       <el-header v-if="user">
-        <admin-navbar v-if="userType === 'admin'"/>
-        <client-navbar v-else-if="userType === 'client'"/>
-        <volunteer-navbar v-else-if="userType === 'volunteer'"/>
-        <service-requestor-navbar v-else-if="userType === 'service_requestor'"/>
+        <admin-navbar v-if="userType === 'admin'" />
+        <client-navbar v-else-if="userType === 'client'" />
+        <volunteer-navbar v-else-if="userType === 'volunteer'" />
+        <service-requestor-navbar v-else-if="userType === 'service_requestor'" />
       </el-header>
       <el-main class="main">
-        <nuxt/>
+        <nuxt />
       </el-main>
     </el-container>
   </div>
@@ -22,7 +22,7 @@ import UserSwitcher from "../components/dev_only/UserSwitcher";
 import ServiceRequestorNavbar from "../components/navbar/service-requestor";
 
 export default {
-  components: {ServiceRequestorNavbar, UserSwitcher, AdminNavbar, ClientNavbar, VolunteerNavbar},
+  components: { ServiceRequestorNavbar, UserSwitcher, AdminNavbar, ClientNavbar, VolunteerNavbar },
 
   computed: {
     user() {
@@ -37,8 +37,8 @@ export default {
 
 <style>
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -55,9 +55,15 @@ html {
   margin: 0;
 }
 
-h1 { color: #47476b; }
-h2 { color: #686880; }
-h3 { color: #7f7f92; }
+h1 {
+  color: #47476b;
+}
+h2 {
+  color: #686880;
+}
+h3 {
+  color: #7f7f92;
+}
 
 .layout {
   height: 100vh;

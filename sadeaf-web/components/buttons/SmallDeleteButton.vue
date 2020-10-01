@@ -1,15 +1,10 @@
 <template>
-  <el-button v-on="$listeners"
-             class="small-delete-btn"
-             icon="el-icon-close"
-             size="mini"
-             type="danger"
-             circle />
+  <el-button v-on="$listeners" class="small-delete-btn" icon="el-icon-close" size="mini" type="danger" circle />
 </template>
 
 <script>
 export default {
-  name: "SmallDeleteButton"
+  name: "SmallDeleteButton",
 };
 </script>
 
