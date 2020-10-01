@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "tooltip-label",
+  name: 'tooltip-label',
   props: {
     title: {
       type: String,

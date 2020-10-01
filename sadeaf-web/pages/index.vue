@@ -6,8 +6,8 @@
 
 <script>
 export default {
-  name: "app-home",
-  middleware: ["authenticated"],
+  name: 'app-home',
+  middleware: ['authenticated'],
   mounted() {
     if (this.userType) {
       this.navigateToRoleHome();
@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     navigateToRoleHome() {
-      this.$router.replace("/" + this.userType);
+      this.$router.replace('/' + this.userType);
     },
   },
   computed: {

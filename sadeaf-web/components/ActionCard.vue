@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "ActionCard",
+  name: 'ActionCard',
   props: {
     action: {
       type: Object,

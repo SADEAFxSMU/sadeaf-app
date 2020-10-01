@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: "feedback-card",
+  name: 'feedback-card',
   computed: {
     volunteer() {
       return this.$store.state.feedbackForm.volunteer;

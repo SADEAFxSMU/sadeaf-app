@@ -104,10 +104,10 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export default {
-  name: "NotificationPreferencesForm",
+  name: 'NotificationPreferencesForm',
   props: {
     formWidth: {
       type: String | Number,
@@ -127,27 +127,27 @@ export default {
         volunteer_urgent: false,
         email_information: {
           id: 0,
-          email_address: "",
+          email_address: '',
         },
         telegram_information: {
           id: 0,
-          user_handle: "",
+          user_handle: '',
         },
         telegramPreferred: false,
         emailPreferred: false,
-        telegramHandle: "",
+        telegramHandle: '',
       },
       // TODO(wy): the account type should be based on the logged in user
-      accountType: "volunteer",
+      accountType: 'volunteer',
       originallyPreferredTelegram: false,
       validationRules: {
-        telegramHandle: [{ validator: this.checkTelegramHandle, trigger: "blue" }],
+        telegramHandle: [{ validator: this.checkTelegramHandle, trigger: 'blue' }],
       },
     };
   },
   methods: {
     onSubmit() {
-      this.$refs["notificationPreferencesForm"].validate((valid) => {
+      this.$refs['notificationPreferencesForm'].validate((valid) => {
         if (valid) {
           this.updateNotificationSettings();
         } else {
@@ -205,7 +205,7 @@ export default {
           },
         })
         .then((data) => {
-          console.log("successfully updated!", data);
+          console.log('successfully updated!', data);
 
           if (!this.originallyPreferredTelegram && this.form.telegramPreferred) {
             this.insertTelegramSettings();
@@ -216,7 +216,7 @@ export default {
           }
         })
         .catch((error) => {
-          console.log("update notification settings error", error);
+          console.log('update notification settings error', error);
           // restore original form values
           this.form = new_notification_settings;
         });
@@ -240,10 +240,10 @@ export default {
           },
         })
         .then((data) => {
-          console.log("inserted telegram data", data);
+          console.log('inserted telegram data', data);
         })
         .catch((error) => {
-          console.log("insert telegram settings error", error);
+          console.log('insert telegram settings error', error);
         });
     },
     updateTelegramSettings() {
@@ -265,10 +265,10 @@ export default {
           },
         })
         .then((data) => {
-          console.log("updated telegram data", data);
+          console.log('updated telegram data', data);
         })
         .catch((error) => {
-          console.log("update telegram data error", error);
+          console.log('update telegram data error', error);
         });
     },
     deleteTelegramSettings() {
@@ -286,17 +286,17 @@ export default {
           },
         })
         .then((data) => {
-          console.log("deleted telegram data", data);
+          console.log('deleted telegram data', data);
         })
         .catch((error) => {
-          console.log("delete telegram data error", error);
+          console.log('delete telegram data error', error);
         });
     },
     checkTelegramHandle(rule, value, callback) {
-      if (this.form.telegramPreferred && value === "") {
-        callback(new Error("Please input a telegram handle"));
-      } else if (this.form.telegram_information && value.startsWith("@")) {
-        callback(new Error("You do not need to add the @ at the start of your handle"));
+      if (this.form.telegramPreferred && value === '') {
+        callback(new Error('Please input a telegram handle'));
+      } else if (this.form.telegram_information && value.startsWith('@')) {
+        callback(new Error('You do not need to add the @ at the start of your handle'));
       } else {
         callback();
       }
@@ -308,12 +308,12 @@ export default {
     checkIfNotificationsAreWanted() {
       if (!this.form.telegramPreferred && !this.form.emailPreferred) {
         const notificationProperties = [
-          "volunteer_new",
-          "volunteer_matched",
-          "volunteer_periodic",
-          "volunteer_urgent",
-          "client_matched",
-          "client_unmatched",
+          'volunteer_new',
+          'volunteer_matched',
+          'volunteer_periodic',
+          'volunteer_urgent',
+          'client_matched',
+          'client_unmatched',
         ];
 
         notificationProperties.map((property) => {

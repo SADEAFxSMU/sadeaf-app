@@ -2,55 +2,59 @@
   <div class="page">
     <h1 class="heading">New Users</h1>
     <div>
-      <user-card v-for="user in pendingUsers"
-                 :key="'user-' + user.id"
-                 :link-to-page="false"
-                 :clickable="false"
-                 :user="user">
+      <user-card
+        v-for="user in pendingUsers"
+        :key="'user-' + user.id"
+        :link-to-page="false"
+        :clickable="false"
+        :user="user"
+      >
         <template v-slot:footer>
           <div>
             <el-button type="danger" @click="handleReject(user)">Reject</el-button>
             <span class="button-divider"> or </span>
             <el-select placeholder="Accept As" v-model="selectedRoleByUserId[user.id]">
-              <el-option v-for="role in ROLES"
-                         :label="'Accept as ' + role"
-                         :value="role">
+              <el-option v-for="role in ROLES" :label="'Accept as ' + role" :value="role">
                 {{ role }}
               </el-option>
             </el-select>
-            <el-button v-if="selectedRoleByUserId[user.id]"
-                       :loading="confirmButtonLoadingByUserId[user.id]"
-                       type="success"
-                       @click="handleApprove(user)">
+            <el-button
+              v-if="selectedRoleByUserId[user.id]"
+              :loading="confirmButtonLoadingByUserId[user.id]"
+              type="success"
+              @click="handleApprove(user)"
+            >
               Confirm
             </el-button>
           </div>
         </template>
       </user-card>
     </div>
-    <el-dialog title="Delete User"
-               :visible="deleteUserDialogVisible"
-               @close="deleteUserDialogVisible = false"
-               @closed="userToDelete = null">
+    <el-dialog
+      title="Delete User"
+      :visible="deleteUserDialogVisible"
+      @close="deleteUserDialogVisible = false"
+      @closed="userToDelete = null"
+    >
       <div v-if="userToDelete">
         <div class="delete-user-info">
           <h1>{{ userToDelete.name }}</h1>
           <h3>{{ userToDelete.email }}</h3>
-          <p>
-            Registered on {{ humanReadableDt(userToDelete.created_at) }}
-          </p>
+          <p>Registered on {{ humanReadableDt(userToDelete.created_at) }}</p>
         </div>
         <danger-zone>
           <p>
             <strong>Warning:</strong>
             Rejecting the new user is permanent and cannot be undone.
           </p>
-          <br/>
-          <el-button type="danger"
-                     style="width: 100%;"
-                     size="mini"
-                     :loading="deleteUserButtonLoading"
-                     @click="handleConfirmDeleteUser(userToDelete)">
+          <br />
+          <el-button
+            type="danger"
+            style="width: 100%"
+            size="mini"
+            :loading="deleteUserButtonLoading"
+            @click="handleConfirmDeleteUser(userToDelete)"
+          >
             Confirm Rejection
           </el-button>
         </danger-zone>
@@ -61,11 +65,11 @@
 
 <script>
 import gql from 'graphql-tag';
-import { accountFieldsFragment } from "../../../common/graphql/fragments";
-import UserCard from "../../../components/user/UserCard";
-import { ROLES } from "../../../common/types/constants";
-import { DateUtils } from "../../../common/date-utils";
-import DangerZone from "../../../components/forms/DangerZone";
+import { accountFieldsFragment } from '../../../common/graphql/fragments';
+import UserCard from '../../../components/user/UserCard';
+import { ROLES } from '../../../common/types/constants';
+import { DateUtils } from '../../../common/date-utils';
+import DangerZone from '../../../components/forms/DangerZone';
 
 const { humanReadableDt } = DateUtils;
 
@@ -73,11 +77,11 @@ const { humanReadableDt } = DateUtils;
  * Page for sadeaf admins to handle pending users
  */
 export default {
-  name: "pending",
+  name: 'pending',
 
   components: {
     DangerZone,
-    UserCard
+    UserCard,
   },
 
   data() {
@@ -89,7 +93,7 @@ export default {
       deleteUserButtonLoading: false,
       userToDelete: null,
       ROLES,
-    }
+    };
   },
 
   methods: {
@@ -105,7 +109,7 @@ export default {
           message: `${user.name} (user id: ${user.id}) has been on-boarded as a ${this.selectedRoleByUserId[user.id]}!`,
           duration: 5000,
         });
-      } catch(err) {
+      } catch (err) {
         console.error(err);
         this.confirmButtonLoadingByUserId[user.id] = false;
         this.$notify.error({
@@ -135,7 +139,7 @@ export default {
         this.deleteUserButtonLoading = false;
         this.$notify.error({
           title: 'Delete Error',
-          message: `Something went wrong while attempting to delete User "${user.name}"`
+          message: `Something went wrong while attempting to delete User "${user.name}"`,
         });
       }
     },
@@ -148,108 +152,88 @@ export default {
           return this.$apollo.mutate({
             mutation: gql`
               mutation InsertAdmin($account_id: Int!) {
-                insert_admin_one(object: {
-                  account_id: $account_id
-                }) {
+                insert_admin_one(object: { account_id: $account_id }) {
                   id
                 }
-                update_account_by_pk(
-                  pk_columns: { id: $account_id },
-                  _set: { role: "admin" }
-                ) {
+                update_account_by_pk(pk_columns: { id: $account_id }, _set: { role: "admin" }) {
                   id
                   role
                 }
               }
             `,
             variables: {
-              account_id: id
-            }
+              account_id: id,
+            },
           });
 
         case ROLES.volunteer:
           return this.$apollo.mutate({
             mutation: gql`
               mutation InsertVolunteer($account_id: Int!) {
-                insert_volunteer_one(object: {
-                  account_id: $account_id
-                  approval_status: true
-                }) {
+                insert_volunteer_one(object: { account_id: $account_id, approval_status: true }) {
                   id
                 }
-                update_account_by_pk(
-                  pk_columns: { id: $account_id },
-                  _set: { role: "volunteer" }
-                ) {
+                update_account_by_pk(pk_columns: { id: $account_id }, _set: { role: "volunteer" }) {
                   id
                   role
                 }
               }
             `,
             variables: {
-              account_id: id
-            }
+              account_id: id,
+            },
           });
 
         case ROLES.client:
           return this.$apollo.mutate({
             mutation: gql`
               mutation InsertClient($account_id: Int!) {
-                insert_client_one(object: {
-                  account_id: $account_id
-                  preferred_comm_mode: "speech"
-                }) {
+                insert_client_one(object: { account_id: $account_id, preferred_comm_mode: "speech" }) {
                   id
                 }
-                update_account_by_pk(
-                  pk_columns: { id: $account_id },
-                  _set: { role: "client" }
-                ) {
+                update_account_by_pk(pk_columns: { id: $account_id }, _set: { role: "client" }) {
                   id
                   role
                 }
               }
             `,
             variables: {
-              account_id: id
-            }
+              account_id: id,
+            },
           });
 
         case ROLES.service_requestor:
           return this.$apollo.mutate({
             mutation: gql`
               mutation InsertServiceRequestor($account_id: Int!) {
-                insert_service_requestor_one(object: {
-                  account_id: $account_id
-                }) {
+                insert_service_requestor_one(object: { account_id: $account_id }) {
                   id
                 }
-                update_account_by_pk(
-                  pk_columns: { id: $account_id },
-                  _set: { role: "service_requestor" }
-                ) {
+                update_account_by_pk(pk_columns: { id: $account_id }, _set: { role: "service_requestor" }) {
                   id
                   role
                 }
               }
             `,
             variables: {
-              account_id: id
-            }
+              account_id: id,
+            },
           });
       }
     },
 
     graphqlDeleteUser(user) {
       return this.$apollo.mutate({
-        mutation: gql`mutation DeleteUser($id: Int!) {
-          delete_account_by_pk(id: $id) {
-            id
+        mutation: gql`
+          mutation DeleteUser($id: Int!) {
+            delete_account_by_pk(id: $id) {
+              id
+            }
           }
-        }`,
+        `,
         variables: {
-          id: user.id
-        }
+          id: user.id,
+        },
       });
     },
   },
@@ -259,9 +243,7 @@ export default {
       pendingUsers: {
         query: gql`
           subscription AllPendingUsers {
-            pendingUsers: account(
-              where: {role:{_eq: "pending"}}
-            ) {
+            pendingUsers: account(where: { role: { _eq: "pending" } }) {
               id
               ...accountFields
               created_at
@@ -271,10 +253,10 @@ export default {
         `,
         result({ data }) {
           this.pendingUsers = data.pendingUsers;
-        }
+        },
       },
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -9,46 +9,46 @@
 </template>
 
 <script>
-import BaseProfile from "./BaseProfile";
+import BaseProfile from './BaseProfile';
 import gql from 'graphql-tag';
-import { accountFieldsFragment } from "../../../common/graphql/fragments";
+import { accountFieldsFragment } from '../../../common/graphql/fragments';
 
 const ServiceRequestorQuery = gql`
-query ServiceRequestorQueryByAccountId($id: Int!) {
-  user: account_by_pk(id: $id){
-    ...accountFields
-    service_requestor {
-      id
+  query ServiceRequestorQueryByAccountId($id: Int!) {
+    user: account_by_pk(id: $id) {
+      ...accountFields
+      service_requestor {
+        id
+      }
     }
   }
-}
-${accountFieldsFragment}
+  ${accountFieldsFragment}
 `;
 
 export default {
-  name: "ServiceRequestorProfile",
+  name: 'ServiceRequestorProfile',
 
   components: {
-    BaseProfile
+    BaseProfile,
   },
 
   props: {
     userId: {
       type: [String, Number],
       required: true,
-    }
+    },
   },
 
   data() {
     return {
       user: null,
-    }
+    };
   },
 
   computed: {
     events() {
       return this.user.events;
-    }
+    },
   },
 
   apollo: {
@@ -57,13 +57,11 @@ export default {
       variables() {
         return {
           id: this.userId,
-        }
-      }
-    }
+        };
+      },
+    },
   },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

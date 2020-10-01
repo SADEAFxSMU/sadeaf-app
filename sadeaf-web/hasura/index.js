@@ -1,8 +1,8 @@
-import server from "./server";
-import workers from "./workers";
+import server from './server';
+import workers from './workers';
 
 export default async function HasuraWebhook() {
-  if (this.options.target !== "server") {
+  if (this.options.target !== 'server') {
     return;
   }
 

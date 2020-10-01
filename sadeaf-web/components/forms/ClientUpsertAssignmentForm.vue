@@ -61,10 +61,10 @@
 </template>
 
 <script>
-import UserCard from "../user/UserCard";
-import gql from "graphql-tag";
-import _ from "lodash";
-import DangerZone from "./DangerZone";
+import UserCard from '../user/UserCard';
+import gql from 'graphql-tag';
+import _ from 'lodash';
+import DangerZone from './DangerZone';
 
 const UPDATE_ASSIGNMENT = gql`
   mutation UpdateAssignment(
@@ -112,7 +112,7 @@ const DELETE_ASSIGNMENT = gql`
 `;
 
 export default {
-  name: "ClientUpsertAssignmentForm",
+  name: 'ClientUpsertAssignmentForm',
 
   props: {
     assignment: {
@@ -150,20 +150,20 @@ export default {
     handleConfirm() {
       if (this.isUpdate) {
         this.updateAssignment();
-        this.$notify.success("Assignment updated!");
+        this.$notify.success('Assignment updated!');
       } else {
         this.insertAssignment();
-        this.$notify.success("Assignment created!");
+        this.$notify.success('Assignment created!');
       }
       this.onOperationSuccess();
     },
     handleCancel() {
-      this.$emit("cancel");
+      this.$emit('cancel');
     },
     async handleDelete() {
       await this.deleteAssignment();
       this.onOperationSuccess();
-      this.$notify.success("Assignment deleted!");
+      this.$notify.success('Assignment deleted!');
     },
 
     async insertAssignment() {
@@ -230,7 +230,7 @@ export default {
 
     onOperationSuccess() {
       this.resetValues();
-      this.$emit("success");
+      this.$emit('success');
     },
 
     resetValues() {

@@ -1,14 +1,14 @@
-import { Router } from "express";
-import CognitoExpress from "cognito-express";
-import { getHasuraUserIdAndRole } from "./hasura-helpers";
+import { Router } from 'express';
+import CognitoExpress from 'cognito-express';
+import { getHasuraUserIdAndRole } from './hasura-helpers';
 const {
   AWS: { COGNITO },
-} = require("../../config");
+} = require('../../config');
 
 const cognitoExpress = new CognitoExpress({
   region: COGNITO.REGION,
   cognitoUserPoolId: COGNITO.USER_POOL_ID,
-  tokenUse: "id",
+  tokenUse: 'id',
   tokenExpiration: 3600000,
 });
 
@@ -17,7 +17,7 @@ const cognitoExpress = new CognitoExpress({
  */
 function authenticated(req, res, next) {
   const authorization = req.headers.authorization;
-  const parts = authorization && authorization.split(" ");
+  const parts = authorization && authorization.split(' ');
   const token = parts && parts[1];
 
   if (!token) {
@@ -31,7 +31,7 @@ function authenticated(req, res, next) {
 }
 
 const router = Router();
-router.get("/_hasura/jwt/authorize", async function (req, res, next) {
+router.get('/_hasura/jwt/authorize', async function (req, res, next) {
   authenticated(req, res, async (user) => {
     const userInfo = await getHasuraUserIdAndRole(user);
     if (!userInfo) {
@@ -41,8 +41,8 @@ router.get("/_hasura/jwt/authorize", async function (req, res, next) {
     const { id, role } = userInfo;
 
     res.json({
-      "X-Hasura-User-Id": id.toString(),
-      "X-Hasura-Role": role,
+      'X-Hasura-User-Id': id.toString(),
+      'X-Hasura-Role': role,
     });
   });
 });

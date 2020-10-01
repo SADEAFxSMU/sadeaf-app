@@ -3,17 +3,12 @@
     <div class="heading">
       <h1>Users Management</h1>
       <div class="user-role-select">
-        <el-select v-model="selectedRoles"
-                   collapse-tags
-                   multiple>
-          <el-option v-for="role in ROLES"
-                     :label="role"
-                     :value="role"
-                     :key="role + '-check'" />
+        <el-select v-model="selectedRoles" collapse-tags multiple>
+          <el-option v-for="role in ROLES" :label="role" :value="role" :key="role + '-check'" />
         </el-select>
       </div>
       <div class="user-search">
-        <user-search style="width: 300px;" />
+        <user-search style="width: 300px" />
       </div>
     </div>
     <div class="users-list">
@@ -23,23 +18,23 @@
 </template>
 
 <script>
-import UsersList from "../../../components/user/UsersList";
-import UserSearch from "../../../components/user/UserSearch";
-import { ROLES } from "../../../common/types/constants";
+import UsersList from '../../../components/user/UsersList';
+import UserSearch from '../../../components/user/UserSearch';
+import { ROLES } from '../../../common/types/constants';
 
 export default {
-  name: "users",
+  name: 'users',
 
   components: {
     UserSearch,
-    UsersList
+    UsersList,
   },
 
   data() {
     return {
       selectedRoles: [],
-      ROLES
-    }
+      ROLES,
+    };
   },
 
   created() {
@@ -58,7 +53,7 @@ export default {
         roles = Object.keys(ROLES);
       }
       this.selectedRoles = roles;
-    }
+    },
   },
 
   computed: {
@@ -69,22 +64,22 @@ export default {
 
   watch: {
     userTypeFilter(roles) {
-      this.selectedRoles = roles
+      this.selectedRoles = roles;
       this.setSelectedRolesFromUrlQuery(false);
     },
     selectedRoles(selectedRoles) {
       let query = {};
       if (selectedRoles && selectedRoles.length > 0) {
         query = {
-          type: selectedRoles.join(',')
+          type: selectedRoles.join(','),
         };
       }
       this.$router.push({
         path: this.$route.path,
         query,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -8,7 +8,7 @@
 export default {
   mounted() {
     this.$auth.signOut().finally(() => {
-      this.$router.push({ path: "/sign-in" });
+      this.$router.push({ path: '/sign-in' });
     });
   },
 };

@@ -1,12 +1,12 @@
-import { Doughnut } from "vue-chartjs";
+import { Doughnut } from 'vue-chartjs';
 export default {
   extends: Doughnut,
-  name: "DoughnutChart",
+  name: 'DoughnutChart',
   props: {
     title: {
       type: String,
       required: false,
-      default: "",
+      default: '',
     },
     data: {
       type: Object,
@@ -21,7 +21,7 @@ export default {
     render() {
       this.renderChart(this.data, {
         title: {
-          display: this.title !== "",
+          display: this.title !== '',
           text: this.title,
         },
         ...this.options,

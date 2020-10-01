@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "StatusIndicator",
+  name: 'StatusIndicator',
   props: {
     text: {
       type: String,
@@ -32,7 +32,7 @@ export default {
   align-items: center;
 }
 .circle {
-  content: "";
+  content: '';
   display: inline-block;
   width: 8px;
   height: 8px;

@@ -1,13 +1,13 @@
-import PgBoss from "pg-boss";
+import PgBoss from 'pg-boss';
 
 const {
   POSTGRES: { QUEUE_DATABASE_URL },
-} = require("../config");
+} = require('../config');
 const boss = new PgBoss(QUEUE_DATABASE_URL);
 
 export default async function () {
   await boss.start();
-  boss.on("error", (error) => console.log(error));
+  boss.on('error', (error) => console.log(error));
 
   return {
     async subscribe(queue, asyncJobHandler) {

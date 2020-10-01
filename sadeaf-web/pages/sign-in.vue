@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import AmplifyContainer from "@/components/AmplifyContainer";
+import AmplifyContainer from '@/components/AmplifyContainer';
 
 export default {
   components: { AmplifyContainer },

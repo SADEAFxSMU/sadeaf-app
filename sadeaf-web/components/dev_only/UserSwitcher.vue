@@ -24,7 +24,7 @@
  * Purely a quality-of-life feature.
  */
 export default {
-  name: "UserSwitcher",
+  name: 'UserSwitcher',
   props: {
     value: {
       type: String,
@@ -34,17 +34,17 @@ export default {
   data() {
     return {
       userTypes: [
-        { type: "admin", home: "/admin" },
-        { type: "client", home: "/client" },
-        { type: "volunteer", home: "/volunteer" },
-        { type: "service_requestor", home: "/org" },
+        { type: 'admin', home: '/admin' },
+        { type: 'client', home: '/client' },
+        { type: 'volunteer', home: '/volunteer' },
+        { type: 'service_requestor', home: '/org' },
       ],
     };
   },
   methods: {
     handleSelect(value) {
-      this.$store.commit("auth/setUserType", value);
-      this.$emit("input", value);
+      this.$store.commit('auth/setUserType', value);
+      this.$emit('input', value);
     },
   },
 };
@@ -65,7 +65,7 @@ export default {
   box-shadow: 0 0 6px 1px #ccd8ea;
 }
 .user-menu:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;

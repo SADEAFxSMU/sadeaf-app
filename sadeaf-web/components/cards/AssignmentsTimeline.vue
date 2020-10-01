@@ -24,14 +24,14 @@
 </template>
 
 <script>
-import AssignmentCardSmall from "./AssignmentCardSmall";
-import AssignmentStatus from "../AssignmentStatus";
-import SadeafCreateAssignmentForm from "../forms/SadeafCreateAssignmentForm";
-import { ASSIGNMENT_STATUS_COLORS } from "../../common/types/constants";
-import dayjs from "dayjs";
+import AssignmentCardSmall from './AssignmentCardSmall';
+import AssignmentStatus from '../AssignmentStatus';
+import SadeafCreateAssignmentForm from '../forms/SadeafCreateAssignmentForm';
+import { ASSIGNMENT_STATUS_COLORS } from '../../common/types/constants';
+import dayjs from 'dayjs';
 
 export default {
-  name: "AssignmentsTimeline",
+  name: 'AssignmentsTimeline',
   components: {
     AssignmentCardSmall,
     AssignmentStatus,
@@ -66,10 +66,10 @@ export default {
       return assignment.volunteer && assignment.volunteer.account;
     },
     handleUpdateAssignment(assignment) {
-      this.$emit("updateAssignment", assignment);
+      this.$emit('updateAssignment', assignment);
     },
     formatTimestamp(timestamp) {
-      return dayjs(timestamp).format("ddd, DD MMM, HH:mm");
+      return dayjs(timestamp).format('ddd, DD MMM, HH:mm');
     },
     color(assignment) {
       return ASSIGNMENT_STATUS_COLORS[assignment.status];

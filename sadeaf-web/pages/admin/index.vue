@@ -22,15 +22,15 @@
 </template>
 
 <script>
-import AdminEventsTable from "../../components/tables/AdminEventsTable";
-import StatCard from "../../components/StatCard";
-import DoughnutChart from "../../components/charts/Doughnut";
+import AdminEventsTable from '../../components/tables/AdminEventsTable';
+import StatCard from '../../components/StatCard';
+import DoughnutChart from '../../components/charts/Doughnut';
 export default {
-  name: "admin-home",
+  name: 'admin-home',
   components: { DoughnutChart, StatCard, AdminEventsTable },
   data() {
     return {
-      userName: "Admin",
+      userName: 'Admin',
       eventsSummary: {},
       matched: 0,
       unmatched: 0,
@@ -45,12 +45,12 @@ export default {
   methods: {
     handleSummaryComputed({ matched, unmatched }) {
       this.eventsSummary = {
-        labels: ["Matched", "Unmatched"],
+        labels: ['Matched', 'Unmatched'],
         datasets: [
           {
-            backgroundColor: ["rgba(54,191,255,0.7)", "rgba(158,89,255,0.7)"],
+            backgroundColor: ['rgba(54,191,255,0.7)', 'rgba(158,89,255,0.7)'],
             borderWidth: 1,
-            borderColor: ["rgba(54,191,255,0.7)", "rgba(158,89,255,0.7)"],
+            borderColor: ['rgba(54,191,255,0.7)', 'rgba(158,89,255,0.7)'],
             data: [matched, unmatched],
           },
         ],

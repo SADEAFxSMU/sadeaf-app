@@ -1,26 +1,30 @@
 <template>
   <div>
     <div class="users">
-      <user-card v-for="(user, i) in users"
-                 :key="'user-card-' + i"
-                 :user="user.account"
-                 link-to-page
-                 class="user-card" />
+      <user-card
+        v-for="(user, i) in users"
+        :key="'user-card-' + i"
+        :user="user.account"
+        link-to-page
+        class="user-card"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag';
-import UserCard from "./UserCard";
-import { ROLES } from "../../common/types/constants";
-import { accountFieldsFragment } from "../../common/graphql/fragments";
+import UserCard from './UserCard';
+import { ROLES } from '../../common/types/constants';
+import { accountFieldsFragment } from '../../common/graphql/fragments';
 
 const allAdminsQuery = gql`
   query AllAdmins {
     admins: admin {
       id
-      account { ...accountFields }
+      account {
+        ...accountFields
+      }
     }
   }
   ${accountFieldsFragment}
@@ -30,7 +34,9 @@ const allVolunteersQuery = gql`
   query AllVolunteers {
     volunteers: volunteer {
       id
-      account { ...accountFields }
+      account {
+        ...accountFields
+      }
     }
   }
   ${accountFieldsFragment}
@@ -40,7 +46,9 @@ const allClientsQuery = gql`
   query AllClients {
     clients: client {
       id
-      account { ...accountFields }
+      account {
+        ...accountFields
+      }
     }
   }
   ${accountFieldsFragment}
@@ -50,21 +58,23 @@ const allServiceRequestorsQuery = gql`
   query AllServiceRequestors {
     service_requestors: service_requestor {
       id
-      account { ...accountFields }
+      account {
+        ...accountFields
+      }
     }
   }
   ${accountFieldsFragment}
-`
+`;
 
 export default {
-  name: "UsersList",
-  components: {UserCard},
+  name: 'UsersList',
+  components: { UserCard },
   props: {
     filterRoles: {
       type: Array,
       required: false,
-      default: Object.keys(ROLES)
-    }
+      default: Object.keys(ROLES),
+    },
   },
 
   data() {
@@ -75,7 +85,7 @@ export default {
       volunteers: [],
       clients: [],
       service_requestors: [],
-    }
+    };
   },
 
   computed: {
@@ -118,26 +128,26 @@ export default {
       query: allAdminsQuery,
       skip() {
         return !this.shouldShowAdmins;
-      }
+      },
     },
     volunteers: {
       query: allVolunteersQuery,
       skip() {
         return !this.shouldShowVolunteers;
-      }
+      },
     },
     clients: {
       query: allClientsQuery,
       skip() {
         return !this.shouldShowClients;
-      }
+      },
     },
     service_requestors: {
       query: allServiceRequestorsQuery,
       skip() {
         return !this.shouldShowServiceRequestors;
-      }
-    }
+      },
+    },
   },
 };
 </script>

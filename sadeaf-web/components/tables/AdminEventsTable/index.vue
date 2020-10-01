@@ -65,16 +65,16 @@
 </template>
 
 <script>
-import BaseTable from "../BaseTable";
-import VolunteersCell from "../custom-columns/VolunteersCell";
-import UserCardHorizontalSmall from "../../user/UserCardHorizontalSmall";
-import SadeafCreateAssignmentForm from "../../forms/SadeafCreateAssignmentForm";
-import gql from "graphql-tag";
-import AssignmentsTimeline from "../../cards/AssignmentsTimeline";
-import SadeafCreateEventForm from "../../forms/SadeafCreateEventForm";
+import BaseTable from '../BaseTable';
+import VolunteersCell from '../custom-columns/VolunteersCell';
+import UserCardHorizontalSmall from '../../user/UserCardHorizontalSmall';
+import SadeafCreateAssignmentForm from '../../forms/SadeafCreateAssignmentForm';
+import gql from 'graphql-tag';
+import AssignmentsTimeline from '../../cards/AssignmentsTimeline';
+import SadeafCreateEventForm from '../../forms/SadeafCreateEventForm';
 
 export default {
-  name: "AdminEventsTable",
+  name: 'AdminEventsTable',
   components: {
     SadeafCreateEventForm,
     AssignmentsTimeline,
@@ -85,8 +85,8 @@ export default {
   },
   data() {
     return {
-      schema: "event",
-      role: "admin",
+      schema: 'event',
+      role: 'admin',
       createAssignmentDialogVisible: false,
       createEventDialogVisible: false,
       updateEvent: null,
@@ -95,24 +95,24 @@ export default {
       updateAssignment: null,
       columns: [
         {
-          name: "client",
-          label: "Client",
+          name: 'client',
+          label: 'Client',
         },
         {
-          name: "name",
-          label: "Event",
+          name: 'name',
+          label: 'Event',
         },
         {
-          name: "description",
-          label: "Description",
+          name: 'description',
+          label: 'Description',
         },
         {
           name: 'status',
           label: 'Status',
         },
         {
-          name: "volunteers",
-          label: "Volunteers",
+          name: 'volunteers',
+          label: 'Volunteers',
         },
       ],
       tableData: [],
@@ -151,10 +151,10 @@ export default {
       const rows = [];
       if (events) {
         for (const event of events) {
-          let aggStatus = "COMPLETE";
+          let aggStatus = 'COMPLETE';
           for (const { status } of event.statuses.nodes) {
-            if (status !== "COMPLETE") {
-              aggStatus = "ONGOING";
+            if (status !== 'COMPLETE') {
+              aggStatus = 'ONGOING';
               break;
             }
           }
@@ -185,7 +185,7 @@ export default {
           }
         });
       });
-      this.$emit("summary", { matched, unmatched });
+      this.$emit('summary', { matched, unmatched });
     },
   },
 
@@ -208,7 +208,9 @@ export default {
               }
             }
             statuses: assignments_aggregate(distinct_on: status) {
-              nodes { status }
+              nodes {
+                status
+              }
             }
             volunteers: assignments_aggregate(distinct_on: volunteer_id) {
               nodes {

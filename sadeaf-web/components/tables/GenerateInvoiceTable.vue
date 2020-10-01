@@ -38,13 +38,13 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export default {
-  name: "GenerateInvoiceTable",
+  name: 'GenerateInvoiceTable',
   data() {
     return {
-      search: "",
+      search: '',
       selectedRows: [],
       event: [],
       currentPage: 1,
@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     generateInvoices() {
-      console.log("Generating invoices for...");
+      console.log('Generating invoices for...');
       // TODO(wy): replace this with real logic
       for (let row of this.selectedRows) {
         console.log(`event id: ${row.id}`);

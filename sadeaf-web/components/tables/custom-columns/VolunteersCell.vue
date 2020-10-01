@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import UserCardHorizontalSmall from "../../user/UserCardHorizontalSmall";
+import UserCardHorizontalSmall from '../../user/UserCardHorizontalSmall';
 export default {
-  name: "VolunteersCell",
+  name: 'VolunteersCell',
   components: { UserCardHorizontalSmall },
   props: {
     volunteers: {

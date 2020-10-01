@@ -71,12 +71,12 @@
 </template>
 
 <script>
-import { DateUtils } from "../../common/date-utils";
-import gql from "graphql-tag";
-import dayjs from "dayjs";
-import AssignmentCard from "../cards/AssignmentCard";
-import AcceptAssignmentDetailsDialog from "../dialogs/AcceptAssignmentDetailsDialog";
-import _ from "lodash";
+import { DateUtils } from '../../common/date-utils';
+import gql from 'graphql-tag';
+import dayjs from 'dayjs';
+import AssignmentCard from '../cards/AssignmentCard';
+import AcceptAssignmentDetailsDialog from '../dialogs/AcceptAssignmentDetailsDialog';
+import _ from 'lodash';
 
 const assignmentQuery = gql`
   query($volunteer_id: Int!) {
@@ -175,7 +175,7 @@ const optOutOfOptedInAssignmentQuery = gql`
 `;
 
 export default {
-  name: "VolunteerEventCalendar",
+  name: 'VolunteerEventCalendar',
   components: { AcceptAssignmentDetailsDialog, AssignmentCard },
   props: {
     volunteer: {
@@ -188,7 +188,7 @@ export default {
       assignments: [],
       pendingAssignments: [],
       selectedDate: null,
-      tab: "pendingAssignments",
+      tab: 'pendingAssignments',
       showAcceptDialog: false,
       selectedAssignment: undefined,
       volunteerOptedInAssignments: [],
@@ -203,7 +203,7 @@ export default {
       let matchedAssignments;
 
       if (assignmentsByDt) {
-        matchedAssignments = _.pickBy(assignmentsByDt, (asg) => asg.status === "MATCHED");
+        matchedAssignments = _.pickBy(assignmentsByDt, (asg) => asg.status === 'MATCHED');
       }
       // Need to check for empty object since pickBy returns an empty object
       // if there are no matches. Return undefined since {} evaluates to true in js
@@ -211,15 +211,15 @@ export default {
       return _.isEmpty(matchedAssignments) ? undefined : matchedAssignments;
     },
     getAssignmentsOnDate(date) {
-      const dateKey = dayjs(date).format("YYYYMMDD");
+      const dateKey = dayjs(date).format('YYYYMMDD');
       return this.assignmentsByDateTime[dateKey];
     },
     handleCalendarClick(date) {
       this.selectedDate = date;
       if (this.getMatchedAssignmentsOnDate(date)) {
-        this.tab = "acceptedAssignments";
+        this.tab = 'acceptedAssignments';
       } else {
-        this.tab = "pendingAssignments";
+        this.tab = 'pendingAssignments';
       }
     },
     showAcceptPendingAssignmentDialog(assignment) {
@@ -230,17 +230,17 @@ export default {
       this.showAcceptDialog = false;
       // only refetch queries when user has accepted an assignment
       // to minimise the number of queries
-      if (status === "accepted") {
+      if (status === 'accepted') {
         this.$apollo.queries.assignments.refetch();
         this.$apollo.queries.volunteer_assignment_opt_in.refetch();
       }
     },
     optOutOfAssignment(optInDetails) {
-      const text = "This will opt you out from this assignment. You will not be able to opt in again. Are you sure?";
-      this.$confirm(text, "Warning", {
-        confirmButtonText: "Yes",
-        cancelButtonText: "Cancel",
-        type: "warning",
+      const text = 'This will opt you out from this assignment. You will not be able to opt in again. Are you sure?';
+      this.$confirm(text, 'Warning', {
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
       })
         .then(() => {
           console.log(optInDetails);
@@ -252,11 +252,11 @@ export default {
               },
             })
             .then((_) => {
-              this.$notify.success("Opted out for Assignment");
+              this.$notify.success('Opted out for Assignment');
               this.$apollo.queries.assignments.refetch();
             })
             .catch((error) => {
-              this.$notify.error("Something went wrong with opting out of the assignment");
+              this.$notify.error('Something went wrong with opting out of the assignment');
               console.log(error);
             });
         })
@@ -265,10 +265,10 @@ export default {
         });
     },
     cancelMatchedAssignment(assignment) {
-      this.$confirm("This will un-match you from this assignment. Are you sure?", "Warning", {
-        confirmButtonText: "Yes",
-        cancelButtonText: "Cancel",
-        type: "warning",
+      this.$confirm('This will un-match you from this assignment. Are you sure?', 'Warning', {
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
       })
         .then(() => {
           this.$apollo
@@ -279,12 +279,12 @@ export default {
               },
             })
             .then((_) => {
-              this.$notify.success("Assignment Cancelled");
-              this.tab = "pendingAssignments";
+              this.$notify.success('Assignment Cancelled');
+              this.tab = 'pendingAssignments';
               this.$apollo.queries.assignments.refetch();
             })
             .catch((error) => {
-              this.$notify.error("Something went wrong with cancelling the assignment");
+              this.$notify.error('Something went wrong with cancelling the assignment');
               console.log(error);
             });
         })

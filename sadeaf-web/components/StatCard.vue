@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "StatCard",
+  name: 'StatCard',
   props: {
     accentColor: {
       type: String,
@@ -39,15 +39,15 @@ export default {
       type: String,
       required: false,
       default: 'left',
-      validator: (val) => ['top', 'right', 'bottom', 'left'].includes(val)
-    }
+      validator: (val) => ['top', 'right', 'bottom', 'left'].includes(val),
+    },
   },
 
   computed: {
     bodyClass() {
       return this.titlePosition === 'right' ? 'main-content-row' : 'main-content-col';
-    }
-  }
+    },
+  },
 };
 </script>
 

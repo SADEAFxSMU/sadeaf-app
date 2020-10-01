@@ -19,11 +19,11 @@
 </template>
 
 <script>
-import ActionCard from "./ActionCard";
-import { chunk } from "lodash";
+import ActionCard from './ActionCard';
+import { chunk } from 'lodash';
 
 export default {
-  name: "ActionsTray",
+  name: 'ActionsTray',
   components: { ActionCard },
   props: {
     actions: {

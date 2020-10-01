@@ -5,20 +5,20 @@
 </template>
 
 <script>
-import ClientProfile from "../../components/user/profiles/ClientProfile";
+import ClientProfile from '../../components/user/profiles/ClientProfile';
 
 export default {
-  name: "client-profile-page",
+  name: 'client-profile-page',
 
   components: {
-    ClientProfile
+    ClientProfile,
   },
 
   computed: {
     id() {
       return this.$route.params.id;
     },
-  }
+  },
 };
 </script>
 

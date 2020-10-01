@@ -45,16 +45,16 @@
 </template>
 
 <script>
-import BaseTable from "../BaseTable";
-import VolunteersCell from "../custom-columns/VolunteersCell";
-import UserCardHorizontalSmall from "../../user/UserCardHorizontalSmall";
-import SadeafCreateAssignmentForm from "../../forms/SadeafCreateAssignmentForm";
-import gql from "graphql-tag";
-import AssignmentsTimeline from "../../cards/AssignmentsTimeline";
-import ClientCreateEventForm from "../../forms/ClientCreateEventForm";
+import BaseTable from '../BaseTable';
+import VolunteersCell from '../custom-columns/VolunteersCell';
+import UserCardHorizontalSmall from '../../user/UserCardHorizontalSmall';
+import SadeafCreateAssignmentForm from '../../forms/SadeafCreateAssignmentForm';
+import gql from 'graphql-tag';
+import AssignmentsTimeline from '../../cards/AssignmentsTimeline';
+import ClientCreateEventForm from '../../forms/ClientCreateEventForm';
 
 export default {
-  name: "ClientEventsTable",
+  name: 'ClientEventsTable',
 
   components: {
     ClientCreateEventForm,
@@ -73,24 +73,24 @@ export default {
       updateAssignment: null,
       columns: [
         {
-          name: "name",
-          label: "Event",
+          name: 'name',
+          label: 'Event',
         },
         {
-          name: "description",
-          label: "Description",
+          name: 'description',
+          label: 'Description',
         },
         {
-          name: "upcoming",
-          label: "Upcoming",
+          name: 'upcoming',
+          label: 'Upcoming',
         },
         {
-          name: "status",
-          label: "Status",
+          name: 'status',
+          label: 'Status',
         },
         {
-          name: "volunteers",
-          label: "Volunteers",
+          name: 'volunteers',
+          label: 'Volunteers',
         },
       ],
       tableData: [],
@@ -129,10 +129,10 @@ export default {
       const rows = [];
       if (events) {
         for (const event of events) {
-          let aggStatus = "COMPLETE";
+          let aggStatus = 'COMPLETE';
           for (const { status } of event.statuses.nodes) {
-            if (status !== "COMPLETE") {
-              aggStatus = "ONGOING";
+            if (status !== 'COMPLETE') {
+              aggStatus = 'ONGOING';
               break;
             }
           }

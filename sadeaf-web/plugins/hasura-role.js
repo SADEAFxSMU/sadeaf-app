@@ -1,6 +1,6 @@
-import jwtDecode from "jwt-decode";
-import gql from "graphql-tag";
-import { Auth } from "aws-amplify";
+import jwtDecode from 'jwt-decode';
+import gql from 'graphql-tag';
+import { Auth } from 'aws-amplify';
 
 /**
  * Query hasura for the user's role with the authenticated apollo client, then
@@ -39,7 +39,7 @@ async function queryAndSetUserInfo(apolloClient, vuexStore) {
   });
   let user = data.user[0];
   if (user) {
-    vuexStore.commit("auth/setUser", { userType: user.role, user });
+    vuexStore.commit('auth/setUser', { userType: user.role, user });
   }
 }
 
@@ -48,7 +48,7 @@ export default ({ app, store }, inject) => {
   if (!apolloClient) {
     throw Error(
       "Apollo client not initialised - unable to query hasura for user's role.\n" +
-        "Ensure that the apollo plugin is set up before this."
+        'Ensure that the apollo plugin is set up before this.'
     );
   }
   queryAndSetUserInfo(apolloClient, store);
