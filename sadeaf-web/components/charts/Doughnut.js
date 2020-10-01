@@ -6,7 +6,7 @@ export default {
     title: {
       type: String,
       required: false,
-      default: '',
+      default: "",
     },
     data: {
       type: Object,
@@ -15,18 +15,18 @@ export default {
     options: {
       type: Object,
       required: true,
-    }
+    },
   },
   methods: {
     render() {
       this.renderChart(this.data, {
         title: {
-          display: this.title !== '',
+          display: this.title !== "",
           text: this.title,
         },
-        ...this.options
+        ...this.options,
       });
-    }
+    },
   },
   mounted() {
     // this.chartData is created in the mixin.
@@ -36,6 +36,6 @@ export default {
   watch: {
     data() {
       this.render();
-    }
-  }
+    },
+  },
 };

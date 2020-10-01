@@ -1,15 +1,8 @@
 <template>
   <div class="feedback-form">
+    <feedback-card />
 
-    <feedback-card/>
-
-    <el-form
-      :rules="rules"
-      label-position="top"
-      ref="feedbackForm"
-      :model="feedbackForm"
-      label-width="auto"
-    >
+    <el-form :rules="rules" label-position="top" ref="feedbackForm" :model="feedbackForm" label-width="auto">
       <h3 class="form-header">Overall Notetaker Rating</h3>
       <el-divider />
 
@@ -30,10 +23,7 @@
       </el-form-item>
 
       <el-form-item prop="notetaker_punctual">
-        <tooltip-label
-          title="Notetaker's Punctuality"
-          tooltip-info="Notetaker's punctuality score"
-        />
+        <tooltip-label title="Notetaker's Punctuality" tooltip-info="Notetaker's punctuality score" />
         <el-radio-group v-model="feedbackForm.notetaker_punctual">
           <el-radio
             v-for="rating in AVAILABLE_RATINGS.slice(0, 5)"
@@ -130,10 +120,8 @@
             v-for="privacyOption in TRAINING_PRIVACY_OPTIONS"
             :key="volunteerSelected + privacyOption.label + 'training_prvcy'"
           >
-            <el-radio class="privacy-radio-label__wrap"
-                      :label="privacyOption.label"
-            >
-              {{privacyOption.title}}
+            <el-radio class="privacy-radio-label__wrap" :label="privacyOption.label">
+              {{ privacyOption.title }}
             </el-radio>
           </el-row>
         </el-radio-group>
@@ -150,10 +138,8 @@
             v-for="privacyOption in CONFIDENTIALITY_PRIVACY_OPTIONS"
             :key="volunteerSelected + privacyOption.label + 'confidentality'"
           >
-            <el-radio class="privacy-radio-label__wrap"
-                      :label="privacyOption.label"
-            >
-              {{privacyOption.title}}
+            <el-radio class="privacy-radio-label__wrap" :label="privacyOption.label">
+              {{ privacyOption.title }}
             </el-radio>
           </el-row>
         </el-radio-group>
@@ -166,104 +152,115 @@
   </div>
 </template>
 
-
 <script>
-import FeedbackRadioGroup from '@/components/forms/FeedbackForm/FeedbackRadioGroup';
-import TooltipLabel from '@/components/forms/FeedbackForm/TooltipLabel';
-import FeedbackCard from '@/components/forms/FeedbackForm/FeedbackCard';
-import gql from 'graphql-tag';
+import TooltipLabel from "@/components/forms/FeedbackForm/TooltipLabel";
+import FeedbackCard from "@/components/forms/FeedbackForm/FeedbackCard";
+import gql from "graphql-tag";
 
 const UPDATE_FEEDBACK = gql`
-mutation UPDATE_FEEDBACK($feedback_id: Int!, $live_comments: String!, $live_information_understanding: rating_enum = "",
-$live_interaction: rating_enum = "", $notetaker_conduct: rating_enum = "", $notetaker_punctual: rating_enum = "",
-$post_session_comments: String = "", $post_session_understanding: rating_enum = "", $training_privacy_preference: privacy_enum = "",
-$confidentiality_privacy_preference: privacy_enum = "", $general_feedback: String = "") {
-  update_feedback(_set: {feedback_given: 1, confidentiality_privacy_preference: $confidentiality_privacy_preference, live_comments: $live_comments, live_information_understanding: $live_information_understanding, live_interaction: $live_interaction, notetaker_conduct: $notetaker_conduct, notetaker_punctual: $notetaker_punctual, post_session_comments: $post_session_comments, post_session_understanding: $post_session_understanding, training_privacy_preference: $training_privacy_preference, general_feedback: $general_feedback},
-  where: {id: {_eq: $feedback_id}}) {
-    returning {
-      confidentiality_privacy_preference
-      created_at
-      general_feedback
-      id
-      live_information_understanding
-      live_comments
-      live_interaction
-      notetaker_punctual
-      post_session_comments
-      post_session_understanding
-      updated_at
-      training_privacy_preference
-      volunteer_id
+  mutation UPDATE_FEEDBACK(
+    $feedback_id: Int!
+    $live_comments: String!
+    $live_information_understanding: rating_enum = ""
+    $live_interaction: rating_enum = ""
+    $notetaker_conduct: rating_enum = ""
+    $notetaker_punctual: rating_enum = ""
+    $post_session_comments: String = ""
+    $post_session_understanding: rating_enum = ""
+    $training_privacy_preference: privacy_enum = ""
+    $confidentiality_privacy_preference: privacy_enum = ""
+    $general_feedback: String = ""
+  ) {
+    update_feedback(
+      _set: {
+        feedback_given: 1
+        confidentiality_privacy_preference: $confidentiality_privacy_preference
+        live_comments: $live_comments
+        live_information_understanding: $live_information_understanding
+        live_interaction: $live_interaction
+        notetaker_conduct: $notetaker_conduct
+        notetaker_punctual: $notetaker_punctual
+        post_session_comments: $post_session_comments
+        post_session_understanding: $post_session_understanding
+        training_privacy_preference: $training_privacy_preference
+        general_feedback: $general_feedback
+      }
+      where: { id: { _eq: $feedback_id } }
+    ) {
+      returning {
+        confidentiality_privacy_preference
+        created_at
+        general_feedback
+        id
+        live_information_understanding
+        live_comments
+        live_interaction
+        notetaker_punctual
+        post_session_comments
+        post_session_understanding
+        updated_at
+        training_privacy_preference
+        volunteer_id
+      }
     }
   }
-}`;
+`;
 
 export default {
-  name: 'feedback-form',
-  components: { FeedbackCard, TooltipLabel, FeedbackRadioGroup },
+  name: "feedback-form",
+  components: { FeedbackCard, TooltipLabel },
   data() {
     return {
       AVAILABLE_RATINGS: [
-        { title: 'Very Bad', label: '1' },
-        { title: 'Bad', label: '2' },
-        { title: 'Neutral', label: '3' },
-        { title: 'Good', label: '4' },
-        { title: 'Very Good', label: '5' },
-        { title: 'N/A', label: 'n.a.' },
+        { title: "Very Bad", label: "1" },
+        { title: "Bad", label: "2" },
+        { title: "Neutral", label: "3" },
+        { title: "Good", label: "4" },
+        { title: "Very Good", label: "5" },
+        { title: "N/A", label: "n.a." },
       ],
       TRAINING_PRIVACY_OPTIONS: [
-        { title: 'Yes, I allow my comments, including name and school/institute to be quoted', label: 'public' },
+        { title: "Yes, I allow my comments, including name and school/institute to be quoted", label: "public" },
         {
-          title: 'Yes, I allow ONLY my comments but not my name or school/institute to be ' +
-            'quoted I\'d like to remain anonymous.',
-          label: 'anonymous',
+          title:
+            "Yes, I allow ONLY my comments but not my name or school/institute to be " +
+            "quoted I'd like to remain anonymous.",
+          label: "anonymous",
         },
-        { title: 'No, I do not allow my comments to be quoted in any way, shape or form.', label: 'no' },
+        { title: "No, I do not allow my comments to be quoted in any way, shape or form.", label: "no" },
       ],
       CONFIDENTIALITY_PRIVACY_OPTIONS: [
-        { title: 'I allow my feedback, including name and school/institute to be quoted.', label: 'public' },
+        { title: "I allow my feedback, including name and school/institute to be quoted.", label: "public" },
         {
-          title: 'I allow ONLY my feedback but not my name or school/institute to be quoted. I\'d ' +
-            'like to remain anonymous.', label: 'anonymous',
+          title:
+            "I allow ONLY my feedback but not my name or school/institute to be quoted. I'd " +
+            "like to remain anonymous.",
+          label: "anonymous",
         },
       ],
       feedbackForm: {
         // for ratings very bad - bad - neutral - good - very good are mapped from a range of 1 - 5 or n.a. respectively
-        notetaker_punctual: '',
-        notetaker_conduct: '',
-        live_information_understanding: '',
-        live_interaction: '',
-        post_session_understanding: '',
+        notetaker_punctual: "",
+        notetaker_conduct: "",
+        live_information_understanding: "",
+        live_interaction: "",
+        post_session_understanding: "",
         // text fields
-        live_comments: '',
-        post_session_comments: '',
-        general_feedback: '',
+        live_comments: "",
+        post_session_comments: "",
+        general_feedback: "",
         // privacy and confidentality prefs are enum of "public", "anonymous" and "no"
-        training_privacy_preference: '',
-        confidentiality_privacy_preference: '',
+        training_privacy_preference: "",
+        confidentiality_privacy_preference: "",
       },
       rules: {
-        notetaker_punctual: [
-          { required: true, message: 'Please select a value!', trigger: 'blur' },
-        ],
-        notetaker_conduct: [
-          { required: true, message: 'Please select a value!', trigger: 'blur' },
-        ],
-        live_information_understanding: [
-          { required: true, message: 'Please select a value!', trigger: 'blur' },
-        ],
-        live_interaction: [
-          { required: true, message: 'Please select a value!', trigger: 'blur' },
-        ],
-        post_session_understanding: [
-          { required: true, message: 'Please select a value!', trigger: 'blur' },
-        ],
-        training_privacy_preference: [
-          { required: true, message: 'Please select a value!', trigger: 'blur' },
-        ],
-        confidentiality_privacy_preference: [
-          { required: true, message: 'Please select a value!', trigger: 'blur' },
-        ],
+        notetaker_punctual: [{ required: true, message: "Please select a value!", trigger: "blur" }],
+        notetaker_conduct: [{ required: true, message: "Please select a value!", trigger: "blur" }],
+        live_information_understanding: [{ required: true, message: "Please select a value!", trigger: "blur" }],
+        live_interaction: [{ required: true, message: "Please select a value!", trigger: "blur" }],
+        post_session_understanding: [{ required: true, message: "Please select a value!", trigger: "blur" }],
+        training_privacy_preference: [{ required: true, message: "Please select a value!", trigger: "blur" }],
+        confidentiality_privacy_preference: [{ required: true, message: "Please select a value!", trigger: "blur" }],
       },
     };
   },
@@ -276,12 +273,12 @@ export default {
     },
     feedbackId() {
       return this.$store.state.feedbackForm.feedbackId;
-    }
+    },
   },
   methods: {
     validateRadioGroup(rule, value, callback) {
       if (value === 0) {
-        callback(new Error('Please select a value!'));
+        callback(new Error("Please select a value!"));
       } else {
         callback();
       }
@@ -289,31 +286,33 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$apollo.mutate({
-            mutation: UPDATE_FEEDBACK,
-            variables: {
-              feedback_id: this.feedbackId,
-              ...this.feedbackForm,
-            },
-          })
-            .then(r => {
-              this.$store.commit('feedbackForm/hideForm');
+          this.$apollo
+            .mutate({
+              mutation: UPDATE_FEEDBACK,
+              variables: {
+                feedback_id: this.feedbackId,
+                ...this.feedbackForm,
+              },
+            })
+            .then((r) => {
+              this.$store.commit("feedbackForm/hideForm");
               this.$refs[formName].resetFields();
               this.$message({
                 message: `Successfully submitted feedback for ${this.volunteerSelected.account.name}! Thank you for your feedback.`,
-                type: 'success',
+                type: "success",
               });
             })
-            .catch(e => {
+            .catch((e) => {
               this.$message({
                 message: `Failed to submit feedback! Please try again.`,
-                type: 'error',
+                type: "error",
               });
-
-            })
-          ;
+            });
         } else {
-          this.$message({message: 'Please fill in all required forms demarked by the asterisk before submitting!', type: 'error'})
+          this.$message({
+            message: "Please fill in all required forms demarked by the asterisk before submitting!",
+            type: "error",
+          });
           return false;
         }
       });
@@ -346,7 +345,6 @@ export default {
     padding-bottom: 0 !important;
   }
 }
-
 </style>
 <style lang="scss" scoped>
 .feedback-form-disclaimer {

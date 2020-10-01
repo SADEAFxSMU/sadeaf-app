@@ -1,33 +1,26 @@
 <template>
   <div>
-    <el-form :model="form"
-             :rules="rules"
-             ref="form"
-             label-width="150px">
+    <el-form :model="form" :rules="rules" ref="form" label-width="150px">
       <el-form-item label="Event Name" prop="name" required>
-        <el-input v-model="form.name"
-                  placeholder="IS111 - Introduction to Programming" />
+        <el-input v-model="form.name" placeholder="IS111 - Introduction to Programming" />
       </el-form-item>
       <el-form-item label="Purpose" prop="purpose" required>
         <div class="field-purpose">
-          <el-select v-model="form.purpose"
-                     placeholder="School">
-            <el-option v-for="option in eventPurposeOptions"
-                       :key="'opt-' + option"
-                       :value="option">
+          <el-select v-model="form.purpose" placeholder="School">
+            <el-option v-for="option in eventPurposeOptions" :key="'opt-' + option" :value="option">
               {{ option }}
             </el-option>
           </el-select>
-          <el-input v-if="form.purpose === 'Other'"
-                    style="margin-left: 6px;"
-                    placeholder="Purpose"
-                    v-model="form.purposeOther" />
+          <el-input
+            v-if="form.purpose === 'Other'"
+            style="margin-left: 6px"
+            placeholder="Purpose"
+            v-model="form.purposeOther"
+          />
         </div>
       </el-form-item>
       <el-form-item label="Description" prop="description">
-        <el-input type="textarea"
-                  v-model="form.description"
-                  placeholder="..." />
+        <el-input type="textarea" v-model="form.description" placeholder="..." />
       </el-form-item>
       <el-form-item prop="time">
         <template v-slot:label>
@@ -39,43 +32,28 @@
           <el-row>
             <el-col :xs="24" :lg="12">
               <el-form-item prop="date" required>
-                <el-date-picker v-model="form.date"
-                                placeholder="Date"
-                                style="width: 100%; padding-right: 8px;" />
+                <el-date-picker v-model="form.date" placeholder="Date" style="width: 100%; padding-right: 8px" />
               </el-form-item>
             </el-col>
             <el-col :xs="24" :lg="12">
               <el-form-item prop="duration">
-                <el-time-picker v-model="form.start_time"
-                                format="HH:mm"
-                                placeholder="Start"
-                                style="width: 120px;" />
+                <el-time-picker v-model="form.start_time" format="HH:mm" placeholder="Start" style="width: 120px" />
                 -
-                <el-time-picker v-model="form.end_time"
-                                format="HH:mm"
-                                placeholder="End"
-                                style="width: 120px" />
+                <el-time-picker v-model="form.end_time" format="HH:mm" placeholder="End" style="width: 120px" />
               </el-form-item>
             </el-col>
           </el-row>
           <div class="field-repeat">
             <el-form-item prop="repeat">
-              <el-select v-model="form.repeat"
-                         placeholder="Repeats every">
-                <el-option :value="REPEAT_OPTS.DOES_NOT_REPEAT"
-                           label="Does not repeat" />
-                <el-option :value="REPEAT_OPTS.WEEKLY"
-                           :label="'Weekly on ' + day"/>
+              <el-select v-model="form.repeat" placeholder="Repeats every">
+                <el-option :value="REPEAT_OPTS.DOES_NOT_REPEAT" label="Does not repeat" />
+                <el-option :value="REPEAT_OPTS.WEEKLY" :label="'Weekly on ' + day" />
                 <!-- More options -->
               </el-select>
             </el-form-item>
             <div v-if="form.repeat !== REPEAT_OPTS.DOES_NOT_REPEAT">
               <el-form-item prop="repeatCount">
-                <el-input-number v-model="form.repeatCount"
-                                 size="small"
-                                 placeholder="Count"
-                                 :min="1"
-                                 :max="100">
+                <el-input-number v-model="form.repeatCount" size="small" placeholder="Count" :min="1" :max="100">
                 </el-input-number>
               </el-form-item>
               Times
@@ -92,41 +70,30 @@
         <div class="field-location">
           <p>Location</p>
           <div class="body">
-            <el-input v-model="form.address_line_one"
-                      placeholder="Address Line 1" />
-            <el-input v-model="form.room_number"
-                      style="margin-left: 5px; width: 200px;"
-                      placeholder="Room Number" />
+            <el-input v-model="form.address_line_one" placeholder="Address Line 1" />
+            <el-input v-model="form.room_number" style="margin-left: 5px; width: 200px" placeholder="Room Number" />
           </div>
           <div class="body">
-            <el-input v-model="form.address_line_two"
-                      placeholder="Address Line 2" />
-            <el-input v-model="form.postal"
-                      style="margin-left: 5px; width: 150px;"
-                      placeholder="Postal Code" />
+            <el-input v-model="form.address_line_two" placeholder="Address Line 2" />
+            <el-input v-model="form.postal" style="margin-left: 5px; width: 150px" placeholder="Postal Code" />
           </div>
         </div>
       </el-form-item>
       <el-form-item>
         <el-button-group>
-          <el-button @click="submitForm">
-            Confirm
-          </el-button>
-          <el-button @click="handleCancel">
-            Cancel
-          </el-button>
+          <el-button @click="submitForm"> Confirm </el-button>
+          <el-button @click="handleCancel"> Cancel </el-button>
         </el-button-group>
-        <el-popconfirm v-if="event"
-                      confirmButtonText='Confirm'
-                      cancelButtonText='Cancel'
-                      icon="el-icon-info"
-                      iconColor="red"
-                      title="Are you sure you want to delete this?"
-                      @onConfirm="handleDelete">
-          <el-button slot="reference"
-                     type="danger">
-            Delete
-          </el-button>
+        <el-popconfirm
+          v-if="event"
+          confirmButtonText="Confirm"
+          cancelButtonText="Cancel"
+          icon="el-icon-info"
+          iconColor="red"
+          title="Are you sure you want to delete this?"
+          @onConfirm="handleDelete"
+        >
+          <el-button slot="reference" type="danger"> Delete </el-button>
         </el-popconfirm>
       </el-form-item>
     </el-form>
@@ -138,8 +105,8 @@ import { EVENT_PURPOSE_OPTIONS } from "../../common/types/constants";
 import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 import UserCard from "../user/UserCard";
 import SmallDeleteButton from "../buttons/SmallDeleteButton";
-import gql from 'graphql-tag';
-import dayjs from 'dayjs';
+import gql from "graphql-tag";
+import dayjs from "dayjs";
 
 const INSERT_EVENT = gql`
   mutation InsertEvent(
@@ -182,11 +149,11 @@ const INSERT_EVENT = gql`
 const REPEAT_OPTS = {
   DOES_NOT_REPEAT: 1,
   WEEKLY: 2,
-}
+};
 
 export default {
   name: "ClientCreateEventForm",
-  components: {SmallDeleteButton, UserCard, UserCardHorizontalSmall},
+  components: { SmallDeleteButton, UserCard, UserCardHorizontalSmall },
   props: {
     date: {
       type: Date,
@@ -197,38 +164,28 @@ export default {
     return {
       event: null,
       rules: {
-        name: [
-          { required: true, message: 'Please enter a name for this Event', trigger: 'blur' },
-        ],
-        purpose: [
-          { required: true, message: 'Please enter a purpose' }
-        ],
-        date: [
-          { required: true, message: 'Please enter a date' }
-        ],
+        name: [{ required: true, message: "Please enter a name for this Event", trigger: "blur" }],
+        purpose: [{ required: true, message: "Please enter a purpose" }],
+        date: [{ required: true, message: "Please enter a date" }],
         duration: [
           {
             validator: (_, __, callback) => {
               let { start_time, end_time } = this.form;
               start_time = dayjs(start_time);
-              end_time   = dayjs(end_time);
+              end_time = dayjs(end_time);
 
-              const diff_hours = end_time.diff(start_time, 'hour', false);
+              const diff_hours = end_time.diff(start_time, "hour", false);
               if (diff_hours < 2) {
-                callback(new Error('Minimum duration is 2 hours'));
+                callback(new Error("Minimum duration is 2 hours"));
               } else {
                 callback();
               }
             },
-            trigger: 'blur'
-          }
+            trigger: "blur",
+          },
         ],
-        repeat: [
-          { required: true, message: 'Please select an option' }
-        ],
-        repeatCount: [
-          { required: true, message: 'Please indicate a count' }
-        ],
+        repeat: [{ required: true, message: "Please select an option" }],
+        repeatCount: [{ required: true, message: "Please indicate a count" }],
         location: [
           {
             validator: (rule, value, callback) => {
@@ -236,10 +193,10 @@ export default {
               if (this.form.address_line_one) {
                 callback();
               } else {
-                callback(new Error('Please enter an address!'));
+                callback(new Error("Please enter an address!"));
               }
-            }
-          }
+            },
+          },
         ],
       },
       form: {
@@ -249,7 +206,7 @@ export default {
         repeatCount: 1,
       },
       eventPurposeOptions: EVENT_PURPOSE_OPTIONS,
-    }
+    };
   },
 
   created() {
@@ -258,22 +215,21 @@ export default {
   },
 
   methods: {
-
     submitForm() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           await this.insertEvent();
           this.onOperationSuccess();
-          this.$notify.success('Service request created!');
+          this.$notify.success("Service request created!");
         } else {
-          console.log('error submit!!');
+          console.log("error submit!!");
           return false;
         }
       });
     },
 
     handleCancel() {
-      this.$emit('cancel');
+      this.$emit("cancel");
     },
 
     handleDelete() {
@@ -289,14 +245,14 @@ export default {
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
           assignments: { data: this.assignments },
-        }
+        },
       });
       this.event = data.insert_event_one;
       return data.insert_event_one.id;
     },
 
     onOperationSuccess() {
-      this.$emit('success');
+      this.$emit("success");
       this.resetState();
     },
 
@@ -313,7 +269,7 @@ export default {
       return this.event !== null;
     },
     day() {
-      return dayjs(this.date).format('dddd');
+      return dayjs(this.date).format("dddd");
     },
     assignments() {
       let {
@@ -337,13 +293,13 @@ export default {
       }
 
       let start_dt = dayjs(date)
-        .set('hour', start_time.getHours())
-        .set('minute', start_time.getMinutes())
-        .set('second', start_time.getSeconds());
+        .set("hour", start_time.getHours())
+        .set("minute", start_time.getMinutes())
+        .set("second", start_time.getSeconds());
       let end_dt = dayjs(date)
-        .set('hour', end_time.getHours())
-        .set('minute', end_time.getMinutes())
-        .set('second', end_time.getSeconds());
+        .set("hour", end_time.getHours())
+        .set("minute", end_time.getMinutes())
+        .set("second", end_time.getSeconds());
 
       for (let i = 0; i < repeatCount; i++) {
         assignments.push({
@@ -351,19 +307,19 @@ export default {
           address_line_two,
           postal,
           room_number,
-          start_dt: start_dt.add(7 * i, 'day'),
-          end_dt: end_dt.add(7 * i, 'day'),
+          start_dt: start_dt.add(7 * i, "day"),
+          end_dt: end_dt.add(7 * i, "day"),
         });
       }
       return assignments;
-    }
+    },
   },
 
   watch: {
     date(val) {
-      this.$set(this.form, 'date', val);
+      this.$set(this.form, "date", val);
     },
-  }
+  },
 };
 </script>
 
@@ -388,8 +344,8 @@ export default {
 }
 
 .required-asterisk:before {
-  content: '*';
+  content: "*";
   margin-right: 4px;
-  color: #F56C6C;
+  color: #f56c6c;
 }
 </style>

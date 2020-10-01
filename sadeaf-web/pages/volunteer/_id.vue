@@ -6,10 +6,8 @@
 
 <script>
 export default {
-  name: "volunteer-profile"
+  name: "volunteer-profile",
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

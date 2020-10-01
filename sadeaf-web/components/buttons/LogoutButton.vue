@@ -1,8 +1,6 @@
 <template>
   <nuxt-link to="/sign-out">
-    <el-button>
-      Logout
-    </el-button>
+    <el-button> Logout </el-button>
   </nuxt-link>
 </template>
 
@@ -12,6 +10,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

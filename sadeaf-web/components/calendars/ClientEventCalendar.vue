@@ -1,13 +1,11 @@
 <template>
   <div class="main">
     <div class="calendar">
-      <el-calendar @input="handleCalendarClick" style="height: 700px;">
-        <template slot="dateCell"
-                  slot-scope="{date}">
-          <h4 :class="{ 'greyed': isBeforeToday(date) }">{{ date.getDate() }}</h4>
+      <el-calendar @input="handleCalendarClick" style="height: 700px">
+        <template slot="dateCell" slot-scope="{ date }">
+          <h4 :class="{ greyed: isBeforeToday(date) }">{{ date.getDate() }}</h4>
           <div v-if="getAssignmentsOnDate(date)" class="assignment-cell">
-            <div v-for="assignment in getAssignmentsOnDate(date)"
-                 class="body">
+            <div v-for="assignment in getAssignmentsOnDate(date)" class="body">
               <el-tag size="mini">
                 {{ assignment.event.name }}
               </el-tag>
@@ -19,33 +17,43 @@
     <transition name="fade">
       <div class="assignment-command-panel" v-if="createServiceRequestFormVisible">
         <el-tabs v-model="tab">
-          <el-tab-pane v-if="getAssignmentsOnDate(selectedDate)"
-                       :label="selectedDate.toDateString() + ' Session'"
-                       name="assignments" >
+          <el-tab-pane
+            v-if="getAssignmentsOnDate(selectedDate)"
+            :label="selectedDate.toDateString() + ' Session'"
+            name="assignments"
+          >
             <div class="assignment-cards">
-              <assignment-card v-for="assignment in getAssignmentsOnDate(selectedDate)"
-                               :key="'as-' + assignment.id"
-                               :details="assignment"
-                               @editClick="handleEditAssignmentClick" />
+              <assignment-card
+                v-for="assignment in getAssignmentsOnDate(selectedDate)"
+                :key="'as-' + assignment.id"
+                :details="assignment"
+                @editClick="handleEditAssignmentClick"
+              />
             </div>
           </el-tab-pane>
           <el-tab-pane label="New Service Request" name="request" v-if="isAfterToday(selectedDate)">
             <div>
-              <client-create-event-form :date="selectedDate"
-                                        @success="createServiceRequestFormVisible = false"
-                                        @cancel="handleUpsertEventCancel"/>
+              <client-create-event-form
+                :date="selectedDate"
+                @success="createServiceRequestFormVisible = false"
+                @cancel="handleUpsertEventCancel"
+              />
             </div>
           </el-tab-pane>
         </el-tabs>
       </div>
     </transition>
-    <el-dialog :visible="updateAssignmentDialogVisible"
-               @close="handleEditAssignmentCancel"
-               :title="`Update ${updateAssignment && updateAssignment.event.name} details`"
-               style="border-radius: 4px;">
-      <client-upsert-assignment-form :assignment="updateAssignment"
-                                     @success="handleEditAssignmentConfirm"
-                                     @cancel="handleEditAssignmentCancel" />
+    <el-dialog
+      :visible="updateAssignmentDialogVisible"
+      @close="handleEditAssignmentCancel"
+      :title="`Update ${updateAssignment && updateAssignment.event.name} details`"
+      style="border-radius: 4px"
+    >
+      <client-upsert-assignment-form
+        :assignment="updateAssignment"
+        @success="handleEditAssignmentConfirm"
+        @cancel="handleEditAssignmentCancel"
+      />
     </el-dialog>
   </div>
 </template>
@@ -56,8 +64,8 @@ import ClientCreateEventForm from "../forms/ClientCreateEventForm";
 import UserCard from "../user/UserCard";
 import AssignmentCard from "../cards/AssignmentCard";
 import ClientUpsertAssignmentForm from "../forms/ClientUpsertAssignmentForm";
-import {DateUtils} from "../../common/date-utils";
-import dayjs from 'dayjs';
+import { DateUtils } from "../../common/date-utils";
+import dayjs from "dayjs";
 
 export default {
   name: "ClientEventCalendar",
@@ -66,7 +74,7 @@ export default {
     ClientUpsertAssignmentForm,
     AssignmentCard,
     UserCard,
-    ClientCreateEventForm
+    ClientCreateEventForm,
   },
 
   data() {
@@ -76,10 +84,10 @@ export default {
       selectedDate: null,
       updateEvent: null,
       updateAssignment: null,
-      tab: 'assignments',
+      tab: "assignments",
       createServiceRequestFormVisible: false,
       updateAssignmentDialogVisible: false,
-    }
+    };
   },
 
   methods: {
@@ -88,9 +96,9 @@ export default {
       let commandPanelVisible = true;
 
       if (this.getAssignmentsOnDate(date)) {
-        this.tab = 'assignments';
+        this.tab = "assignments";
       } else if (this.isAfterToday(date)) {
-        this.tab = 'request';
+        this.tab = "request";
       } else {
         commandPanelVisible = false;
       }
@@ -121,7 +129,7 @@ export default {
     },
 
     getAssignmentsOnDate(date) {
-      const dateKey = dayjs(date).format('YYYYMMDD');
+      const dateKey = dayjs(date).format("YYYYMMDD");
       return this.assignmentsByDateTime[dateKey];
     },
     isBeforeToday(date) {
@@ -135,42 +143,41 @@ export default {
   computed: {
     client() {
       return this.$store.state.auth.user.client;
-    }
+    },
   },
 
   apollo: {
     $subscribe: {
       assignments: {
-        query: gql`subscription AssignmentsSubscription($client_id: Int!) {
-          assignments: assignment(
-            where: { event: { client_id: { _eq: $client_id }}}
-            order_by: { start_dt: asc }
-          ) {
-            id
-            address_line_one
-            address_line_two
-            room_number
-            postal
-            start_dt
-            end_dt
-            status
-            event {
+        query: gql`
+          subscription AssignmentsSubscription($client_id: Int!) {
+            assignments: assignment(where: { event: { client_id: { _eq: $client_id } } }, order_by: { start_dt: asc }) {
               id
-              name
-            }
-            volunteer {
-              id
-              account {
+              address_line_one
+              address_line_two
+              room_number
+              postal
+              start_dt
+              end_dt
+              status
+              event {
                 id
                 name
               }
+              volunteer {
+                id
+                account {
+                  id
+                  name
+                }
+              }
             }
           }
-        }`,
+        `,
         variables() {
           return {
-            client_id: this.client.id
-          }
+            client_id: this.client.id,
+          };
         },
         skip() {
           return !this.client;
@@ -178,10 +185,10 @@ export default {
         result({ data }) {
           this.assignments = data.assignments;
           this.assignmentsByDateTime = DateUtils.groupAssignmentsByDateTime(data.assignments);
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 };
 </script>
 
@@ -221,11 +228,13 @@ export default {
 .assignment-cards {
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   flex: 1;
   transition: flex 0.3s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   flex: 0;
 }
 

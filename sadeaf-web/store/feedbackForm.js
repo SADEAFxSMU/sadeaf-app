@@ -3,7 +3,7 @@ export const state = () => ({
   volunteer: {},
   event: {},
   feedbackId: null,
-})
+});
 
 export const mutations = {
   submitForm(state) {
@@ -17,7 +17,5 @@ export const mutations = {
   },
   hideForm(state) {
     state.visible = false;
-  }
-}
-
-
+  },
+};

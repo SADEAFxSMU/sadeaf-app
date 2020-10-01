@@ -13,8 +13,8 @@ export const DateUtils = {
   groupAssignmentsByDateTime(assignments) {
     const assignmentsByDateTime = {};
 
-    assignments.forEach(assignment => {
-      const [dateKey, timeKey] = dayjs(assignment.start_dt).format('YYYYMMDD HH:mm').split(' ');
+    assignments.forEach((assignment) => {
+      const [dateKey, timeKey] = dayjs(assignment.start_dt).format("YYYYMMDD HH:mm").split(" ");
       if (!assignmentsByDateTime.hasOwnProperty(dateKey)) {
         assignmentsByDateTime[dateKey] = {};
       }
@@ -24,6 +24,6 @@ export const DateUtils = {
     return assignmentsByDateTime;
   },
   humanReadableDt(date) {
-    return dayjs(date).format('DD MMMM YYYY HH:MM');
-  }
-}
+    return dayjs(date).format("DD MMMM YYYY HH:MM");
+  },
+};

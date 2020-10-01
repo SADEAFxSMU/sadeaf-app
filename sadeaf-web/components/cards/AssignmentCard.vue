@@ -10,7 +10,8 @@
         :icon="icon"
         size="mini"
         :disabled="editButtonDisabled"
-        @click="$emit('editClick', details)" />
+        @click="$emit('editClick', details)"
+      />
     </div>
     <div class="body">
       <div>
@@ -23,12 +24,10 @@
         {{ startDate }}
       </h5>
       <div class="assigned-volunteer">
-        <user-card-horizontal-small v-if="assignment.volunteer"
-                                    :user="assignment.volunteer.account"/>
+        <user-card-horizontal-small v-if="assignment.volunteer" :user="assignment.volunteer.account" />
       </div>
     </div>
-    <div class="footer">
-    </div>
+    <div class="footer"></div>
   </div>
 </template>
 
@@ -36,12 +35,12 @@
 import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 import StatusIndicator from "../StatusIndicator";
 import AssignmentStatus from "../AssignmentStatus";
-import {DateUtils} from "../../common/date-utils";
-import dayjs from 'dayjs';
+import { DateUtils } from "../../common/date-utils";
+import dayjs from "dayjs";
 
 export default {
   name: "AssignmentCard",
-  components: {AssignmentStatus, StatusIndicator, UserCardHorizontalSmall},
+  components: { AssignmentStatus, StatusIndicator, UserCardHorizontalSmall },
   props: {
     details: {
       type: Object,
@@ -50,23 +49,23 @@ export default {
     showEdit: {
       type: Boolean,
       default: true,
-      required: false
+      required: false,
     },
     showCancel: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     isOptIn: {
       type: Boolean,
       default: false,
-      require: false
+      require: false,
     },
     toAccept: {
       type: Boolean,
       default: false,
-      require: false
-    }
+      require: false,
+    },
   },
   computed: {
     // we need to make a distinction since an opt-in object or assignment object
@@ -88,7 +87,7 @@ export default {
     },
     address() {
       const { address_line_one, address_line_two } = this.assignment;
-      return address_line_one + (address_line_two ? ', ' + address_line_two : '');
+      return address_line_one + (address_line_two ? ", " + address_line_two : "");
     },
     roomNumber() {
       return this.assignment.room_number;
@@ -108,8 +107,8 @@ export default {
     editButtonDisabled() {
       // disable edit button if assignment start datetime is before current datetime
       return dayjs(this.assignment.start_dt).isBefore(dayjs());
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -149,10 +148,8 @@ export default {
 }
 
 .assignment-card .body .assigned-volunteer {
-
 }
 
 .assignment-card .footer {
 }
 </style>
-

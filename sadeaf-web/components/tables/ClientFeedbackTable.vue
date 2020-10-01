@@ -1,134 +1,123 @@
 <template>
   <div>
-    <BaseTable title="Event Feedback"
-               :rows="tableData"
-               :columns="columns"
-               expandable-rows
-    >
-      <template v-slot:volunteers="{row}">
-        <volunteers-cell :volunteers="row.volunteer"
-                         v-if="row.volunteer && row.volunteer.length > 0" />
+    <BaseTable title="Event Feedback" :rows="tableData" :columns="columns" expandable-rows>
+      <template v-slot:volunteers="{ row }">
+        <volunteers-cell :volunteers="row.volunteer" v-if="row.volunteer && row.volunteer.length > 0" />
       </template>
 
       <template v-slot:expanded="{ row }">
         <div class="expanded-row">
-          <div style="display: flex; align-items: center; margin-bottom: 16px;">
-            <h2 style="opacity: 0.5; margin-right: 8px;">Assignments</h2>
+          <div style="display: flex; align-items: center; margin-bottom: 16px">
+            <h2 style="opacity: 0.5; margin-right: 8px">Assignments</h2>
           </div>
           <!-- Show assignments as timeline -->
-          <assignments-timeline :event_id="row.eventId"
-                                :client="row.client"
-                                :assignments="row.assignments"
-                                :edit-button="false"
+          <assignments-timeline
+            :event_id="row.eventId"
+            :client="row.client"
+            :assignments="row.assignments"
+            :edit-button="false"
           />
         </div>
       </template>
 
-      <template v-slot:edit="{row}">
-        <el-button
-          size="small"
-          type="primary"
-          @click="handleEventFeedback(row)">
-          Feedback
-        </el-button>
+      <template v-slot:edit="{ row }">
+        <el-button size="small" type="primary" @click="handleEventFeedback(row)"> Feedback </el-button>
       </template>
     </BaseTable>
 
-    <el-dialog
-      width="70%"
-      :visible="formVisible"
-      @close="closeEventFeedbackForm"
-      destroy-on-close
-    >
-      <feedback-form
-        :feedbackVolunteer="feedbackVolunteer"
-        :eventSelected="eventSelected"
-      />
+    <el-dialog width="70%" :visible="formVisible" @close="closeEventFeedbackForm" destroy-on-close>
+      <feedback-form :feedbackVolunteer="feedbackVolunteer" :eventSelected="eventSelected" />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import BaseTable from './BaseTable';
-import gql from 'graphql-tag';
-import VolunteersCell from '@/components/tables/custom-columns/VolunteersCell';
-import FeedbackForm from '@/components/forms/FeedbackForm/FeedbackForm';
-import AssignmentsTimeline from '@/components/cards/AssignmentsTimeline';
-import volunteer from '@/components/navbar/volunteer';
+import BaseTable from "./BaseTable";
+import gql from "graphql-tag";
+import VolunteersCell from "@/components/tables/custom-columns/VolunteersCell";
+import FeedbackForm from "@/components/forms/FeedbackForm/FeedbackForm";
+import AssignmentsTimeline from "@/components/cards/AssignmentsTimeline";
+import volunteer from "@/components/navbar/volunteer";
 
-const FEEDBACK_SUBSRCRIBE_QUERY = gql`subscription ClientCompletedEventsSubscription($client_account_id: Int!, $feedback_given: Int!) {
-          feedback(where: {event: {client: {account_id: {_eq: $client_account_id}}}, feedback_given: {_eq: $feedback_given}}) {
+const FEEDBACK_SUBSRCRIBE_QUERY = gql`
+  subscription ClientCompletedEventsSubscription($client_account_id: Int!, $feedback_given: Int!) {
+    feedback(
+      where: {
+        event: { client: { account_id: { _eq: $client_account_id } } }
+        feedback_given: { _eq: $feedback_given }
+      }
+    ) {
+      id
+      event {
+        id
+        name
+        description
+        client {
+          id
+          account {
             id
-            event {
+            name
+            email
+          }
+        }
+        assignments(order_by: { start_dt: desc }) {
+          id
+          address_line_one
+          address_line_two
+          end_dt
+          start_dt
+          status
+          volunteer {
+            id
+            account {
               id
               name
-              description
-              client {
-                id
-                account {
-                  id
-                  name
-                  email
-                }
-              }
-              assignments(order_by: {start_dt: desc}) {
-                id
-                address_line_one
-                address_line_two
-                end_dt
-                start_dt
-                status
-                volunteer {
-                  id
-                  account {
-                    id
-                    name
-                  }
-                }
-              }
-            }
-            volunteer {
-              id
-              account {
-                id
-                name
-              }
             }
           }
         }
+      }
+      volunteer {
+        id
+        account {
+          id
+          name
+        }
+      }
+    }
+  }
 `;
 export default {
-  name: 'client-feedback-table',
+  name: "client-feedback-table",
   components: { FeedbackForm, BaseTable, VolunteersCell, AssignmentsTimeline },
   data() {
     return {
       tableData: [],
       eventSelected: {},
       feedbackVolunteer: {
-        'id': 1,
-        'account': { 'id': 17, 'name': 'Toh Jin Wee Wayne', '__typename': 'account' },
-        '__typename': 'volunteer',
+        id: 1,
+        account: { id: 17, name: "Toh Jin Wee Wayne", __typename: "account" },
+        __typename: "volunteer",
       },
       columns: [
         {
-          name: 'name',
-          label: 'Event',
+          name: "name",
+          label: "Event",
         },
         {
-          name: 'description',
-          label: 'Description',
+          name: "description",
+          label: "Description",
         },
         {
-          name: 'startDate',
-          label: 'First Assignment Date',
+          name: "startDate",
+          label: "First Assignment Date",
         },
         {
-          name: 'endDate',
-          label: 'Last Assignment Date',
+          name: "endDate",
+          label: "Last Assignment Date",
         },
         {
-          name: 'volunteers',
-          label: 'Volunteers',
+          name: "volunteers",
+          label: "Volunteers",
         },
       ],
     };
@@ -139,15 +128,18 @@ export default {
     },
     clientAccountId() {
       return this.$store.state.auth.user.id;
-    }
+    },
   },
   methods: {
     handleEventFeedback(row) {
-      this.$store.commit('feedbackForm/clickForm',
-        { volunteer: row.volunteer[0], event: row, feedbackId: row.feedback_id });
+      this.$store.commit("feedbackForm/clickForm", {
+        volunteer: row.volunteer[0],
+        event: row,
+        feedbackId: row.feedback_id,
+      });
     },
     closeEventFeedbackForm() {
-      this.$store.commit('feedbackForm/hideForm');
+      this.$store.commit("feedbackForm/hideForm");
       this.eventSelected = {};
     },
     mapResponseToRows(feedbacksToGive) {
@@ -155,7 +147,7 @@ export default {
       if (feedbacksToGive) {
         feedbacksToGive.forEach((feedback) => {
           const { event, volunteer } = feedback;
-          const volunteerAssignments = event.assignments.filter(a => a.volunteer.id === volunteer.id);
+          const volunteerAssignments = event.assignments.filter((a) => a.volunteer.id === volunteer.id);
           rows.push({
             feedback_id: feedback.id,
             id: event.id + volunteer.account.name,
@@ -194,6 +186,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

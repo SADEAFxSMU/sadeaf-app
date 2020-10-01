@@ -1,11 +1,11 @@
 <template>
   <div class="assignment-info">
-    <user-card-horizontal-small v-if="hasVolunteerAssigned"
-                                :user="assignment.volunteer.account"
-                                style="margin-bottom: 4px;" />
-    <p>
-      {{ assignment.address_line_one }}, {{ assignment.postal }}
-    </p>
+    <user-card-horizontal-small
+      v-if="hasVolunteerAssigned"
+      :user="assignment.volunteer.account"
+      style="margin-bottom: 4px"
+    />
+    <p>{{ assignment.address_line_one }}, {{ assignment.postal }}</p>
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
 export default {
   name: "AssignmentCardSmall",
-  components: {UserCardHorizontalSmall},
+  components: { UserCardHorizontalSmall },
   props: {
     assignment: {
       type: Object,
@@ -24,10 +24,8 @@ export default {
     hasVolunteerAssigned() {
       return this.assignment.volunteer && this.assignment.volunteer.account;
     },
-  }
+  },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -13,9 +13,9 @@ export default {
     title: {
       type: String,
       required: false,
-      default: 'Danger Zone'
-    }
-  }
+      default: "Danger Zone",
+    },
+  },
 };
 </script>
 

@@ -5,12 +5,11 @@
 </template>
 
 <script>
-
 const statusToTypeMapping = {
-  PENDING: 'danger',
-  LIVE: 'primary',
-  COMPLETE: 'success',
-}
+  PENDING: "danger",
+  LIVE: "primary",
+  COMPLETE: "success",
+};
 
 export default {
   name: "StatusCell",
@@ -18,16 +17,14 @@ export default {
     status: {
       type: String,
       required: true,
-    }
+    },
   },
   computed: {
     type() {
       return statusToTypeMapping[status];
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -11,11 +11,9 @@ export default {
   computed: {
     userTypeFilter() {
       return this.$route.query.type;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

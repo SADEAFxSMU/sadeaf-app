@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="cell">
-      <div v-for="volunteer in volunteers"
-           class="volunteer">
+      <div v-for="volunteer in volunteers" class="volunteer">
         <user-card-horizontal-small :user="volunteer.account" />
       </div>
     </div>
@@ -13,7 +12,7 @@
 import UserCardHorizontalSmall from "../../user/UserCardHorizontalSmall";
 export default {
   name: "VolunteersCell",
-  components: {UserCardHorizontalSmall},
+  components: { UserCardHorizontalSmall },
   props: {
     volunteers: {
       type: Array,

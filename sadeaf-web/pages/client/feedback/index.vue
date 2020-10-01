@@ -5,14 +5,12 @@
 </template>
 
 <script>
-import ClientFeedbackTable from '@/components/tables/ClientFeedbackTable';
+import ClientFeedbackTable from "@/components/tables/ClientFeedbackTable";
 
 export default {
-  name: 'feedback',
+  name: "feedback",
   components: { ClientFeedbackTable },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

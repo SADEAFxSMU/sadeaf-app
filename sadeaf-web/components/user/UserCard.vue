@@ -2,12 +2,8 @@
   <div class="card">
     <div :style="cardStyle" class="body-wrapper">
       <slot name="avatar">
-        <img v-if="user && user.imgSrc"
-             :src="user.imgSrc"
-             class="image" />
-        <el-avatar v-else
-                   class="el-icon-user-solid"
-                   size="large" />
+        <img v-if="user && user.imgSrc" :src="user.imgSrc" class="image" />
+        <el-avatar v-else class="el-icon-user-solid" size="large" />
       </slot>
       <slot name="body">
         <div class="body">
@@ -22,15 +18,14 @@
       </slot>
     </div>
     <div class="footer" v-if="$slots.footer">
-      <slot name="footer">
-      </slot>
+      <slot name="footer"> </slot>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'UserCard',
+  name: "UserCard",
   props: {
     user: {
       type: Object,
@@ -43,7 +38,7 @@ export default {
     imgStyle: {
       type: [String, Object],
       required: false,
-    }
+    },
   },
   computed: {
     name() {
@@ -51,12 +46,12 @@ export default {
     },
     role() {
       const user = this.user;
-      return (user.role && user.role.toUpperCase()) || 'USER';
+      return (user.role && user.role.toUpperCase()) || "USER";
     },
     email() {
       return this.user.email;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -74,7 +69,7 @@ export default {
 }
 .image {
   border-radius: 50%;
-  box-shadow: 0 2px 6px 1px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.2);
 }
 .body {
   padding-left: 12px;
@@ -87,8 +82,7 @@ export default {
 .name {
 }
 .role {
-  margin-left:
-    6px;
+  margin-left: 6px;
 }
 
 .footer {
@@ -97,6 +91,6 @@ export default {
   align-items: center;
   margin-top: 12px;
   padding: 8px;
-  background-color: rgba(0,0,50,0.05);
+  background-color: rgba(0, 0, 50, 0.05);
 }
 </style>

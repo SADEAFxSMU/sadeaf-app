@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "app-home",
-  middleware: ['authenticated'],
+  middleware: ["authenticated"],
   mounted() {
     if (this.userType) {
       this.navigateToRoleHome();
@@ -15,20 +15,20 @@ export default {
   },
   methods: {
     navigateToRoleHome() {
-      this.$router.replace('/' + this.userType);
-    }
+      this.$router.replace("/" + this.userType);
+    },
   },
   computed: {
     userType() {
       return this.$store.state.auth.user.userType;
-    }
+    },
   },
   watch: {
     userType() {
       this.navigateToRoleHome();
     },
-  }
-}
+  },
+};
 </script>
 
 <style>

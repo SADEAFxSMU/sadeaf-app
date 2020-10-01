@@ -6,7 +6,7 @@
 import StatusIndicator from "../../components/StatusIndicator";
 
 export default {
-  name: "service_requestor-home"
+  name: "service_requestor-home",
 };
 </script>
 

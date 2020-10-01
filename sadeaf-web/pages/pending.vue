@@ -2,9 +2,7 @@
   <div class="page">
     <div class="notice">
       <h1 class="title">Pending Account Verification</h1>
-      <p class="body">
-        Your account is currently being verified by the SADEAF team.
-      </p>
+      <p class="body">Your account is currently being verified by the SADEAF team.</p>
     </div>
   </div>
 </template>
@@ -17,7 +15,7 @@
  * 2. have yet to be on-boarded (set role) by sadeaf admin
  */
 export default {
-  name: "pending"
+  name: "pending",
 };
 </script>
 

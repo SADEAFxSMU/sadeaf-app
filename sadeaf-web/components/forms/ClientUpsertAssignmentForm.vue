@@ -13,28 +13,18 @@
     <el-form :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
-          <el-input v-model="form.address_line_one"
-                    placeholder="Address Line 1" />
-          <el-input v-model="form.room_number"
-                    style="margin-left: 5px; width: 200px;"
-                    placeholder="Room Number" />
+          <el-input v-model="form.address_line_one" placeholder="Address Line 1" />
+          <el-input v-model="form.room_number" style="margin-left: 5px; width: 200px" placeholder="Room Number" />
         </div>
         <div style="display: flex; margin-top: 5px">
-          <el-input v-model="form.address_line_two"
-                    placeholder="Address Line 2" />
-          <el-input v-model="form.postal"
-                    style="margin-left: 5px; width: 150px;"
-                    placeholder="Postal Code" />
+          <el-input v-model="form.address_line_two" placeholder="Address Line 2" />
+          <el-input v-model="form.postal" style="margin-left: 5px; width: 150px" placeholder="Postal Code" />
         </div>
       </el-form-item>
       <el-form-item label="Dates">
-        <el-date-picker v-model="form.start_dt"
-                        placeholder="Start"
-                        type="datetime" />
+        <el-date-picker v-model="form.start_dt" placeholder="Start" type="datetime" />
         -
-        <el-date-picker v-model="form.end_dt"
-                        placeholder="End"
-                        type="datetime" />
+        <el-date-picker v-model="form.end_dt" placeholder="End" type="datetime" />
       </el-form-item>
       <el-form-item>
         <danger-zone>
@@ -42,33 +32,28 @@
             <div>
               <h3 class="heading">Cancel this session</h3>
               <p class="body">
-                NOTE: Last minute cancellation of appointments are strictly discouraged. It will
-                not only affect volunteers, but also ...
+                NOTE: Last minute cancellation of appointments are strictly discouraged. It will not only affect
+                volunteers, but also ...
               </p>
             </div>
-            <el-popconfirm confirmButtonText='Confirm'
-                          cancelButtonText='Cancel'
-                          icon="el-icon-info"
-                          iconColor="red"
-                          title="Are you sure you want to cancel this assignment?"
-                          @onConfirm="handleDelete">
-              <el-button slot="reference"
-                         type="danger"
-                         size="mini">
-                Cancel
-              </el-button>
+            <el-popconfirm
+              confirmButtonText="Confirm"
+              cancelButtonText="Cancel"
+              icon="el-icon-info"
+              iconColor="red"
+              title="Are you sure you want to cancel this assignment?"
+              @onConfirm="handleDelete"
+            >
+              <el-button slot="reference" type="danger" size="mini"> Cancel </el-button>
             </el-popconfirm>
           </div>
         </danger-zone>
       </el-form-item>
       <el-form-item>
-        <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: space-between">
           <el-button-group>
-            <el-button @click="handleConfirm">
-              Confirm
-            </el-button>
+            <el-button @click="handleConfirm"> Confirm </el-button>
           </el-button-group>
-
         </div>
       </el-form-item>
     </el-form>
@@ -77,8 +62,8 @@
 
 <script>
 import UserCard from "../user/UserCard";
-import gql from 'graphql-tag';
-import _ from 'lodash';
+import gql from "graphql-tag";
+import _ from "lodash";
 import DangerZone from "./DangerZone";
 
 const UPDATE_ASSIGNMENT = gql`
@@ -118,11 +103,13 @@ const UPDATE_ASSIGNMENT = gql`
   }
 `;
 
-const DELETE_ASSIGNMENT = gql`mutation DeleteAssignmentByPk($id: Int!) {
-  delete_assignment_by_pk(id: $id) {
-    id
+const DELETE_ASSIGNMENT = gql`
+  mutation DeleteAssignmentByPk($id: Int!) {
+    delete_assignment_by_pk(id: $id) {
+      id
+    }
   }
-}`;
+`;
 
 export default {
   name: "ClientUpsertAssignmentForm",
@@ -131,7 +118,7 @@ export default {
     assignment: {
       type: Object,
       required: false,
-    }
+    },
   },
 
   components: {
@@ -142,7 +129,7 @@ export default {
   data() {
     return {
       form: {},
-    }
+    };
   },
 
   created() {
@@ -163,20 +150,20 @@ export default {
     handleConfirm() {
       if (this.isUpdate) {
         this.updateAssignment();
-        this.$notify.success('Assignment updated!');
+        this.$notify.success("Assignment updated!");
       } else {
         this.insertAssignment();
-        this.$notify.success('Assignment created!');
+        this.$notify.success("Assignment created!");
       }
       this.onOperationSuccess();
     },
     handleCancel() {
-      this.$emit('cancel');
+      this.$emit("cancel");
     },
     async handleDelete() {
       await this.deleteAssignment();
       this.onOperationSuccess();
-      this.$notify.success('Assignment deleted!');
+      this.$notify.success("Assignment deleted!");
     },
 
     async insertAssignment() {
@@ -201,7 +188,7 @@ export default {
           postal,
           room_number,
           start_dt,
-        }
+        },
       });
     },
 
@@ -228,28 +215,28 @@ export default {
           postal,
           room_number,
           start_dt,
-        }
-      })
+        },
+      });
     },
 
     async deleteAssignment() {
       await this.$apollo.mutate({
         mutation: DELETE_ASSIGNMENT,
         variables: {
-          id: this.assignment.id
-        }
-      })
+          id: this.assignment.id,
+        },
+      });
     },
 
     onOperationSuccess() {
       this.resetValues();
-      this.$emit('success');
+      this.$emit("success");
     },
 
     resetValues() {
       this.form = {};
       this.volunteer = null;
-    }
+    },
   },
 
   computed: {
@@ -271,8 +258,8 @@ export default {
         this.setForm(assignment);
       },
       deep: true,
-    }
-  }
+    },
+  },
 };
 </script>
 

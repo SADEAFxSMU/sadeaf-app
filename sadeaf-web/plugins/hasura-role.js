@@ -12,12 +12,12 @@ import { Auth } from "aws-amplify";
 async function queryAndSetUserInfo(apolloClient, vuexStore) {
   const jwtToken = await Auth.currentSession()
     .then((session) => {
-      return session.getIdToken().getJwtToken()
+      return session.getIdToken().getJwtToken();
     })
     .catch(() => null);
   if (!jwtToken) {
     // Jwt unavailable - user is probably not logged in, hence skip
-    return
+    return;
   }
   const cognitoId = jwtDecode(jwtToken).sub;
   const { data } = await apolloClient.query({
@@ -35,11 +35,11 @@ async function queryAndSetUserInfo(apolloClient, vuexStore) {
         client { id }
         service_requestor { id }
       }
-    }`
-  })
+    }`,
+  });
   let user = data.user[0];
   if (user) {
-    vuexStore.commit('auth/setUser', { userType: user.role, user });
+    vuexStore.commit("auth/setUser", { userType: user.role, user });
   }
 }
 
@@ -48,8 +48,8 @@ export default ({ app, store }, inject) => {
   if (!apolloClient) {
     throw Error(
       "Apollo client not initialised - unable to query hasura for user's role.\n" +
-      "Ensure that the apollo plugin is set up before this."
+        "Ensure that the apollo plugin is set up before this."
     );
   }
   queryAndSetUserInfo(apolloClient, store);
-}
+};
