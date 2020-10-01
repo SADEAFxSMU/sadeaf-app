@@ -21,21 +21,42 @@ export const ASSIGNMENT_STATUS_COLORS = {
 };
 
 export const EVENT_PURPOSE_OPTIONS = [
-  "Conference/Dialogue/Forum/Seminar/Rally",
-  "Counselling",
-  "Course / Workshop",
-  "Deaf Awareness Program / Sign Language Courses",
-  "Discussion/Meeting",
-  "Employment Related",
-  "Events (Exhibition/Excursion/Field Trip)",
-  "Lectures/Tutorial/Practical Lab",
-  "Legal",
-  "Media",
-  "Medical",
-  "Personal/Social",
-  "Police",
-  "Religious",
-  "ROM/ROMM",
-  "Tours",
-  "Others",
-];
+  'Conference/Dialogue/Forum/Seminar/Rally',
+  'Counselling',
+  'Course / Workshop',
+  'Deaf Awareness Program / Sign Language Courses',
+  'Discussion/Meeting',
+  'Employment Related',
+  'Events (Exhibition/Excursion/Field Trip)',
+  'Lectures/Tutorial/Practical Lab',
+  'Legal',
+  'Media',
+  'Medical',
+  'Personal/Social',
+  'Police',
+  'Religious',
+  'ROM/ROMM',
+  'Tours',
+  'Others',
+]
+
+export const ROLES = {
+  admin: 'admin',
+  client: 'client',
+  volunteer: 'volunteer',
+  service_requestor: 'service_requestor',
+}
+
+export const ROLE_EL_TAG_TYPES = {
+  [ROLES.admin]: 'primary',
+  [ROLES.client]: 'danger',
+  [ROLES.volunteer]: 'success',
+  [ROLES.service_requestor]: 'danger',
+}
+
+export const ROLE_PROFILE_PAGE_MAPPING = {
+  admin: '/admin',
+  volunteer: '/volunteer',
+  svcreq: '/org',
+  client: '/client',
+}

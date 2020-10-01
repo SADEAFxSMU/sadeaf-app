@@ -1,39 +1,79 @@
 <template>
-  <div style="position: relative">
-    <el-input
-      v-model="search"
-      placeholder="Search user"
-      prefix-icon="el-icon-search"
-      @focus.passive="setVisible(true)"
-      @blur.passive="setVisible(false)"
-      v-on="$listeners"
-    />
-    <div class="search-results" :style="resultsStyle">
-      <el-spinner v-if="loading" :radius="50" />
-      <div v-else-if="results.length === 0">
-        <code>No results</code>
-      </div>
-      <div class="user-card" v-else v-for="user in results" @click="onSelectUser(user)">
-        <user-card-horizontal-small :user="user" />
-      </div>
-    </div>
-  </div>
+  <el-autocomplete v-model="search"
+                   :fetch-suggestions="querySearch"
+                   style="width: 100%"
+                   placeholder="Enter a name, email, ..."
+                   @select="handleSelect">
+    <i class="el-icon-search" slot="prepend" />
+    <template v-slot="{ item }">
+      <user-profile-link :user="item">
+        <user-card-horizontal-small :user="item" />
+      </user-profile-link>
+    </template>
+  </el-autocomplete>
 </template>
+
 
 <script>
 import debounce from "debounce";
 import UserCardHorizontalSmall from "./UserCardHorizontalSmall";
 import gql from "graphql-tag";
+import UserProfileLink from "../link/UserProfileLink";
+import { accountFieldsWithRolesFragment } from "../../common/graphql/fragments";
+
+const UserSearchWithRoleQuery = gql`
+  query UserSearchWithRoleQuery($search: String!, $role: String!) {
+    users: account(where: {
+      _and: [
+        { role: { _eq: $role } },
+        {
+          _or: [
+            { name: { _like: $search } }
+            { email: { _like: $search } }
+          ]
+        }
+      ]
+    }) {
+      ...accountFieldsWithRoles
+    }
+  }
+  ${accountFieldsWithRolesFragment}
+`;
+
+const UserSearchQuery = gql`
+  query UserSearchQuery($search: String!) {
+    users: account(where: {
+      _or: [
+        { name: { _like: $search } }
+        { email: { _like: $search } }
+      ]
+    }) {
+      ...accountFieldsWithRoles
+    }
+  }
+  ${accountFieldsWithRolesFragment}
+`;
 
 export default {
   name: "UserSearch",
-  components: { UserCardHorizontalSmall },
+
+  components: {
+    UserProfileLink,
+    UserCardHorizontalSmall
+  },
+
   props: {
     userRole: {
       type: String,
-      required: true,
+      required: false,
     },
+    clickToProfile: {
+      type: Boolean,
+      required: false,
+      default: false,
+    }
   },
+
   data() {
     return {
       search: "",
@@ -42,55 +82,45 @@ export default {
       visible: false,
     };
   },
+
   created() {
     this.onSearch = debounce(this.onSearch, 300);
   },
+
   methods: {
-    onSearch() {
-      this.$apollo
-        .query({
-          query: gql`
-            query UserQuery($search: String!, $role: String!) {
-              account(
-                where: {
-                  _and: [
-                    { role: { _eq: $role } }
-                    { _or: [{ name: { _like: $search } }, { email: { _like: $search } }] }
-                  ]
-                }
-              ) {
-                id
-                name
-                email
-                client {
-                  id
-                }
-                volunteer {
-                  id
-                }
-                service_requestor {
-                  id
-                }
-              }
-            }
-          `,
+    async querySearch(queryString, cb) {
+      let result;
+      this.loading = true;
+      if (this.userRole) {
+        result = await this.$apollo.query({
+          query: UserSearchWithRoleQuery,
           variables: {
             role: this.userRole,
-            search: this.search + "%",
-          },
-        })
-        .then((result) => {
-          this.results = result.data.account;
-          this.loading = result.loading;
+            search: this.search + '%',
+          }
         });
+      } else {
+        result = await this.$apollo.query({
+          query: UserSearchQuery,
+          variables: {
+            search: this.search + '%',
+          }
+        });
+      }
+      this.loading = true;
+      const users = result.data.users;
+      cb(users.map(user => ({ ...user, value: user.name })));
     },
-    onSelectUser(user) {
-      this.$emit("select", user);
+
+    handleSelect(user) {
+      this.$emit('select', user);
     },
+
     setVisible(visible) {
       this.visible = visible;
     },
   },
+
   computed: {
     resultsStyle() {
       const height = this.visible ? Math.max(this.results.length * 60, 60) + "px" : 0;

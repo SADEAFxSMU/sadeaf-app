@@ -1,7 +1,7 @@
 <template>
   <div class="statcard">
     <el-icon class="icon" :type="icon"></el-icon>
-    <div class="main-content">
+    <div :class="bodyClass">
       <h1 class="stat">{{ stat }}</h1>
       <h1 class="title">{{ title }}</h1>
     </div>
@@ -21,6 +21,12 @@ export default {
       type: String,
       required: true,
     },
+    titlePosition: {
+      type: String,
+      required: false,
+      validator: (val) => ['right', 'bottom'].includes(val),
+      default: 'right',
+    },
     stat: {
       type: [String, Number],
       required: true,
@@ -32,10 +38,16 @@ export default {
     accentPosition: {
       type: String,
       required: false,
-      default: "left",
-      validator: (val) => ["top", "right", "bottom", "left"].includes(val),
-    },
+      default: 'left',
+      validator: (val) => ['top', 'right', 'bottom', 'left'].includes(val)
+    }
   },
+
+  computed: {
+    bodyClass() {
+      return this.titlePosition === 'right' ? 'main-content-row' : 'main-content-col';
+    }
+  }
 };
 </script>
 
@@ -50,7 +62,7 @@ export default {
   overflow: hidden;
   padding: 8px 24px 0 16px;
   min-width: 250px;
-  min-height: 150px;
+  min-height: 120px;
   max-height: 200px;
   margin: 8px;
   color: #486177;
@@ -62,11 +74,17 @@ export default {
   margin-right: 16px;
 }
 
-.main-content {
+.main-content-row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   width: 100%;
   text-align: right;
+}
+.main-content-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .title {

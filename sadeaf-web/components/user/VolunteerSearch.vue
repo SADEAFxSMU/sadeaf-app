@@ -32,18 +32,15 @@ export default {
   methods: {
     async querySearch(queryString, cb) {
       const { data } = await this.$apollo.query({
-        query: gql`
-          query VolunteerQuery($search: String!) {
-            volunteers: volunteer(
-              where: { _or: [{ account: { name: { _like: $search } } }, { account: { email: { _like: $search } } }] }
-            ) {
-              id
-              account {
-                id
-                name
-                email
-              }
-            }
+        query: gql`query VolunteerQuery($search: String!) {
+          volunteers: volunteer(where: {
+            _or: [
+              {account: {name: {_like: $search}}},
+              {account: {email: {_like: $search}}}
+            ]
+          }) {
+            id
+            account { id, name, email, profile_pic_url }
           }
         `,
         variables: {

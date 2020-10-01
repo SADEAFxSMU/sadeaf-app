@@ -107,12 +107,8 @@ export default {
           label: "Description",
         },
         {
-          name: "upcoming",
-          label: "Upcoming",
-        },
-        {
-          name: "status",
-          label: "Status",
+          name: 'status',
+          label: 'Status',
         },
         {
           name: "volunteers",
@@ -205,7 +201,18 @@ export default {
               purpose
               client {
                 id
-                account {
+                name
+                email
+                role
+                profile_pic_url
+              }
+            }
+            statuses: assignments_aggregate(distinct_on: status) {
+              nodes { status }
+            }
+            volunteers: assignments_aggregate(distinct_on: volunteer_id) {
+              nodes {
+                volunteer {
                   id
                   name
                   email
@@ -220,10 +227,8 @@ export default {
                 nodes {
                   volunteer {
                     id
-                    account {
-                      id
-                      name
-                    }
+                    name
+                    profile_pic_url
                   }
                 }
               }
@@ -237,10 +242,9 @@ export default {
                 status
                 volunteer {
                   id
-                  account {
-                    id
-                    name
-                  }
+                  name
+                  role
+                  profile_pic_url
                 }
               }
             }

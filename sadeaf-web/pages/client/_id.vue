@@ -1,13 +1,31 @@
 <template>
-  <div>
-    <h1>Client Profile Page</h1>
+  <div class="profile-page">
+    <client-profile :user-id="id" />
   </div>
 </template>
 
 <script>
+import ClientProfile from "../../components/user/profiles/ClientProfile";
+
 export default {
-  name: "client-profile",
+  name: "client-profile-page",
+
+  components: {
+    ClientProfile
+  },
+
+  computed: {
+    id() {
+      return this.$route.params.id;
+    },
+  }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
