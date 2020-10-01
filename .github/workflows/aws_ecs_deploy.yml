@@ -28,8 +28,6 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           path: sadeaf-hasura
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
           registry: ${{ steps.login-ecr.outputs.registry }}
           repository: sadeafxsmu/sadeaf-hasura
           tag_with_ref: true
@@ -38,8 +36,6 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           path: sadeaf-web
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
           registry: ${{ steps.login-ecr.outputs.registry }}
           repository: sadeafxsmu/sadeaf-web
           tag_with_ref: true
