@@ -8,7 +8,8 @@
         <div class="status-bar">
           <assignment-status :status="assignment.status"
                              :show-ball="false" />
-          <el-button @click="handleUpdateAssignment(assignment)"
+          <el-button v-if="editable"
+                     @click="handleUpdateAssignment(assignment)"
                      icon="el-icon-edit"
                      size="mini"
                      style="margin-left: 4px;" />
@@ -37,6 +38,11 @@ export default {
     event_id: {
       type: Number,
       required: true,
+    },
+    editable: {
+      type: Boolean,
+      required: false,
+      default: true
     },
     client: {
       type: Object,

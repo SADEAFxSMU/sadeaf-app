@@ -27,6 +27,7 @@
         <slot name="role-content"/>
       </el-col>
     </el-row>
+    <slot name="role-body" />
   </div>
 </template>
 
@@ -90,15 +91,14 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: white;
   border-radius: 6px;
-  box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.1);
   padding: 16px;
 }
 .profile-pic {
-  border-radius: 4px;
+  border-radius: 50%;
   margin-bottom: 16px;
   width: 250px;
+  box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.1);
 }
 .name {
   display: flex;

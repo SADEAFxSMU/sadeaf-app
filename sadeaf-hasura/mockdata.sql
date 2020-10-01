@@ -222,7 +222,8 @@ INSERT INTO volunteer_assignment_opt_in (
 (3, 2, 2, 'OPTED_IN'),
 (4, 3, 2, 'OPTED_IN'),
 (5, 3, 3, 'OPTED_IN'),
-(6, 4, 4, 'OPTED_IN');
+(6, 4, 4, 'OPTED_IN'),
+(7, 5, 4, 'OPTED_OUT');
 
 INSERT INTO feedback (
     id, event_id, volunteer_id, notetaker_punctual, notetaker_conduct, live_comments, live_information_understanding,
@@ -237,6 +238,14 @@ INSERT INTO interpretation_details (
     number_of_hearing,event_id
 ) VALUES
 (1, 'home system', true, true, 5, 100, 1);
+
+INSERT INTO attendance(
+   id, assignment_id, attended, dispute_comment, has_dispute
+) VALUES
+(1, 1, true, null, false),
+(2, 2, true, null, false),
+(3, 3, true, null, false),
+(4, 4, false, null, true);
 
 SELECT setval(pg_get_serial_sequence('telegram_information', 'id'), coalesce(max(id) + 1, 1), false) FROM telegram_information;
 SELECT setval(pg_get_serial_sequence('email_information', 'id'), coalesce(max(id) + 1, 1), false) FROM email_information;

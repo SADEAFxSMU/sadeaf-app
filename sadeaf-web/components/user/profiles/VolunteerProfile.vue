@@ -1,22 +1,17 @@
 <template>
   <base-profile :user="user" :loading="$apollo.loading">
     <template v-slot:role-content>
-      <div class="">
-        <div class="volunteer-stats">
-          <stat-card v-for="({value, color}, statName) in stats"
-                     :title="statName"
-                     title-position="bottom"
-                     :stat="value"
-                     :accent-color="color" />
-        </div>
-        <h1>Assignments</h1>
-        <div class="assignments">
-          <assignment-card v-for="assignment in assignments"
-                           :details="assignment"
-                           :show-edit="false"
-                           type="elevate" />
-        </div>
+      <div class="volunteer-stats">
+        <stat-card v-for="({value, color}, statName) in stats"
+                   :title="statName"
+                   title-position="bottom"
+                   :stat="value"
+                   :accent-color="color" />
       </div>
+    </template>
+
+    <template v-slot:role-body>
+      <volunteer-events-table :events="events" />
     </template>
   </base-profile>
 </template>
@@ -27,25 +22,62 @@ import BaseProfile from "./BaseProfile";
 import StatCard from "../../StatCard";
 import { accountFieldsFragment } from "../../../common/graphql/fragments";
 import AssignmentCard from "../../cards/AssignmentCard";
+import VolunteerEventsTable from "../../tables/VolunteerEventsTable/index";
 
 const VolunteerQuery = gql`
   query VolunteerQueryByAccountId($id: Int!) {
     user: account_by_pk(id: $id){
       ...accountFields
+
       volunteer {
         id
-        assignments {
+      }
+    }
+
+    unique_clients: client_aggregate(where: {events:{assignments:{volunteer:{account_id:{_eq:$id}}}}}) {
+      aggregate {
+        count
+      }
+    }
+
+    events: event(where: {assignments:{volunteer:{account_id:{_eq: $id}}}}) {
+      id
+      name
+      client {
+        id
+        account {
           id
-          event {
-            id
-            name
-          }
-          start_dt
-          end_dt
-          status
-          address_line_one
-          room_number
+          name
+          profile_pic_url
         }
+      }
+      statuses: assignments_aggregate(distinct_on: status) {
+        nodes {
+          status
+        }
+      }
+      assignments {
+        id
+        start_dt
+        end_dt
+        status
+        address_line_one
+        room_number
+        attendance {
+          id
+          attended
+        }
+      }
+    }
+
+    attended_count: attendance_aggregate(where: { attended: { _eq: true }}) {
+      aggregate {
+        count
+      }
+    }
+    not_attended_count: attendance_aggregate(where: {attended: {_eq: false}}) {
+      aggregate {
+        count
       }
     }
   }
@@ -57,6 +89,7 @@ export default {
   name: "VolunteerProfile",
 
   components: {
+    VolunteerEventsTable,
     AssignmentCard,
     StatCard,
     BaseProfile
@@ -72,16 +105,18 @@ export default {
   data() {
     return {
       user: null,
+      events: [],
+      attendance_aggregate: null,
       stats: {
-        "Attendance": {
+        attendance: {
           value: '100%',
           color: '#3dd670',
         },
-        "Clients": {
+        clients: {
           value: 21,
           color: '#3dd670',
         },
-        Cancels: {
+        cancels: {
           value: '68%',
           color: 'salmon',
         },
@@ -93,14 +128,29 @@ export default {
     volunteer() {
       return this.user.volunteer;
     },
-    assignments() {
-      return this.volunteer.assignments;
-    }
   },
 
   apollo: {
     user: {
       query: VolunteerQuery,
+      result({ data }) {
+        const {
+          user,
+          unique_clients,
+          events,
+          attendance_aggregate,
+          attended_count,
+          not_attended_count
+        } = data;
+        this.user = user;
+        this.events = events;
+        this.attendance_aggregate = attendance_aggregate;
+        this.stats.clients.value = unique_clients.aggregate.count;
+        this.stats.attendance.value = (
+          attended_count.aggregate.count /
+          (attended_count.aggregate.count + not_attended_count.aggregate.count)
+        ) * 100 + '%';
+      },
       variables() {
         return {
           id: this.userId,
@@ -121,5 +171,9 @@ export default {
 }
 .assignments {
   width: 100%;
+}
+.heading {
+  margin-top: 16px;
+  text-align: center;
 }
 </style>
