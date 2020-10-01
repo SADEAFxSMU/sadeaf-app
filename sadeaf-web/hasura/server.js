@@ -1,6 +1,6 @@
-import express from "express";
-import bodyParser from "body-parser";
-import pubsub from "./pubsub";
+import express from 'express';
+import bodyParser from 'body-parser';
+import pubsub from './pubsub';
 
 export default {
   async start(port) {
@@ -9,12 +9,12 @@ export default {
     const app = express();
     app.use(bodyParser.json());
 
-    app.post("/_hasura/webhook/:queue", async function (req, res, next) {
+    app.post('/_hasura/webhook/:queue', async function (req, res, next) {
       await publish(req.params.queue, req.body);
       res.json({});
     });
 
-    app.use(require("./authz"));
+    app.use(require('./authz'));
 
     return new Promise((resolve, reject) => {
       app.listen(port, (err) => {

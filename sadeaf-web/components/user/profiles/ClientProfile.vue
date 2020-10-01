@@ -6,8 +6,8 @@
         <div class="client-events">
           <div v-if="events && events.length > 0">
             <div v-for="event in events">
-              <el-card style="margin: 8px;">
-                <h3 style="margin-bottom: 4px;">{{ event.name }}</h3>
+              <el-card style="margin: 8px">
+                <h3 style="margin-bottom: 4px">{{ event.name }}</h3>
                 <p style="color: #959aa5">{{ event.description }}</p>
               </el-card>
             </div>
@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import BaseProfile from "./BaseProfile";
+import BaseProfile from './BaseProfile';
 import gql from 'graphql-tag';
 
 const ClientQuery = gql`
   query ClientQueryByAccountId($id: Int!) {
-    user: account_by_pk(id: $id){
+    user: account_by_pk(id: $id) {
       name
       email
       role
@@ -58,31 +58,30 @@ const ClientQuery = gql`
   }
 `;
 
-
 export default {
-  name: "ClientProfile",
+  name: 'ClientProfile',
 
   components: {
-    BaseProfile
+    BaseProfile,
   },
 
   props: {
     userId: {
       type: [String, Number],
       required: true,
-    }
+    },
   },
 
   data() {
     return {
       user: null,
-    }
+    };
   },
 
   computed: {
     events() {
       return this.user.client.events;
-    }
+    },
   },
 
   apollo: {
@@ -91,9 +90,9 @@ export default {
       variables() {
         return {
           id: this.userId,
-        }
-      }
-    }
+        };
+      },
+    },
   },
 };
 </script>

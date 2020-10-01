@@ -101,12 +101,12 @@
 </template>
 
 <script>
-import { EVENT_PURPOSE_OPTIONS } from "../../common/types/constants";
-import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
-import UserCard from "../user/UserCard";
-import SmallDeleteButton from "../buttons/SmallDeleteButton";
-import gql from "graphql-tag";
-import dayjs from "dayjs";
+import { EVENT_PURPOSE_OPTIONS } from '../../common/types/constants';
+import UserCardHorizontalSmall from '../user/UserCardHorizontalSmall';
+import UserCard from '../user/UserCard';
+import SmallDeleteButton from '../buttons/SmallDeleteButton';
+import gql from 'graphql-tag';
+import dayjs from 'dayjs';
 
 const INSERT_EVENT = gql`
   mutation InsertEvent(
@@ -152,7 +152,7 @@ const REPEAT_OPTS = {
 };
 
 export default {
-  name: "ClientCreateEventForm",
+  name: 'ClientCreateEventForm',
   components: { SmallDeleteButton, UserCard, UserCardHorizontalSmall },
   props: {
     date: {
@@ -164,9 +164,9 @@ export default {
     return {
       event: null,
       rules: {
-        name: [{ required: true, message: "Please enter a name for this Event", trigger: "blur" }],
-        purpose: [{ required: true, message: "Please enter a purpose" }],
-        date: [{ required: true, message: "Please enter a date" }],
+        name: [{ required: true, message: 'Please enter a name for this Event', trigger: 'blur' }],
+        purpose: [{ required: true, message: 'Please enter a purpose' }],
+        date: [{ required: true, message: 'Please enter a date' }],
         duration: [
           {
             validator: (_, __, callback) => {
@@ -174,18 +174,18 @@ export default {
               start_time = dayjs(start_time);
               end_time = dayjs(end_time);
 
-              const diff_hours = end_time.diff(start_time, "hour", false);
+              const diff_hours = end_time.diff(start_time, 'hour', false);
               if (diff_hours < 2) {
-                callback(new Error("Minimum duration is 2 hours"));
+                callback(new Error('Minimum duration is 2 hours'));
               } else {
                 callback();
               }
             },
-            trigger: "blur",
+            trigger: 'blur',
           },
         ],
-        repeat: [{ required: true, message: "Please select an option" }],
-        repeatCount: [{ required: true, message: "Please indicate a count" }],
+        repeat: [{ required: true, message: 'Please select an option' }],
+        repeatCount: [{ required: true, message: 'Please indicate a count' }],
         location: [
           {
             validator: (rule, value, callback) => {
@@ -193,7 +193,7 @@ export default {
               if (this.form.address_line_one) {
                 callback();
               } else {
-                callback(new Error("Please enter an address!"));
+                callback(new Error('Please enter an address!'));
               }
             },
           },
@@ -220,16 +220,16 @@ export default {
         if (valid) {
           await this.insertEvent();
           this.onOperationSuccess();
-          this.$notify.success("Service request created!");
+          this.$notify.success('Service request created!');
         } else {
-          console.log("error submit!!");
+          console.log('error submit!!');
           return false;
         }
       });
     },
 
     handleCancel() {
-      this.$emit("cancel");
+      this.$emit('cancel');
     },
 
     handleDelete() {
@@ -252,7 +252,7 @@ export default {
     },
 
     onOperationSuccess() {
-      this.$emit("success");
+      this.$emit('success');
       this.resetState();
     },
 
@@ -269,7 +269,7 @@ export default {
       return this.event !== null;
     },
     day() {
-      return dayjs(this.date).format("dddd");
+      return dayjs(this.date).format('dddd');
     },
     assignments() {
       let {
@@ -293,13 +293,13 @@ export default {
       }
 
       let start_dt = dayjs(date)
-        .set("hour", start_time.getHours())
-        .set("minute", start_time.getMinutes())
-        .set("second", start_time.getSeconds());
+        .set('hour', start_time.getHours())
+        .set('minute', start_time.getMinutes())
+        .set('second', start_time.getSeconds());
       let end_dt = dayjs(date)
-        .set("hour", end_time.getHours())
-        .set("minute", end_time.getMinutes())
-        .set("second", end_time.getSeconds());
+        .set('hour', end_time.getHours())
+        .set('minute', end_time.getMinutes())
+        .set('second', end_time.getSeconds());
 
       for (let i = 0; i < repeatCount; i++) {
         assignments.push({
@@ -307,8 +307,8 @@ export default {
           address_line_two,
           postal,
           room_number,
-          start_dt: start_dt.add(7 * i, "day"),
-          end_dt: end_dt.add(7 * i, "day"),
+          start_dt: start_dt.add(7 * i, 'day'),
+          end_dt: end_dt.add(7 * i, 'day'),
         });
       }
       return assignments;
@@ -317,7 +317,7 @@ export default {
 
   watch: {
     date(val) {
-      this.$set(this.form, "date", val);
+      this.$set(this.form, 'date', val);
     },
   },
 };
@@ -344,7 +344,7 @@ export default {
 }
 
 .required-asterisk:before {
-  content: "*";
+  content: '*';
   margin-right: 4px;
   color: #f56c6c;
 }

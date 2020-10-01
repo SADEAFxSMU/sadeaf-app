@@ -1,14 +1,14 @@
-import Vue from "vue";
-import VueApollo from "vue-apollo";
-import { HttpLink } from "apollo-link-http";
-import { ApolloClient } from "apollo-client";
-import { split } from "apollo-link";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import MessageTypes from "subscriptions-transport-ws/dist/message-types";
-import { WebSocketLink } from "apollo-link-ws";
-import { getMainDefinition } from "apollo-utilities";
-import { setContext } from "apollo-link-context";
-import { Auth } from "aws-amplify";
+import Vue from 'vue';
+import VueApollo from 'vue-apollo';
+import { HttpLink } from 'apollo-link-http';
+import { ApolloClient } from 'apollo-client';
+import { split } from 'apollo-link';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import MessageTypes from 'subscriptions-transport-ws/dist/message-types';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
+import { setContext } from 'apollo-link-context';
+import { Auth } from 'aws-amplify';
 
 Vue.use(VueApollo);
 
@@ -43,13 +43,13 @@ export default ({ app }, inject) => {
 
   const httpLink = authLink.concat(
     new HttpLink({
-      uri: "/api/graphql",
+      uri: '/api/graphql',
     })
   );
 
   const wsLink = new WebSocketLink({
     // TODO(fuxing): Inject and change to wss for production
-    uri: "ws://localhost:3000/api/graphql",
+    uri: 'ws://localhost:3000/api/graphql',
     options: {
       reconnect: true,
       lazy: true,
@@ -67,7 +67,7 @@ export default ({ app }, inject) => {
   const link = split(
     ({ query }) => {
       const { kind, operation } = getMainDefinition(query);
-      return kind === "OperationDefinition" && operation === "subscription";
+      return kind === 'OperationDefinition' && operation === 'subscription';
     },
     wsLink,
     httpLink
@@ -82,14 +82,14 @@ export default ({ app }, inject) => {
     defaultClient: apolloClient,
     errorHandler(error) {
       console.log(
-        "%cError",
-        "background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;",
+        '%cError',
+        'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;',
         error.message
       );
     },
   });
 
-  inject("apolloHelpers", {
+  inject('apolloHelpers', {
     onLogin: async (apolloClient = app.apolloProvider.defaultClient) => {
       const wsClient = apolloClient.wsClient;
       if (!wsClient) return;

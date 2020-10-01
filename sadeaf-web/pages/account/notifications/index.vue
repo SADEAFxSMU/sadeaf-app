@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import NotificationPreferencesForm from "../../../components/forms/NotificationPreferencesForm";
+import NotificationPreferencesForm from '../../../components/forms/NotificationPreferencesForm';
 export default {
-  name: "notifications",
+  name: 'notifications',
   components: { NotificationPreferencesForm },
 };
 </script>

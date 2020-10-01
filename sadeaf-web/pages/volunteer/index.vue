@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import VolunteerEventCalendar from "../../components/calendars/VolunteerEventCalendar";
+import gql from 'graphql-tag';
+import VolunteerEventCalendar from '../../components/calendars/VolunteerEventCalendar';
 
 export default {
-  name: "volunteer-home",
+  name: 'volunteer-home',
 
   components: {
     VolunteerEventCalendar,

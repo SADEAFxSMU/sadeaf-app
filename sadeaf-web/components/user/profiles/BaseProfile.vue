@@ -3,15 +3,22 @@
     <h1>LOADING...</h1>
   </div>
   <div v-else-if="user" class="user">
-    <el-row type="flex" style="flex-wrap: wrap;" :gutter="20">
+    <el-row type="flex" style="flex-wrap: wrap" :gutter="20">
       <el-col :xs="24" :md="8">
         <div class="profile">
-          <img v-if="profilePicUrl"
-               :src="profilePicUrl"
-               class="profile-pic" />
-          <el-avatar v-else
-                     class="el-icon-user-solid"
-                     style="display: flex; justify-content: center; align-items: center; height: 150px; width: 150px; font-size: 70px;" />
+          <img v-if="profilePicUrl" :src="profilePicUrl" class="profile-pic" />
+          <el-avatar
+            v-else
+            class="el-icon-user-solid"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 150px;
+              width: 150px;
+              font-size: 70px;
+            "
+          />
           <div class="name">
             <h1>{{ name }}</h1>
             <role-tag :role="role" />
@@ -24,23 +31,23 @@
         </div>
       </el-col>
       <el-col :xs="24" :md="16">
-        <slot name="role-content"/>
+        <slot name="role-content" />
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import RoleTag from "../../RoleTag";
+import RoleTag from '../../RoleTag';
 
 /**
  * Shows the user's details and other account info
  */
 export default {
-  name: "BaseProfile",
+  name: 'BaseProfile',
 
   components: {
-    RoleTag
+    RoleTag,
   },
 
   props: {
@@ -52,7 +59,7 @@ export default {
       type: Boolean,
       required: true,
       default: true,
-    }
+    },
   },
 
   computed: {

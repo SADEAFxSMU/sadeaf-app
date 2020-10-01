@@ -63,12 +63,12 @@
 </template>
 
 <script>
-const STRING = "string";
-const INT = "int";
-const FLOAT = "float";
-const NUMERIC = "numeric";
-const ENUM = "enum";
-const TIMESTAMP = "timestamp";
+const STRING = 'string';
+const INT = 'int';
+const FLOAT = 'float';
+const NUMERIC = 'numeric';
+const ENUM = 'enum';
+const TIMESTAMP = 'timestamp';
 const defaultFormatters = {
   [STRING]: (x) => x,
   [INT]: (x) => x,
@@ -79,7 +79,7 @@ const defaultFormatters = {
 };
 
 export default {
-  name: "BaseTable",
+  name: 'BaseTable',
   props: {
     title: {
       type: String,
@@ -122,7 +122,7 @@ export default {
   },
   data() {
     return {
-      search: "",
+      search: '',
       currentPage: 1, // Local state for current selected page
       editRow: null,
       editIndex: null,
@@ -143,7 +143,7 @@ export default {
       this.currentPage = currentPage;
     },
     filterHandler(value, row, column) {
-      const property = column["property"];
+      const property = column['property'];
       return row[property] === value;
     },
     formatter(row, column, x) {
@@ -171,7 +171,7 @@ export default {
         for (const column in data) {
           const value = data[column];
           if (value) {
-            if (typeof value === "string") {
+            if (typeof value === 'string') {
               if (value.toLowerCase().includes(searchString)) {
                 return true;
               }

@@ -59,16 +59,16 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import ClientCreateEventForm from "../forms/ClientCreateEventForm";
-import UserCard from "../user/UserCard";
-import AssignmentCard from "../cards/AssignmentCard";
-import ClientUpsertAssignmentForm from "../forms/ClientUpsertAssignmentForm";
-import { DateUtils } from "../../common/date-utils";
-import dayjs from "dayjs";
+import gql from 'graphql-tag';
+import ClientCreateEventForm from '../forms/ClientCreateEventForm';
+import UserCard from '../user/UserCard';
+import AssignmentCard from '../cards/AssignmentCard';
+import ClientUpsertAssignmentForm from '../forms/ClientUpsertAssignmentForm';
+import { DateUtils } from '../../common/date-utils';
+import dayjs from 'dayjs';
 
 export default {
-  name: "ClientEventCalendar",
+  name: 'ClientEventCalendar',
 
   components: {
     ClientUpsertAssignmentForm,
@@ -84,7 +84,7 @@ export default {
       selectedDate: null,
       updateEvent: null,
       updateAssignment: null,
-      tab: "assignments",
+      tab: 'assignments',
       createServiceRequestFormVisible: false,
       updateAssignmentDialogVisible: false,
     };
@@ -96,9 +96,9 @@ export default {
       let commandPanelVisible = true;
 
       if (this.getAssignmentsOnDate(date)) {
-        this.tab = "assignments";
+        this.tab = 'assignments';
       } else if (this.isAfterToday(date)) {
-        this.tab = "request";
+        this.tab = 'request';
       } else {
         commandPanelVisible = false;
       }
@@ -129,7 +129,7 @@ export default {
     },
 
     getAssignmentsOnDate(date) {
-      const dateKey = dayjs(date).format("YYYYMMDD");
+      const dateKey = dayjs(date).format('YYYYMMDD');
       return this.assignmentsByDateTime[dateKey];
     },
     isBeforeToday(date) {

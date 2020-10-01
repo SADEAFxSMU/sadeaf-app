@@ -32,21 +32,21 @@
 </template>
 
 <script>
-import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
-import StatusIndicator from "../StatusIndicator";
-import AssignmentStatus from "../AssignmentStatus";
-import { DateUtils } from "../../common/date-utils";
-import dayjs from "dayjs";
+import UserCardHorizontalSmall from '../user/UserCardHorizontalSmall';
+import StatusIndicator from '../StatusIndicator';
+import AssignmentStatus from '../AssignmentStatus';
+import { DateUtils } from '../../common/date-utils';
+import dayjs from 'dayjs';
 
 export default {
-  name: "AssignmentCard",
+  name: 'AssignmentCard',
   components: { AssignmentStatus, StatusIndicator, UserCardHorizontalSmall },
   props: {
     type: {
       type: String,
       required: false,
       default: 'elevate',
-      validator: val => ['elevate', 'indent'].includes(val)
+      validator: (val) => ['elevate', 'indent'].includes(val),
     },
     details: {
       type: Object,
@@ -93,7 +93,7 @@ export default {
     },
     address() {
       const { address_line_one, address_line_two } = this.assignment;
-      return address_line_one + (address_line_two ? ", " + address_line_two : "");
+      return address_line_one + (address_line_two ? ', ' + address_line_two : '');
     },
     roomNumber() {
       return this.assignment.room_number;
@@ -103,12 +103,12 @@ export default {
     },
     icon() {
       if (this.toAccept) {
-        return "el-icon-check";
+        return 'el-icon-check';
       }
       if (this.showCancel) {
-        return "el-icon-close";
+        return 'el-icon-close';
       }
-      return "el-icon-edit";
+      return 'el-icon-edit';
     },
     editButtonDisabled() {
       // disable edit button if assignment start datetime is before current datetime

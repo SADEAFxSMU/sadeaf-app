@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import GenerateInvoiceTable from "../../components/tables/GenerateInvoiceTable";
+import GenerateInvoiceTable from '../../components/tables/GenerateInvoiceTable';
 
 export default {
-  name: "index",
+  name: 'index',
   components: { GenerateInvoiceTable },
 };
 </script>

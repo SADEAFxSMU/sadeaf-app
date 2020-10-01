@@ -58,13 +58,13 @@
 </template>
 
 <script>
-import { ASSIGNMENT_STATUSES } from "../../common/types/constants";
-import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
-import VolunteerSearch from "../user/VolunteerSearch";
-import UserCard from "../user/UserCard";
-import _ from "lodash";
-import gql from "graphql-tag";
-import SmallDeleteButton from "../buttons/SmallDeleteButton";
+import { ASSIGNMENT_STATUSES } from '../../common/types/constants';
+import UserCardHorizontalSmall from '../user/UserCardHorizontalSmall';
+import VolunteerSearch from '../user/VolunteerSearch';
+import UserCard from '../user/UserCard';
+import _ from 'lodash';
+import gql from 'graphql-tag';
+import SmallDeleteButton from '../buttons/SmallDeleteButton';
 
 const UPDATE_ASSIGNMENT = gql`
   mutation UpdateAssignment(
@@ -160,7 +160,7 @@ const DELETE_ASSIGNMENT = gql`
 `;
 
 export default {
-  name: "SadeafCreateAssignmentForm",
+  name: 'SadeafCreateAssignmentForm',
   components: { SmallDeleteButton, UserCard, VolunteerSearch, UserCardHorizontalSmall },
   props: {
     client: {
@@ -215,10 +215,10 @@ export default {
       } else {
         this.insertAssignment();
       }
-      this.$emit("update", this.form);
+      this.$emit('update', this.form);
     },
     handleCancel() {
-      this.$emit("cancel");
+      this.$emit('cancel');
     },
     handleDelete() {
       this.deleteAssignment();
@@ -241,7 +241,7 @@ export default {
         },
       });
       this.onOperationSuccess();
-      this.$notify.success("Assignment created!");
+      this.$notify.success('Assignment created!');
     },
     async updateAssignment() {
       await this.$apollo.mutate({
@@ -261,7 +261,7 @@ export default {
         },
       });
       this.onOperationSuccess();
-      this.$notify.success("Assignment updated!");
+      this.$notify.success('Assignment updated!');
     },
     async deleteAssignment() {
       await this.$apollo.mutate({
@@ -271,12 +271,12 @@ export default {
         },
       });
       this.onOperationSuccess();
-      this.$notify.success("Assignment deleted!");
+      this.$notify.success('Assignment deleted!');
     },
 
     onOperationSuccess() {
       this.resetValues();
-      this.$emit("success");
+      this.$emit('success');
     },
 
     resetValues() {

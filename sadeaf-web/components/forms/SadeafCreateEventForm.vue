@@ -54,12 +54,12 @@
 </template>
 
 <script>
-import { EVENT_PURPOSE_OPTIONS } from "../../common/types/constants";
-import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
-import UserCard from "../user/UserCard";
-import _ from "lodash";
-import gql from "graphql-tag";
-import ClientSearch from "../user/ClientSearch";
+import { EVENT_PURPOSE_OPTIONS } from '../../common/types/constants';
+import UserCardHorizontalSmall from '../user/UserCardHorizontalSmall';
+import UserCard from '../user/UserCard';
+import _ from 'lodash';
+import gql from 'graphql-tag';
+import ClientSearch from '../user/ClientSearch';
 
 const UPDATE_EVENT = gql`
   mutation UpdateEvent($client_id: Int, $description: String, $id: Int!, $name: String, $purpose: String) {
@@ -101,7 +101,7 @@ const DELETE_EVENT = gql`
 `;
 
 export default {
-  name: "SadeafCreateEventForm",
+  name: 'SadeafCreateEventForm',
   components: { ClientSearch, UserCard, UserCardHorizontalSmall },
   props: {
     event: {
@@ -136,8 +136,8 @@ export default {
           this.$set(this.form, fieldName, value);
         });
         if (event.purpose && !EVENT_PURPOSE_OPTIONS.includes(event.purpose)) {
-          this.$set(this.form, "purpose", "Other");
-          this.$set(this.form, "purposeOther", event.purpose);
+          this.$set(this.form, 'purpose', 'Other');
+          this.$set(this.form, 'purposeOther', event.purpose);
         }
       } else {
         this.resetState();
@@ -149,10 +149,10 @@ export default {
       } else {
         this.insertEvent();
       }
-      this.$emit("update", this.form);
+      this.$emit('update', this.form);
     },
     handleCancel() {
-      this.$emit("cancel");
+      this.$emit('cancel');
     },
     handleDelete() {
       this.deleteEvent();
@@ -169,7 +169,7 @@ export default {
       });
       this.event = data.event;
       this.onOperationSuccess();
-      this.$notify.success("Event created!");
+      this.$notify.success('Event created!');
     },
     async updateEvent() {
       const { data } = await this.$apollo.mutate({
@@ -184,7 +184,7 @@ export default {
       });
       this.event = data.event;
       this.onOperationSuccess();
-      this.$notify.success("Event updated!");
+      this.$notify.success('Event updated!');
     },
     async deleteEvent() {
       await this.$apollo.mutate({
@@ -194,11 +194,11 @@ export default {
         },
       });
       this.onOperationSuccess();
-      this.$notify.success("Event deleted!");
+      this.$notify.success('Event deleted!');
     },
 
     onOperationSuccess() {
-      this.$emit("success");
+      this.$emit('success');
       this.resetState();
     },
 

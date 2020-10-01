@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import NuxtLinkWrapper from "./NuxtLinkWrapper";
-import { getUserProfilePagePath } from "../../common/types/users";
+import NuxtLinkWrapper from './NuxtLinkWrapper';
+import { getUserProfilePagePath } from '../../common/types/users';
 
 export default {
-  name: "UserProfileLink",
+  name: 'UserProfileLink',
 
   props: {
     user: {
@@ -20,11 +20,11 @@ export default {
       type: Boolean,
       required: false,
       default: true,
-    }
+    },
   },
 
   components: {
-    NuxtLinkWrapper
+    NuxtLinkWrapper,
   },
 
   computed: {
@@ -37,10 +37,8 @@ export default {
     role() {
       return this.user.role;
     },
-  }
+  },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

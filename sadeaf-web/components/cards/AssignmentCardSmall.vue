@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import UserCardHorizontalSmall from "../user/UserCardHorizontalSmall";
+import UserCardHorizontalSmall from '../user/UserCardHorizontalSmall';
 export default {
-  name: "AssignmentCardSmall",
+  name: 'AssignmentCardSmall',
   components: { UserCardHorizontalSmall },
   props: {
     assignment: {

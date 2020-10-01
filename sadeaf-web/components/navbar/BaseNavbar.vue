@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import StatusIndicator from "../StatusIndicator";
-import LogoutButton from "../buttons/LogoutButton";
+import StatusIndicator from '../StatusIndicator';
+import LogoutButton from '../buttons/LogoutButton';
 export default {
-  name: "BaseNavbar",
+  name: 'BaseNavbar',
   components: { LogoutButton, StatusIndicator },
 };
 </script>

@@ -5,27 +5,27 @@
 </template>
 
 <script>
-import VolunteerProfile from "../../components/user/profiles/VolunteerProfile";
+import VolunteerProfile from '../../components/user/profiles/VolunteerProfile';
 
 export default {
-  name: "volunteer-profile-page",
+  name: 'volunteer-profile-page',
 
   components: {
-    VolunteerProfile
+    VolunteerProfile,
   },
 
   computed: {
     id() {
       return this.$route.params.id;
     },
-  }
+  },
 };
 </script>
 
 <style scoped>
-  .profile-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

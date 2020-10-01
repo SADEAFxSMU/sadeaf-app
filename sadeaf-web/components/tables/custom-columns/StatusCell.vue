@@ -6,13 +6,13 @@
 
 <script>
 const statusToTypeMapping = {
-  PENDING: "danger",
-  LIVE: "primary",
-  COMPLETE: "success",
+  PENDING: 'danger',
+  LIVE: 'primary',
+  COMPLETE: 'success',
 };
 
 export default {
-  name: "StatusCell",
+  name: 'StatusCell',
   props: {
     status: {
       type: String,

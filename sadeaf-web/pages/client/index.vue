@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import ClientEventsTable from "../../components/tables/ClientEventsTable/index";
-import ClientEventCalendar from "../../components/calendars/ClientEventCalendar";
+import ClientEventsTable from '../../components/tables/ClientEventsTable/index';
+import ClientEventCalendar from '../../components/calendars/ClientEventCalendar';
 export default {
-  name: "client-home",
+  name: 'client-home',
 
   components: {
     ClientEventCalendar,

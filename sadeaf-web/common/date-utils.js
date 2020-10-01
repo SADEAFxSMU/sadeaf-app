@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export const DateUtils = {
   isBeforeToday(date) {
@@ -14,7 +14,7 @@ export const DateUtils = {
     const assignmentsByDateTime = {};
 
     assignments.forEach((assignment) => {
-      const [dateKey, timeKey] = dayjs(assignment.start_dt).format("YYYYMMDD HH:mm").split(" ");
+      const [dateKey, timeKey] = dayjs(assignment.start_dt).format('YYYYMMDD HH:mm').split(' ');
       if (!assignmentsByDateTime.hasOwnProperty(dateKey)) {
         assignmentsByDateTime[dateKey] = {};
       }
@@ -24,6 +24,6 @@ export const DateUtils = {
     return assignmentsByDateTime;
   },
   humanReadableDt(date) {
-    return dayjs(date).format("DD MMMM YYYY HH:MM");
+    return dayjs(date).format('DD MMMM YYYY HH:MM');
   },
 };

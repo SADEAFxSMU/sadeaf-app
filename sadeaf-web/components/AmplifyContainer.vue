@@ -17,18 +17,18 @@
 </template>
 
 <script>
-import { onAuthUIStateChange, AuthState } from "@aws-amplify/ui-components";
-import "@aws-amplify/ui-vue";
+import { onAuthUIStateChange, AuthState } from '@aws-amplify/ui-components';
+import '@aws-amplify/ui-vue';
 
 const AuthRouting = {};
-AuthRouting[AuthState.SignedIn] = { path: "/", push: true };
-AuthRouting[AuthState.ConfirmSignUp] = { path: "/confirm-sign-up", push: true };
-AuthRouting[AuthState.SignIn] = { path: "/sign-in" };
-AuthRouting[AuthState.SignUp] = { path: "/sign-up" };
-AuthRouting[AuthState.ForgotPassword] = { path: "/forget-password" };
+AuthRouting[AuthState.SignedIn] = { path: '/', push: true };
+AuthRouting[AuthState.ConfirmSignUp] = { path: '/confirm-sign-up', push: true };
+AuthRouting[AuthState.SignIn] = { path: '/sign-in' };
+AuthRouting[AuthState.SignUp] = { path: '/sign-up' };
+AuthRouting[AuthState.ForgotPassword] = { path: '/forget-password' };
 
 export default {
-  name: "AmplifyContainer",
+  name: 'AmplifyContainer',
   props: {
     state: {
       type: String,
@@ -58,22 +58,22 @@ export default {
       signUp: {
         formFields: [
           {
-            type: "email",
-            label: "Email Address",
-            placeholder: "Email",
+            type: 'email',
+            label: 'Email Address',
+            placeholder: 'Email',
             required: true,
           },
           {
-            type: "password",
-            label: "Password",
-            placeholder: "Password",
+            type: 'password',
+            label: 'Password',
+            placeholder: 'Password',
             required: true,
           },
           {
-            type: "phone_number",
-            label: "Phone Number",
-            dialCode: "+65",
-            placeholder: "8765 4321",
+            type: 'phone_number',
+            label: 'Phone Number',
+            dialCode: '+65',
+            placeholder: '8765 4321',
             required: true,
           },
         ],
@@ -81,15 +81,15 @@ export default {
       confirmSignUp: {
         formFields: [
           {
-            type: "email",
-            label: "Email Address",
-            placeholder: "Enter your email address",
+            type: 'email',
+            label: 'Email Address',
+            placeholder: 'Enter your email address',
             required: true,
           },
           {
-            type: "code",
-            label: "Verification Code",
-            placeholder: "Code",
+            type: 'code',
+            label: 'Verification Code',
+            placeholder: 'Code',
           },
         ],
       },

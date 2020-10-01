@@ -3,18 +3,17 @@
     <template v-slot:role-content>
       <div class="">
         <div class="volunteer-stats">
-          <stat-card v-for="({value, color}, statName) in stats"
-                     :title="statName"
-                     title-position="bottom"
-                     :stat="value"
-                     :accent-color="color" />
+          <stat-card
+            v-for="({ value, color }, statName) in stats"
+            :title="statName"
+            title-position="bottom"
+            :stat="value"
+            :accent-color="color"
+          />
         </div>
         <h1>Assignments</h1>
         <div class="assignments">
-          <assignment-card v-for="assignment in assignments"
-                           :details="assignment"
-                           :show-edit="false"
-                           type="elevate" />
+          <assignment-card v-for="assignment in assignments" :details="assignment" :show-edit="false" type="elevate" />
         </div>
       </div>
     </template>
@@ -23,14 +22,14 @@
 
 <script>
 import gql from 'graphql-tag';
-import BaseProfile from "./BaseProfile";
-import StatCard from "../../StatCard";
-import { accountFieldsFragment } from "../../../common/graphql/fragments";
-import AssignmentCard from "../../cards/AssignmentCard";
+import BaseProfile from './BaseProfile';
+import StatCard from '../../StatCard';
+import { accountFieldsFragment } from '../../../common/graphql/fragments';
+import AssignmentCard from '../../cards/AssignmentCard';
 
 const VolunteerQuery = gql`
   query VolunteerQueryByAccountId($id: Int!) {
-    user: account_by_pk(id: $id){
+    user: account_by_pk(id: $id) {
       ...accountFields
       volunteer {
         id
@@ -52,32 +51,31 @@ const VolunteerQuery = gql`
   ${accountFieldsFragment}
 `;
 
-
 export default {
-  name: "VolunteerProfile",
+  name: 'VolunteerProfile',
 
   components: {
     AssignmentCard,
     StatCard,
-    BaseProfile
+    BaseProfile,
   },
 
   props: {
     userId: {
       type: [String, Number],
       required: true,
-    }
+    },
   },
 
   data() {
     return {
       user: null,
       stats: {
-        "Attendance": {
+        Attendance: {
           value: '100%',
           color: '#3dd670',
         },
-        "Clients": {
+        Clients: {
           value: 21,
           color: '#3dd670',
         },
@@ -85,8 +83,8 @@ export default {
           value: '68%',
           color: 'salmon',
         },
-      }
-    }
+      },
+    };
   },
 
   computed: {
@@ -95,7 +93,7 @@ export default {
     },
     assignments() {
       return this.volunteer.assignments;
-    }
+    },
   },
 
   apollo: {
@@ -104,16 +102,15 @@ export default {
       variables() {
         return {
           id: this.userId,
-        }
-      }
-    }
+        };
+      },
+    },
   },
 };
 </script>
 
 <style scoped>
 .volunteer {
-
 }
 .volunteer-stats {
   display: flex;

@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import BaseNavbar from "./BaseNavbar";
+import BaseNavbar from './BaseNavbar';
 
 export default {
-  name: "volunteer-navbar",
+  name: 'volunteer-navbar',
   components: { BaseNavbar },
 };
 </script>

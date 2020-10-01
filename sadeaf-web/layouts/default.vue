@@ -15,11 +15,11 @@
 </template>
 
 <script>
-import AdminNavbar from "../components/navbar/admin";
-import ClientNavbar from "../components/navbar/client";
-import VolunteerNavbar from "../components/navbar/volunteer";
-import UserSwitcher from "../components/dev_only/UserSwitcher";
-import ServiceRequestorNavbar from "../components/navbar/service-requestor";
+import AdminNavbar from '../components/navbar/admin';
+import ClientNavbar from '../components/navbar/client';
+import VolunteerNavbar from '../components/navbar/volunteer';
+import UserSwitcher from '../components/dev_only/UserSwitcher';
+import ServiceRequestorNavbar from '../components/navbar/service-requestor';
 
 export default {
   components: { ServiceRequestorNavbar, UserSwitcher, AdminNavbar, ClientNavbar, VolunteerNavbar },
@@ -37,7 +37,7 @@ export default {
 
 <style>
 html {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     sans-serif;
   font-size: 16px;
   word-spacing: 1px;

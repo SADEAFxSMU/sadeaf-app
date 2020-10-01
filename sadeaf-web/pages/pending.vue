@@ -15,7 +15,7 @@
  * 2. have yet to be on-boarded (set role) by sadeaf admin
  */
 export default {
-  name: "pending",
+  name: 'pending',
 };
 </script>
 

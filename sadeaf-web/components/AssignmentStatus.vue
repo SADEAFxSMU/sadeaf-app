@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import { ASSIGNMENT_STATUSES, ASSIGNMENT_STATUS_COLORS } from "../common/types/constants";
-import StatusIndicator from "./StatusIndicator";
+import { ASSIGNMENT_STATUSES, ASSIGNMENT_STATUS_COLORS } from '../common/types/constants';
+import StatusIndicator from './StatusIndicator';
 
 export default {
-  name: "AssignmentStatus",
+  name: 'AssignmentStatus',
 
   components: {
     StatusIndicator,
@@ -26,7 +26,7 @@ export default {
       return ASSIGNMENT_STATUS_COLORS[this.status];
     },
     statusText() {
-      return this.status.split("_").join(" ");
+      return this.status.split('_').join(' ');
     },
   },
 };

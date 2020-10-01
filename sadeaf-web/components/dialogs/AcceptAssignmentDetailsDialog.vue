@@ -55,11 +55,11 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import { DateUtils } from "../../common/date-utils";
+import gql from 'graphql-tag';
+import { DateUtils } from '../../common/date-utils';
 
 export default {
-  name: "AcceptAssignmentDetailsDialog",
+  name: 'AcceptAssignmentDetailsDialog',
   props: {
     isVisible: {
       type: Boolean,
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     closeDialog() {
-      this.$emit("onClose");
+      this.$emit('onClose');
     },
     // need to await mutation so that parent will only refetch assignment
     // data after mutation is complete
@@ -100,11 +100,11 @@ export default {
           },
         })
         .then((_) => {
-          this.$notify.success("Assignment Accepted");
-          this.$emit("onClose", "accepted");
+          this.$notify.success('Assignment Accepted');
+          this.$emit('onClose', 'accepted');
         })
         .catch((error) => {
-          this.$notify.error("Something went wrong with accepting the assignment");
+          this.$notify.error('Something went wrong with accepting the assignment');
           console.log(error);
           this.closeDialog();
         });
@@ -113,7 +113,7 @@ export default {
   computed: {
     eventAddress() {
       let asg = this.assignment;
-      let addLineTwo = asg.address_line_two ? asg.address_line_two : "";
+      let addLineTwo = asg.address_line_two ? asg.address_line_two : '';
       return `${asg.address_line_one} ${addLineTwo} s(${asg.postal})`;
     },
     startDate() {

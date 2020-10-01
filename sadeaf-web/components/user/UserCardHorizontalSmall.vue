@@ -2,12 +2,8 @@
   <div class="profile" v-on="$listeners">
     <slot name="avatar">
       <div class="profile-pic">
-        <img v-if="profile_pic_url"
-             :src="profile_pic_url"
-             class="image" />
-        <el-avatar v-else
-                   class="el-icon-user-solid"
-                   size="small" />
+        <img v-if="profile_pic_url" :src="profile_pic_url" class="image" />
+        <el-avatar v-else class="el-icon-user-solid" size="small" />
       </div>
     </slot>
     <slot name="body">
@@ -18,7 +14,7 @@
 
 <script>
 export default {
-  name: "UserCardHorizontalSmall",
+  name: 'UserCardHorizontalSmall',
 
   props: {
     user: {
@@ -33,9 +29,9 @@ export default {
     },
     profile_pic_url() {
       return this.user.profile_pic_url;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

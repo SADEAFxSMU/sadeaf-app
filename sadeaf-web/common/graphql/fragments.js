@@ -16,9 +16,15 @@ export const accountFieldsFragment = gql`
 export const accountFieldsWithRolesFragment = gql`
   fragment accountFieldsWithRoles on account {
     ...accountFields
-    client { id }
-    volunteer { id }
-    service_requestor { id }
+    client {
+      id
+    }
+    volunteer {
+      id
+    }
+    service_requestor {
+      id
+    }
   }
   ${accountFieldsFragment}
-`
+`;

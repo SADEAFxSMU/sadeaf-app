@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import BaseNavbar from "./BaseNavbar";
+import BaseNavbar from './BaseNavbar';
 
 export default {
-  name: "service-requestor-navbar",
+  name: 'service-requestor-navbar',
   components: { BaseNavbar },
 };
 </script>

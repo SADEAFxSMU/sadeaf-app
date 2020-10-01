@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import BaseTable from "./BaseTable";
-import gql from "graphql-tag";
-import VolunteersCell from "@/components/tables/custom-columns/VolunteersCell";
-import FeedbackForm from "@/components/forms/FeedbackForm/FeedbackForm";
-import AssignmentsTimeline from "@/components/cards/AssignmentsTimeline";
-import volunteer from "@/components/navbar/volunteer";
+import BaseTable from './BaseTable';
+import gql from 'graphql-tag';
+import VolunteersCell from '@/components/tables/custom-columns/VolunteersCell';
+import FeedbackForm from '@/components/forms/FeedbackForm/FeedbackForm';
+import AssignmentsTimeline from '@/components/cards/AssignmentsTimeline';
+import volunteer from '@/components/navbar/volunteer';
 
 const FEEDBACK_SUBSRCRIBE_QUERY = gql`
   subscription ClientCompletedEventsSubscription($client_account_id: Int!, $feedback_given: Int!) {
@@ -87,7 +87,7 @@ const FEEDBACK_SUBSRCRIBE_QUERY = gql`
   }
 `;
 export default {
-  name: "client-feedback-table",
+  name: 'client-feedback-table',
   components: { FeedbackForm, BaseTable, VolunteersCell, AssignmentsTimeline },
   data() {
     return {
@@ -95,29 +95,29 @@ export default {
       eventSelected: {},
       feedbackVolunteer: {
         id: 1,
-        account: { id: 17, name: "Toh Jin Wee Wayne", __typename: "account" },
-        __typename: "volunteer",
+        account: { id: 17, name: 'Toh Jin Wee Wayne', __typename: 'account' },
+        __typename: 'volunteer',
       },
       columns: [
         {
-          name: "name",
-          label: "Event",
+          name: 'name',
+          label: 'Event',
         },
         {
-          name: "description",
-          label: "Description",
+          name: 'description',
+          label: 'Description',
         },
         {
-          name: "startDate",
-          label: "First Assignment Date",
+          name: 'startDate',
+          label: 'First Assignment Date',
         },
         {
-          name: "endDate",
-          label: "Last Assignment Date",
+          name: 'endDate',
+          label: 'Last Assignment Date',
         },
         {
-          name: "volunteers",
-          label: "Volunteers",
+          name: 'volunteers',
+          label: 'Volunteers',
         },
       ],
     };
@@ -132,14 +132,14 @@ export default {
   },
   methods: {
     handleEventFeedback(row) {
-      this.$store.commit("feedbackForm/clickForm", {
+      this.$store.commit('feedbackForm/clickForm', {
         volunteer: row.volunteer[0],
         event: row,
         feedbackId: row.feedback_id,
       });
     },
     closeEventFeedbackForm() {
-      this.$store.commit("feedbackForm/hideForm");
+      this.$store.commit('feedbackForm/hideForm');
       this.eventSelected = {};
     },
     mapResponseToRows(feedbacksToGive) {

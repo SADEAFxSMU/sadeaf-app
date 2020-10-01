@@ -14,16 +14,16 @@
 </template>
 
 <script>
-import debounce from "debounce";
-import gql from "graphql-tag";
-import UserCardHorizontalSmall from "./UserCardHorizontalSmall";
+import debounce from 'debounce';
+import gql from 'graphql-tag';
+import UserCardHorizontalSmall from './UserCardHorizontalSmall';
 export default {
-  name: "VolunteerSearch",
+  name: 'VolunteerSearch',
   components: { UserCardHorizontalSmall },
   data() {
     return {
       results: [],
-      search: "",
+      search: '',
     };
   },
   created() {
@@ -44,13 +44,13 @@ export default {
           }
         `,
         variables: {
-          search: "%" + this.search + "%",
+          search: '%' + this.search + '%',
         },
       });
       cb(data.volunteers.map((volunteer) => ({ ...volunteer, value: volunteer.account.name })));
     },
     handleSelect(volunteer) {
-      this.$emit("select", volunteer);
+      this.$emit('select', volunteer);
     },
   },
 };

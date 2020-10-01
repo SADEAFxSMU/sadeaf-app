@@ -5,27 +5,27 @@
 </template>
 
 <script>
-  import ServiceRequestorProfile from "../../components/user/profiles/ServiceRequestorProfile";
+import ServiceRequestorProfile from '../../components/user/profiles/ServiceRequestorProfile';
 
-  export default {
-    name: "service-requestor-profile-page",
+export default {
+  name: 'service-requestor-profile-page',
 
-    components: {
-      ServiceRequestorProfile
+  components: {
+    ServiceRequestorProfile,
+  },
+
+  computed: {
+    id() {
+      return this.$route.params.id;
     },
-
-    computed: {
-      id() {
-        return this.$route.params.id;
-      },
-    }
-  };
+  },
+};
 </script>
 
 <style scoped>
-  .profile-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

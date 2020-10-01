@@ -1,9 +1,11 @@
 <template>
-  <el-autocomplete v-model="search"
-                   :fetch-suggestions="querySearch"
-                   style="width: 100%"
-                   placeholder="Enter a name, email, ..."
-                   @select="handleSelect">
+  <el-autocomplete
+    v-model="search"
+    :fetch-suggestions="querySearch"
+    style="width: 100%"
+    placeholder="Enter a name, email, ..."
+    @select="handleSelect"
+  >
     <i class="el-icon-search" slot="prepend" />
     <template v-slot="{ item }">
       <user-profile-link :user="item">
@@ -13,27 +15,20 @@
   </el-autocomplete>
 </template>
 
-
 <script>
-import debounce from "debounce";
-import UserCardHorizontalSmall from "./UserCardHorizontalSmall";
-import gql from "graphql-tag";
-import UserProfileLink from "../link/UserProfileLink";
-import { accountFieldsWithRolesFragment } from "../../common/graphql/fragments";
+import debounce from 'debounce';
+import UserCardHorizontalSmall from './UserCardHorizontalSmall';
+import gql from 'graphql-tag';
+import UserProfileLink from '../link/UserProfileLink';
+import { accountFieldsWithRolesFragment } from '../../common/graphql/fragments';
 
 const UserSearchWithRoleQuery = gql`
   query UserSearchWithRoleQuery($search: String!, $role: String!) {
-    users: account(where: {
-      _and: [
-        { role: { _eq: $role } },
-        {
-          _or: [
-            { name: { _like: $search } }
-            { email: { _like: $search } }
-          ]
-        }
-      ]
-    }) {
+    users: account(
+      where: {
+        _and: [{ role: { _eq: $role } }, { _or: [{ name: { _like: $search } }, { email: { _like: $search } }] }]
+      }
+    ) {
       ...accountFieldsWithRoles
     }
   }
@@ -42,12 +37,7 @@ const UserSearchWithRoleQuery = gql`
 
 const UserSearchQuery = gql`
   query UserSearchQuery($search: String!) {
-    users: account(where: {
-      _or: [
-        { name: { _like: $search } }
-        { email: { _like: $search } }
-      ]
-    }) {
+    users: account(where: { _or: [{ name: { _like: $search } }, { email: { _like: $search } }] }) {
       ...accountFieldsWithRoles
     }
   }
@@ -55,11 +45,11 @@ const UserSearchQuery = gql`
 `;
 
 export default {
-  name: "UserSearch",
+  name: 'UserSearch',
 
   components: {
     UserProfileLink,
-    UserCardHorizontalSmall
+    UserCardHorizontalSmall,
   },
 
   props: {
@@ -71,12 +61,12 @@ export default {
       type: Boolean,
       required: false,
       default: false,
-    }
+    },
   },
 
   data() {
     return {
-      search: "",
+      search: '',
       results: [],
       loading: false,
       visible: false,
@@ -97,19 +87,19 @@ export default {
           variables: {
             role: this.userRole,
             search: this.search + '%',
-          }
+          },
         });
       } else {
         result = await this.$apollo.query({
           query: UserSearchQuery,
           variables: {
             search: this.search + '%',
-          }
+          },
         });
       }
       this.loading = true;
       const users = result.data.users;
-      cb(users.map(user => ({ ...user, value: user.name })));
+      cb(users.map((user) => ({ ...user, value: user.name })));
     },
 
     handleSelect(user) {
@@ -123,8 +113,8 @@ export default {
 
   computed: {
     resultsStyle() {
-      const height = this.visible ? Math.max(this.results.length * 60, 60) + "px" : 0;
-      const border = this.visible ? null : "none";
+      const height = this.visible ? Math.max(this.results.length * 60, 60) + 'px' : 0;
+      const border = this.visible ? null : 'none';
       return { height, border };
     },
   },
