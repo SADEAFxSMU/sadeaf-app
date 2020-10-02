@@ -201,23 +201,12 @@ export default {
               purpose
               client {
                 id
-                name
-                email
-                role
-                profile_pic_url
-              }
-            }
-            statuses: assignments_aggregate(distinct_on: status) {
-              nodes {
-                status
-              }
-            }
-            volunteers: assignments_aggregate(distinct_on: volunteer_id) {
-              nodes {
-                volunteer {
+                account {
                   id
                   name
                   email
+                  role
+                  profile_pic_url
                 }
               }
               statuses: assignments_aggregate(distinct_on: status) {
@@ -229,26 +218,33 @@ export default {
                 nodes {
                   volunteer {
                     id
-                    name
-                    profile_pic_url
+                    account {
+                      id
+                      name
+                      email
+                      profile_pic_url
+                    }
                   }
                 }
               }
               assignments(order_by: { start_dt: desc }) {
+              id
+              address_line_one
+              address_line_two
+              postal
+              start_dt
+              end_dt
+              status
+              volunteer {
                 id
-                address_line_one
-                address_line_two
-                postal
-                start_dt
-                end_dt
-                status
-                volunteer {
+                account {
                   id
                   name
                   role
                   profile_pic_url
                 }
               }
+            }
             }
           }
         `,
