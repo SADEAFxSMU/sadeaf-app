@@ -42,7 +42,7 @@ export default {
             id
             account { id, name, email, profile_pic_url }
           }
-        `,
+        }`,
         variables: {
           search: '%' + this.search + '%',
         },
