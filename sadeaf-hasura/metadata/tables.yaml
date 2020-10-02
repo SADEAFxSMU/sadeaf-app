@@ -1525,6 +1525,7 @@
       check: {}
       columns:
       - assignment_id
+      - status
       - volunteer_id
       backend_only: false
   select_permissions:
@@ -1540,9 +1541,10 @@
     permission:
       columns:
       - assignment_id
-      - id
-      - volunteer_id
       - created_at
+      - id
+      - status
+      - volunteer_id
       filter: {}
   update_permissions:
   - role: volunteer
