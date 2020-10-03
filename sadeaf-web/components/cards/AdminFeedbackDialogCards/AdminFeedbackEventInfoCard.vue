@@ -26,26 +26,22 @@ export default {
   name: 'AdminFeedbackEventInfoCard',
   data() {
     return {
-      // TODO: Add props for these
       information: [
-        {
-          label: 'Event Name',
-          contents: 'IS112 - Web Application',
-        },
-        {
-          label: 'Date Range',
-          contents: 'March 20, 2020 - September 20, 2020',
-        },
-        {
-          label: 'Date / Time',
-          contents: 'April 20th 2020 1630',
-        },
-        {
-          label: 'Client',
-          contents: 'Vicky Lim',
-        },
+
       ],
     };
+  },
+  created() {
+    const event = this.$store.state.adminFeedbackDialog.event;
+    const { assignments } = event;
+    const start_dt = new Date(assignments[0].start_dt).toDateString();
+    const end_dt = new Date(assignments[assignments.length - 1].end_dt).toDateString();
+
+    this.information.push({ label: 'Event Id', contents: event.eventId });
+    this.information.push({ label: 'Event Name', contents: event.name });
+    this.information.push({ label: 'Client', contents: event.client.account.name });
+    this.information.push({ label: 'Date Range', contents: `${start_dt} - ${end_dt}` });
+    this.information.push({ label: 'Total Assignments', contents: assignments.length });
   },
 };
 </script>

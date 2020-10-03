@@ -8,7 +8,6 @@
       class="rating-row"
     >
       <el-col
-        :xl="6"
         :span="12"
       >
         <h4>
@@ -16,7 +15,6 @@
         </h4>
       </el-col>
       <el-col
-        :xl="6"
         :span="12"
       >
         <el-rate

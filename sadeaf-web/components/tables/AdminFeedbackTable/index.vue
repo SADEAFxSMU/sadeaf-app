@@ -4,6 +4,10 @@
       <template v-slot:sentiment="{ row }">
         <SentimentEmoji :sentiment="row.sentiment"></SentimentEmoji>
       </template>
+
+      <template v-slot:edit="{ row }">
+        <el-button type="text" size="small" @click="handleOpenFeedback(row)"> View Details </el-button>
+      </template>
     </BaseTable>
 
     <div v-if="this.tableData.length > 0">
@@ -44,17 +48,15 @@ const ADMIN_FEEDBACK_SUB_QUERY = gql`
         id
         account {
           id
+          contact
           name
           email
         }
       }
       assignments(order_by: {start_dt: desc}) {
         id
-        address_line_one
-        address_line_two
         end_dt
         start_dt
-        status
         volunteer {
           id
           account {
@@ -67,8 +69,10 @@ const ADMIN_FEEDBACK_SUB_QUERY = gql`
     volunteer {
       id
       account {
-        id
-        name
+          id
+          contact
+          name
+          email
       }
     }
   }
@@ -117,11 +121,10 @@ export default {
     };
   },
   methods: {
-    handleEventFeedback(row) {
-      this.$store.commit('feedbackForm/clickForm', {
-        volunteer: row.volunteer[0],
+    handleOpenFeedback(row) {
+      this.$store.commit('adminFeedbackDialog/clickDialog', {
+        volunteer: row.volunteer,
         event: row,
-        feedbackId: row.feedback_id,
       });
     },
     getVolunteerSentiment(row) {

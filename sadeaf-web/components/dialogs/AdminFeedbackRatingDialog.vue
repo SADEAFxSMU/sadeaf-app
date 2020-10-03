@@ -1,19 +1,21 @@
 <template>
   <el-dialog
-    :visible="true"
+    :visible="this.$store.state.adminFeedbackDialog.visible"
+    @close="this.closeDialog"
+    width="65%"
   >
-    <el-row class="margin-bottom__md" :gutter="16">
+    <el-row class="margin-bottom__md">
+      <AdminFeedbackVolunteerCard />
+    </el-row>
+
+    <el-row :gutter="16" type="flex" class="margin-bottom__md">
       <el-col :span="12">
         <AdminFeedbackEventInfoCard />
       </el-col>
 
       <el-col :span="12">
-        <AdminFeedbackVolunteerCard />
+        <AdminFeedbackRatingCard style="min-height: 100%" :ratings="ratings" />
       </el-col>
-    </el-row>
-
-    <el-row class="margin-bottom__md">
-      <AdminFeedbackRatingCard :ratings="ratings" />
     </el-row>
 
     <el-row class="margin-bottom__md">
@@ -46,6 +48,11 @@ export default {
       required: true,
     },
   },
+  methods: {
+    closeDialog() {
+      this.$store.commit('adminFeedbackDialog/hideDialog');
+    }
+  },
   computed: {
     ratings() {
       let ratings = {};
@@ -64,7 +71,7 @@ export default {
 
       COMMENT_KEYS.forEach(k => {
         const label = StringUtils.toTitleCase(k.replace(/_/g, ' '));
-        comments[label] = this.rowData[k];
+        comments[label] = this.rowData[k].length > 0 ? this.rowData[k] : "No Comments.";
       });
 
       return comments;
