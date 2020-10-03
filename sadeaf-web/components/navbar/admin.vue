@@ -2,6 +2,7 @@
   <base-navbar>
     <template v-slot:user-nav>
       <el-menu-item index="/admin"> Service Requests </el-menu-item>
+      <el-menu-item index="/admin/feedback"> Feedback </el-menu-item>
       <el-submenu index="/admin/users">
         <template slot="title">User Management</template>
         <el-menu-item index="/admin/users?type=client,service_requestor,volunteer,admin"> All Users </el-menu-item>

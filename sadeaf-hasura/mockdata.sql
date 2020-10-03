@@ -247,10 +247,10 @@ INSERT INTO volunteer_assignment_opt_in (
 INSERT INTO feedback (
     id, event_id, volunteer_id, notetaker_punctual, notetaker_conduct, live_comments, live_information_understanding,
     live_interaction, post_session_comments, post_session_understanding,
-    general_feedback, training_privacy_preference, confidentiality_privacy_preference
+    general_feedback, training_privacy_preference, confidentiality_privacy_preference, feedback_given
 ) VALUES
-(1, 1, 1, '5', '5', 'very good person, kind lad, 10/10', '4', '4', 'great post session notes mate', '4', 'great lad',
- 'public', 'no');
+(1, 2, 8, '5', '5', 'very good person, kind lad, 10/10', '4', '4', 'great post session notes mate', '4', 'great lad',
+ 'public', 'no', 1);
 
 INSERT INTO interpretation_details (
     id, sign_system, filming_interpreters, allow_trainee_interpreters,number_of_deaf,
