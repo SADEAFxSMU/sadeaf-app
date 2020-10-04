@@ -27,12 +27,12 @@
 
 <script>
 
-import { StringUtils } from '@/common/string-utils';
 import { RATING_KEYS } from '@/common/types/constants';
 import AdminFeedbackEventInfoCard from '@/components/cards/AdminFeedbackDialogCards/AdminFeedbackEventInfoCard';
 import AdminFeedbackRatingCard from '@/components/cards/AdminFeedbackDialogCards/AdminFeedbackRatingCard';
 import AdminFeedbackCommentsCard from '@/components/cards/AdminFeedbackDialogCards/AdminFeedbackCommentsCard';
 import AdminFeedbackVolunteerCard from '@/components/cards/AdminFeedbackDialogCards/AdminFeedbackVolunteerCard';
+import _ from 'lodash';
 
 export default {
   name: 'AdminFeedbackRatingDialog',
@@ -51,14 +51,14 @@ export default {
   methods: {
     closeDialog() {
       this.$store.commit('adminFeedbackDialog/hideDialog');
-    }
+    },
   },
   computed: {
     ratings() {
       let ratings = {};
 
       RATING_KEYS.forEach(k => {
-        const label = StringUtils.toTitleCase(k.replace(/_/g, ' '));
+        const label = _.startCase(k);
         ratings[label] = parseInt(this.rowData[k]);
       });
 
@@ -70,8 +70,8 @@ export default {
       let comments = {};
 
       COMMENT_KEYS.forEach(k => {
-        const label = StringUtils.toTitleCase(k.replace(/_/g, ' '));
-        comments[label] = (this.rowData[k] && this.rowData[k].length > 0) ? this.rowData[k] : "No Comments.";
+        const label = _.startCase(k);
+        comments[label] = (this.rowData[k] && this.rowData[k].length > 0) ? this.rowData[k] : 'No Comments.';
       });
 
       return comments;
