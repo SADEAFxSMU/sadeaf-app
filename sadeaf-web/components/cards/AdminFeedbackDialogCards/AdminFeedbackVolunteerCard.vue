@@ -1,18 +1,21 @@
 <template>
   <div>
     <el-card
-      header="Volunteer Information"
     >
+      <div slot="header" class="clearfix">
+        <h2>Volunteer Information</h2>
+      </div>
       <el-row
         class="margin-bottom__sm"
+        justify="start"
         type="flex"
-        justify="start">
-        <!--        TODO(Austin): Change src to Avatar url once user profile pic column has been pushed to master (Eli)-->
-        <el-col :span="2">
+        :gutter="16"
+      >
+        <el-col :span="1.5">
           <el-avatar
             :size="69"
             shape="square"
-            src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+            :src="this.volunteer.account.profile_pic_url || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
           />
         </el-col>
 
@@ -116,7 +119,7 @@ export default {
     },
     event() {
       return this.$store.state.adminFeedbackDialog.event;
-    }
+    },
   },
   methods: {
     async getFeedbackScores() {

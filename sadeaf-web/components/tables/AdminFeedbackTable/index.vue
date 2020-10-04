@@ -1,23 +1,21 @@
 <template>
   <div>
-    <BaseTable title="Feedbacks" :rows="tableData" :columns="columns">
+    <BaseTable :loading="loading" title="Feedbacks" :rows="tableData" :columns="columns">
       <template v-slot:sentiment="{ row }">
         <SentimentEmoji :sentiment="row.sentiment"></SentimentEmoji>
       </template>
 
       <template v-slot:edit="{ row }">
-        <el-button type="text" size="small" @click="handleOpenFeedback(row)"> View Details </el-button>
+        <el-button type="text" size="small" @click="handleOpenFeedback(row)"> View Details</el-button>
       </template>
     </BaseTable>
 
     <div v-if="this.tableData.length > 0">
       <AdminFeedbackRatingDialog :rowData="this.tableData[0]" />
     </div>
-
   </div>
 </template>
 
-// TODO (Austin): Click on feedback row and generate pop-up modal view of full-feedback
 // TODO (Austin): think about what columns sadeaf wants to see for feedback --> Rating columns to see rating per feedback
 <script>
 import BaseTable from '@/components/tables/BaseTable';
@@ -43,7 +41,6 @@ const ADMIN_FEEDBACK_SUB_QUERY = gql`
     event {
       id
       name
-      description
       client {
         id
         account {
@@ -70,6 +67,7 @@ const ADMIN_FEEDBACK_SUB_QUERY = gql`
       id
       account {
           id
+          profile_pic_url
           contact
           name
           email
@@ -102,10 +100,6 @@ export default {
           label: 'Volunteer',
         },
         {
-          name: 'description',
-          label: 'Description',
-        },
-        {
           name: 'startDate',
           label: 'First Assignment Date',
         },
@@ -118,6 +112,7 @@ export default {
           label: 'Sentiment',
         },
       ],
+      loading: true,
     };
   },
   methods: {
@@ -126,6 +121,10 @@ export default {
         volunteer: row.volunteer,
         event: row,
       });
+    },
+    closeEventFeedbackForm() {
+      this.$store.commit('feedbackForm/hideForm');
+      this.eventSelected = {};
     },
     getVolunteerSentiment(row) {
       /**
@@ -163,19 +162,12 @@ export default {
       }
       return sentiment;
     },
-    closeEventFeedbackForm() {
-      this.$store.commit('feedbackForm/hideForm');
-      this.eventSelected = {};
-    },
     mapResponseToRows(feedbacksGiven) {
       const rows = [];
       if (feedbacksGiven) {
         feedbacksGiven.forEach((feedback) => {
           const { event, volunteer } = feedback;
           const sentiment = this.getVolunteerSentiment(feedback);
-          const { notetaker_conduct, notetaker_punctual, post_session_understanding,
-            live_information_understanding, live_interaction } = feedback;
-
           const volunteerAssignments = event.assignments.filter((a) => a.volunteer.id === volunteer.id);
           rows.push({
             ...feedback,
@@ -183,13 +175,10 @@ export default {
             feedback_id: feedback.id,
             id: event.id + volunteer.account.name,
             eventId: event.id,
-            quotation: event.quotation,
-            purpose: event.purpose,
             client: event.client,
             startDate: new Date(volunteerAssignments[0].start_dt).toLocaleString(),
             endDate: new Date(volunteerAssignments[volunteerAssignments.length - 1].start_dt).toLocaleString(),
             name: event.name,
-            description: event.description,
             volunteer: volunteer,
             volunteerName: volunteer.account.name,
             clientName: event.client.account.name,
@@ -198,6 +187,7 @@ export default {
         });
       }
       this.tableData = rows;
+      this.loading = false;
     },
   },
   apollo: {

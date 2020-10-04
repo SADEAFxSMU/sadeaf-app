@@ -1,5 +1,10 @@
 <template>
-  <el-card class="rating-card" header="Overall Ratings">
+  <el-card
+    class="rating-card"
+  >
+    <div slot="header" class="clearfix">
+      <h2>Rating for Event</h2>
+    </div>
     <el-row
       v-for="ratingLabel in Object.keys(ratings)"
       :key="ratingLabel"

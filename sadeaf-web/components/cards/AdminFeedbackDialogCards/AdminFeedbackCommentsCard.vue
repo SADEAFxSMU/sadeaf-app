@@ -1,8 +1,10 @@
 <template>
   <el-card
-    header="Feedback Comments"
     class="comment-card"
   >
+    <div slot="header" class="clearfix">
+      <h2>Feedback Comments</h2>
+    </div>
     <el-row
       v-for="commentLabel in Object.keys(comments)"
       :key="commentLabel"

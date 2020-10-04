@@ -71,7 +71,7 @@ export default {
 
       COMMENT_KEYS.forEach(k => {
         const label = StringUtils.toTitleCase(k.replace(/_/g, ' '));
-        comments[label] = this.rowData[k].length > 0 ? this.rowData[k] : "No Comments.";
+        comments[label] = (this.rowData[k] && this.rowData[k].length > 0) ? this.rowData[k] : "No Comments.";
       });
 
       return comments;
