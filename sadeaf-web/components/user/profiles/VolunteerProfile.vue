@@ -106,6 +106,7 @@ export default {
           events: event(where: { assignments: { volunteer_id: { _eq: $id } } }) {
             id
             name
+            uncompleted_status
             client {
               id
               account {
@@ -114,11 +115,6 @@ export default {
                 profile_pic_url
                 email
                 created_at
-              }
-            }
-            statuses: assignments_aggregate(distinct_on: status) {
-              nodes {
-                status
               }
             }
             assignments {
@@ -158,6 +154,19 @@ export default {
         const { volunteer, unique_clients, events, attendance_aggregate, attended_count, not_attended_count } = data;
         this.volunteer = volunteer;
         this.events = events;
+
+        let inprogress = 0;
+        let completed = 0;
+        events.forEach((event) => {
+          if (event.uncompleted_status === true) {
+            inprogress++;
+          } else {
+            completed++;
+          }
+        });
+        this.stats.completed.value = completed;
+        this.stats.inprogress.value = inprogress;
+
         this.attendance_aggregate = attendance_aggregate;
         this.stats.clients.value = unique_clients.aggregate.count;
         this.percentageStats.attendance.value =

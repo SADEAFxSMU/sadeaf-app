@@ -126,14 +126,7 @@ export default {
       const rows = [];
       if (events) {
         for (const event of events) {
-          let aggStatus = 'COMPLETE';
-          for (const { status } of event.statuses.nodes) {
-            if (status !== 'COMPLETE') {
-              aggStatus = 'ONGOING';
-              break;
-            }
-          }
-          console.log(event.client);
+          let aggStatus = event.uncompleted_status === true ? 'IN PROGRESS' : 'COMPLETE';
           rows.push({
             id: event.id,
             client: event.client,
