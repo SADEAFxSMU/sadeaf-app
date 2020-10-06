@@ -44,4 +44,10 @@ module.exports = {
       (process.env.HASURA_GRAPHQL_ENDPOINT && `${process.env.HASURA_GRAPHQL_ENDPOINT}/v1/graphql`) ||
       'http://localhost:8080/v1/graphql',
   },
+  TELEGRAM: {
+    WEBHOOK_ENDPOINT: process.env.TELEGRAM_WEBHOOK_ENDPOINT || 'http://localhost:4001/',
+    WEBHOOK_URL: process.env.TELEGRAM_WEBHOOK_URL || 'https://sadeaftest.tunnelto.dev/_telegram/webhook',
+    // TODO(wy): use this when making send messages via telegram
+    API_KEY: process.env.SADEAF_TELEGRAM_API_KEY
+  },
 };
