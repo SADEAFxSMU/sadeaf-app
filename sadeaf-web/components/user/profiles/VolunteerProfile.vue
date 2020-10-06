@@ -3,10 +3,14 @@
     <template v-slot:role-content>
       <div class="volunteer-stats">
         <stat-card v-for="({value, color}, statName) in stats"
+                   style="flex: 1;"
                    :title="statName"
                    title-position="bottom"
                    :stat="value"
                    :accent-color="color" />
+      </div>
+      <div>
+        <stat-bar :stats="percentageStats" />
       </div>
     </template>
 
@@ -23,72 +27,15 @@ import StatCard from "../../StatCard";
 import { accountFieldsFragment } from "../../../common/graphql/fragments";
 import AssignmentCard from "../../cards/AssignmentCard";
 import VolunteerEventsTable from "../../tables/VolunteerEventsTable/index";
+import StatBar from "../../indicators/StatBar";
 
-const VolunteerQuery = gql`
-  query VolunteerQueryByAccountId($id: Int!) {
-    user: account_by_pk(id: $id){
-      ...accountFields
-
-      volunteer {
-        id
-      }
-    }
-
-    unique_clients: client_aggregate(where: {events:{assignments:{volunteer:{account_id:{_eq:$id}}}}}) {
-      aggregate {
-        count
-      }
-    }
-
-    events: event(where: {assignments:{volunteer:{account_id:{_eq: $id}}}}) {
-      id
-      name
-      client {
-        id
-        account {
-          id
-          name
-          profile_pic_url
-        }
-      }
-      statuses: assignments_aggregate(distinct_on: status) {
-        nodes {
-          status
-        }
-      }
-      assignments {
-        id
-        start_dt
-        end_dt
-        status
-        address_line_one
-        room_number
-        attendance {
-          id
-          attended
-        }
-      }
-    }
-
-    attended_count: attendance_aggregate(where: { attended: { _eq: true }}) {
-      aggregate {
-        count
-      }
-    }
-    not_attended_count: attendance_aggregate(where: {attended: {_eq: false}}) {
-      aggregate {
-        count
-      }
-    }
-  }
-  ${accountFieldsFragment}
-`;
-
+const statCardColor = '#97baff';
 
 export default {
   name: "VolunteerProfile",
 
   components: {
+    StatBar,
     VolunteerEventsTable,
     AssignmentCard,
     StatCard,
@@ -107,18 +54,31 @@ export default {
       user: null,
       events: [],
       attendance_aggregate: null,
-      stats: {
+      percentageStats: {
         attendance: {
-          value: '100%',
+          label: 'attendance',
+          percentage: 100,
+        },
+        cancellations: {
+          label: 'cancellations',
+          percentage: 20,
           color: '#3dd670',
+        }
+      },
+      stats: {
+        completed: {
+          label: 'completed',
+          value: 0,
+          color: statCardColor,
+        },
+        inprogress: {
+          label: 'in progress',
+          value: 0,
+          color: statCardColor,
         },
         clients: {
           value: 21,
-          color: '#3dd670',
-        },
-        cancels: {
-          value: '68%',
-          color: 'salmon',
+          color: statCardColor,
         },
       }
     }
@@ -132,7 +92,64 @@ export default {
 
   apollo: {
     user: {
-      query: VolunteerQuery,
+      query: gql`
+        query VolunteerQueryByAccountId($id: Int!) {
+          user: account_by_pk(id: $id){
+            ...accountFields
+            volunteer {
+              id
+            }
+          }
+
+          unique_clients: client_aggregate(where: {events:{assignments:{volunteer:{account_id:{_eq:$id}}}}}) {
+            aggregate {
+              count
+            }
+          }
+
+          events: event(where: {assignments:{volunteer:{account_id:{_eq: $id}}}}) {
+            id
+            name
+            client {
+              id
+              account {
+                id
+                name
+                profile_pic_url
+              }
+            }
+            statuses: assignments_aggregate(distinct_on: status) {
+              nodes {
+                status
+              }
+            }
+            assignments {
+              id
+              start_dt
+              end_dt
+              status
+              address_line_one
+              room_number
+              attendance {
+                id
+                attended
+              }
+            }
+          }
+
+          attended_count: attendance_aggregate(where: { attended: { _eq: true }}) {
+            aggregate {
+              count
+            }
+          }
+          not_attended_count: attendance_aggregate(where: {attended: {_eq: false}}) {
+            aggregate {
+              count
+            }
+          }
+        }
+        ${accountFieldsFragment}
+      `,
       result({ data }) {
         const {
           user,
@@ -146,10 +163,10 @@ export default {
         this.events = events;
         this.attendance_aggregate = attendance_aggregate;
         this.stats.clients.value = unique_clients.aggregate.count;
-        this.stats.attendance.value = (
+        this.percentageStats.attendance.value = (
           attended_count.aggregate.count /
           (attended_count.aggregate.count + not_attended_count.aggregate.count)
-        ) * 100 + '%';
+        ) * 100;
       },
       variables() {
         return {
@@ -167,6 +184,7 @@ export default {
 }
 .volunteer-stats {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 16px;
 }
 .assignments {
