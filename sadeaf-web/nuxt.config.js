@@ -14,7 +14,7 @@ export default {
   plugins: ['@/plugins/amplify-cognito', '@/plugins/apollo', '@/plugins/hasura-role', '@/plugins/element-ui'],
   components: true,
   buildModules: [],
-  modules: ['~/hasura', '@nuxtjs/axios', '@nuxtjs/pwa'],
+  modules: ['~/hasura', '~/telegram', '@nuxtjs/axios', '@nuxtjs/pwa'],
   serverMiddleware: [{ prefix: false, handler: '~/api' }],
   router: {
     middleware: ['authz-role'],

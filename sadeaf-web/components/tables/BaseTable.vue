@@ -10,6 +10,7 @@
       </div>
     </div>
     <el-table
+      v-loading="loading"
       :data="paginatedTableData"
       size="small"
       :cell-style="{ padding: '5px' }"
@@ -34,6 +35,7 @@
         :prop="column.name"
         :width="column.width"
       >
+
         <template
           :slot="isSlotProvidedForColumn(column) ? 'default' : ''"
           slot-scope="{ row }"
@@ -81,6 +83,11 @@ const defaultFormatters = {
 export default {
   name: 'BaseTable',
   props: {
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     title: {
       type: String,
       required: false,
