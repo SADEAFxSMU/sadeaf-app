@@ -1,7 +1,7 @@
 export default {
   async start() {
-    await require('./email-example')()
+    await require('./email-example')();
 
-    console.log('Hasura webhook workers started')
-  }
-}
+    console.log('Hasura webhook workers started');
+  },
+};

@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="to" v-if="shouldLink" style="text-decoration: none; color: inherit;">
+  <nuxt-link :to="to" v-if="shouldLink" style="text-decoration: none; color: inherit">
     <slot />
   </nuxt-link>
   <div v-else>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "NuxtLinkWrapper",
+  name: 'NuxtLinkWrapper',
 
   props: {
     to: {
@@ -20,11 +20,9 @@ export default {
       type: Boolean,
       required: false,
       default: true,
-    }
+    },
   },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

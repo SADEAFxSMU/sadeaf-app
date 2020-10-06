@@ -12,8 +12,16 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
+    "format": "prettier --write .",
+    "lint": "prettier --check .",
     "test": "jest",
     "graphql-codegen": "cd tools/codegen && node graphqlQueryBuilder.js"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
   },
   "dependencies": {
     "@aws-amplify/ui-vue": "^0.2.18",
@@ -43,7 +51,6 @@
     "lodash": "^4.17.20",
     "nuxt": "^2.14.0",
     "pg-boss": "^5.0.8",
-    "sass-loader": "^9.0.3",
     "subscriptions-transport-ws": "^0.9.18",
     "vue-apollo": "^3.0.4",
     "vue-chartjs": "^3.5.0"
@@ -58,6 +65,9 @@
     "jest": "^24.1.0",
     "js-yaml": "^3.14.0",
     "node-fetch": "^2.6.1",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.1.1",
+    "sass-loader": "^10.0.2",
     "vue-jest": "^4.0.0-0"
   }
 }

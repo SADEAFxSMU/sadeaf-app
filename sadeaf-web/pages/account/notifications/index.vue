@@ -1,20 +1,20 @@
 <template>
   <div class="form-wrapper">
-    <NotificationPreferencesForm form-width="500"/>
+    <NotificationPreferencesForm form-width="500" />
   </div>
 </template>
 
 <script>
-import NotificationPreferencesForm from "../../../components/forms/NotificationPreferencesForm";
+import NotificationPreferencesForm from '../../../components/forms/NotificationPreferencesForm';
 export default {
-  name: "notifications",
-  components: {NotificationPreferencesForm}
+  name: 'notifications',
+  components: { NotificationPreferencesForm },
 };
 </script>
 
 <style scoped>
-  .form-wrapper {
-    display: flex;
-    justify-content: center;
-  }
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+}
 </style>

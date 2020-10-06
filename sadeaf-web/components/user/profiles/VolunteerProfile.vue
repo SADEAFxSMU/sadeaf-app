@@ -2,12 +2,14 @@
   <base-profile :user="user" :loading="$apollo.loading">
     <template v-slot:role-content>
       <div class="volunteer-stats">
-        <stat-card v-for="({value, color}, statName) in stats"
-                   style="flex: 1;"
-                   :title="statName"
-                   title-position="bottom"
-                   :stat="value"
-                   :accent-color="color" />
+        <stat-card
+          v-for="({value, color}, statName) in stats"
+          style="flex: 1;"
+          :title="statName"
+          title-position="bottom"
+          :stat="value"
+          :accent-color="color"
+        />
       </div>
       <div>
         <stat-bar :stats="percentageStats" />
@@ -32,14 +34,14 @@ import StatBar from "../../indicators/StatBar";
 const statCardColor = '#97baff';
 
 export default {
-  name: "VolunteerProfile",
+  name: 'VolunteerProfile',
 
   components: {
     StatBar,
     VolunteerEventsTable,
     AssignmentCard,
     StatCard,
-    BaseProfile
+    BaseProfile,
   },
 
   props: {
@@ -80,8 +82,8 @@ export default {
           value: 21,
           color: statCardColor,
         },
-      }
-    }
+      },
+    };
   },
 
   computed: {
@@ -182,7 +184,6 @@ export default {
 
 <style scoped>
 .volunteer {
-
 }
 .volunteer-stats {
   display: flex;

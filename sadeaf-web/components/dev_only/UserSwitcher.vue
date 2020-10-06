@@ -3,14 +3,14 @@
     <el-menu default-active="/admin" router class="user-menu">
       <el-submenu index="">
         <template v-slot:title>
-          <div>
-            <el-icon name="user" /> {{ value }}
-          </div>
+          <div><el-icon name="user" /> {{ value }}</div>
         </template>
-        <el-menu-item v-for="user in userTypes"
-                      :key="'user-' + user.type"
-                      :index="user.home"
-                      @click="handleSelect(user.type)">
+        <el-menu-item
+          v-for="user in userTypes"
+          :key="'user-' + user.type"
+          :index="user.home"
+          @click="handleSelect(user.type)"
+        >
           {{ user.type }}
         </el-menu-item>
       </el-submenu>
@@ -24,12 +24,12 @@
  * Purely a quality-of-life feature.
  */
 export default {
-  name: "UserSwitcher",
+  name: 'UserSwitcher',
   props: {
     value: {
       type: String,
       required: false,
-    }
+    },
   },
   data() {
     return {
@@ -39,14 +39,14 @@ export default {
         { type: 'volunteer', home: '/volunteer' },
         { type: 'service_requestor', home: '/org' },
       ],
-    }
+    };
   },
   methods: {
     handleSelect(value) {
       this.$store.commit('auth/setUserType', value);
       this.$emit('input', value);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -65,7 +65,7 @@ export default {
   box-shadow: 0 0 6px 1px #ccd8ea;
 }
 .user-menu:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;

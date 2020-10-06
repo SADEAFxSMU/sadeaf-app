@@ -5,20 +5,20 @@
 </template>
 
 <script>
-import NuxtLinkWrapper from "./NuxtLinkWrapper";
+import NuxtLinkWrapper from './NuxtLinkWrapper';
 
 export default {
-  name: "UserProfileLink",
+  name: 'UserProfileLink',
 
   props: {
     link: {
       type: String,
       required: false,
-    }
+    },
   },
 
   components: {
-    NuxtLinkWrapper
+    NuxtLinkWrapper,
   },
 
   computed: {
@@ -30,6 +30,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

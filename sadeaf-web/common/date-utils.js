@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export const DateUtils = {
   isBeforeToday(date) {
@@ -13,7 +13,7 @@ export const DateUtils = {
   groupAssignmentsByDateTime(assignments) {
     const assignmentsByDateTime = {};
 
-    assignments.forEach(assignment => {
+    assignments.forEach((assignment) => {
       const [dateKey, timeKey] = dayjs(assignment.start_dt).format('YYYYMMDD HH:mm').split(' ');
       if (!assignmentsByDateTime.hasOwnProperty(dateKey)) {
         assignmentsByDateTime[dateKey] = {};
@@ -28,5 +28,5 @@ export const DateUtils = {
   },
   humanReadableMonthYear(date) {
     return dayjs(date).format('MMM YYYY');
-  }
-}
+  },
+};

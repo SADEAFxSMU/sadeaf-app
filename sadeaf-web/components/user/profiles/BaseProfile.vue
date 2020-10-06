@@ -3,7 +3,7 @@
     <h1>LOADING...</h1>
   </div>
   <div v-else-if="user" class="user">
-    <el-row type="flex" style="flex-wrap: wrap;" :gutter="20">
+    <el-row type="flex" style="flex-wrap: wrap" :gutter="20">
       <el-col :xs="24" :md="8">
         <div class="profile">
           <div class="avatar">
@@ -34,7 +34,7 @@
         </div>
       </el-col>
       <el-col :xs="24" :md="16">
-        <slot name="role-content"/>
+        <slot name="role-content" />
       </el-col>
     </el-row>
     <slot name="role-body" />
@@ -42,17 +42,17 @@
 </template>
 
 <script>
-import RoleTag from "../../RoleTag";
-import { DateUtils } from "../../../common/date-utils";
+import { DateUtils } from '../../../common/date-utils';
+import RoleTag from '../../RoleTag';
 
 /**
  * Shows the user's details and other account info
  */
 export default {
-  name: "BaseProfile",
+  name: 'BaseProfile',
 
   components: {
-    RoleTag
+    RoleTag,
   },
 
   props: {
@@ -64,7 +64,7 @@ export default {
       type: Boolean,
       required: true,
       default: true,
-    }
+    },
   },
 
   computed: {

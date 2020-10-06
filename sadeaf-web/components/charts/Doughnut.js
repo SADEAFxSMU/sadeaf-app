@@ -1,7 +1,7 @@
-import { Doughnut } from "vue-chartjs";
+import { Doughnut } from 'vue-chartjs';
 export default {
   extends: Doughnut,
-  name: "DoughnutChart",
+  name: 'DoughnutChart',
   props: {
     title: {
       type: String,
@@ -15,7 +15,7 @@ export default {
     options: {
       type: Object,
       required: true,
-    }
+    },
   },
   methods: {
     render() {
@@ -24,9 +24,9 @@ export default {
           display: this.title !== '',
           text: this.title,
         },
-        ...this.options
+        ...this.options,
       });
-    }
+    },
   },
   mounted() {
     // this.chartData is created in the mixin.
@@ -36,6 +36,6 @@ export default {
   watch: {
     data() {
       this.render();
-    }
-  }
+    },
+  },
 };

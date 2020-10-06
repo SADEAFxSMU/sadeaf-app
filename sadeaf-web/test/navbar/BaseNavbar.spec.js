@@ -1,5 +1,5 @@
-import { createLocalVue, mount } from "@vue/test-utils";
-import BaseNavbar from "../../components/navbar/BaseNavbar";
+import { createLocalVue, mount } from '@vue/test-utils';
+import BaseNavbar from '../../components/navbar/BaseNavbar';
 import Element from 'element-ui';
 import _ from 'lodash';
 
@@ -9,17 +9,12 @@ localVue.use(Element);
 let wrapper;
 
 beforeEach(() => {
-  wrapper = mount(BaseNavbar, {localVue});
+  wrapper = mount(BaseNavbar, { localVue });
 });
 
 describe('Common Nav Links', () => {
   it('should display common nav links', async () => {
-    const commonNavLinks = [
-      '/account#profile',
-      '/account#settings',
-      '/account/notifications',
-      '/notifications',
-    ];
+    const commonNavLinks = ['/account#profile', '/account#settings', '/account/notifications', '/notifications'];
 
     const renderedNavLinks = [];
     const navMenu = wrapper.findComponent(Element.Menu);

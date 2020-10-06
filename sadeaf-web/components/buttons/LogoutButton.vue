@@ -1,17 +1,13 @@
 <template>
   <nuxt-link to="/sign-out">
-    <el-button>
-      Logout
-    </el-button>
+    <el-button> Logout </el-button>
   </nuxt-link>
 </template>
 
 <script>
 export default {
-  name: "LogoutButton",
+  name: 'LogoutButton',
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

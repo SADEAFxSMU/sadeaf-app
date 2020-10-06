@@ -1,11 +1,11 @@
 <template>
-  <amplify-container state="signup"/>
+  <amplify-container state="signup" />
 </template>
 
 <script>
-import AmplifyContainer from "@/components/AmplifyContainer";
+import AmplifyContainer from '@/components/AmplifyContainer';
 
 export default {
-  components: {AmplifyContainer},
-}
+  components: { AmplifyContainer },
+};
 </script>

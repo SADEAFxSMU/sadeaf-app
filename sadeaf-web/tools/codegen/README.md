@@ -1,10 +1,11 @@
 # Graphql Query Builder
 
-A CLI tool that performs GraphQL introspection and combines the 
-results with Hasura's Role-based permission configs to build GraphQL 
+A CLI tool that performs GraphQL introspection and combines the
+results with Hasura's Role-based permission configs to build GraphQL
 queries and mutations (CRUD).
 
 ## Example use
+
 Start hasura, then cd to sadeaf-web/ and run
 `yarn run graphql-codegen`
 

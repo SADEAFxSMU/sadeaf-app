@@ -7,15 +7,15 @@
 
 <script>
 export default {
-  name: "DangerZone",
+  name: 'DangerZone',
 
   props: {
     title: {
       type: String,
       required: false,
-      default: 'Danger Zone'
-    }
-  }
+      default: 'Danger Zone',
+    },
+  },
 };
 </script>
 

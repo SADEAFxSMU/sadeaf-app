@@ -6,10 +6,8 @@
 
 <script>
 export default {
-  name: "_id"
+  name: '_id',
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

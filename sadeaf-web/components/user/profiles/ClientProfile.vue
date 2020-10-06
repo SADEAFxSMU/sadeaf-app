@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import BaseProfile from "./BaseProfile";
+import BaseProfile from './BaseProfile';
 import gql from 'graphql-tag';
 import StatCard from "../../StatCard";
 import StatusIndicator from "../../StatusIndicator";
@@ -100,28 +100,27 @@ const ClientQuery = gql`
   }
 `;
 
-
 export default {
-  name: "ClientProfile",
+  name: 'ClientProfile',
 
   components: {
     DangerZone,
     StatusIndicator,
     StatCard,
-    BaseProfile
+    BaseProfile,
   },
 
   props: {
     clientId: {
       type: [String, Number],
       required: true,
-    }
+    },
   },
 
   data() {
     return {
       client: null,
-    }
+    };
   },
 
   computed: {
@@ -159,9 +158,9 @@ export default {
       variables() {
         return {
           id: this.clientId,
-        }
-      }
-    }
+        };
+      },
+    },
   },
 };
 </script>

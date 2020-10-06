@@ -5,29 +5,26 @@
 </template>
 
 <script>
-
 const statusToTypeMapping = {
   PENDING: 'danger',
   LIVE: 'primary',
   COMPLETE: 'success',
-}
+};
 
 export default {
-  name: "StatusCell",
+  name: 'StatusCell',
   props: {
     status: {
       type: String,
       required: true,
-    }
+    },
   },
   computed: {
     type() {
       return statusToTypeMapping[status];
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

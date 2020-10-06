@@ -5,14 +5,13 @@
       <h1 class="stat">{{ stat }}</h1>
       <h1 class="title">{{ title }}</h1>
     </div>
-    <div class="statcard-accent"
-         :style="`backgroundColor: ${accentColor}; ${accentPosition || 'left'}: 0`"/>
+    <div class="statcard-accent" :style="`backgroundColor: ${accentColor}; ${accentPosition || 'left'}: 0`" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "StatCard",
+  name: 'StatCard',
   props: {
     accentColor: {
       type: String,
@@ -40,15 +39,15 @@ export default {
       type: String,
       required: false,
       default: 'left',
-      validator: (val) => ['top', 'right', 'bottom', 'left'].includes(val)
-    }
+      validator: (val) => ['top', 'right', 'bottom', 'left'].includes(val),
+    },
   },
 
   computed: {
     bodyClass() {
       return this.titlePosition === 'right' ? 'main-content-row' : 'main-content-col';
-    }
-  }
+    },
+  },
 };
 </script>
 

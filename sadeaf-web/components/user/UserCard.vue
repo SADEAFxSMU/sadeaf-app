@@ -7,12 +7,8 @@
       <div :style="cardStyle" class="body-wrapper">
         <slot name="avatar">
           <div>
-            <img v-if="profile_pic_url"
-                 :src="profile_pic_url"
-                 class="image" />
-            <el-avatar v-else
-                       class="el-icon-user-solid"
-                       size="large" />
+            <img v-if="profile_pic_url" :src="profile_pic_url" class="image" />
+            <el-avatar v-else class="el-icon-user-solid" size="large" />
           </div>
         </slot>
         <slot name="body">
@@ -28,17 +24,16 @@
         </slot>
       </div>
       <div class="footer" v-if="$slots.footer">
-        <slot name="footer">
-        </slot>
+        <slot name="footer"> </slot>
       </div>
     </user-profile-link>
   </div>
 </template>
 
 <script>
-import UserProfileLink from "../link/UserProfileLink";
-import { ROLE_EL_TAG_TYPES } from "../../common/types/constants";
-import RoleTag from "../RoleTag";
+import UserProfileLink from '../link/UserProfileLink';
+import { ROLE_EL_TAG_TYPES } from '../../common/types/constants';
+import RoleTag from '../RoleTag';
 
 export default {
   name: 'UserCard',
@@ -79,13 +74,13 @@ export default {
     imgStyle: {
       type: [String, Object],
       required: false,
-    }
+    },
   },
 
   data() {
     return {
       isMouseOver: false,
-    }
+    };
   },
 
   methods: {
@@ -125,12 +120,12 @@ export default {
       return {
         card: true,
         hover: this.isMouseOver,
-      }
+      };
     },
     elTagType() {
       return ROLE_EL_TAG_TYPES[this.role] || 'primary';
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -154,7 +149,7 @@ export default {
   padding: 16px;
 }
 .image {
-  box-shadow: 0 2px 6px 1px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   width: 75px;
 }
@@ -171,8 +166,7 @@ export default {
   white-space: nowrap;
 }
 .role {
-  margin-left:
-    6px;
+  margin-left: 6px;
 }
 
 .footer {
@@ -181,6 +175,6 @@ export default {
   align-items: center;
   margin-top: 12px;
   padding: 8px;
-  background-color: rgba(0,0,50,0.05);
+  background-color: rgba(0, 0, 50, 0.05);
 }
 </style>

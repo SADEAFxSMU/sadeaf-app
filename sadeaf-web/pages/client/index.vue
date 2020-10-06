@@ -7,21 +7,21 @@
 </template>
 
 <script>
-import ClientEventsTable from "../../components/tables/ClientEventsTable/index";
-import ClientEventCalendar from "../../components/calendars/ClientEventCalendar";
+import ClientEventsTable from '../../components/tables/ClientEventsTable/index';
+import ClientEventCalendar from '../../components/calendars/ClientEventCalendar';
 export default {
-  name: "client-home",
+  name: 'client-home',
 
   components: {
     ClientEventCalendar,
-    ClientEventsTable
+    ClientEventsTable,
   },
 
   data() {
     return {
       updateEvent: null,
       createEventDialogVisible: false,
-    }
+    };
   },
 
   methods: {
@@ -30,7 +30,7 @@ export default {
     },
     handleUpsertEventCancel() {
       this.createEventDialogVisible = false;
-    }
+    },
   },
 
   computed: {
@@ -46,7 +46,7 @@ export default {
     lastUpdatedFormatted() {
       const lastUpdated = this.lastUpdated.toString();
       return lastUpdated.toString().substr(0, lastUpdated.length - 34);
-    }
+    },
   },
 };
 </script>

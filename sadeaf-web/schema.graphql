@@ -20,26 +20,26 @@ type account {
   "An array relationship"
   memberships(
     "distinct select on columns"
-    distinct_on: [membership_select_column!],
+    distinct_on: [membership_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_order_by!],
+    order_by: [membership_order_by!]
     "filter the rows returned"
     where: membership_bool_exp
   ): [membership!]!
   "An aggregated array relationship"
   memberships_aggregate(
     "distinct select on columns"
-    distinct_on: [membership_select_column!],
+    distinct_on: [membership_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_order_by!],
+    order_by: [membership_order_by!]
     "filter the rows returned"
     where: membership_bool_exp
   ): membership_aggregate!
@@ -270,26 +270,26 @@ type assignment {
   "An array relationship"
   volunteer_assignment_opt_ins(
     "distinct select on columns"
-    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    distinct_on: [volunteer_assignment_opt_in_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_assignment_opt_in_order_by!],
+    order_by: [volunteer_assignment_opt_in_order_by!]
     "filter the rows returned"
     where: volunteer_assignment_opt_in_bool_exp
   ): [volunteer_assignment_opt_in!]!
   "An aggregated array relationship"
   volunteer_assignment_opt_ins_aggregate(
     "distinct select on columns"
-    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    distinct_on: [volunteer_assignment_opt_in_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_assignment_opt_in_order_by!],
+    order_by: [volunteer_assignment_opt_in_order_by!]
     "filter the rows returned"
     where: volunteer_assignment_opt_in_bool_exp
   ): volunteer_assignment_opt_in_aggregate!
@@ -551,26 +551,26 @@ type client {
   "An array relationship"
   events(
     "distinct select on columns"
-    distinct_on: [event_select_column!],
+    distinct_on: [event_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [event_order_by!],
+    order_by: [event_order_by!]
     "filter the rows returned"
     where: event_bool_exp
   ): [event!]!
   "An aggregated array relationship"
   events_aggregate(
     "distinct select on columns"
-    distinct_on: [event_select_column!],
+    distinct_on: [event_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [event_order_by!],
+    order_by: [event_order_by!]
     "filter the rows returned"
     where: event_bool_exp
   ): event_aggregate!
@@ -807,26 +807,26 @@ type event {
   "An array relationship"
   assignments(
     "distinct select on columns"
-    distinct_on: [assignment_select_column!],
+    distinct_on: [assignment_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [assignment_order_by!],
+    order_by: [assignment_order_by!]
     "filter the rows returned"
     where: assignment_bool_exp
   ): [assignment!]!
   "An aggregated array relationship"
   assignments_aggregate(
     "distinct select on columns"
-    distinct_on: [assignment_select_column!],
+    distinct_on: [assignment_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [assignment_order_by!],
+    order_by: [assignment_order_by!]
     "filter the rows returned"
     where: assignment_bool_exp
   ): assignment_aggregate!
@@ -838,26 +838,26 @@ type event {
   "An array relationship"
   feedbacks(
     "distinct select on columns"
-    distinct_on: [feedback_select_column!],
+    distinct_on: [feedback_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [feedback_order_by!],
+    order_by: [feedback_order_by!]
     "filter the rows returned"
     where: feedback_bool_exp
   ): [feedback!]!
   "An aggregated array relationship"
   feedbacks_aggregate(
     "distinct select on columns"
-    distinct_on: [feedback_select_column!],
+    distinct_on: [feedback_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [feedback_order_by!],
+    order_by: [feedback_order_by!]
     "filter the rows returned"
     where: feedback_bool_exp
   ): feedback_aggregate!
@@ -1367,26 +1367,26 @@ type membership {
   "An array relationship"
   membership_renewals(
     "distinct select on columns"
-    distinct_on: [membership_renewals_select_column!],
+    distinct_on: [membership_renewals_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_renewals_order_by!],
+    order_by: [membership_renewals_order_by!]
     "filter the rows returned"
     where: membership_renewals_bool_exp
   ): [membership_renewals!]!
   "An aggregated array relationship"
   membership_renewals_aggregate(
     "distinct select on columns"
-    distinct_on: [membership_renewals_select_column!],
+    distinct_on: [membership_renewals_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_renewals_order_by!],
+    order_by: [membership_renewals_order_by!]
     "filter the rows returned"
     where: membership_renewals_bool_exp
   ): membership_renewals_aggregate!
@@ -1396,26 +1396,26 @@ type membership {
   "An array relationship"
   service_requestors(
     "distinct select on columns"
-    distinct_on: [service_requestor_select_column!],
+    distinct_on: [service_requestor_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [service_requestor_order_by!],
+    order_by: [service_requestor_order_by!]
     "filter the rows returned"
     where: service_requestor_bool_exp
   ): [service_requestor!]!
   "An aggregated array relationship"
   service_requestors_aggregate(
     "distinct select on columns"
-    distinct_on: [service_requestor_select_column!],
+    distinct_on: [service_requestor_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [service_requestor_order_by!],
+    order_by: [service_requestor_order_by!]
     "filter the rows returned"
     where: service_requestor_bool_exp
   ): service_requestor_aggregate!
@@ -1623,26 +1623,26 @@ type membership_type {
   "An array relationship"
   memberships(
     "distinct select on columns"
-    distinct_on: [membership_select_column!],
+    distinct_on: [membership_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_order_by!],
+    order_by: [membership_order_by!]
     "filter the rows returned"
     where: membership_bool_exp
   ): [membership!]!
   "An aggregated array relationship"
   memberships_aggregate(
     "distinct select on columns"
-    distinct_on: [membership_select_column!],
+    distinct_on: [membership_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_order_by!],
+    order_by: [membership_order_by!]
     "filter the rows returned"
     where: membership_bool_exp
   ): membership_aggregate!
@@ -1779,17 +1779,11 @@ type membership_variance_fields {
 "mutation root"
 type mutation_root {
   "delete data from the table: \"account\""
-  delete_account(
-    "filter the rows which have to be deleted"
-    where: account_bool_exp!
-  ): account_mutation_response
+  delete_account("filter the rows which have to be deleted" where: account_bool_exp!): account_mutation_response
   "delete single row from the table: \"account\""
   delete_account_by_pk(id: Int!): account
   "delete data from the table: \"admin\""
-  delete_admin(
-    "filter the rows which have to be deleted"
-    where: admin_bool_exp!
-  ): admin_mutation_response
+  delete_admin("filter the rows which have to be deleted" where: admin_bool_exp!): admin_mutation_response
   "delete single row from the table: \"admin\""
   delete_admin_by_pk(id: Int!): admin
   "delete data from the table: \"assignment\""
@@ -1807,10 +1801,7 @@ type mutation_root {
   "delete single row from the table: \"attendance\""
   delete_attendance_by_pk(id: Int!): attendance
   "delete data from the table: \"client\""
-  delete_client(
-    "filter the rows which have to be deleted"
-    where: client_bool_exp!
-  ): client_mutation_response
+  delete_client("filter the rows which have to be deleted" where: client_bool_exp!): client_mutation_response
   "delete single row from the table: \"client\""
   delete_client_by_pk(id: Int!): client
   "delete data from the table: \"email_information\""
@@ -1821,27 +1812,18 @@ type mutation_root {
   "delete single row from the table: \"email_information\""
   delete_email_information_by_pk(id: Int!): email_information
   "delete data from the table: \"event\""
-  delete_event(
-    "filter the rows which have to be deleted"
-    where: event_bool_exp!
-  ): event_mutation_response
+  delete_event("filter the rows which have to be deleted" where: event_bool_exp!): event_mutation_response
   "delete single row from the table: \"event\""
   delete_event_by_pk(id: Int!): event
   "delete data from the table: \"feedback\""
-  delete_feedback(
-    "filter the rows which have to be deleted"
-    where: feedback_bool_exp!
-  ): feedback_mutation_response
+  delete_feedback("filter the rows which have to be deleted" where: feedback_bool_exp!): feedback_mutation_response
   "delete data from the table: \"interpretation_details\""
   delete_interpretation_details(
     "filter the rows which have to be deleted"
     where: interpretation_details_bool_exp!
   ): interpretation_details_mutation_response
   "delete data from the table: \"invoice\""
-  delete_invoice(
-    "filter the rows which have to be deleted"
-    where: invoice_bool_exp!
-  ): invoice_mutation_response
+  delete_invoice("filter the rows which have to be deleted" where: invoice_bool_exp!): invoice_mutation_response
   "delete single row from the table: \"invoice\""
   delete_invoice_by_pk(id: Int!): invoice
   "delete data from the table: \"membership\""
@@ -1873,10 +1855,7 @@ type mutation_root {
   "delete single row from the table: \"notification_setting\""
   delete_notification_setting_by_pk(id: Int!): notification_setting
   "delete data from the table: \"quotation\""
-  delete_quotation(
-    "filter the rows which have to be deleted"
-    where: quotation_bool_exp!
-  ): quotation_mutation_response
+  delete_quotation("filter the rows which have to be deleted" where: quotation_bool_exp!): quotation_mutation_response
   "delete single row from the table: \"quotation\""
   delete_quotation_by_pk(id: Int!): quotation
   "delete data from the table: \"service_requestor\""
@@ -1894,10 +1873,7 @@ type mutation_root {
   "delete single row from the table: \"telegram_information\""
   delete_telegram_information_by_pk(id: Int!): telegram_information
   "delete data from the table: \"volunteer\""
-  delete_volunteer(
-    "filter the rows which have to be deleted"
-    where: volunteer_bool_exp!
-  ): volunteer_mutation_response
+  delete_volunteer("filter the rows which have to be deleted" where: volunteer_bool_exp!): volunteer_mutation_response
   "delete data from the table: \"volunteer_assignment_opt_in\""
   delete_volunteer_assignment_opt_in(
     "filter the rows which have to be deleted"
@@ -1910,574 +1886,574 @@ type mutation_root {
   "insert data into the table: \"account\""
   insert_account(
     "the rows to be inserted"
-    objects: [account_insert_input!]!,
+    objects: [account_insert_input!]!
     "on conflict condition"
     on_conflict: account_on_conflict
   ): account_mutation_response
   "insert a single row into the table: \"account\""
   insert_account_one(
     "the row to be inserted"
-    object: account_insert_input!,
+    object: account_insert_input!
     "on conflict condition"
     on_conflict: account_on_conflict
   ): account
   "insert data into the table: \"admin\""
   insert_admin(
     "the rows to be inserted"
-    objects: [admin_insert_input!]!,
+    objects: [admin_insert_input!]!
     "on conflict condition"
     on_conflict: admin_on_conflict
   ): admin_mutation_response
   "insert a single row into the table: \"admin\""
   insert_admin_one(
     "the row to be inserted"
-    object: admin_insert_input!,
+    object: admin_insert_input!
     "on conflict condition"
     on_conflict: admin_on_conflict
   ): admin
   "insert data into the table: \"assignment\""
   insert_assignment(
     "the rows to be inserted"
-    objects: [assignment_insert_input!]!,
+    objects: [assignment_insert_input!]!
     "on conflict condition"
     on_conflict: assignment_on_conflict
   ): assignment_mutation_response
   "insert a single row into the table: \"assignment\""
   insert_assignment_one(
     "the row to be inserted"
-    object: assignment_insert_input!,
+    object: assignment_insert_input!
     "on conflict condition"
     on_conflict: assignment_on_conflict
   ): assignment
   "insert data into the table: \"attendance\""
   insert_attendance(
     "the rows to be inserted"
-    objects: [attendance_insert_input!]!,
+    objects: [attendance_insert_input!]!
     "on conflict condition"
     on_conflict: attendance_on_conflict
   ): attendance_mutation_response
   "insert a single row into the table: \"attendance\""
   insert_attendance_one(
     "the row to be inserted"
-    object: attendance_insert_input!,
+    object: attendance_insert_input!
     "on conflict condition"
     on_conflict: attendance_on_conflict
   ): attendance
   "insert data into the table: \"client\""
   insert_client(
     "the rows to be inserted"
-    objects: [client_insert_input!]!,
+    objects: [client_insert_input!]!
     "on conflict condition"
     on_conflict: client_on_conflict
   ): client_mutation_response
   "insert a single row into the table: \"client\""
   insert_client_one(
     "the row to be inserted"
-    object: client_insert_input!,
+    object: client_insert_input!
     "on conflict condition"
     on_conflict: client_on_conflict
   ): client
   "insert data into the table: \"email_information\""
   insert_email_information(
     "the rows to be inserted"
-    objects: [email_information_insert_input!]!,
+    objects: [email_information_insert_input!]!
     "on conflict condition"
     on_conflict: email_information_on_conflict
   ): email_information_mutation_response
   "insert a single row into the table: \"email_information\""
   insert_email_information_one(
     "the row to be inserted"
-    object: email_information_insert_input!,
+    object: email_information_insert_input!
     "on conflict condition"
     on_conflict: email_information_on_conflict
   ): email_information
   "insert data into the table: \"event\""
   insert_event(
     "the rows to be inserted"
-    objects: [event_insert_input!]!,
+    objects: [event_insert_input!]!
     "on conflict condition"
     on_conflict: event_on_conflict
   ): event_mutation_response
   "insert a single row into the table: \"event\""
   insert_event_one(
     "the row to be inserted"
-    object: event_insert_input!,
+    object: event_insert_input!
     "on conflict condition"
     on_conflict: event_on_conflict
   ): event
   "insert data into the table: \"feedback\""
   insert_feedback(
     "the rows to be inserted"
-    objects: [feedback_insert_input!]!,
+    objects: [feedback_insert_input!]!
     "on conflict condition"
     on_conflict: feedback_on_conflict
   ): feedback_mutation_response
   "insert a single row into the table: \"feedback\""
   insert_feedback_one(
     "the row to be inserted"
-    object: feedback_insert_input!,
+    object: feedback_insert_input!
     "on conflict condition"
     on_conflict: feedback_on_conflict
   ): feedback
   "insert data into the table: \"interpretation_details\""
   insert_interpretation_details(
     "the rows to be inserted"
-    objects: [interpretation_details_insert_input!]!,
+    objects: [interpretation_details_insert_input!]!
     "on conflict condition"
     on_conflict: interpretation_details_on_conflict
   ): interpretation_details_mutation_response
   "insert a single row into the table: \"interpretation_details\""
   insert_interpretation_details_one(
     "the row to be inserted"
-    object: interpretation_details_insert_input!,
+    object: interpretation_details_insert_input!
     "on conflict condition"
     on_conflict: interpretation_details_on_conflict
   ): interpretation_details
   "insert data into the table: \"invoice\""
   insert_invoice(
     "the rows to be inserted"
-    objects: [invoice_insert_input!]!,
+    objects: [invoice_insert_input!]!
     "on conflict condition"
     on_conflict: invoice_on_conflict
   ): invoice_mutation_response
   "insert a single row into the table: \"invoice\""
   insert_invoice_one(
     "the row to be inserted"
-    object: invoice_insert_input!,
+    object: invoice_insert_input!
     "on conflict condition"
     on_conflict: invoice_on_conflict
   ): invoice
   "insert data into the table: \"membership\""
   insert_membership(
     "the rows to be inserted"
-    objects: [membership_insert_input!]!,
+    objects: [membership_insert_input!]!
     "on conflict condition"
     on_conflict: membership_on_conflict
   ): membership_mutation_response
   "insert a single row into the table: \"membership\""
   insert_membership_one(
     "the row to be inserted"
-    object: membership_insert_input!,
+    object: membership_insert_input!
     "on conflict condition"
     on_conflict: membership_on_conflict
   ): membership
   "insert data into the table: \"membership_renewals\""
   insert_membership_renewals(
     "the rows to be inserted"
-    objects: [membership_renewals_insert_input!]!,
+    objects: [membership_renewals_insert_input!]!
     "on conflict condition"
     on_conflict: membership_renewals_on_conflict
   ): membership_renewals_mutation_response
   "insert a single row into the table: \"membership_renewals\""
   insert_membership_renewals_one(
     "the row to be inserted"
-    object: membership_renewals_insert_input!,
+    object: membership_renewals_insert_input!
     "on conflict condition"
     on_conflict: membership_renewals_on_conflict
   ): membership_renewals
   "insert data into the table: \"membership_type\""
   insert_membership_type(
     "the rows to be inserted"
-    objects: [membership_type_insert_input!]!,
+    objects: [membership_type_insert_input!]!
     "on conflict condition"
     on_conflict: membership_type_on_conflict
   ): membership_type_mutation_response
   "insert a single row into the table: \"membership_type\""
   insert_membership_type_one(
     "the row to be inserted"
-    object: membership_type_insert_input!,
+    object: membership_type_insert_input!
     "on conflict condition"
     on_conflict: membership_type_on_conflict
   ): membership_type
   "insert data into the table: \"notification_setting\""
   insert_notification_setting(
     "the rows to be inserted"
-    objects: [notification_setting_insert_input!]!,
+    objects: [notification_setting_insert_input!]!
     "on conflict condition"
     on_conflict: notification_setting_on_conflict
   ): notification_setting_mutation_response
   "insert a single row into the table: \"notification_setting\""
   insert_notification_setting_one(
     "the row to be inserted"
-    object: notification_setting_insert_input!,
+    object: notification_setting_insert_input!
     "on conflict condition"
     on_conflict: notification_setting_on_conflict
   ): notification_setting
   "insert data into the table: \"quotation\""
   insert_quotation(
     "the rows to be inserted"
-    objects: [quotation_insert_input!]!,
+    objects: [quotation_insert_input!]!
     "on conflict condition"
     on_conflict: quotation_on_conflict
   ): quotation_mutation_response
   "insert a single row into the table: \"quotation\""
   insert_quotation_one(
     "the row to be inserted"
-    object: quotation_insert_input!,
+    object: quotation_insert_input!
     "on conflict condition"
     on_conflict: quotation_on_conflict
   ): quotation
   "insert data into the table: \"service_requestor\""
   insert_service_requestor(
     "the rows to be inserted"
-    objects: [service_requestor_insert_input!]!,
+    objects: [service_requestor_insert_input!]!
     "on conflict condition"
     on_conflict: service_requestor_on_conflict
   ): service_requestor_mutation_response
   "insert a single row into the table: \"service_requestor\""
   insert_service_requestor_one(
     "the row to be inserted"
-    object: service_requestor_insert_input!,
+    object: service_requestor_insert_input!
     "on conflict condition"
     on_conflict: service_requestor_on_conflict
   ): service_requestor
   "insert data into the table: \"telegram_information\""
   insert_telegram_information(
     "the rows to be inserted"
-    objects: [telegram_information_insert_input!]!,
+    objects: [telegram_information_insert_input!]!
     "on conflict condition"
     on_conflict: telegram_information_on_conflict
   ): telegram_information_mutation_response
   "insert a single row into the table: \"telegram_information\""
   insert_telegram_information_one(
     "the row to be inserted"
-    object: telegram_information_insert_input!,
+    object: telegram_information_insert_input!
     "on conflict condition"
     on_conflict: telegram_information_on_conflict
   ): telegram_information
   "insert data into the table: \"volunteer\""
   insert_volunteer(
     "the rows to be inserted"
-    objects: [volunteer_insert_input!]!,
+    objects: [volunteer_insert_input!]!
     "on conflict condition"
     on_conflict: volunteer_on_conflict
   ): volunteer_mutation_response
   "insert data into the table: \"volunteer_assignment_opt_in\""
   insert_volunteer_assignment_opt_in(
     "the rows to be inserted"
-    objects: [volunteer_assignment_opt_in_insert_input!]!,
+    objects: [volunteer_assignment_opt_in_insert_input!]!
     "on conflict condition"
     on_conflict: volunteer_assignment_opt_in_on_conflict
   ): volunteer_assignment_opt_in_mutation_response
   "insert a single row into the table: \"volunteer_assignment_opt_in\""
   insert_volunteer_assignment_opt_in_one(
     "the row to be inserted"
-    object: volunteer_assignment_opt_in_insert_input!,
+    object: volunteer_assignment_opt_in_insert_input!
     "on conflict condition"
     on_conflict: volunteer_assignment_opt_in_on_conflict
   ): volunteer_assignment_opt_in
   "insert a single row into the table: \"volunteer\""
   insert_volunteer_one(
     "the row to be inserted"
-    object: volunteer_insert_input!,
+    object: volunteer_insert_input!
     "on conflict condition"
     on_conflict: volunteer_on_conflict
   ): volunteer
   "update data of the table: \"account\""
   update_account(
     "increments the integer columns with given value of the filtered values"
-    _inc: account_inc_input,
+    _inc: account_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: account_set_input,
+    _set: account_set_input
     "filter the rows which have to be updated"
     where: account_bool_exp!
   ): account_mutation_response
   "update single row of the table: \"account\""
   update_account_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: account_inc_input,
+    _inc: account_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: account_set_input,
+    _set: account_set_input
     pk_columns: account_pk_columns_input!
   ): account
   "update data of the table: \"admin\""
   update_admin(
     "increments the integer columns with given value of the filtered values"
-    _inc: admin_inc_input,
+    _inc: admin_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: admin_set_input,
+    _set: admin_set_input
     "filter the rows which have to be updated"
     where: admin_bool_exp!
   ): admin_mutation_response
   "update single row of the table: \"admin\""
   update_admin_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: admin_inc_input,
+    _inc: admin_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: admin_set_input,
+    _set: admin_set_input
     pk_columns: admin_pk_columns_input!
   ): admin
   "update data of the table: \"assignment\""
   update_assignment(
     "increments the integer columns with given value of the filtered values"
-    _inc: assignment_inc_input,
+    _inc: assignment_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: assignment_set_input,
+    _set: assignment_set_input
     "filter the rows which have to be updated"
     where: assignment_bool_exp!
   ): assignment_mutation_response
   "update single row of the table: \"assignment\""
   update_assignment_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: assignment_inc_input,
+    _inc: assignment_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: assignment_set_input,
+    _set: assignment_set_input
     pk_columns: assignment_pk_columns_input!
   ): assignment
   "update data of the table: \"attendance\""
   update_attendance(
     "increments the integer columns with given value of the filtered values"
-    _inc: attendance_inc_input,
+    _inc: attendance_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: attendance_set_input,
+    _set: attendance_set_input
     "filter the rows which have to be updated"
     where: attendance_bool_exp!
   ): attendance_mutation_response
   "update single row of the table: \"attendance\""
   update_attendance_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: attendance_inc_input,
+    _inc: attendance_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: attendance_set_input,
+    _set: attendance_set_input
     pk_columns: attendance_pk_columns_input!
   ): attendance
   "update data of the table: \"client\""
   update_client(
     "increments the integer columns with given value of the filtered values"
-    _inc: client_inc_input,
+    _inc: client_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: client_set_input,
+    _set: client_set_input
     "filter the rows which have to be updated"
     where: client_bool_exp!
   ): client_mutation_response
   "update single row of the table: \"client\""
   update_client_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: client_inc_input,
+    _inc: client_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: client_set_input,
+    _set: client_set_input
     pk_columns: client_pk_columns_input!
   ): client
   "update data of the table: \"email_information\""
   update_email_information(
     "increments the integer columns with given value of the filtered values"
-    _inc: email_information_inc_input,
+    _inc: email_information_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: email_information_set_input,
+    _set: email_information_set_input
     "filter the rows which have to be updated"
     where: email_information_bool_exp!
   ): email_information_mutation_response
   "update single row of the table: \"email_information\""
   update_email_information_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: email_information_inc_input,
+    _inc: email_information_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: email_information_set_input,
+    _set: email_information_set_input
     pk_columns: email_information_pk_columns_input!
   ): email_information
   "update data of the table: \"event\""
   update_event(
     "increments the integer columns with given value of the filtered values"
-    _inc: event_inc_input,
+    _inc: event_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: event_set_input,
+    _set: event_set_input
     "filter the rows which have to be updated"
     where: event_bool_exp!
   ): event_mutation_response
   "update single row of the table: \"event\""
   update_event_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: event_inc_input,
+    _inc: event_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: event_set_input,
+    _set: event_set_input
     pk_columns: event_pk_columns_input!
   ): event
   "update data of the table: \"feedback\""
   update_feedback(
     "increments the integer columns with given value of the filtered values"
-    _inc: feedback_inc_input,
+    _inc: feedback_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: feedback_set_input,
+    _set: feedback_set_input
     "filter the rows which have to be updated"
     where: feedback_bool_exp!
   ): feedback_mutation_response
   "update data of the table: \"interpretation_details\""
   update_interpretation_details(
     "increments the integer columns with given value of the filtered values"
-    _inc: interpretation_details_inc_input,
+    _inc: interpretation_details_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: interpretation_details_set_input,
+    _set: interpretation_details_set_input
     "filter the rows which have to be updated"
     where: interpretation_details_bool_exp!
   ): interpretation_details_mutation_response
   "update data of the table: \"invoice\""
   update_invoice(
     "increments the integer columns with given value of the filtered values"
-    _inc: invoice_inc_input,
+    _inc: invoice_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: invoice_set_input,
+    _set: invoice_set_input
     "filter the rows which have to be updated"
     where: invoice_bool_exp!
   ): invoice_mutation_response
   "update single row of the table: \"invoice\""
   update_invoice_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: invoice_inc_input,
+    _inc: invoice_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: invoice_set_input,
+    _set: invoice_set_input
     pk_columns: invoice_pk_columns_input!
   ): invoice
   "update data of the table: \"membership\""
   update_membership(
     "increments the integer columns with given value of the filtered values"
-    _inc: membership_inc_input,
+    _inc: membership_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: membership_set_input,
+    _set: membership_set_input
     "filter the rows which have to be updated"
     where: membership_bool_exp!
   ): membership_mutation_response
   "update single row of the table: \"membership\""
   update_membership_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: membership_inc_input,
+    _inc: membership_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: membership_set_input,
+    _set: membership_set_input
     pk_columns: membership_pk_columns_input!
   ): membership
   "update data of the table: \"membership_renewals\""
   update_membership_renewals(
     "increments the integer columns with given value of the filtered values"
-    _inc: membership_renewals_inc_input,
+    _inc: membership_renewals_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: membership_renewals_set_input,
+    _set: membership_renewals_set_input
     "filter the rows which have to be updated"
     where: membership_renewals_bool_exp!
   ): membership_renewals_mutation_response
   "update single row of the table: \"membership_renewals\""
   update_membership_renewals_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: membership_renewals_inc_input,
+    _inc: membership_renewals_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: membership_renewals_set_input,
+    _set: membership_renewals_set_input
     pk_columns: membership_renewals_pk_columns_input!
   ): membership_renewals
   "update data of the table: \"membership_type\""
   update_membership_type(
     "increments the integer columns with given value of the filtered values"
-    _inc: membership_type_inc_input,
+    _inc: membership_type_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: membership_type_set_input,
+    _set: membership_type_set_input
     "filter the rows which have to be updated"
     where: membership_type_bool_exp!
   ): membership_type_mutation_response
   "update single row of the table: \"membership_type\""
   update_membership_type_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: membership_type_inc_input,
+    _inc: membership_type_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: membership_type_set_input,
+    _set: membership_type_set_input
     pk_columns: membership_type_pk_columns_input!
   ): membership_type
   "update data of the table: \"notification_setting\""
   update_notification_setting(
     "increments the integer columns with given value of the filtered values"
-    _inc: notification_setting_inc_input,
+    _inc: notification_setting_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: notification_setting_set_input,
+    _set: notification_setting_set_input
     "filter the rows which have to be updated"
     where: notification_setting_bool_exp!
   ): notification_setting_mutation_response
   "update single row of the table: \"notification_setting\""
   update_notification_setting_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: notification_setting_inc_input,
+    _inc: notification_setting_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: notification_setting_set_input,
+    _set: notification_setting_set_input
     pk_columns: notification_setting_pk_columns_input!
   ): notification_setting
   "update data of the table: \"quotation\""
   update_quotation(
     "increments the integer columns with given value of the filtered values"
-    _inc: quotation_inc_input,
+    _inc: quotation_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: quotation_set_input,
+    _set: quotation_set_input
     "filter the rows which have to be updated"
     where: quotation_bool_exp!
   ): quotation_mutation_response
   "update single row of the table: \"quotation\""
   update_quotation_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: quotation_inc_input,
+    _inc: quotation_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: quotation_set_input,
+    _set: quotation_set_input
     pk_columns: quotation_pk_columns_input!
   ): quotation
   "update data of the table: \"service_requestor\""
   update_service_requestor(
     "increments the integer columns with given value of the filtered values"
-    _inc: service_requestor_inc_input,
+    _inc: service_requestor_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: service_requestor_set_input,
+    _set: service_requestor_set_input
     "filter the rows which have to be updated"
     where: service_requestor_bool_exp!
   ): service_requestor_mutation_response
   "update single row of the table: \"service_requestor\""
   update_service_requestor_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: service_requestor_inc_input,
+    _inc: service_requestor_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: service_requestor_set_input,
+    _set: service_requestor_set_input
     pk_columns: service_requestor_pk_columns_input!
   ): service_requestor
   "update data of the table: \"telegram_information\""
   update_telegram_information(
     "increments the integer columns with given value of the filtered values"
-    _inc: telegram_information_inc_input,
+    _inc: telegram_information_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: telegram_information_set_input,
+    _set: telegram_information_set_input
     "filter the rows which have to be updated"
     where: telegram_information_bool_exp!
   ): telegram_information_mutation_response
   "update single row of the table: \"telegram_information\""
   update_telegram_information_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: telegram_information_inc_input,
+    _inc: telegram_information_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: telegram_information_set_input,
+    _set: telegram_information_set_input
     pk_columns: telegram_information_pk_columns_input!
   ): telegram_information
   "update data of the table: \"volunteer\""
   update_volunteer(
     "increments the integer columns with given value of the filtered values"
-    _inc: volunteer_inc_input,
+    _inc: volunteer_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: volunteer_set_input,
+    _set: volunteer_set_input
     "filter the rows which have to be updated"
     where: volunteer_bool_exp!
   ): volunteer_mutation_response
   "update data of the table: \"volunteer_assignment_opt_in\""
   update_volunteer_assignment_opt_in(
     "increments the integer columns with given value of the filtered values"
-    _inc: volunteer_assignment_opt_in_inc_input,
+    _inc: volunteer_assignment_opt_in_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: volunteer_assignment_opt_in_set_input,
+    _set: volunteer_assignment_opt_in_set_input
     "filter the rows which have to be updated"
     where: volunteer_assignment_opt_in_bool_exp!
   ): volunteer_assignment_opt_in_mutation_response
   "update single row of the table: \"volunteer_assignment_opt_in\""
   update_volunteer_assignment_opt_in_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: volunteer_assignment_opt_in_inc_input,
+    _inc: volunteer_assignment_opt_in_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: volunteer_assignment_opt_in_set_input,
+    _set: volunteer_assignment_opt_in_set_input
     pk_columns: volunteer_assignment_opt_in_pk_columns_input!
   ): volunteer_assignment_opt_in
   "update single row of the table: \"volunteer\""
   update_volunteer_by_pk(
     "increments the integer columns with given value of the filtered values"
-    _inc: volunteer_inc_input,
+    _inc: volunteer_inc_input
     "sets the columns of the filtered rows to the given values"
-    _set: volunteer_set_input,
+    _set: volunteer_set_input
     pk_columns: volunteer_pk_columns_input!
   ): volunteer
 }
@@ -2594,26 +2570,26 @@ type query_root {
   "fetch data from the table: \"account\""
   account(
     "distinct select on columns"
-    distinct_on: [account_select_column!],
+    distinct_on: [account_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [account_order_by!],
+    order_by: [account_order_by!]
     "filter the rows returned"
     where: account_bool_exp
   ): [account!]!
   "fetch aggregated fields from the table: \"account\""
   account_aggregate(
     "distinct select on columns"
-    distinct_on: [account_select_column!],
+    distinct_on: [account_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [account_order_by!],
+    order_by: [account_order_by!]
     "filter the rows returned"
     where: account_bool_exp
   ): account_aggregate!
@@ -2622,26 +2598,26 @@ type query_root {
   "fetch data from the table: \"admin\""
   admin(
     "distinct select on columns"
-    distinct_on: [admin_select_column!],
+    distinct_on: [admin_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [admin_order_by!],
+    order_by: [admin_order_by!]
     "filter the rows returned"
     where: admin_bool_exp
   ): [admin!]!
   "fetch aggregated fields from the table: \"admin\""
   admin_aggregate(
     "distinct select on columns"
-    distinct_on: [admin_select_column!],
+    distinct_on: [admin_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [admin_order_by!],
+    order_by: [admin_order_by!]
     "filter the rows returned"
     where: admin_bool_exp
   ): admin_aggregate!
@@ -2650,26 +2626,26 @@ type query_root {
   "fetch data from the table: \"assignment\""
   assignment(
     "distinct select on columns"
-    distinct_on: [assignment_select_column!],
+    distinct_on: [assignment_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [assignment_order_by!],
+    order_by: [assignment_order_by!]
     "filter the rows returned"
     where: assignment_bool_exp
   ): [assignment!]!
   "fetch aggregated fields from the table: \"assignment\""
   assignment_aggregate(
     "distinct select on columns"
-    distinct_on: [assignment_select_column!],
+    distinct_on: [assignment_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [assignment_order_by!],
+    order_by: [assignment_order_by!]
     "filter the rows returned"
     where: assignment_bool_exp
   ): assignment_aggregate!
@@ -2678,26 +2654,26 @@ type query_root {
   "fetch data from the table: \"attendance\""
   attendance(
     "distinct select on columns"
-    distinct_on: [attendance_select_column!],
+    distinct_on: [attendance_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [attendance_order_by!],
+    order_by: [attendance_order_by!]
     "filter the rows returned"
     where: attendance_bool_exp
   ): [attendance!]!
   "fetch aggregated fields from the table: \"attendance\""
   attendance_aggregate(
     "distinct select on columns"
-    distinct_on: [attendance_select_column!],
+    distinct_on: [attendance_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [attendance_order_by!],
+    order_by: [attendance_order_by!]
     "filter the rows returned"
     where: attendance_bool_exp
   ): attendance_aggregate!
@@ -2706,26 +2682,26 @@ type query_root {
   "fetch data from the table: \"client\""
   client(
     "distinct select on columns"
-    distinct_on: [client_select_column!],
+    distinct_on: [client_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [client_order_by!],
+    order_by: [client_order_by!]
     "filter the rows returned"
     where: client_bool_exp
   ): [client!]!
   "fetch aggregated fields from the table: \"client\""
   client_aggregate(
     "distinct select on columns"
-    distinct_on: [client_select_column!],
+    distinct_on: [client_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [client_order_by!],
+    order_by: [client_order_by!]
     "filter the rows returned"
     where: client_bool_exp
   ): client_aggregate!
@@ -2734,26 +2710,26 @@ type query_root {
   "fetch data from the table: \"email_information\""
   email_information(
     "distinct select on columns"
-    distinct_on: [email_information_select_column!],
+    distinct_on: [email_information_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [email_information_order_by!],
+    order_by: [email_information_order_by!]
     "filter the rows returned"
     where: email_information_bool_exp
   ): [email_information!]!
   "fetch aggregated fields from the table: \"email_information\""
   email_information_aggregate(
     "distinct select on columns"
-    distinct_on: [email_information_select_column!],
+    distinct_on: [email_information_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [email_information_order_by!],
+    order_by: [email_information_order_by!]
     "filter the rows returned"
     where: email_information_bool_exp
   ): email_information_aggregate!
@@ -2762,26 +2738,26 @@ type query_root {
   "fetch data from the table: \"event\""
   event(
     "distinct select on columns"
-    distinct_on: [event_select_column!],
+    distinct_on: [event_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [event_order_by!],
+    order_by: [event_order_by!]
     "filter the rows returned"
     where: event_bool_exp
   ): [event!]!
   "fetch aggregated fields from the table: \"event\""
   event_aggregate(
     "distinct select on columns"
-    distinct_on: [event_select_column!],
+    distinct_on: [event_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [event_order_by!],
+    order_by: [event_order_by!]
     "filter the rows returned"
     where: event_bool_exp
   ): event_aggregate!
@@ -2790,78 +2766,78 @@ type query_root {
   "fetch data from the table: \"feedback\""
   feedback(
     "distinct select on columns"
-    distinct_on: [feedback_select_column!],
+    distinct_on: [feedback_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [feedback_order_by!],
+    order_by: [feedback_order_by!]
     "filter the rows returned"
     where: feedback_bool_exp
   ): [feedback!]!
   "fetch aggregated fields from the table: \"feedback\""
   feedback_aggregate(
     "distinct select on columns"
-    distinct_on: [feedback_select_column!],
+    distinct_on: [feedback_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [feedback_order_by!],
+    order_by: [feedback_order_by!]
     "filter the rows returned"
     where: feedback_bool_exp
   ): feedback_aggregate!
   "fetch data from the table: \"interpretation_details\""
   interpretation_details(
     "distinct select on columns"
-    distinct_on: [interpretation_details_select_column!],
+    distinct_on: [interpretation_details_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [interpretation_details_order_by!],
+    order_by: [interpretation_details_order_by!]
     "filter the rows returned"
     where: interpretation_details_bool_exp
   ): [interpretation_details!]!
   "fetch aggregated fields from the table: \"interpretation_details\""
   interpretation_details_aggregate(
     "distinct select on columns"
-    distinct_on: [interpretation_details_select_column!],
+    distinct_on: [interpretation_details_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [interpretation_details_order_by!],
+    order_by: [interpretation_details_order_by!]
     "filter the rows returned"
     where: interpretation_details_bool_exp
   ): interpretation_details_aggregate!
   "fetch data from the table: \"invoice\""
   invoice(
     "distinct select on columns"
-    distinct_on: [invoice_select_column!],
+    distinct_on: [invoice_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [invoice_order_by!],
+    order_by: [invoice_order_by!]
     "filter the rows returned"
     where: invoice_bool_exp
   ): [invoice!]!
   "fetch aggregated fields from the table: \"invoice\""
   invoice_aggregate(
     "distinct select on columns"
-    distinct_on: [invoice_select_column!],
+    distinct_on: [invoice_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [invoice_order_by!],
+    order_by: [invoice_order_by!]
     "filter the rows returned"
     where: invoice_bool_exp
   ): invoice_aggregate!
@@ -2870,26 +2846,26 @@ type query_root {
   "fetch data from the table: \"membership\""
   membership(
     "distinct select on columns"
-    distinct_on: [membership_select_column!],
+    distinct_on: [membership_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_order_by!],
+    order_by: [membership_order_by!]
     "filter the rows returned"
     where: membership_bool_exp
   ): [membership!]!
   "fetch aggregated fields from the table: \"membership\""
   membership_aggregate(
     "distinct select on columns"
-    distinct_on: [membership_select_column!],
+    distinct_on: [membership_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_order_by!],
+    order_by: [membership_order_by!]
     "filter the rows returned"
     where: membership_bool_exp
   ): membership_aggregate!
@@ -2898,26 +2874,26 @@ type query_root {
   "fetch data from the table: \"membership_renewals\""
   membership_renewals(
     "distinct select on columns"
-    distinct_on: [membership_renewals_select_column!],
+    distinct_on: [membership_renewals_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_renewals_order_by!],
+    order_by: [membership_renewals_order_by!]
     "filter the rows returned"
     where: membership_renewals_bool_exp
   ): [membership_renewals!]!
   "fetch aggregated fields from the table: \"membership_renewals\""
   membership_renewals_aggregate(
     "distinct select on columns"
-    distinct_on: [membership_renewals_select_column!],
+    distinct_on: [membership_renewals_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_renewals_order_by!],
+    order_by: [membership_renewals_order_by!]
     "filter the rows returned"
     where: membership_renewals_bool_exp
   ): membership_renewals_aggregate!
@@ -2926,26 +2902,26 @@ type query_root {
   "fetch data from the table: \"membership_type\""
   membership_type(
     "distinct select on columns"
-    distinct_on: [membership_type_select_column!],
+    distinct_on: [membership_type_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_type_order_by!],
+    order_by: [membership_type_order_by!]
     "filter the rows returned"
     where: membership_type_bool_exp
   ): [membership_type!]!
   "fetch aggregated fields from the table: \"membership_type\""
   membership_type_aggregate(
     "distinct select on columns"
-    distinct_on: [membership_type_select_column!],
+    distinct_on: [membership_type_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_type_order_by!],
+    order_by: [membership_type_order_by!]
     "filter the rows returned"
     where: membership_type_bool_exp
   ): membership_type_aggregate!
@@ -2954,26 +2930,26 @@ type query_root {
   "fetch data from the table: \"notification_setting\""
   notification_setting(
     "distinct select on columns"
-    distinct_on: [notification_setting_select_column!],
+    distinct_on: [notification_setting_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [notification_setting_order_by!],
+    order_by: [notification_setting_order_by!]
     "filter the rows returned"
     where: notification_setting_bool_exp
   ): [notification_setting!]!
   "fetch aggregated fields from the table: \"notification_setting\""
   notification_setting_aggregate(
     "distinct select on columns"
-    distinct_on: [notification_setting_select_column!],
+    distinct_on: [notification_setting_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [notification_setting_order_by!],
+    order_by: [notification_setting_order_by!]
     "filter the rows returned"
     where: notification_setting_bool_exp
   ): notification_setting_aggregate!
@@ -2982,26 +2958,26 @@ type query_root {
   "fetch data from the table: \"quotation\""
   quotation(
     "distinct select on columns"
-    distinct_on: [quotation_select_column!],
+    distinct_on: [quotation_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [quotation_order_by!],
+    order_by: [quotation_order_by!]
     "filter the rows returned"
     where: quotation_bool_exp
   ): [quotation!]!
   "fetch aggregated fields from the table: \"quotation\""
   quotation_aggregate(
     "distinct select on columns"
-    distinct_on: [quotation_select_column!],
+    distinct_on: [quotation_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [quotation_order_by!],
+    order_by: [quotation_order_by!]
     "filter the rows returned"
     where: quotation_bool_exp
   ): quotation_aggregate!
@@ -3010,26 +2986,26 @@ type query_root {
   "fetch data from the table: \"service_requestor\""
   service_requestor(
     "distinct select on columns"
-    distinct_on: [service_requestor_select_column!],
+    distinct_on: [service_requestor_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [service_requestor_order_by!],
+    order_by: [service_requestor_order_by!]
     "filter the rows returned"
     where: service_requestor_bool_exp
   ): [service_requestor!]!
   "fetch aggregated fields from the table: \"service_requestor\""
   service_requestor_aggregate(
     "distinct select on columns"
-    distinct_on: [service_requestor_select_column!],
+    distinct_on: [service_requestor_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [service_requestor_order_by!],
+    order_by: [service_requestor_order_by!]
     "filter the rows returned"
     where: service_requestor_bool_exp
   ): service_requestor_aggregate!
@@ -3038,26 +3014,26 @@ type query_root {
   "fetch data from the table: \"telegram_information\""
   telegram_information(
     "distinct select on columns"
-    distinct_on: [telegram_information_select_column!],
+    distinct_on: [telegram_information_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [telegram_information_order_by!],
+    order_by: [telegram_information_order_by!]
     "filter the rows returned"
     where: telegram_information_bool_exp
   ): [telegram_information!]!
   "fetch aggregated fields from the table: \"telegram_information\""
   telegram_information_aggregate(
     "distinct select on columns"
-    distinct_on: [telegram_information_select_column!],
+    distinct_on: [telegram_information_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [telegram_information_order_by!],
+    order_by: [telegram_information_order_by!]
     "filter the rows returned"
     where: telegram_information_bool_exp
   ): telegram_information_aggregate!
@@ -3066,52 +3042,52 @@ type query_root {
   "fetch data from the table: \"volunteer\""
   volunteer(
     "distinct select on columns"
-    distinct_on: [volunteer_select_column!],
+    distinct_on: [volunteer_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_order_by!],
+    order_by: [volunteer_order_by!]
     "filter the rows returned"
     where: volunteer_bool_exp
   ): [volunteer!]!
   "fetch aggregated fields from the table: \"volunteer\""
   volunteer_aggregate(
     "distinct select on columns"
-    distinct_on: [volunteer_select_column!],
+    distinct_on: [volunteer_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_order_by!],
+    order_by: [volunteer_order_by!]
     "filter the rows returned"
     where: volunteer_bool_exp
   ): volunteer_aggregate!
   "fetch data from the table: \"volunteer_assignment_opt_in\""
   volunteer_assignment_opt_in(
     "distinct select on columns"
-    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    distinct_on: [volunteer_assignment_opt_in_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_assignment_opt_in_order_by!],
+    order_by: [volunteer_assignment_opt_in_order_by!]
     "filter the rows returned"
     where: volunteer_assignment_opt_in_bool_exp
   ): [volunteer_assignment_opt_in!]!
   "fetch aggregated fields from the table: \"volunteer_assignment_opt_in\""
   volunteer_assignment_opt_in_aggregate(
     "distinct select on columns"
-    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    distinct_on: [volunteer_assignment_opt_in_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_assignment_opt_in_order_by!],
+    order_by: [volunteer_assignment_opt_in_order_by!]
     "filter the rows returned"
     where: volunteer_assignment_opt_in_bool_exp
   ): volunteer_assignment_opt_in_aggregate!
@@ -3122,7 +3098,6 @@ type query_root {
 }
 
 """
-
 Reference - https://sadeaf.org.sg/service/notetaking/
 
 
@@ -3272,26 +3247,26 @@ type service_requestor {
   "An array relationship"
   clients(
     "distinct select on columns"
-    distinct_on: [client_select_column!],
+    distinct_on: [client_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [client_order_by!],
+    order_by: [client_order_by!]
     "filter the rows returned"
     where: client_bool_exp
   ): [client!]!
   "An aggregated array relationship"
   clients_aggregate(
     "distinct select on columns"
-    distinct_on: [client_select_column!],
+    distinct_on: [client_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [client_order_by!],
+    order_by: [client_order_by!]
     "filter the rows returned"
     where: client_bool_exp
   ): client_aggregate!
@@ -3408,26 +3383,26 @@ type subscription_root {
   "fetch data from the table: \"account\""
   account(
     "distinct select on columns"
-    distinct_on: [account_select_column!],
+    distinct_on: [account_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [account_order_by!],
+    order_by: [account_order_by!]
     "filter the rows returned"
     where: account_bool_exp
   ): [account!]!
   "fetch aggregated fields from the table: \"account\""
   account_aggregate(
     "distinct select on columns"
-    distinct_on: [account_select_column!],
+    distinct_on: [account_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [account_order_by!],
+    order_by: [account_order_by!]
     "filter the rows returned"
     where: account_bool_exp
   ): account_aggregate!
@@ -3436,26 +3411,26 @@ type subscription_root {
   "fetch data from the table: \"admin\""
   admin(
     "distinct select on columns"
-    distinct_on: [admin_select_column!],
+    distinct_on: [admin_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [admin_order_by!],
+    order_by: [admin_order_by!]
     "filter the rows returned"
     where: admin_bool_exp
   ): [admin!]!
   "fetch aggregated fields from the table: \"admin\""
   admin_aggregate(
     "distinct select on columns"
-    distinct_on: [admin_select_column!],
+    distinct_on: [admin_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [admin_order_by!],
+    order_by: [admin_order_by!]
     "filter the rows returned"
     where: admin_bool_exp
   ): admin_aggregate!
@@ -3464,26 +3439,26 @@ type subscription_root {
   "fetch data from the table: \"assignment\""
   assignment(
     "distinct select on columns"
-    distinct_on: [assignment_select_column!],
+    distinct_on: [assignment_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [assignment_order_by!],
+    order_by: [assignment_order_by!]
     "filter the rows returned"
     where: assignment_bool_exp
   ): [assignment!]!
   "fetch aggregated fields from the table: \"assignment\""
   assignment_aggregate(
     "distinct select on columns"
-    distinct_on: [assignment_select_column!],
+    distinct_on: [assignment_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [assignment_order_by!],
+    order_by: [assignment_order_by!]
     "filter the rows returned"
     where: assignment_bool_exp
   ): assignment_aggregate!
@@ -3492,26 +3467,26 @@ type subscription_root {
   "fetch data from the table: \"attendance\""
   attendance(
     "distinct select on columns"
-    distinct_on: [attendance_select_column!],
+    distinct_on: [attendance_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [attendance_order_by!],
+    order_by: [attendance_order_by!]
     "filter the rows returned"
     where: attendance_bool_exp
   ): [attendance!]!
   "fetch aggregated fields from the table: \"attendance\""
   attendance_aggregate(
     "distinct select on columns"
-    distinct_on: [attendance_select_column!],
+    distinct_on: [attendance_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [attendance_order_by!],
+    order_by: [attendance_order_by!]
     "filter the rows returned"
     where: attendance_bool_exp
   ): attendance_aggregate!
@@ -3520,26 +3495,26 @@ type subscription_root {
   "fetch data from the table: \"client\""
   client(
     "distinct select on columns"
-    distinct_on: [client_select_column!],
+    distinct_on: [client_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [client_order_by!],
+    order_by: [client_order_by!]
     "filter the rows returned"
     where: client_bool_exp
   ): [client!]!
   "fetch aggregated fields from the table: \"client\""
   client_aggregate(
     "distinct select on columns"
-    distinct_on: [client_select_column!],
+    distinct_on: [client_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [client_order_by!],
+    order_by: [client_order_by!]
     "filter the rows returned"
     where: client_bool_exp
   ): client_aggregate!
@@ -3548,26 +3523,26 @@ type subscription_root {
   "fetch data from the table: \"email_information\""
   email_information(
     "distinct select on columns"
-    distinct_on: [email_information_select_column!],
+    distinct_on: [email_information_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [email_information_order_by!],
+    order_by: [email_information_order_by!]
     "filter the rows returned"
     where: email_information_bool_exp
   ): [email_information!]!
   "fetch aggregated fields from the table: \"email_information\""
   email_information_aggregate(
     "distinct select on columns"
-    distinct_on: [email_information_select_column!],
+    distinct_on: [email_information_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [email_information_order_by!],
+    order_by: [email_information_order_by!]
     "filter the rows returned"
     where: email_information_bool_exp
   ): email_information_aggregate!
@@ -3576,26 +3551,26 @@ type subscription_root {
   "fetch data from the table: \"event\""
   event(
     "distinct select on columns"
-    distinct_on: [event_select_column!],
+    distinct_on: [event_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [event_order_by!],
+    order_by: [event_order_by!]
     "filter the rows returned"
     where: event_bool_exp
   ): [event!]!
   "fetch aggregated fields from the table: \"event\""
   event_aggregate(
     "distinct select on columns"
-    distinct_on: [event_select_column!],
+    distinct_on: [event_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [event_order_by!],
+    order_by: [event_order_by!]
     "filter the rows returned"
     where: event_bool_exp
   ): event_aggregate!
@@ -3604,78 +3579,78 @@ type subscription_root {
   "fetch data from the table: \"feedback\""
   feedback(
     "distinct select on columns"
-    distinct_on: [feedback_select_column!],
+    distinct_on: [feedback_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [feedback_order_by!],
+    order_by: [feedback_order_by!]
     "filter the rows returned"
     where: feedback_bool_exp
   ): [feedback!]!
   "fetch aggregated fields from the table: \"feedback\""
   feedback_aggregate(
     "distinct select on columns"
-    distinct_on: [feedback_select_column!],
+    distinct_on: [feedback_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [feedback_order_by!],
+    order_by: [feedback_order_by!]
     "filter the rows returned"
     where: feedback_bool_exp
   ): feedback_aggregate!
   "fetch data from the table: \"interpretation_details\""
   interpretation_details(
     "distinct select on columns"
-    distinct_on: [interpretation_details_select_column!],
+    distinct_on: [interpretation_details_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [interpretation_details_order_by!],
+    order_by: [interpretation_details_order_by!]
     "filter the rows returned"
     where: interpretation_details_bool_exp
   ): [interpretation_details!]!
   "fetch aggregated fields from the table: \"interpretation_details\""
   interpretation_details_aggregate(
     "distinct select on columns"
-    distinct_on: [interpretation_details_select_column!],
+    distinct_on: [interpretation_details_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [interpretation_details_order_by!],
+    order_by: [interpretation_details_order_by!]
     "filter the rows returned"
     where: interpretation_details_bool_exp
   ): interpretation_details_aggregate!
   "fetch data from the table: \"invoice\""
   invoice(
     "distinct select on columns"
-    distinct_on: [invoice_select_column!],
+    distinct_on: [invoice_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [invoice_order_by!],
+    order_by: [invoice_order_by!]
     "filter the rows returned"
     where: invoice_bool_exp
   ): [invoice!]!
   "fetch aggregated fields from the table: \"invoice\""
   invoice_aggregate(
     "distinct select on columns"
-    distinct_on: [invoice_select_column!],
+    distinct_on: [invoice_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [invoice_order_by!],
+    order_by: [invoice_order_by!]
     "filter the rows returned"
     where: invoice_bool_exp
   ): invoice_aggregate!
@@ -3684,26 +3659,26 @@ type subscription_root {
   "fetch data from the table: \"membership\""
   membership(
     "distinct select on columns"
-    distinct_on: [membership_select_column!],
+    distinct_on: [membership_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_order_by!],
+    order_by: [membership_order_by!]
     "filter the rows returned"
     where: membership_bool_exp
   ): [membership!]!
   "fetch aggregated fields from the table: \"membership\""
   membership_aggregate(
     "distinct select on columns"
-    distinct_on: [membership_select_column!],
+    distinct_on: [membership_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_order_by!],
+    order_by: [membership_order_by!]
     "filter the rows returned"
     where: membership_bool_exp
   ): membership_aggregate!
@@ -3712,26 +3687,26 @@ type subscription_root {
   "fetch data from the table: \"membership_renewals\""
   membership_renewals(
     "distinct select on columns"
-    distinct_on: [membership_renewals_select_column!],
+    distinct_on: [membership_renewals_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_renewals_order_by!],
+    order_by: [membership_renewals_order_by!]
     "filter the rows returned"
     where: membership_renewals_bool_exp
   ): [membership_renewals!]!
   "fetch aggregated fields from the table: \"membership_renewals\""
   membership_renewals_aggregate(
     "distinct select on columns"
-    distinct_on: [membership_renewals_select_column!],
+    distinct_on: [membership_renewals_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_renewals_order_by!],
+    order_by: [membership_renewals_order_by!]
     "filter the rows returned"
     where: membership_renewals_bool_exp
   ): membership_renewals_aggregate!
@@ -3740,26 +3715,26 @@ type subscription_root {
   "fetch data from the table: \"membership_type\""
   membership_type(
     "distinct select on columns"
-    distinct_on: [membership_type_select_column!],
+    distinct_on: [membership_type_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_type_order_by!],
+    order_by: [membership_type_order_by!]
     "filter the rows returned"
     where: membership_type_bool_exp
   ): [membership_type!]!
   "fetch aggregated fields from the table: \"membership_type\""
   membership_type_aggregate(
     "distinct select on columns"
-    distinct_on: [membership_type_select_column!],
+    distinct_on: [membership_type_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [membership_type_order_by!],
+    order_by: [membership_type_order_by!]
     "filter the rows returned"
     where: membership_type_bool_exp
   ): membership_type_aggregate!
@@ -3768,26 +3743,26 @@ type subscription_root {
   "fetch data from the table: \"notification_setting\""
   notification_setting(
     "distinct select on columns"
-    distinct_on: [notification_setting_select_column!],
+    distinct_on: [notification_setting_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [notification_setting_order_by!],
+    order_by: [notification_setting_order_by!]
     "filter the rows returned"
     where: notification_setting_bool_exp
   ): [notification_setting!]!
   "fetch aggregated fields from the table: \"notification_setting\""
   notification_setting_aggregate(
     "distinct select on columns"
-    distinct_on: [notification_setting_select_column!],
+    distinct_on: [notification_setting_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [notification_setting_order_by!],
+    order_by: [notification_setting_order_by!]
     "filter the rows returned"
     where: notification_setting_bool_exp
   ): notification_setting_aggregate!
@@ -3796,26 +3771,26 @@ type subscription_root {
   "fetch data from the table: \"quotation\""
   quotation(
     "distinct select on columns"
-    distinct_on: [quotation_select_column!],
+    distinct_on: [quotation_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [quotation_order_by!],
+    order_by: [quotation_order_by!]
     "filter the rows returned"
     where: quotation_bool_exp
   ): [quotation!]!
   "fetch aggregated fields from the table: \"quotation\""
   quotation_aggregate(
     "distinct select on columns"
-    distinct_on: [quotation_select_column!],
+    distinct_on: [quotation_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [quotation_order_by!],
+    order_by: [quotation_order_by!]
     "filter the rows returned"
     where: quotation_bool_exp
   ): quotation_aggregate!
@@ -3824,26 +3799,26 @@ type subscription_root {
   "fetch data from the table: \"service_requestor\""
   service_requestor(
     "distinct select on columns"
-    distinct_on: [service_requestor_select_column!],
+    distinct_on: [service_requestor_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [service_requestor_order_by!],
+    order_by: [service_requestor_order_by!]
     "filter the rows returned"
     where: service_requestor_bool_exp
   ): [service_requestor!]!
   "fetch aggregated fields from the table: \"service_requestor\""
   service_requestor_aggregate(
     "distinct select on columns"
-    distinct_on: [service_requestor_select_column!],
+    distinct_on: [service_requestor_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [service_requestor_order_by!],
+    order_by: [service_requestor_order_by!]
     "filter the rows returned"
     where: service_requestor_bool_exp
   ): service_requestor_aggregate!
@@ -3852,26 +3827,26 @@ type subscription_root {
   "fetch data from the table: \"telegram_information\""
   telegram_information(
     "distinct select on columns"
-    distinct_on: [telegram_information_select_column!],
+    distinct_on: [telegram_information_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [telegram_information_order_by!],
+    order_by: [telegram_information_order_by!]
     "filter the rows returned"
     where: telegram_information_bool_exp
   ): [telegram_information!]!
   "fetch aggregated fields from the table: \"telegram_information\""
   telegram_information_aggregate(
     "distinct select on columns"
-    distinct_on: [telegram_information_select_column!],
+    distinct_on: [telegram_information_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [telegram_information_order_by!],
+    order_by: [telegram_information_order_by!]
     "filter the rows returned"
     where: telegram_information_bool_exp
   ): telegram_information_aggregate!
@@ -3880,52 +3855,52 @@ type subscription_root {
   "fetch data from the table: \"volunteer\""
   volunteer(
     "distinct select on columns"
-    distinct_on: [volunteer_select_column!],
+    distinct_on: [volunteer_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_order_by!],
+    order_by: [volunteer_order_by!]
     "filter the rows returned"
     where: volunteer_bool_exp
   ): [volunteer!]!
   "fetch aggregated fields from the table: \"volunteer\""
   volunteer_aggregate(
     "distinct select on columns"
-    distinct_on: [volunteer_select_column!],
+    distinct_on: [volunteer_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_order_by!],
+    order_by: [volunteer_order_by!]
     "filter the rows returned"
     where: volunteer_bool_exp
   ): volunteer_aggregate!
   "fetch data from the table: \"volunteer_assignment_opt_in\""
   volunteer_assignment_opt_in(
     "distinct select on columns"
-    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    distinct_on: [volunteer_assignment_opt_in_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_assignment_opt_in_order_by!],
+    order_by: [volunteer_assignment_opt_in_order_by!]
     "filter the rows returned"
     where: volunteer_assignment_opt_in_bool_exp
   ): [volunteer_assignment_opt_in!]!
   "fetch aggregated fields from the table: \"volunteer_assignment_opt_in\""
   volunteer_assignment_opt_in_aggregate(
     "distinct select on columns"
-    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    distinct_on: [volunteer_assignment_opt_in_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_assignment_opt_in_order_by!],
+    order_by: [volunteer_assignment_opt_in_order_by!]
     "filter the rows returned"
     where: volunteer_assignment_opt_in_bool_exp
   ): volunteer_assignment_opt_in_aggregate!
@@ -4055,52 +4030,52 @@ type volunteer {
   "An array relationship"
   assignments(
     "distinct select on columns"
-    distinct_on: [assignment_select_column!],
+    distinct_on: [assignment_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [assignment_order_by!],
+    order_by: [assignment_order_by!]
     "filter the rows returned"
     where: assignment_bool_exp
   ): [assignment!]!
   "An aggregated array relationship"
   assignments_aggregate(
     "distinct select on columns"
-    distinct_on: [assignment_select_column!],
+    distinct_on: [assignment_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [assignment_order_by!],
+    order_by: [assignment_order_by!]
     "filter the rows returned"
     where: assignment_bool_exp
   ): assignment_aggregate!
   "An array relationship"
   feedbacks(
     "distinct select on columns"
-    distinct_on: [feedback_select_column!],
+    distinct_on: [feedback_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [feedback_order_by!],
+    order_by: [feedback_order_by!]
     "filter the rows returned"
     where: feedback_bool_exp
   ): [feedback!]!
   "An aggregated array relationship"
   feedbacks_aggregate(
     "distinct select on columns"
-    distinct_on: [feedback_select_column!],
+    distinct_on: [feedback_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [feedback_order_by!],
+    order_by: [feedback_order_by!]
     "filter the rows returned"
     where: feedback_bool_exp
   ): feedback_aggregate!
@@ -4108,26 +4083,26 @@ type volunteer {
   "An array relationship"
   volunteer_assignment_opt_ins(
     "distinct select on columns"
-    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    distinct_on: [volunteer_assignment_opt_in_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_assignment_opt_in_order_by!],
+    order_by: [volunteer_assignment_opt_in_order_by!]
     "filter the rows returned"
     where: volunteer_assignment_opt_in_bool_exp
   ): [volunteer_assignment_opt_in!]!
   "An aggregated array relationship"
   volunteer_assignment_opt_ins_aggregate(
     "distinct select on columns"
-    distinct_on: [volunteer_assignment_opt_in_select_column!],
+    distinct_on: [volunteer_assignment_opt_in_select_column!]
     "limit the number of rows returned"
-    limit: Int,
+    limit: Int
     "skip the first n rows. Use only with order_by"
-    offset: Int,
+    offset: Int
     "sort the rows by one or more columns"
-    order_by: [volunteer_assignment_opt_in_order_by!],
+    order_by: [volunteer_assignment_opt_in_order_by!]
     "filter the rows returned"
     where: volunteer_assignment_opt_in_bool_exp
   ): volunteer_assignment_opt_in_aggregate!
@@ -8530,7 +8505,6 @@ input volunteer_variance_order_by {
   account_id: order_by
   id: order_by
 }
-
 
 scalar bigint
 

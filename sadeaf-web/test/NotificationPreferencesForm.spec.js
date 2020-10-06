@@ -1,6 +1,6 @@
-import {createLocalVue, mount} from "@vue/test-utils";
-import Element from "element-ui";
-import NotificationPreferencesForm from "../components/forms/NotificationPreferencesForm";
+import { createLocalVue, mount } from '@vue/test-utils';
+import Element from 'element-ui';
+import NotificationPreferencesForm from '../components/forms/NotificationPreferencesForm';
 
 const localVue = createLocalVue();
 localVue.use(Element);
@@ -14,22 +14,22 @@ beforeEach(() => {
   wrapper = mount(NotificationPreferencesForm, {
     localVue,
     propsData: {
-      formWidth: "500"
+      formWidth: '500',
     },
     mocks: {
-      $apollo
+      $apollo,
     },
     data() {
       return {
         // declare these to prevent reactivity warnings
         form: {
           telegramPreferred: false,
-          emailPreferred: false
-        }
-      }
-    }
+          emailPreferred: false,
+        },
+      };
+    },
   });
-})
+});
 
 describe('Telegram user-handle input field', () => {
   it('should not validate if empty', async () => {
@@ -37,13 +37,13 @@ describe('Telegram user-handle input field', () => {
       form: {
         telegramPreferred: true,
         emailPreferred: false,
-        telegramHandle: "",
+        telegramHandle: '',
       },
       accountType: 'client',
     });
 
-    await wrapper.findComponent({name: ELEMENTUI_BUTTON_COMPONENT_NAME }).trigger('click')
-    const expectedErrorMessage = 'Please input a telegram handle'
+    await wrapper.findComponent({ name: ELEMENTUI_BUTTON_COMPONENT_NAME }).trigger('click');
+    const expectedErrorMessage = 'Please input a telegram handle';
     expect(wrapper.find(ELEMENTUI_INPUT_ERROR_CLASS).text()).toBe(expectedErrorMessage);
   });
 
@@ -52,39 +52,38 @@ describe('Telegram user-handle input field', () => {
       form: {
         telegramPreferred: true,
         emailPreferred: false,
-        telegramHandle: "@someUserHandle",
+        telegramHandle: '@someUserHandle',
       },
       accountType: 'client',
     });
 
-    await wrapper.findComponent({name: ELEMENTUI_BUTTON_COMPONENT_NAME }).trigger('click')
+    await wrapper.findComponent({ name: ELEMENTUI_BUTTON_COMPONENT_NAME }).trigger('click');
     const expectedErrorMessage = 'You do not need to add the @ at the start of your handle';
     expect(wrapper.find(ELEMENTUI_INPUT_ERROR_CLASS).text()).toBe(expectedErrorMessage);
   });
-})
-
+});
 
 describe('Client Form', () => {
   it('should not show any alert preferences if email and telegram are not checked', async () => {
     await wrapper.setData({
       form: {
         telegramPreferred: false,
-        emailPreferred: false
+        emailPreferred: false,
       },
       accountType: 'client',
-    })
+    });
     let allCheckboxes = wrapper.findAllComponents({ name: ELEMENTUI_CHECKBOX_COMPONENT_NAME });
-    expectOnlyEmailAndTelegramCheckboxes(allCheckboxes)
+    expectOnlyEmailAndTelegramCheckboxes(allCheckboxes);
   });
 
   it('should show all preference checkboxes when either email or telegram is checked', async () => {
     await wrapper.setData({
       form: {
         telegramPreferred: false,
-        emailPreferred: true
+        emailPreferred: true,
       },
       accountType: 'client',
-    })
+    });
 
     let allCheckboxes = wrapper.findAllComponents({ name: ELEMENTUI_CHECKBOX_COMPONENT_NAME });
     expectAllClientPreferencesToBePresent(allCheckboxes);
@@ -92,10 +91,10 @@ describe('Client Form', () => {
     await wrapper.setData({
       form: {
         telegramPreferred: true,
-        emailPreferred: false
+        emailPreferred: false,
       },
       accountType: 'client',
-    })
+    });
 
     allCheckboxes = wrapper.findAllComponents({ name: ELEMENTUI_CHECKBOX_COMPONENT_NAME });
     expectAllClientPreferencesToBePresent(allCheckboxes);
@@ -106,46 +105,46 @@ describe('Client Form', () => {
     // because client and volunteer share a similar checkbox label
     const clientPreferenceExplanations = [
       'You will be notified when a volunteer has been matched to you',
-      'You will be notified if volunteers have still not been matched to you a few hours before your event'
-    ]
+      'You will be notified if volunteers have still not been matched to you a few hours before your event',
+    ];
     await wrapper.setData({
       form: {
         emailPreferred: true,
       },
       accountType: 'client',
-    })
+    });
 
     // skip the first explanation for Email checkbox
     const preferenceExplanationWrappers = wrapper.findAll('.form-element-explanation').wrappers.slice(1);
     expect(preferenceExplanationWrappers).toHaveLength(2);
 
-    for (let i=0; i<clientPreferenceExplanations.length; i++) {
+    for (let i = 0; i < clientPreferenceExplanations.length; i++) {
       expect(preferenceExplanationWrappers[i].text()).toBe(clientPreferenceExplanations[i]);
     }
   });
-})
+});
 
 describe('Volunteer Form', () => {
   it('should not show any alert preferences if email and telegram are not checked', async () => {
     await wrapper.setData({
       form: {
         telegramPreferred: false,
-        emailPreferred: false
+        emailPreferred: false,
       },
       accountType: 'volunteer',
-    })
+    });
     let allCheckboxes = wrapper.findAllComponents({ name: ELEMENTUI_CHECKBOX_COMPONENT_NAME });
-    expectOnlyEmailAndTelegramCheckboxes(allCheckboxes)
+    expectOnlyEmailAndTelegramCheckboxes(allCheckboxes);
   });
 
   it('should show all preference checkboxes when either email or telegram is checked', async () => {
     await wrapper.setData({
       form: {
         telegramPreferred: false,
-        emailPreferred: true
+        emailPreferred: true,
       },
       accountType: 'volunteer',
-    })
+    });
 
     let allCheckboxes = wrapper.findAllComponents({ name: ELEMENTUI_CHECKBOX_COMPONENT_NAME });
     expectAllVolunteerPreferencesToBePresent(allCheckboxes);
@@ -153,10 +152,10 @@ describe('Volunteer Form', () => {
     await wrapper.setData({
       form: {
         telegramPreferred: true,
-        emailPreferred: false
+        emailPreferred: false,
       },
       accountType: 'volunteer',
-    })
+    });
 
     allCheckboxes = wrapper.findAllComponents({ name: ELEMENTUI_CHECKBOX_COMPONENT_NAME });
     expectAllVolunteerPreferencesToBePresent(allCheckboxes);
@@ -167,25 +166,26 @@ describe('Volunteer Form', () => {
       'You will only be notified of assignments that urgently needs a volunteer. This includes assignments in the next few hours, or 1 to 2 days',
       'You will receive notifications of all new assignments',
       'You will receive periodic updates for assignments that have not been matched to a volunteer',
-      'You will receive a notification when an assignment you have selected is matched to you'
-    ]
+      'You will receive a notification when an assignment you have selected is matched to you',
+    ];
     await wrapper.setData({
       form: {
         emailPreferred: true,
       },
       accountType: 'volunteer',
-    })
+    });
 
     // skip the first explanation for Email checkbox
     const preferenceExplanationWrappers = wrapper.findAll('.form-element-explanation').wrappers.slice(1);
     expect(preferenceExplanationWrappers).toHaveLength(4);
 
-    for (let i=0; i<volunteerPreferencesExplanation.length; i++) {
-      expect(preferenceExplanationWrappers[i].text()).toBe(volunteerPreferencesExplanation[i]);
+    for (let i = 0; i < volunteerPreferencesExplanation.length; i++) {
+      // due to formatting, there could be some unnecessary whitespaces between text
+      let trimmedText = preferenceExplanationWrappers[i].text().replace(/\s+/g, ' ');
+      expect(trimmedText).toBe(volunteerPreferencesExplanation[i]);
     }
   });
 });
-
 
 // test helpers
 function expectAllClientPreferencesToBePresent(checkboxElements) {
