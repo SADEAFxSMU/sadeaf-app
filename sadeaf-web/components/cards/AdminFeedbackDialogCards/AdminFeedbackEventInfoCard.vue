@@ -3,15 +3,11 @@
     <div slot="header" class="clearfix">
       <h2>Event Information</h2>
     </div>
-    <el-row v-for="info in information"
-            :key="info.label"
-            class="margin-bottom__sm-not-last"
-    >
+    <el-row v-for="info in information" :key="info.label" class="margin-bottom__sm-not-last">
       <el-row>
         <el-col>
-          <h4> {{ info.label }}</h4>
+          <h4>{{ info.label }}</h4>
         </el-col>
-
       </el-row>
 
       <el-row>
@@ -19,7 +15,6 @@
           {{ info.contents }}
         </el-col>
       </el-row>
-
     </el-row>
   </el-card>
 </template>
