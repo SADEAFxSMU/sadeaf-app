@@ -1,22 +1,37 @@
 <template>
   <base-profile :user="user" :loading="$apollo.loading">
     <template v-slot:role-content>
-      <div class="events-container">
-        <h1>Events</h1>
-        <div class="client-events">
-          <div v-if="events && events.length > 0">
-            <div v-for="event in events">
-              <el-card style="margin: 8px;">
-                <h3 style="margin-bottom: 4px;">{{ event.name }}</h3>
-                <p style="color: #959aa5">{{ event.description }}</p>
-              </el-card>
-            </div>
-          </div>
-          <div v-else class="no-events">
-            <h3>🙈 No events yet</h3>
+      <div class="client-stats">
+        <stat-card v-for="({value}, statName) in stats"
+                   style="flex: 1;"
+                   :title="statName"
+                   title-position="bottom"
+                   :stat="value"
+                   accent-color="#a892fc" />
+      </div>
+    </template>
+    <template v-slot:role-body>
+      <h1 class="title">Events</h1>
+      <div class="client-events">
+        <div v-if="events && events.length > 0">
+          <div v-for="event in events">
+            <el-card style="margin: 8px;">
+              <div class="event-card-header">
+                <h3 style="margin-bottom: 4px;">
+                  {{ event.name }}
+                </h3>
+                <status-indicator :text="event.uncompleted_status ? 'IN PROGRESS' : 'COMPLETED'"
+                                  :color="event.uncompleted_status ? 'salmon': '#46cd6f'" />
+              </div>
+              <p style="color: #959aa5">{{ event.description }}</p>
+            </el-card>
           </div>
         </div>
+        <div v-else class="no-events">
+          <h3>🙈 No events yet</h3>
+        </div>
       </div>
+
     </template>
   </base-profile>
 </template>
@@ -24,6 +39,8 @@
 <script>
 import BaseProfile from "./BaseProfile";
 import gql from 'graphql-tag';
+import StatCard from "../../StatCard";
+import StatusIndicator from "../../StatusIndicator";
 
 const ClientQuery = gql`
   query ClientQueryByAccountId($id: Int!) {
@@ -64,6 +81,8 @@ export default {
   name: "ClientProfile",
 
   components: {
+    StatusIndicator,
+    StatCard,
     BaseProfile
   },
 
@@ -87,6 +106,26 @@ export default {
     events() {
       return this.client && this.client.events;
     },
+    stats() {
+      const events = this.events;
+      let inProgress = 0;
+      let completed = 0;
+      events.forEach(event => {
+        if (event.uncompleted_status === true) {
+          inProgress++;
+        } else {
+          completed++;
+        }
+      });
+      return {
+        "in progress": {
+          value: inProgress
+        },
+        "completed": {
+          value: completed
+        },
+      }
+    }
   },
 
   apollo: {
@@ -103,10 +142,12 @@ export default {
 </script>
 
 <style scoped>
-.events-container {
-  height: 100%;
+.title {
+  margin: 16px 0 12px 0;
+}
+.client-stats {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 .client-events {
   background: white;
@@ -121,5 +162,10 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+.event-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>
