@@ -6,18 +6,20 @@
     <el-row type="flex" style="flex-wrap: wrap;" :gutter="20">
       <el-col :xs="24" :md="8">
         <div class="profile">
-          <img v-if="profilePicUrl"
-               :src="profilePicUrl"
-               :alt="`${name}'s profile picture`"
-               class="profile-pic" />
-          <el-avatar v-else
-                     class="el-icon-user-solid profile-pic"
-                     style="display: flex; justify-content: center; align-items: center; height: 150px; width: 150px; font-size: 70px;" />
+          <div class="avatar">
+            <img v-if="profilePicUrl"
+                 :src="profilePicUrl"
+                 :alt="`${name}'s profile picture`"
+                 class="profile-pic" />
+            <el-avatar v-else
+                       class="el-icon-user-solid profile-pic"
+                       style="display: flex; justify-content: center; align-items: center; height: 150px; width: 150px; font-size: 70px;" />
+            <role-tag :role="role"
+                      class="role" />
+          </div>
           <div class="user-info">
             <h1 class="name">
               {{ name }}
-              <role-tag :role="role"
-                        style="margin-left: 8px;" />
             </h1>
             <a class="link" :href="`mailto:${email}`" target="_blank">{{ email }}</a>
             <div class="user-stats">
@@ -110,7 +112,16 @@ export default {
   border-radius: 50%;
   margin-bottom: 16px;
   width: 250px;
-  box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 8px 1px #cccce7;
+}
+.avatar {
+  position: relative;
+}
+.role {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  box-shadow: 1px 1px 6px 1px #dbdbf5;
 }
 .user-info {
   display: flex;
