@@ -47,7 +47,7 @@ export default {
       required: true,
     },
     roleId: {
-      type: Object,
+      type: Number,
       required: false,
     },
     loading: {

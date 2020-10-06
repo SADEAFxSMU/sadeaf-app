@@ -17,7 +17,7 @@ export default {
 
   props: {
     stats: {
-      type: Array,
+      type: [Object, Array],
       required: true,
     },
   },
