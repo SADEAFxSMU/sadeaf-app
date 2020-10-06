@@ -9,6 +9,29 @@
                    :stat="value"
                    accent-color="#a892fc" />
       </div>
+      <div class="client-info">
+        <h1>
+          Client Information
+        </h1>
+        <table>
+          <tr>
+            <th>Organisation</th>
+            <td>- {{ client.organisation }}</td>
+          </tr>
+          <tr>
+            <th>Designation</th>
+            <td>- {{ client.designation }}</td>
+          </tr>
+          <tr>
+            <th>Comm Pref.</th>
+            <td>- {{ client.preferred_comm_mode }}</td>
+          </tr>
+          <tr v-if="client.additional_notes">
+            <th>*Note</th>
+            <td>- {{ client.additional_notes }}</td>
+          </tr>
+        </table>
+      </div>
     </template>
     <template v-slot:role-body>
       <h1 class="title">Events</h1>
@@ -41,6 +64,7 @@ import BaseProfile from "./BaseProfile";
 import gql from 'graphql-tag';
 import StatCard from "../../StatCard";
 import StatusIndicator from "../../StatusIndicator";
+import DangerZone from "../../forms/DangerZone";
 
 const ClientQuery = gql`
   query ClientQueryByAccountId($id: Int!) {
@@ -81,6 +105,7 @@ export default {
   name: "ClientProfile",
 
   components: {
+    DangerZone,
     StatusIndicator,
     StatCard,
     BaseProfile
@@ -148,6 +173,20 @@ export default {
 .client-stats {
   display: flex;
   flex-wrap: wrap;
+}
+.client-info {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 24px;
+  margin: 12px 8px 8px 8px;
+  box-shadow: inset 2px 2px 8px #d9d9e9;
+}
+.client-info table {
+  margin-top: 12px;
+  color: #5f5f75;
+}
+.client-info table th {
+  text-align: right;
 }
 .client-events {
   background: white;
