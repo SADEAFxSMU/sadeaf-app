@@ -10,7 +10,3 @@ export default {
   name: 'admin-feedback',
 };
 </script>
-
-<style scoped>
-
-</style>

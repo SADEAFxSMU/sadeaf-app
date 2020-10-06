@@ -1,15 +1,9 @@
 <template>
-  <el-card
-    class="comment-card"
-  >
+  <el-card class="comment-card">
     <div slot="header" class="clearfix">
       <h2>Feedback Comments</h2>
     </div>
-    <el-row
-      v-for="commentLabel in Object.keys(comments)"
-      :key="commentLabel"
-      class="comment-row"
-    >
+    <el-row v-for="commentLabel in Object.keys(comments)" :key="commentLabel" class="comment-row">
       <el-row>
         <el-col class="comment-label">
           <h4>{{ commentLabel }}</h4>
@@ -22,7 +16,6 @@
         </el-col>
       </el-row>
     </el-row>
-
   </el-card>
 </template>
 

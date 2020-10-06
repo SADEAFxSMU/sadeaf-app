@@ -1,7 +1,5 @@
 <template>
-  <el-card
-    class="rating-card"
-  >
+  <el-card class="rating-card">
     <div slot="header" class="clearfix">
       <h2>Rating for Event</h2>
     </div>
@@ -12,22 +10,13 @@
       justify="start"
       class="rating-row"
     >
-      <el-col
-        :span="12"
-      >
+      <el-col :span="12">
         <h4>
           {{ ratingLabel }}
         </h4>
       </el-col>
-      <el-col
-        :span="12"
-      >
-        <el-rate
-          v-model="ratings[ratingLabel]"
-          disabled
-          show-score
-        >
-        </el-rate>
+      <el-col :span="12">
+        <el-rate v-model="ratings[ratingLabel]" disabled show-score> </el-rate>
       </el-col>
     </el-row>
   </el-card>

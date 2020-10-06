@@ -61,5 +61,10 @@ export const ROLE_PROFILE_PAGE_MAPPING = {
   client: '/client',
 };
 
-export const RATING_KEYS = ['notetaker_conduct', 'notetaker_punctual',
-  'post_session_understanding', 'live_information_understanding', 'live_interaction'];
+export const RATING_KEYS = [
+  'notetaker_conduct',
+  'notetaker_punctual',
+  'post_session_understanding',
+  'live_information_understanding',
+  'live_interaction',
+];
