@@ -10,7 +10,7 @@
     </el-menu-item>
     <el-submenu index="/account">
       <template slot="title">Account</template>
-      <el-menu-item index="/account#profile">
+      <el-menu-item :index="linkToProfile">
         Profile
       </el-menu-item>
       <el-menu-item index="/account#settings">
@@ -32,6 +32,16 @@ import LogoutButton from "../buttons/LogoutButton";
 export default {
   name: "BaseNavbar",
   components: {LogoutButton, StatusIndicator},
+  computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
+    linkToProfile() {
+      const user = this.user;
+      const roleId = user[user.role].id;
+      return `/${user.role}/${roleId}`;
+    }
+  }
 };
 </script>
 

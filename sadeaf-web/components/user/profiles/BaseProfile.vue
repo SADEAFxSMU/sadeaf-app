@@ -8,17 +8,25 @@
         <div class="profile">
           <img v-if="profilePicUrl"
                :src="profilePicUrl"
+               :alt="`${name}'s profile picture`"
                class="profile-pic" />
           <el-avatar v-else
-                     class="el-icon-user-solid"
+                     class="el-icon-user-solid profile-pic"
                      style="display: flex; justify-content: center; align-items: center; height: 150px; width: 150px; font-size: 70px;" />
-          <div class="name">
-            <h1>{{ name }}</h1>
-            <role-tag :role="role" />
+          <div class="user-info">
+            <h1 class="name">
+              {{ name }}
+              <role-tag :role="role"
+                        style="margin-left: 8px;" />
+            </h1>
+            <a class="link" :href="`mailto:${email}`" target="_blank">{{ email }}</a>
             <div class="user-stats">
-              <span>102</span>
-              <span>88</span>
-              <span>56</span>
+              <div v-if="createdAt"
+                   class="joined">
+                <span>
+                  Joined {{ createdAt }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -33,6 +41,7 @@
 
 <script>
 import RoleTag from "../../RoleTag";
+import { DateUtils } from "../../../common/date-utils";
 
 /**
  * Shows the user's details and other account info
@@ -67,6 +76,9 @@ export default {
     email() {
       return this.user.email;
     },
+    createdAt() {
+      return DateUtils.humanReadableMonthYear(this.user.created_at) || undefined;
+    },
     client() {
       return this.user.client;
     },
@@ -100,12 +112,26 @@ export default {
   width: 250px;
   box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.1);
 }
-.name {
+.user-info {
   display: flex;
   flex-direction: column;
+}
+.name {
+  display: flex;
   align-items: center;
 }
-.name > * {
-  margin: 3px;
+.link {
+  color: #6f97ff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+.link:hover {
+  color: #f8637a;
+}
+.joined {
+  color: #797994;
+  margin-top: 12px;
+  font-size: 0.8em;
 }
 </style>

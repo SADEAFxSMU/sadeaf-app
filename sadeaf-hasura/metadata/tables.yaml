@@ -83,6 +83,7 @@
       - email
       - id
       - name
+      - profile_pic_url
       - role
       - updated_at
       filter: {}

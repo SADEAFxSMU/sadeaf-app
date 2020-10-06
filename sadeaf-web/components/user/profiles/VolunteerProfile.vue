@@ -116,6 +116,8 @@ export default {
                 id
                 name
                 profile_pic_url
+                email
+                created_at
               }
             }
             statuses: assignments_aggregate(distinct_on: status) {
