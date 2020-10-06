@@ -18,7 +18,7 @@
           <assignments-timeline
             :event_id="row.id"
             :client="row.client"
-            :editable="false"
+            :edit-button="false"
             :assignments="row.assignments"
             @updateAssignment="(assignment) => handleUpdateAssignmentClick(row, assignment)"
           />
