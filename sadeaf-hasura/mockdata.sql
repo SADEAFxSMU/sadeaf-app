@@ -244,13 +244,9 @@ INSERT INTO volunteer_assignment_opt_in (
 (5, 3, 3, 'OPTED_IN'),
 (6, 4, 4, 'OPTED_IN');
 
-INSERT INTO feedback (
-    id, event_id, volunteer_id, notetaker_punctual, notetaker_conduct, live_comments, live_information_understanding,
-    live_interaction, post_session_comments, post_session_understanding,
-    general_feedback, training_privacy_preference, confidentiality_privacy_preference
-) VALUES
-(1, 1, 1, '5', '5', 'very good person, kind lad, 10/10', '4', '4', 'great post session notes mate', '4', 'great lad',
- 'public', 'no');
+-- Check feedback id value before inserting / updating feedback manually. It takes into account previous feedback\'s that have been added and increments it by 1.
+--UPDATE feedback SET feedback_given = 1, notetaker_punctual = '2' , notetaker_conduct = '5', live_information_understanding = '5', live_interaction = '5', post_session_understanding = '4' where id = 33;
+--UPDATE feedback SET feedback_given = 1, notetaker_punctual = '2' , notetaker_conduct = '5', live_information_understanding = '5', live_interaction = '5', post_session_understanding = '4' where id = 34;
 
 INSERT INTO interpretation_details (
     id, sign_system, filming_interpreters, allow_trainee_interpreters,number_of_deaf,
