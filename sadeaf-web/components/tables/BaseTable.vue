@@ -44,11 +44,7 @@
           <slot :name="column.name" :row="row" />
         </template>
       </el-table-column>
-      <el-table-column
-        v-if="showOperations"
-        fixed="right"
-        label="Operations"
-        width="120">
+      <el-table-column v-if="showOperations" fixed="right" label="Operations" width="120">
         <template slot-scope="{ row }">
           <slot name="edit" :row="row" />
         </template>
@@ -108,7 +104,7 @@ export default {
     emptyText: {
       type: String,
       required: false,
-      default: 'No Data'
+      default: 'No Data',
     },
     showToolbar: {
       type: Boolean,

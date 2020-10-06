@@ -1,8 +1,5 @@
 <template>
-  <div :class="classes"
-       @mouseover="handleMouseOver"
-       @mouseleave="handleMouseLeave"
-       @click="handleClick">
+  <div :class="classes" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" @click="handleClick">
     <user-profile-link :link="`/${role}/${roleId}`">
       <div :style="cardStyle" class="body-wrapper">
         <slot name="avatar">

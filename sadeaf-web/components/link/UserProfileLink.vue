@@ -25,8 +25,8 @@ export default {
     shouldLink() {
       // not undefined, not null, not empty string
       return Boolean(this.link);
-    }
-  }
+    },
+  },
 };
 </script>
 

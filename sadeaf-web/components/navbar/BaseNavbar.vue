@@ -31,11 +31,10 @@ export default {
     linkToProfile() {
       const user = this.user;
       const role = user[user.role];
-      if (role)
-        return `/${user.role}/${role.id}`;
+      if (role) return `/${user.role}/${role.id}`;
       return '/account#profile';
-    }
-  }
+    },
+  },
 };
 </script>
 

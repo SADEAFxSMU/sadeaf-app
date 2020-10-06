@@ -1,13 +1,11 @@
 <template>
   <table>
-    <tr v-for="{label, percentage, color} in stats"
-        class="stat-table-row">
+    <tr v-for="{ label, percentage, color } in stats" class="stat-table-row">
       <td>
         <span class="stat-label">{{ label.toUpperCase() }}</span>
       </td>
-      <td style="width: 100%;">
-        <el-progress :percentage="percentage"
-                     :color="color || barColor(percentage)"/>
+      <td style="width: 100%">
+        <el-progress :percentage="percentage" :color="color || barColor(percentage)" />
       </td>
     </tr>
   </table>
@@ -15,22 +13,21 @@
 
 <script>
 export default {
-  name: "StatBars",
+  name: 'StatBars',
 
   props: {
     stats: {
       type: Array,
       required: true,
-    }
+    },
   },
 
   methods: {
     barColor(percentage) {
-      if (percentage < 50)
-        return '#ff7b7b'
-      return '#3dd670'
-    }
-  }
+      if (percentage < 50) return '#ff7b7b';
+      return '#3dd670';
+    },
+  },
 };
 </script>
 

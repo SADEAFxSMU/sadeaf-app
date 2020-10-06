@@ -7,15 +7,20 @@
       <el-col :xs="24" :md="8">
         <div class="profile">
           <div class="avatar">
-            <img v-if="profilePicUrl"
-                 :src="profilePicUrl"
-                 :alt="`${name}'s profile picture`"
-                 class="profile-pic" />
-            <el-avatar v-else
-                       class="el-icon-user-solid profile-pic"
-                       style="display: flex; justify-content: center; align-items: center; height: 150px; width: 150px; font-size: 70px;" />
-            <role-tag :role="role"
-                      class="role" />
+            <img v-if="profilePicUrl" :src="profilePicUrl" :alt="`${name}'s profile picture`" class="profile-pic" />
+            <el-avatar
+              v-else
+              class="el-icon-user-solid profile-pic"
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 150px;
+                width: 150px;
+                font-size: 70px;
+              "
+            />
+            <role-tag :role="role" class="role" />
           </div>
           <div class="user-info">
             <h1 class="name">
@@ -23,11 +28,8 @@
             </h1>
             <a class="link" :href="`mailto:${email}`" target="_blank">{{ email }}</a>
             <div class="user-stats">
-              <div v-if="createdAt"
-                   class="joined">
-                <span>
-                  Joined {{ createdAt }}
-                </span>
+              <div v-if="createdAt" class="joined">
+                <span> Joined {{ createdAt }} </span>
               </div>
             </div>
           </div>

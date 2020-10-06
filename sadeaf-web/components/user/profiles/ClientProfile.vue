@@ -2,17 +2,17 @@
   <base-profile :user="user" :loading="$apollo.loading">
     <template v-slot:role-content>
       <div class="client-stats">
-        <stat-card v-for="({value}, statName) in stats"
-                   style="flex: 1;"
-                   :title="statName"
-                   title-position="bottom"
-                   :stat="value"
-                   accent-color="#a892fc" />
+        <stat-card
+          v-for="({ value }, statName) in stats"
+          style="flex: 1"
+          :title="statName"
+          title-position="bottom"
+          :stat="value"
+          accent-color="#a892fc"
+        />
       </div>
       <div class="client-info">
-        <h1>
-          Client Information
-        </h1>
+        <h1>Client Information</h1>
         <table>
           <tr>
             <th>Organisation</th>
@@ -38,13 +38,15 @@
       <div class="client-events">
         <div v-if="events && events.length > 0">
           <div v-for="event in events">
-            <el-card style="margin: 8px;">
+            <el-card style="margin: 8px">
               <div class="event-card-header">
-                <h3 style="margin-bottom: 4px;">
+                <h3 style="margin-bottom: 4px">
                   {{ event.name }}
                 </h3>
-                <status-indicator :text="event.uncompleted_status ? 'IN PROGRESS' : 'COMPLETED'"
-                                  :color="event.uncompleted_status ? 'salmon': '#46cd6f'" />
+                <status-indicator
+                  :text="event.uncompleted_status ? 'IN PROGRESS' : 'COMPLETED'"
+                  :color="event.uncompleted_status ? 'salmon' : '#46cd6f'"
+                />
               </div>
               <p style="color: #959aa5">{{ event.description }}</p>
             </el-card>
@@ -54,7 +56,6 @@
           <h3>🙈 No events yet</h3>
         </div>
       </div>
-
     </template>
   </base-profile>
 </template>
@@ -62,9 +63,9 @@
 <script>
 import BaseProfile from './BaseProfile';
 import gql from 'graphql-tag';
-import StatCard from "../../StatCard";
-import StatusIndicator from "../../StatusIndicator";
-import DangerZone from "../../forms/DangerZone";
+import StatCard from '../../StatCard';
+import StatusIndicator from '../../StatusIndicator';
+import DangerZone from '../../forms/DangerZone';
 
 const ClientQuery = gql`
   query ClientQueryByAccountId($id: Int!) {
@@ -134,7 +135,7 @@ export default {
       const events = this.events;
       let inProgress = 0;
       let completed = 0;
-      events.forEach(event => {
+      events.forEach((event) => {
         if (event.uncompleted_status === true) {
           inProgress++;
         } else {
@@ -142,14 +143,14 @@ export default {
         }
       });
       return {
-        "in progress": {
-          value: inProgress
+        'in progress': {
+          value: inProgress,
         },
-        "completed": {
-          value: completed
+        completed: {
+          value: completed,
         },
-      }
-    }
+      };
+    },
   },
 
   apollo: {
