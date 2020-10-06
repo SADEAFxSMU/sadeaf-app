@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { HASURA } from '../../config';
+import { HASURA, BOOTSTRAP } from '../../config';
 
 export async function getHasuraUserIdAndRole(user) {
   // user.sub contains the cognitoId
@@ -41,21 +41,29 @@ function hasuraRoleAndIdQuery(cognitoId) {
   });
 }
 
+function getRole(email) {
+  if (BOOTSTRAP.ADMIN_EMAIL.includes(email)) {
+    return 'admin';
+  }
+  return 'pending';
+}
+
 function createNewHasuraAccount(user) {
   const operationName = 'CreateNewAccount';
   const query = `
-    mutation ${operationName}($cognito_id: String!, $email: String!) {
+    mutation ${operationName}($cognito_id: String!, $email: String!, $role: String!) {
       insert_account_one(
         object: {
           cognito_id: $cognito_id,
           email: $email,
-          role: "pending"
+          role: $role"
         }
       ) { id role }
     }
   `;
   const email = user.email;
   const cognito_id = user.sub;
+  const role = getRole(email);
 
   return fetch(HASURA.GRAPHQL_API_URL, {
     headers: {
@@ -63,7 +71,7 @@ function createNewHasuraAccount(user) {
     },
     body: JSON.stringify({
       query,
-      variables: { cognito_id, email },
+      variables: { cognito_id, email, role },
       operationName,
     }),
     method: 'POST',
