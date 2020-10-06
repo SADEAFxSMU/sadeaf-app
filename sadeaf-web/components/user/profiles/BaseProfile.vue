@@ -119,6 +119,7 @@ export default {
 .name {
   display: flex;
   align-items: center;
+  margin-bottom: 8px;
 }
 .link {
   color: #6f97ff;
