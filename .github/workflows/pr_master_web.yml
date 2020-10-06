@@ -36,5 +36,8 @@ jobs:
       - run: yarn install
         working-directory: sadeaf-web
 
+      - run: yarn lint
+        working-directory: sadeaf-web
+
       - run: yarn test
         working-directory: sadeaf-web
