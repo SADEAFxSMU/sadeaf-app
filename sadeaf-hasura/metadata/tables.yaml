@@ -107,6 +107,7 @@
       - email
       - id
       - name
+      - profile_pic_url
       - role
       - updated_at
       filter:
@@ -126,6 +127,7 @@
       - email
       - id
       - name
+      - profile_pic_url
       - role
       - updated_at
       filter: {}
@@ -449,6 +451,7 @@
         assignment:
           volunteer_id:
             _eq: X-Hasura-User-Id
+      allow_aggregations: true
   update_permissions:
   - role: client
     permission:
@@ -543,6 +546,7 @@
       - preferred_comm_mode
       - service_requestor_id
       filter: {}
+      allow_aggregations: true
   update_permissions:
   - role: client
     permission:
