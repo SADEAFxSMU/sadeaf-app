@@ -38,8 +38,10 @@ export default {
     },
     linkToProfile() {
       const user = this.user;
-      const roleId = user[user.role].id;
-      return `/${user.role}/${roleId}`;
+      const role = user[user.role];
+      if (role)
+        return `/${user.role}/${role.id}`;
+      return '/account#profile';
     }
   }
 };

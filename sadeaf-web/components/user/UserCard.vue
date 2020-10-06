@@ -3,7 +3,7 @@
        @mouseover="handleMouseOver"
        @mouseleave="handleMouseLeave"
        @click="handleClick">
-    <user-profile-link :user="user" :should-link="linkToPage">
+    <user-profile-link :link="`/${role}/${roleId}`">
       <div :style="cardStyle" class="body-wrapper">
         <slot name="avatar">
           <div>
@@ -52,6 +52,10 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+    roleId: {
+      type: Object,
+      required: false,
     },
     loading: {
       type: Boolean,

@@ -27,32 +27,33 @@ import gql from 'graphql-tag';
 
 const ClientQuery = gql`
   query ClientQueryByAccountId($id: Int!) {
-    user: account_by_pk(id: $id){
-      name
-      email
-      role
-      profile_pic_url
-      contact
-      created_at
-      client {
+    client: client_by_pk(id: $id) {
+      id
+      designation
+      additional_notes
+      organisation
+      preferred_comm_mode
+      user: account {
         id
-        designation
-        additional_notes
+        name
+        email
+        role
+        profile_pic_url
+        contact
+        created_at
+      }
+      events {
+        id
+        description
+        name
+        uncompleted_status
+        purpose
+        created_at
+        updated_at
+      }
+      service_requestor {
+        id
         organisation
-        preferred_comm_mode
-        events {
-          id
-          description
-          name
-          uncompleted_status
-          purpose
-          created_at
-          updated_at
-        }
-        service_requestor {
-          id
-          organisation
-        }
       }
     }
   }
@@ -67,7 +68,7 @@ export default {
   },
 
   props: {
-    userId: {
+    clientId: {
       type: [String, Number],
       required: true,
     }
@@ -75,22 +76,25 @@ export default {
 
   data() {
     return {
-      user: null,
+      client: null,
     }
   },
 
   computed: {
+    user() {
+      return this.client && this.client.user;
+    },
     events() {
-      return this.user.client.events;
-    }
+      return this.client && this.client.events;
+    },
   },
 
   apollo: {
-    user: {
+    client: {
       query: ClientQuery,
       variables() {
         return {
-          id: this.userId,
+          id: this.clientId,
         }
       }
     }

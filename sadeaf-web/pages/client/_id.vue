@@ -1,6 +1,6 @@
 <template>
   <div class="profile-page">
-    <client-profile :user-id="id" />
+    <client-profile :client-id="id" />
   </div>
 </template>
 

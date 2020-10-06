@@ -43,15 +43,15 @@ export default {
   },
 
   props: {
-    userId: {
+    volunteerId: {
       type: [String, Number],
       required: true,
-    }
+    },
   },
 
   data() {
     return {
-      user: null,
+      volunteer: null,
       events: [],
       attendance_aggregate: null,
       percentageStats: {
@@ -85,29 +85,23 @@ export default {
   },
 
   computed: {
-    volunteer() {
-      return this.user.volunteer;
+    user() {
+      return this.volunteer && this.volunteer.user;
     },
   },
 
   apollo: {
-    user: {
+    volunteer: {
       query: gql`
         query VolunteerQueryByAccountId($id: Int!) {
-          user: account_by_pk(id: $id){
-            ...accountFields
-            volunteer {
-              id
+          volunteer: volunteer_by_pk(id: $id) {
+            id
+            user: account {
+              ...accountFields
             }
           }
 
-          unique_clients: client_aggregate(where: {events:{assignments:{volunteer:{account_id:{_eq:$id}}}}}) {
-            aggregate {
-              count
-            }
-          }
-
-          events: event(where: {assignments:{volunteer:{account_id:{_eq: $id}}}}) {
+          events: event(where: {assignments:{volunteer_id:{_eq: $id}}}) {
             id
             name
             client {
@@ -139,6 +133,12 @@ export default {
             }
           }
 
+          unique_clients: client_aggregate(where: {events:{assignments:{volunteer_id:{_eq:$id}}}}) {
+            aggregate {
+              count
+            }
+          }
+
           attended_count: attendance_aggregate(where: { attended: { _eq: true }}) {
             aggregate {
               count
@@ -154,14 +154,14 @@ export default {
       `,
       result({ data }) {
         const {
-          user,
+          volunteer,
           unique_clients,
           events,
           attendance_aggregate,
           attended_count,
           not_attended_count
         } = data;
-        this.user = user;
+        this.volunteer = volunteer;
         this.events = events;
         this.attendance_aggregate = attendance_aggregate;
         this.stats.clients.value = unique_clients.aggregate.count;
@@ -172,7 +172,7 @@ export default {
       },
       variables() {
         return {
-          id: this.userId,
+          id: this.volunteerId,
         }
       }
     }
