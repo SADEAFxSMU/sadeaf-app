@@ -48,6 +48,6 @@ module.exports = {
     WEBHOOK_ENDPOINT: process.env.TELEGRAM_WEBHOOK_ENDPOINT || 'http://localhost:4001/',
     WEBHOOK_URL: process.env.TELEGRAM_WEBHOOK_URL || 'https://sadeaftest.tunnelto.dev/_telegram/webhook',
     // TODO(wy): use this when making send messages via telegram
-    API_KEY: process.env.SADEAF_TELEGRAM_API_KEY
+    API_KEY: process.env.SADEAF_TELEGRAM_API_KEY,
   },
 };

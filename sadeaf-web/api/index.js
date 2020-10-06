@@ -2,7 +2,7 @@ import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 const {
   HASURA: { GRAPHQL_ENDPOINT },
-  TELEGRAM: { WEBHOOK_ENDPOINT }
+  TELEGRAM: { WEBHOOK_ENDPOINT },
 } = require('../config');
 
 const app = express();

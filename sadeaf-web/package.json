@@ -12,7 +12,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "format": "yarn prettier --write .",
+    "format": "prettier --write .",
+    "lint": "prettier --check .",
     "test": "jest",
     "graphql-codegen": "cd tools/codegen && node graphqlQueryBuilder.js"
   },
