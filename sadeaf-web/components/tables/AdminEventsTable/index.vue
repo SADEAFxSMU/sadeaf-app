@@ -228,23 +228,23 @@ export default {
                 }
               }
               assignments(order_by: { start_dt: desc }) {
-              id
-              address_line_one
-              address_line_two
-              postal
-              start_dt
-              end_dt
-              status
-              volunteer {
                 id
-                account {
+                address_line_one
+                address_line_two
+                postal
+                start_dt
+                end_dt
+                status
+                volunteer {
                   id
-                  name
-                  role
-                  profile_pic_url
+                  account {
+                    id
+                    name
+                    role
+                    profile_pic_url
+                  }
                 }
               }
-            }
             }
           }
         `,

@@ -16,8 +16,9 @@
   </div>
 </template>
 
-// TODO (Austin): think about what columns sadeaf wants to see for feedback --> Rating columns to see rating per feedback
 <script>
+// TODO (Austin): think about what columns sadeaf wants to see for feedback --> Rating columns to see rating per feedback
+
 import BaseTable from '@/components/tables/BaseTable';
 import gql from 'graphql-tag';
 import SentimentEmoji from '@/components/tables/AdminFeedbackTable/SentimentEmoji';
@@ -25,56 +26,56 @@ import AdminFeedbackRatingDialog from '@/components/dialogs/AdminFeedbackRatingD
 
 const ADMIN_FEEDBACK_SUB_QUERY = gql`
   subscription AdminFeedbackQuery($feedback_given: Int!) {
-  feedback(where: {feedback_given: {_eq: $feedback_given}}) {
-    id
-    live_comments
-    notetaker_conduct
-    notetaker_punctual
-    post_session_comments
-    post_session_understanding
-    training_privacy_preference
-    general_feedback
-    live_interaction
-    live_information_understanding
-    confidentiality_privacy_preference
-    training_privacy_preference
-    event {
+    feedback(where: { feedback_given: { _eq: $feedback_given } }) {
       id
-      name
-      client {
+      live_comments
+      notetaker_conduct
+      notetaker_punctual
+      post_session_comments
+      post_session_understanding
+      training_privacy_preference
+      general_feedback
+      live_interaction
+      live_information_understanding
+      confidentiality_privacy_preference
+      training_privacy_preference
+      event {
         id
-        account {
-          id
-          contact
-          name
-          email
-        }
-      }
-      assignments(order_by: {start_dt: desc}) {
-        id
-        end_dt
-        start_dt
-        volunteer {
+        name
+        client {
           id
           account {
             id
+            contact
             name
+            email
+          }
+        }
+        assignments(order_by: { start_dt: desc }) {
+          id
+          end_dt
+          start_dt
+          volunteer {
+            id
+            account {
+              id
+              name
+            }
           }
         }
       }
-    }
-    volunteer {
-      id
-      account {
+      volunteer {
+        id
+        account {
           id
           profile_pic_url
           contact
           name
           email
+        }
       }
     }
   }
-}
 `;
 export default {
   name: 'AdminFeedbackTable',
@@ -137,11 +138,16 @@ export default {
        * Very Good: >= 80%
        * Gets sentiment for volunteer based on the total score
        */
-      const RATING_KEYS = ['notetaker_conduct', 'notetaker_punctual', 'post_session_understanding',
-        'live_information_understanding', 'live_interaction'];
+      const RATING_KEYS = [
+        'notetaker_conduct',
+        'notetaker_punctual',
+        'post_session_understanding',
+        'live_information_understanding',
+        'live_interaction',
+      ];
 
       let totalScore = 0;
-      RATING_KEYS.forEach(k => {
+      RATING_KEYS.forEach((k) => {
         totalScore += parseInt(row[k]);
       });
 
@@ -149,7 +155,7 @@ export default {
       const percentile = totalScore / MAX_SCORE;
       let sentiment = '';
 
-      if (percentile < 0.20) {
+      if (percentile < 0.2) {
         sentiment = 'Very Bad';
       } else if (percentile >= 0.2 && percentile < 0.4) {
         sentiment = 'Bad';
@@ -207,7 +213,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-
-</style>

@@ -7,7 +7,7 @@
       {
         'el-progress--without-text': !showText,
         'el-progress--text-inside': textInside,
-      }
+      },
     ]"
     role="progressbar"
     :aria-valuenow="percentage"
@@ -15,13 +15,13 @@
     aria-valuemax="100"
   >
     <div class="el-progress-bar" v-if="type === 'line'">
-      <div class="el-progress-bar__outer" :style="{height: strokeWidth + 'px'}">
+      <div class="el-progress-bar__outer" :style="{ height: strokeWidth + 'px' }">
         <div class="el-progress-bar__inner" :style="barStyle">
-          <div class="el-progress-bar__innerText" v-if="showText && textInside">{{content}}</div>
+          <div class="el-progress-bar__innerText" v-if="showText && textInside">{{ content }}</div>
         </div>
       </div>
     </div>
-    <div class="el-progress-circle" :style="{height: width + 'px', width: width + 'px'}" v-else>
+    <div class="el-progress-circle" :style="{ height: width + 'px', width: width + 'px' }" v-else>
       <svg viewBox="0 0 100 100">
         <path
           class="el-progress-circle__track"
@@ -29,7 +29,8 @@
           stroke="#e5e9f2"
           :stroke-width="relativeStrokeWidth"
           fill="none"
-          :style="trailPathStyle"></path>
+          :style="trailPathStyle"
+        ></path>
         <path
           class="el-progress-circle__path"
           :d="trackPath"
@@ -37,15 +38,12 @@
           fill="none"
           :stroke-linecap="strokeLinecap"
           :stroke-width="percentage ? relativeStrokeWidth : 0"
-          :style="circlePathStyle"></path>
+          :style="circlePathStyle"
+        ></path>
       </svg>
     </div>
-    <div
-      class="el-progress__text"
-      v-if="showText && !textInside"
-      :style="{fontSize: progressTextSize + 'px'}"
-    >
-      <template>{{content}}</template>
+    <div class="el-progress__text" v-if="showText && !textInside" :style="{ fontSize: progressTextSize + 'px' }">
+      <template>{{ content }}</template>
     </div>
   </div>
 </template>
@@ -56,7 +54,7 @@ export default {
     type: {
       type: String,
       default: 'line',
-      validator: val => ['line', 'circle', 'dashboard'].indexOf(val) > -1
+      validator: (val) => ['line', 'circle', 'dashboard'].indexOf(val) > -1,
     },
     value: {
       type: Number,
@@ -66,37 +64,37 @@ export default {
       type: Number,
       default: 0,
       required: true,
-      validator: val => val >= 0 && val <= 100
+      validator: (val) => val >= 0 && val <= 100,
     },
     status: {
       type: String,
-      validator: val => ['success', 'exception', 'warning'].indexOf(val) > -1
+      validator: (val) => ['success', 'exception', 'warning'].indexOf(val) > -1,
     },
     strokeWidth: {
       type: Number,
-      default: 6
+      default: 6,
     },
     strokeLinecap: {
       type: String,
-      default: 'round'
+      default: 'round',
     },
     textInside: {
       type: Boolean,
-      default: false
+      default: false,
     },
     width: {
       type: Number,
-      default: 126
+      default: 126,
     },
     showText: {
       type: Boolean,
-      default: true
+      default: true,
     },
     color: {
       type: [String, Array, Function],
-      default: ''
+      default: '',
     },
-    format: Function
+    format: Function,
   },
   computed: {
     barStyle() {
@@ -106,7 +104,7 @@ export default {
       return style;
     },
     relativeStrokeWidth() {
-      return (this.strokeWidth / this.width * 100).toFixed(1);
+      return ((this.strokeWidth / this.width) * 100).toFixed(1);
     },
     radius() {
       if (this.type === 'circle' || this.type === 'dashboard') {
@@ -132,20 +130,20 @@ export default {
       return this.type === 'dashboard' ? 0.75 : 1;
     },
     strokeDashoffset() {
-      const offset = -1 * this.perimeter * (1 - this.rate) / 2;
+      const offset = (-1 * this.perimeter * (1 - this.rate)) / 2;
       return `${offset}px`;
     },
     trailPathStyle() {
       return {
-        strokeDasharray: `${(this.perimeter * this.rate)}px, ${this.perimeter}px`,
-        strokeDashoffset: this.strokeDashoffset
+        strokeDasharray: `${this.perimeter * this.rate}px, ${this.perimeter}px`,
+        strokeDashoffset: this.strokeDashoffset,
       };
     },
     circlePathStyle() {
       return {
-        strokeDasharray: `${this.perimeter * this.rate * (this.percentage / 100) }px, ${this.perimeter}px`,
+        strokeDasharray: `${this.perimeter * this.rate * (this.percentage / 100)}px, ${this.perimeter}px`,
         strokeDashoffset: this.strokeDashoffset,
-        transition: 'stroke-dasharray 0.6s ease 0s, stroke 0.6s ease'
+        transition: 'stroke-dasharray 0.6s ease 0s, stroke 0.6s ease',
       };
     },
     stroke() {
@@ -180,9 +178,7 @@ export default {
       }
     },
     progressTextSize() {
-      return this.type === 'line'
-        ? 12 + this.strokeWidth * 0.4
-        : this.width * 0.3 + 2 ;
+      return this.type === 'line' ? 12 + this.strokeWidth * 0.4 : this.width * 0.3 + 2;
     },
     content() {
       if (typeof this.format === 'function') {
@@ -190,7 +186,7 @@ export default {
       } else {
         return `${this.value}`;
       }
-    }
+    },
   },
   methods: {
     getCurrentColor(percentage) {
@@ -219,12 +215,12 @@ export default {
         if (typeof seriesColor === 'string') {
           return {
             color: seriesColor,
-            progress: (index + 1) * span
+            progress: (index + 1) * span,
           };
         }
         return seriesColor;
       });
-    }
-  }
+    },
+  },
 };
 </script>

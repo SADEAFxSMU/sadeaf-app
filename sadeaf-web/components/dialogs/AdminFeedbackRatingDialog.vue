@@ -1,9 +1,5 @@
 <template>
-  <el-dialog
-    :visible="this.$store.state.adminFeedbackDialog.visible"
-    @close="this.closeDialog"
-    width="65%"
-  >
+  <el-dialog :visible="this.$store.state.adminFeedbackDialog.visible" @close="this.closeDialog" width="65%">
     <el-row class="margin-bottom__md">
       <AdminFeedbackVolunteerCard />
     </el-row>
@@ -21,12 +17,10 @@
     <el-row class="margin-bottom__md">
       <AdminFeedbackCommentsCard :comments="comments" />
     </el-row>
-
   </el-dialog>
 </template>
 
 <script>
-
 import { RATING_KEYS } from '@/common/types/constants';
 import AdminFeedbackEventInfoCard from '@/components/cards/AdminFeedbackDialogCards/AdminFeedbackEventInfoCard';
 import AdminFeedbackRatingCard from '@/components/cards/AdminFeedbackDialogCards/AdminFeedbackRatingCard';
@@ -57,7 +51,7 @@ export default {
     ratings() {
       let ratings = {};
 
-      RATING_KEYS.forEach(k => {
+      RATING_KEYS.forEach((k) => {
         const label = _.startCase(k);
         ratings[label] = parseInt(this.rowData[k]);
       });
@@ -69,9 +63,9 @@ export default {
 
       let comments = {};
 
-      COMMENT_KEYS.forEach(k => {
+      COMMENT_KEYS.forEach((k) => {
         const label = _.startCase(k);
-        comments[label] = (this.rowData[k] && this.rowData[k].length > 0) ? this.rowData[k] : 'No Comments.';
+        comments[label] = this.rowData[k] && this.rowData[k].length > 0 ? this.rowData[k] : 'No Comments.';
       });
 
       return comments;
