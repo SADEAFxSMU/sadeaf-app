@@ -50,4 +50,9 @@ module.exports = {
     // TODO(wy): use this when making send messages via telegram
     API_KEY: process.env.SADEAF_TELEGRAM_API_KEY,
   },
+  BOOTSTRAP: {
+    ADMIN_EMAIL: process.env.BOOTSTRAP_ADMIN_EMAIL
+      ? (process.env.BOOTSTRAP_ADMIN_EMAIL || '').replace(/ /g, '').split(',')
+      : ['sadeaf-admin@huansen.dev', 'sadeaf-admin@fuxing.io', 'weiyong@sadeaf.org.sg'],
+  },
 };
