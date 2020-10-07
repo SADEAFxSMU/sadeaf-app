@@ -480,6 +480,13 @@
 - table:
     schema: public
     name: blacklist
+  object_relationships:
+  - name: client
+    using:
+      foreign_key_constraint_on: client_account_id
+  - name: volunteer
+    using:
+      foreign_key_constraint_on: volunteer_account_id
   insert_permissions:
   - role: client
     permission:

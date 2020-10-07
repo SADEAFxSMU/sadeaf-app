@@ -2,19 +2,19 @@
   <el-dialog
     destroy-on-close
     v-if="volunteer && assignments.length > 0"
-    :visible="visible" @close="closeViewMore" width="75%">
-    <el-row
-      class="margin-bottom__sm"
-      justify="start"
-      align="middle"
-      type="flex"
-      :gutter="16"
-    >
+    :visible="visible"
+    @close="closeViewMore"
+    width="75%"
+  >
+    <el-row class="margin-bottom__sm" justify="start" align="middle" type="flex" :gutter="16">
       <el-col :span="1.5">
         <el-avatar
           :size="69"
           shape="square"
-          :src="this.volunteer.account.profile_pic_url || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
+          :src="
+            this.volunteer.account.profile_pic_url ||
+            'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+          "
         />
       </el-col>
 
@@ -25,11 +25,7 @@
       </el-col>
     </el-row>
 
-    <BaseTable
-      title="Completed Assignments History"
-      :show-operations="false"
-      :rows="assignments"
-      :columns="columns" />
+    <BaseTable title="Completed Assignments History" :show-operations="false" :rows="assignments" :columns="columns" />
   </el-dialog>
 </template>
 
@@ -69,7 +65,7 @@ export default {
   },
   computed: {
     assignments() {
-      return this.$store.state.clientBlacklist.assignments.map(a => ({
+      return this.$store.state.clientBlacklist.assignments.map((a) => ({
         ...a,
         start_dt: new Date(a.start_dt).toDateString(),
         name: a.event.name,
@@ -88,6 +84,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

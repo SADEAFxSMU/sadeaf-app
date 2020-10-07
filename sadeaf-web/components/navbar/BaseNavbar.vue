@@ -12,7 +12,10 @@
       <el-menu-item index="/account#settings"> Settings </el-menu-item>
       <el-menu-item
         v-if="this.$store.state.auth.user.role === 'client' || this.$store.state.auth.user.role === 'admin'"
-        index="/account/blacklist"> Blacklist </el-menu-item>
+        :index="`/${this.$store.state.auth.user.role}/account/blacklist`"
+      >
+        Blacklist
+      </el-menu-item>
       <el-menu-item index="/account/notifications"> Notification Preferences </el-menu-item>
     </el-submenu>
     <el-menu-item>

@@ -1,21 +1,10 @@
 <template>
-  <div
-    class="blacklist-assignment-card"
-    v-if="assignments"
-  >
+  <div class="blacklist-assignment-card" v-if="assignments">
     <el-row>
-      <span
-        class="assignment-card-button-badge"
-      >
-        Latest Assignment Details
-      </span>
+      <span class="assignment-card-button-badge"> Latest Assignment Details </span>
     </el-row>
 
-    <el-card
-      class="assignment-card"
-      shadow="never"
-    >
-
+    <el-card class="assignment-card" shadow="never">
       <el-row>
         <span class="assignment-card-date">
           {{ new Date(assignments[0].start_dt).toDateString() }}
@@ -26,22 +15,11 @@
         <h4>{{ assignments[0].event.name }}</h4>
       </el-row>
 
-      <el-row
-        type="flex"
-        justify="end"
-      >
-        <el-button
-          type="text"
-          class="view-more-btn"
-          @click="toggleViewMoreEvents"
-        >
-          View More
-        </el-button>
+      <el-row type="flex" justify="end">
+        <el-button type="text" class="view-more-btn" @click="toggleViewMoreEvents"> View More </el-button>
       </el-row>
-
     </el-card>
   </div>
-
 </template>
 
 <script>
@@ -71,11 +49,10 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
 <style scoped lang="scss">
 .assignment-card {
-  background-color: #ECF8FF;
+  background-color: #ecf8ff;
 
   &-button-badge {
     position: absolute;
@@ -83,7 +60,7 @@ export default {
     left: 5px;
     font-size: 12px;
     font-weight: bold;
-    background-color: #E4E7ED;
+    background-color: #e4e7ed;
     border-radius: 30px;
     padding: 3px 15px 3px 15px;
   }
