@@ -35,7 +35,6 @@
         :prop="column.name"
         :width="column.width"
       >
-
         <template
           :slot="isSlotProvidedForColumn(column) ? 'default' : ''"
           slot-scope="{ row }"

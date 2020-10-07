@@ -8,8 +8,6 @@
       </el-col>
       <el-col>{{ sentiment }}</el-col>
     </el-row>
-
-
   </div>
 </template>
 
@@ -42,7 +40,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-
-</style>

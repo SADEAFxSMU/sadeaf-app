@@ -51,7 +51,6 @@
     "lodash": "^4.17.20",
     "nuxt": "^2.14.0",
     "pg-boss": "^5.0.8",
-    "sass-loader": "^9.0.3",
     "subscriptions-transport-ws": "^0.9.18",
     "vue-apollo": "^3.0.4",
     "vue-chartjs": "^3.5.0"
@@ -68,6 +67,7 @@
     "node-fetch": "^2.6.1",
     "node-sass": "^4.14.1",
     "prettier": "^2.1.1",
+    "sass-loader": "^10.0.2",
     "vue-jest": "^4.0.0-0"
   }
 }
