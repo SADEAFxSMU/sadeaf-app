@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { ROLE_PROFILE_PAGE_MAPPING } from "../common/types/constants";
+import { ROLE_PROFILE_PAGE_MAPPING } from '../common/types/constants';
 
 export default {
   name: 'app-home',

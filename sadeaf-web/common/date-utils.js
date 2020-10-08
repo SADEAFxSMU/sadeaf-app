@@ -31,5 +31,5 @@ export const DateUtils = {
   },
   utcToGmt8(date) {
     return dayjs.utc(date).utcOffset(8);
-  }
+  },
 };

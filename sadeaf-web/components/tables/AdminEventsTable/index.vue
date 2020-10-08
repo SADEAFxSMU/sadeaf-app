@@ -72,7 +72,7 @@ import SadeafCreateAssignmentForm from '../../forms/SadeafCreateAssignmentForm';
 import gql from 'graphql-tag';
 import AssignmentsTimeline from '../../cards/AssignmentsTimeline';
 import SadeafCreateEventForm from '../../forms/SadeafCreateEventForm';
-import { DateUtils } from "../../../common/date-utils";
+import { DateUtils } from '../../../common/date-utils';
 
 export default {
   name: 'AdminEventsTable',
@@ -250,10 +250,10 @@ export default {
           }
         `,
         result({ data }) {
-          data.events.forEach(event => {
-            event.assignments.forEach(assignment => {
+          data.events.forEach((event) => {
+            event.assignments.forEach((assignment) => {
               assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
-              assignment.end_dt   = DateUtils.utcToGmt8(assignment.end_dt);
+              assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
             });
           });
           this.mapQueryResponseToRows(data.events);

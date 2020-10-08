@@ -313,13 +313,13 @@ export default {
         };
       },
       result({ data }) {
-        data.assignments.forEach(assignment => {
+        data.assignments.forEach((assignment) => {
           assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
-          assignment.end_dt   = DateUtils.utcToGmt8(assignment.end_dt);
+          assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
         });
-        data.pendingAssignments.forEach(assignment => {
+        data.pendingAssignments.forEach((assignment) => {
           assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
-          assignment.end_dt   = DateUtils.utcToGmt8(assignment.end_dt);
+          assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
         });
         this.assignments = data.assignments;
         this.pendingAssignments = data.pendingAssignments;
@@ -335,7 +335,7 @@ export default {
       result({ data }) {
         data.volunteer_assignment_opt_in.forEach(({ assignment }) => {
           assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
-          assignment.end_dt   = DateUtils.utcToGmt8(assignment.end_dt);
+          assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
         });
         this.volunteerOptedInAssignments = data.volunteer_assignment_opt_in;
       },
