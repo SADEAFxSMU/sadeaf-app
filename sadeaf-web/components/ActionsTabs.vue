@@ -22,12 +22,12 @@
 <script>
 import ActionCard from './ActionCard';
 import PendingUserList from './user/PendingUserList';
-import NoDataPlaceholder from "./NoDataPlaceholder";
+import NoDataPlaceholder from './NoDataPlaceholder';
 
 export default {
   name: 'ActionsTabs',
 
-  components: {NoDataPlaceholder, PendingUserList, ActionCard },
+  components: { NoDataPlaceholder, PendingUserList, ActionCard },
 
   data() {
     return {

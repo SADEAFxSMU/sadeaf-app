@@ -7,15 +7,15 @@
 
 <script>
 export default {
-  name: "NoDataPlaceholder",
+  name: 'NoDataPlaceholder',
 
   props: {
     text: {
       type: String,
       required: false,
       default: 'No Data',
-    }
-  }
+    },
+  },
 };
 </script>
 
