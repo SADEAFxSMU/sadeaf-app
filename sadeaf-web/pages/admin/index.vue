@@ -85,6 +85,7 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin-right: 16px;
 }
 .service-request-summary {
   display: flex;
