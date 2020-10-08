@@ -9,9 +9,13 @@
       <pending-user-list class="pending-users" />
     </el-tab-pane>
     <el-tab-pane label="Notifications">
-      <div>
-
-      </div>
+      <action-card
+        v-for="(action, i) in actions"
+        :key="'action' + i"
+        :action="action"
+        @check="handleActionCardChecked"
+        class="action-card"
+      />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -24,11 +28,37 @@ export default {
   name: 'ActionsTabs',
 
   components: { PendingUserList, ActionCard },
+
+  data() {
+    return {
+      actions: [
+        {
+          title: 'Example notification 1',
+          message: 'This is an example of an urgent notification',
+          isUrgent: true,
+        },
+        {
+          title: 'Example notification 2',
+          message: 'This is an example of a notification',
+          isUrgent: false,
+        },
+      ],
+    };
+  },
+
+  methods: {
+    handleActionCardChecked(action) {
+      alert('Checked ' + action.title);
+    },
+  },
 };
 </script>
 
 <style scoped>
 .pending-users {
   padding: 0 32px 0 32px;
+}
+.action-card {
+  margin-bottom: 16px;
 }
 </style>

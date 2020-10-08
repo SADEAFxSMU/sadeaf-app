@@ -79,6 +79,7 @@ export default {
   justify-content: space-between;
   margin-bottom: 16px;
   height: 40vh;
+  min-height: 450px;
 }
 .left {
   flex: 1;
