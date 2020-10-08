@@ -13,7 +13,7 @@ export default {
 
   props: {
     to: {
-      type: String,
+      type: [String, Boolean],
       required: true,
     },
     shouldLink: {
