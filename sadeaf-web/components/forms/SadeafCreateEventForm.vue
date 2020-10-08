@@ -212,9 +212,6 @@ export default {
     isUpdate() {
       return this.event !== null;
     },
-    client() {
-      return this.event && this.event.client;
-    },
   },
 
   watch: {
