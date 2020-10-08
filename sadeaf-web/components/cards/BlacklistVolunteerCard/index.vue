@@ -36,8 +36,10 @@
 
         <el-col :span="2.5">
           <el-row class="block-btn" v-if="blockCard" align="top" justify="center" type="flex">
-            <el-tooltip content="Blocking this volunteer will prompt SADeaf to try and re-assign
-            all assignments that are paired with this volunteer to another volunteer">
+            <el-tooltip
+              content="Blocking this volunteer will prompt SADeaf to try and re-assign
+            all assignments that are paired with this volunteer to another volunteer"
+            >
               <el-button type="text" @click="handleClickBlock"> Block</el-button>
             </el-tooltip>
           </el-row>
@@ -98,13 +100,17 @@ export default {
   },
   methods: {
     handleClickBlock() {
-      this.$confirm(`This action will block user ${this.volunteer.account.name}. \n
+      this.$confirm(
+        `This action will block user ${this.volunteer.account.name}. \n
       Doing so will prompt SADeaf to try and re-assign all assignments that are paired with this volunteer to another volunteer
-       Are you sure?`, 'Warning', {
-        confirmButtonText: 'Block',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-      }).then(async () => {
+       Are you sure?`,
+        'Warning',
+        {
+          confirmButtonText: 'Block',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+        }
+      ).then(async () => {
         try {
           await this.$apollo.mutate({
             mutation: BLOCK_MUTATION,

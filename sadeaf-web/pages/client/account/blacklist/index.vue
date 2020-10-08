@@ -21,12 +21,13 @@
         </el-row>
 
         <div v-if="filteredVolunteers.length > 0">
-          <el-row type="flex"
-                  align="middle"
-                  justify="center"
-                  :gutter="16"
-                  v-for="(i, row) in blockMaxRows"
-                  :key="row + colCount"
+          <el-row
+            type="flex"
+            align="middle"
+            justify="center"
+            :gutter="16"
+            v-for="(i, row) in blockMaxRows"
+            :key="row + colCount"
           >
             <el-col :span="24 / colCount" v-for="(n, col) in colCount" :key="col">
               <BlacklistVolunteerCard
