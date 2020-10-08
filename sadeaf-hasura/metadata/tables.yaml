@@ -1157,73 +1157,120 @@
   insert_permissions:
   - role: client
     permission:
-      check:
-        account_id:
-          _eq: X-Hasura-User-Id
-      set:
-        account_id: x-hasura-User-Id
+      check: {}
       columns:
+      - id
       - account_id
+      - volunteer_urgent
+      - volunteer_new
+      - volunteer_periodic
+      - client_unmatched
+      - volunteer_matched
+      - client_matched
       backend_only: false
   - role: service_requestor
     permission:
-      check:
-        _or:
-        - account:
-            client:
-              service_requestor:
-                account_id:
-                  _eq: X-Hasura-User-Id
-        - account:
-            service_requestor:
-              account_id:
-                _eq: X-Hasura-User-Id
+      check: {}
       columns:
+      - id
       - account_id
+      - volunteer_urgent
+      - volunteer_new
+      - volunteer_periodic
+      - client_unmatched
+      - volunteer_matched
+      - client_matched
       backend_only: false
   - role: volunteer
     permission:
-      check:
-        account_id:
-          _eq: X-Hasura-User-Id
-      set:
-        account_id: x-hasura-User-Id
+      check: {}
       columns:
+      - id
       - account_id
+      - volunteer_urgent
+      - volunteer_new
+      - volunteer_periodic
+      - client_unmatched
+      - volunteer_matched
+      - client_matched
       backend_only: false
   select_permissions:
   - role: client
     permission:
       columns:
-      - account_id
       - id
-      filter:
-        account_id:
-          _eq: X-Hasura-User-Id
+      - account_id
+      - volunteer_urgent
+      - volunteer_new
+      - volunteer_periodic
+      - client_unmatched
+      - volunteer_matched
+      - client_matched
+      filter: {}
   - role: service_requestor
     permission:
       columns:
-      - account_id
       - id
-      filter:
-        _or:
-        - account:
-            client:
-              service_requestor:
-                account_id:
-                  _eq: X-Hasura-User-Id
-        - account:
-            service_requestor:
-              account_id:
-                _eq: X-Hasura-User-Id
+      - account_id
+      - volunteer_urgent
+      - volunteer_new
+      - volunteer_periodic
+      - client_unmatched
+      - volunteer_matched
+      - client_matched
+      filter: {}
   - role: volunteer
     permission:
       columns:
       - id
       - account_id
-      filter:
-        account_id:
-          _eq: X-Hasura-User-Id
+      - volunteer_urgent
+      - volunteer_new
+      - volunteer_periodic
+      - client_unmatched
+      - volunteer_matched
+      - client_matched
+      filter: {}
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - client_matched
+      - client_unmatched
+      - volunteer_matched
+      - volunteer_new
+      - volunteer_periodic
+      - volunteer_urgent
+      - account_id
+      - id
+      filter: {}
+      check: {}
+  - role: service_requestor
+    permission:
+      columns:
+      - client_matched
+      - client_unmatched
+      - volunteer_matched
+      - volunteer_new
+      - volunteer_periodic
+      - volunteer_urgent
+      - account_id
+      - id
+      filter: {}
+      check: {}
+  - role: volunteer
+    permission:
+      columns:
+      - client_matched
+      - client_unmatched
+      - volunteer_matched
+      - volunteer_new
+      - volunteer_periodic
+      - volunteer_urgent
+      - account_id
+      - id
+      filter: {}
+      check: {}
   delete_permissions:
   - role: client
     permission:
@@ -1324,137 +1371,73 @@
   insert_permissions:
   - role: client
     permission:
-      check:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      check: {}
       columns:
-      - chat_id
+      - notification_setting_id
+      - user_handle
       backend_only: false
   - role: service_requestor
     permission:
-      check:
-        _or:
-        - notification_setting:
-            account_id:
-              _eq: X-Hasura-User-Id
-        - notification_setting:
-            account:
-              client:
-                service_requestor:
-                  account_id:
-                    _eq: X-Hasura-User-Id
+      check: {}
       columns:
-      - chat_id
+      - notification_setting_id
+      - user_handle
       backend_only: false
   - role: volunteer
     permission:
-      check:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      check: {}
       columns:
-      - chat_id
+      - notification_setting_id
+      - user_handle
       backend_only: false
   select_permissions:
   - role: client
     permission:
       columns:
       - id
-      - chat_id
-      - notification_setting_id
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      - user_handle
+      filter: {}
   - role: service_requestor
     permission:
       columns:
       - id
-      - notification_setting_id
-      - chat_id
-      filter:
-        _or:
-        - notification_setting:
-            account_id:
-              _eq: X-Hasura-User-Id
-        - notification_setting:
-            account:
-              client:
-                service_requestor:
-                  account_id:
-                    _eq: X-Hasura-User-Id
+      - user_handle
+      filter: {}
   - role: volunteer
     permission:
       columns:
       - id
-      - notification_setting_id
-      - chat_id
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      - user_handle
+      filter: {}
   update_permissions:
   - role: client
     permission:
       columns:
-      - chat_id
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      - user_handle
+      filter: {}
       check: null
   - role: service_requestor
     permission:
       columns:
-      - chat_id
-      filter:
-        _or:
-        - notification_setting:
-            account_id:
-              _eq: X-Hasura-User-Id
-        - notification_setting:
-            account:
-              client:
-                service_requestor:
-                  account_id:
-                    _eq: X-Hasura-User-Id
+      - user_handle
+      filter: {}
       check: null
   - role: volunteer
     permission:
       columns:
-      - chat_id
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      - user_handle
+      filter: {}
       check: null
   delete_permissions:
   - role: client
     permission:
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   - role: service_requestor
     permission:
-      filter:
-        _or:
-        - notification_setting:
-            account_id:
-              _eq: X-Hasura-User-Id
-        - notification_setting:
-            account:
-              client:
-                service_requestor:
-                  account_id:
-                    _eq: X-Hasura-User-Id
+      filter: {}
   - role: volunteer
     permission:
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
 - table:
     schema: public
     name: volunteer
