@@ -56,7 +56,7 @@ function createNewHasuraAccount(user) {
         object: {
           cognito_id: $cognito_id,
           email: $email,
-          role: $role"
+          role: $role
         }
       ) { id role }
     }
