@@ -20,7 +20,6 @@
             :client="row.client"
             :edit-button="false"
             :assignments="row.assignments"
-            @updateAssignment="(assignment) => handleUpdateAssignmentClick(row, assignment)"
           />
         </div>
       </template>
@@ -41,8 +40,6 @@
 
 <script>
 import BaseTable from '../BaseTable';
-import VolunteersCell from '../custom-columns/VolunteersCell';
-import SadeafCreateAssignmentForm from '../../forms/SadeafCreateAssignmentForm';
 import AssignmentsTimeline from '../../cards/AssignmentsTimeline';
 import UserCardHorizontalSmall from '../../user/UserCardHorizontalSmall';
 
@@ -52,8 +49,6 @@ export default {
   components: {
     UserCardHorizontalSmall,
     AssignmentsTimeline,
-    VolunteersCell,
-    SadeafCreateAssignmentForm,
     BaseTable,
   },
 
@@ -72,7 +67,6 @@ export default {
       updateEvent: null,
       event_id: null,
       client: null,
-      updateAssignment: null,
       columns: [
         {
           name: 'client',
@@ -95,33 +89,6 @@ export default {
   },
 
   methods: {
-    handleNewEventClick() {
-      this.createEventDialogVisible = true;
-    },
-    handleUpdateEventClick(row) {
-      this.updateEvent = row;
-      this.createEventDialogVisible = true;
-    },
-    handleUpsertEventCancel() {
-      this.createEventDialogVisible = false;
-      this.updateEvent = null;
-    },
-    handleNewAssignmentClick(row) {
-      this.event_id = row.id;
-      this.client = row.client;
-      this.updateAssignment = null;
-      this.createAssignmentDialogVisible = true;
-    },
-    handleUpdateAssignmentClick(row, assignment) {
-      this.event_id = row.id;
-      this.client = row.client;
-      this.updateAssignment = assignment;
-      this.createAssignmentDialogVisible = true;
-    },
-    handleAssignmentFormCancel() {
-      this.createAssignmentDialogVisible = false;
-      this.updateAssignment = null;
-    },
     mapEventsToRows(events) {
       const rows = [];
       if (events) {
