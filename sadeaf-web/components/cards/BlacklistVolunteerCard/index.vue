@@ -89,7 +89,7 @@ export default {
     client: {
       type: Object,
       required: false,
-      default: { id : null },
+      default: { id: null },
     },
     volunteer: {
       type: Object,

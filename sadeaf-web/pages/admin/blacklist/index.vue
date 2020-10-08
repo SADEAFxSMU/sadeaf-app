@@ -217,7 +217,6 @@ export default {
   },
   methods: {
     getSelection(client) {
-      console.log(client);
       this.client = client;
     },
     setColCount() {
