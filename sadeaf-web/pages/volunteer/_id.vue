@@ -1,6 +1,6 @@
 <template>
   <div class="profile-page">
-    <volunteer-profile :user-id="id" />
+    <volunteer-profile :volunteer-id="id" />
   </div>
 </template>
 

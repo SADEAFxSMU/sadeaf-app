@@ -1,20 +1,60 @@
 <template>
   <base-profile :user="user" :loading="$apollo.loading">
     <template v-slot:role-content>
-      <div class="events-container">
-        <h1>Events</h1>
-        <div class="client-events">
-          <div v-if="events && events.length > 0">
-            <div v-for="event in events">
-              <el-card style="margin: 8px">
-                <h3 style="margin-bottom: 4px">{{ event.name }}</h3>
-                <p style="color: #959aa5">{{ event.description }}</p>
-              </el-card>
-            </div>
+      <div class="client-stats">
+        <stat-card
+          v-for="({ value }, statName) in stats"
+          :key="statName + '-card'"
+          style="flex: 1"
+          :title="statName"
+          title-position="bottom"
+          :stat="value"
+          accent-color="#a892fc"
+        />
+      </div>
+      <div class="client-info">
+        <h1>Client Information</h1>
+        <table>
+          <tr>
+            <th>Organisation</th>
+            <td>- {{ client.organisation }}</td>
+          </tr>
+          <tr>
+            <th>Designation</th>
+            <td>- {{ client.designation }}</td>
+          </tr>
+          <tr>
+            <th>Comm Pref.</th>
+            <td>- {{ client.preferred_comm_mode }}</td>
+          </tr>
+          <tr v-if="client.additional_notes">
+            <th>*Note</th>
+            <td>- {{ client.additional_notes }}</td>
+          </tr>
+        </table>
+      </div>
+    </template>
+    <template v-slot:role-body>
+      <h1 class="title">Events</h1>
+      <div class="client-events">
+        <div v-if="events && events.length > 0">
+          <div v-for="event in events">
+            <el-card style="margin: 8px">
+              <div class="event-card-header">
+                <h3 style="margin-bottom: 4px">
+                  {{ event.name }}
+                </h3>
+                <status-indicator
+                  :text="event.uncompleted_status ? 'IN PROGRESS' : 'COMPLETED'"
+                  :color="event.uncompleted_status ? 'salmon' : '#46cd6f'"
+                />
+              </div>
+              <p style="color: #959aa5">{{ event.description }}</p>
+            </el-card>
           </div>
-          <div v-else class="no-events">
-            <h3>🙈 No events yet</h3>
-          </div>
+        </div>
+        <div v-else class="no-events">
+          <h3>🙈 No events yet</h3>
         </div>
       </div>
     </template>
@@ -24,35 +64,39 @@
 <script>
 import BaseProfile from './BaseProfile';
 import gql from 'graphql-tag';
+import StatCard from '../../StatCard';
+import StatusIndicator from '../../StatusIndicator';
+import DangerZone from '../../forms/DangerZone';
 
 const ClientQuery = gql`
   query ClientQueryByAccountId($id: Int!) {
-    user: account_by_pk(id: $id) {
-      name
-      email
-      role
-      profile_pic_url
-      contact
-      created_at
-      client {
+    client: client_by_pk(id: $id) {
+      id
+      designation
+      additional_notes
+      organisation
+      preferred_comm_mode
+      user: account {
         id
-        designation
-        additional_notes
+        name
+        email
+        role
+        profile_pic_url
+        contact
+        created_at
+      }
+      events {
+        id
+        description
+        name
+        uncompleted_status
+        purpose
+        created_at
+        updated_at
+      }
+      service_requestor {
+        id
         organisation
-        preferred_comm_mode
-        events {
-          id
-          description
-          name
-          uncompleted_status
-          purpose
-          created_at
-          updated_at
-        }
-        service_requestor {
-          id
-          organisation
-        }
       }
     }
   }
@@ -62,11 +106,14 @@ export default {
   name: 'ClientProfile',
 
   components: {
+    DangerZone,
+    StatusIndicator,
+    StatCard,
     BaseProfile,
   },
 
   props: {
-    userId: {
+    clientId: {
       type: [String, Number],
       required: true,
     },
@@ -74,22 +121,45 @@ export default {
 
   data() {
     return {
-      user: null,
+      client: null,
     };
   },
 
   computed: {
+    user() {
+      return this.client && this.client.user;
+    },
     events() {
-      return this.user.client.events;
+      return this.client && this.client.events;
+    },
+    stats() {
+      const events = this.events;
+      let inProgress = 0;
+      let completed = 0;
+      events.forEach((event) => {
+        if (event.uncompleted_status === true) {
+          inProgress++;
+        } else {
+          completed++;
+        }
+      });
+      return {
+        'in progress': {
+          value: inProgress,
+        },
+        completed: {
+          value: completed,
+        },
+      };
     },
   },
 
   apollo: {
-    user: {
+    client: {
       query: ClientQuery,
       variables() {
         return {
-          id: this.userId,
+          id: this.clientId,
         };
       },
     },
@@ -98,10 +168,26 @@ export default {
 </script>
 
 <style scoped>
-.events-container {
-  height: 100%;
+.title {
+  margin: 16px 0 12px 0;
+}
+.client-stats {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+}
+.client-info {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 24px;
+  margin: 12px 8px 8px 8px;
+  box-shadow: inset 2px 2px 8px #d9d9e9;
+}
+.client-info table {
+  margin-top: 12px;
+  color: #5f5f75;
+}
+.client-info table th {
+  text-align: right;
 }
 .client-events {
   background: white;
@@ -116,5 +202,10 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+.event-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

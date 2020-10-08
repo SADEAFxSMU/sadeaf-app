@@ -1,21 +1,24 @@
 <template>
   <base-profile :user="user" :loading="$apollo.loading">
     <template v-slot:role-content>
-      <div class="">
-        <div class="volunteer-stats">
-          <stat-card
-            v-for="({ value, color }, statName) in stats"
-            :title="statName"
-            title-position="bottom"
-            :stat="value"
-            :accent-color="color"
-          />
-        </div>
-        <h1>Assignments</h1>
-        <div class="assignments">
-          <assignment-card v-for="assignment in assignments" :details="assignment" :show-edit="false" type="elevate" />
-        </div>
+      <div class="volunteer-stats">
+        <stat-card
+          v-for="({ value, color }, statName) in stats"
+          :key="statName + '-card'"
+          style="flex: 1"
+          :title="statName"
+          title-position="bottom"
+          :stat="value"
+          :accent-color="color"
+        />
       </div>
+      <div>
+        <stat-bar :stats="percentageStats" />
+      </div>
+    </template>
+
+    <template v-slot:role-body>
+      <volunteer-events-table :events="events" />
     </template>
   </base-profile>
 </template>
@@ -26,42 +29,24 @@ import BaseProfile from './BaseProfile';
 import StatCard from '../../StatCard';
 import { accountFieldsFragment } from '../../../common/graphql/fragments';
 import AssignmentCard from '../../cards/AssignmentCard';
+import VolunteerEventsTable from '../../tables/VolunteerEventsTable/index';
+import StatBar from '../../indicators/StatBar';
 
-const VolunteerQuery = gql`
-  query VolunteerQueryByAccountId($id: Int!) {
-    user: account_by_pk(id: $id) {
-      ...accountFields
-      volunteer {
-        id
-        assignments {
-          id
-          event {
-            id
-            name
-          }
-          start_dt
-          end_dt
-          status
-          address_line_one
-          room_number
-        }
-      }
-    }
-  }
-  ${accountFieldsFragment}
-`;
+const statCardColor = '#97baff';
 
 export default {
   name: 'VolunteerProfile',
 
   components: {
+    StatBar,
+    VolunteerEventsTable,
     AssignmentCard,
     StatCard,
     BaseProfile,
   },
 
   props: {
-    userId: {
+    volunteerId: {
       type: [String, Number],
       required: true,
     },
@@ -69,39 +54,129 @@ export default {
 
   data() {
     return {
-      user: null,
+      volunteer: null,
+      events: [],
+      attendance_aggregate: null,
+      percentageStats: {
+        attendance: {
+          label: 'attendance',
+          percentage: 100,
+        },
+        cancellations: {
+          label: 'cancellations',
+          percentage: 20,
+          color: '#3dd670',
+        },
+      },
       stats: {
-        Attendance: {
-          value: '100%',
-          color: '#3dd670',
+        completed: {
+          label: 'completed',
+          value: 0,
+          color: statCardColor,
         },
-        Clients: {
+        inprogress: {
+          label: 'in progress',
+          value: 0,
+          color: statCardColor,
+        },
+        clients: {
           value: 21,
-          color: '#3dd670',
-        },
-        Cancels: {
-          value: '68%',
-          color: 'salmon',
+          color: statCardColor,
         },
       },
     };
   },
 
   computed: {
-    volunteer() {
-      return this.user.volunteer;
-    },
-    assignments() {
-      return this.volunteer.assignments;
+    user() {
+      return this.volunteer && this.volunteer.user;
     },
   },
 
   apollo: {
-    user: {
-      query: VolunteerQuery,
+    volunteer: {
+      query: gql`
+        query VolunteerQueryByAccountId($id: Int!) {
+          volunteer: volunteer_by_pk(id: $id) {
+            id
+            user: account {
+              ...accountFields
+            }
+          }
+
+          events: event(where: { assignments: { volunteer_id: { _eq: $id } } }) {
+            id
+            name
+            uncompleted_status
+            client {
+              id
+              account {
+                id
+                name
+                profile_pic_url
+                email
+                created_at
+              }
+            }
+            assignments {
+              id
+              start_dt
+              end_dt
+              status
+              address_line_one
+              room_number
+              attendance {
+                id
+                attended
+              }
+            }
+          }
+
+          unique_clients: client_aggregate(where: { events: { assignments: { volunteer_id: { _eq: $id } } } }) {
+            aggregate {
+              count
+            }
+          }
+
+          attended_count: attendance_aggregate(where: { attended: { _eq: true } }) {
+            aggregate {
+              count
+            }
+          }
+          not_attended_count: attendance_aggregate(where: { attended: { _eq: false } }) {
+            aggregate {
+              count
+            }
+          }
+        }
+        ${accountFieldsFragment}
+      `,
+      result({ data }) {
+        const { volunteer, unique_clients, events, attendance_aggregate, attended_count, not_attended_count } = data;
+        this.volunteer = volunteer;
+        this.events = events;
+
+        let inprogress = 0;
+        let completed = 0;
+        events.forEach((event) => {
+          if (event.uncompleted_status === true) {
+            inprogress++;
+          } else {
+            completed++;
+          }
+        });
+        this.stats.completed.value = completed;
+        this.stats.inprogress.value = inprogress;
+
+        this.attendance_aggregate = attendance_aggregate;
+        this.stats.clients.value = unique_clients.aggregate.count;
+        this.percentageStats.attendance.value =
+          (attended_count.aggregate.count / (attended_count.aggregate.count + not_attended_count.aggregate.count)) *
+          100;
+      },
       variables() {
         return {
-          id: this.userId,
+          id: this.volunteerId,
         };
       },
     },
@@ -114,9 +189,14 @@ export default {
 }
 .volunteer-stats {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 16px;
 }
 .assignments {
   width: 100%;
+}
+.heading {
+  margin-top: 16px;
+  text-align: center;
 }
 </style>
