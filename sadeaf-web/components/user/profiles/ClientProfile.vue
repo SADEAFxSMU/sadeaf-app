@@ -4,6 +4,7 @@
       <div class="client-stats">
         <stat-card
           v-for="({ value }, statName) in stats"
+          :key="statName + '-card'"
           style="flex: 1"
           :title="statName"
           title-position="bottom"

@@ -4,6 +4,7 @@
       <div class="volunteer-stats">
         <stat-card
           v-for="({ value, color }, statName) in stats"
+          :key="statName + '-card'"
           style="flex: 1"
           :title="statName"
           title-position="bottom"
