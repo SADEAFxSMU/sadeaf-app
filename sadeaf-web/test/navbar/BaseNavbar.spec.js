@@ -32,7 +32,6 @@ describe('Client Nav Links', () => {
       '/account#settings',
       '/client/account/blacklist',
       '/account/notifications',
-      '/notifications',
     ];
     const renderedNavLinks = [];
     const navMenu = wrapper.findComponent(Element.Menu);
@@ -64,7 +63,7 @@ describe('Common Nav Links', () => {
   });
 
   it('should display common nav links', async () => {
-    const commonNavLinks = ['/account#profile', '/account#settings', '/account/notifications', '/notifications'];
+    const commonNavLinks = ['/account#profile', '/account#settings', '/account/notifications'];
     const renderedNavLinks = [];
     const navMenu = wrapper.findComponent(Element.Menu);
     _.forOwn(navMenu.vm.$data.items, (navMenuItem, index) => {
@@ -100,7 +99,6 @@ describe('Admin Nav Links', () => {
       '/account#settings',
       '/account/notifications',
       '/admin/account/blacklist',
-      '/notifications',
     ];
     const renderedNavLinks = [];
     const navMenu = wrapper.findComponent(Element.Menu);
