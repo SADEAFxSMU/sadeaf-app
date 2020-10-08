@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
-    <el-container style="height: 100%">
-      <el-header v-if="user">
+    <el-container v-if="user" style="height: 100%">
+      <el-header>
         <admin-navbar v-if="userType === 'admin'" />
         <client-navbar v-else-if="userType === 'client'" />
         <volunteer-navbar v-else-if="userType === 'volunteer'" />
@@ -11,6 +11,12 @@
         <nuxt />
       </el-main>
     </el-container>
+    <div class="loading-page" v-else>
+      <h1>
+        SADEAF
+        <el-spinner :radius="70" />
+      </h1>
+    </div>
   </div>
 </template>
 
@@ -72,5 +78,13 @@ h3 {
 
 .main {
   background: #f4f5ff;
+}
+
+.loading-page {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
