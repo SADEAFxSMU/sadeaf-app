@@ -11,7 +11,7 @@
       <el-menu-item index="/account#profile"> Profile </el-menu-item>
       <el-menu-item index="/account#settings"> Settings </el-menu-item>
       <el-menu-item
-        v-if="this.$store.state.auth.user.role === 'client' || this.$store.state.auth.user.role === 'admin'"
+        v-if="this.$store.state.auth.user.role === 'client'"
         :index="`/${this.$store.state.auth.user.role}/account/blacklist`"
       >
         Blacklist

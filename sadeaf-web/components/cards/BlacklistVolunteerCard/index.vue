@@ -86,6 +86,10 @@ export default {
   name: 'BlacklistVolunteerCard',
   components: { BlacklistCardAssignments },
   props: {
+    client: {
+      type: Object,
+      required: false,
+    },
     volunteer: {
       type: Object,
       required: true,
@@ -115,7 +119,7 @@ export default {
           await this.$apollo.mutate({
             mutation: BLOCK_MUTATION,
             variables: {
-              client_account_id: this.$store.state.auth.user.id,
+              client_account_id: this.client.id || this.$store.state.auth.user.id,
               volunteer_account_id: this.volunteer.account.id,
             },
           });
@@ -143,7 +147,7 @@ export default {
           await this.$apollo.mutate({
             mutation: UNBLOCK_DELETE,
             variables: {
-              client_account_id: this.$store.state.auth.user.id,
+              client_account_id: this.client.id || this.$store.state.auth.user.id,
               volunteer_account_id: this.volunteer.account.id,
             },
           });

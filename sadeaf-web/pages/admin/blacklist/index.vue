@@ -4,6 +4,21 @@
       <h1 style="padding-right: 16px">Blacklist</h1>
     </el-row>
 
+    <el-row class="margin-bottom__md">
+      <admin-blacklist-user-search user-role="client" v-on:select="getSelection" />
+    </el-row>
+
+    <el-row class="margin-bottom__md">
+      <div v-if="this.client">
+        <h3>Current Selected Client</h3>
+        <user-card v-if="this.client" :user="this.client" :clickable="false" :link-to-page="false" />
+      </div>
+
+      <div v-else>
+        <h2 style="color: red">Please select a Client's blacklist to view</h2>
+      </div>
+    </el-row>
+
     <el-tabs type="border-card" ref="tabContainer">
       <el-tab-pane>
         <span slot="label" style="color: red">
@@ -32,6 +47,7 @@
             <el-col :span="24 / colCount" v-for="(n, col) in colCount" :key="col">
               <BlacklistVolunteerCard
                 v-if="row * colCount + col < pagedBlockedCards.length"
+                :client="client"
                 :volunteer="pagedBlockedCards[row * colCount + col]"
                 class="margin-bottom__md"
               />
@@ -79,6 +95,7 @@
             <el-col :span="24 / colCount" v-for="(n, col) in colCount" :key="col">
               <BlacklistVolunteerCard
                 v-if="row * colCount + col < pagedUnblockedCards.length"
+                :client="client"
                 :volunteer="pagedUnblockedCards[row * colCount + col]"
                 class="margin-bottom__md"
                 :blockCard="false"
@@ -109,8 +126,10 @@
 
 <script>
 import BlacklistVolunteerCard from '@/components/cards/BlacklistVolunteerCard/index';
-import gql from 'graphql-tag';
 import ClientBlacklistDialog from '@/components/dialogs/ClientBlacklistDialog';
+import AdminBlacklistUserSearch from '@/components/user/AdminBlacklistUserSearch';
+import UserCard from '@/components/user/UserCard';
+import gql from 'graphql-tag';
 
 const CLIENT_VOLUNTEER_BLOCK_SUB = gql`
   subscription sub($client_acc_id: Int!) {
@@ -180,21 +199,27 @@ const CLIENT_VOLUNTEER_UNBLOCK_SUB = gql`
 `;
 
 export default {
-  name: 'blacklist',
-  components: { ClientBlacklistDialog, BlacklistVolunteerCard },
+  name: 'admin-blacklist',
+  components: { UserCard, AdminBlacklistUserSearch, ClientBlacklistDialog, BlacklistVolunteerCard },
   data() {
     return {
       volunteers: [],
       unblockVolunteers: [],
       blockSearch: '',
       unblockSearch: '',
+      clientSearch: '',
       colCount: 3,
       blockListCurrentPage: 1,
       unblockListCurrentPage: 1,
       pageSize: 9,
+      client: null,
     };
   },
   methods: {
+    getSelection(client) {
+      console.log(client);
+      this.client = client;
+    },
     setColCount() {
       const tabWidth = this.$refs.tabContainer.$el.clientWidth;
       const newColCount = Math.max(1, Math.floor(tabWidth / 500));
@@ -217,9 +242,6 @@ export default {
     },
     unblockMaxrows() {
       return Math.floor((this.filteredUnblockVolunteers.length - 1) / this.colCount) + 1;
-    },
-    user() {
-      return this.$store.state.auth.user;
     },
     viewMoreVisible() {
       return this.$store.state.clientBlacklist.visible;
@@ -260,7 +282,10 @@ export default {
       volunteers: {
         query: CLIENT_VOLUNTEER_BLOCK_SUB,
         variables() {
-          return { client_acc_id: this.user.id };
+          return { client_acc_id: this.client.id };
+        },
+        skip() {
+          return this.client === null;
         },
         result({ data }) {
           this.volunteers = data.assignment.map((v) => ({
@@ -273,7 +298,10 @@ export default {
       unblockVolunteers: {
         query: CLIENT_VOLUNTEER_UNBLOCK_SUB,
         variables() {
-          return { client_acc_id: this.user.id };
+          return { client_acc_id: this.client.id };
+        },
+        skip() {
+          return this.client === null;
         },
         result({ data }) {
           this.unblockVolunteers = data.blacklist.map((v) => ({
