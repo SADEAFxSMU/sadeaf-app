@@ -36,11 +36,14 @@
 
         <el-col :span="2.5">
           <el-row class="block-btn" v-if="blockCard" align="top" justify="center" type="flex">
-            <el-button type="text" @click="handleClickBlock"> Block </el-button>
+            <el-tooltip content="Blocking this volunteer will prompt SADeaf to try and re-assign
+            all assignments that are paired with this volunteer to another volunteer">
+              <el-button type="text" @click="handleClickBlock"> Block</el-button>
+            </el-tooltip>
           </el-row>
 
           <el-row class="unblock-btn" v-else align="top" justify="center" type="flex">
-            <el-button type="text" @click="handleClickUnblock"> Unblock </el-button>
+            <el-button type="text" @click="handleClickUnblock"> Unblock</el-button>
           </el-row>
         </el-col>
       </el-row>
@@ -95,13 +98,15 @@ export default {
   },
   methods: {
     handleClickBlock() {
-      this.$confirm(`This action will block user ${this.volunteer.account.name}. Are you sure?`, 'Warning', {
+      this.$confirm(`This action will block user ${this.volunteer.account.name}. \n
+      Doing so will prompt SADeaf to try and re-assign all assignments that are paired with this volunteer to another volunteer
+       Are you sure?`, 'Warning', {
         confirmButtonText: 'Block',
         cancelButtonText: 'Cancel',
         type: 'warning',
       }).then(async () => {
         try {
-          const res = await this.$apollo.mutate({
+          await this.$apollo.mutate({
             mutation: BLOCK_MUTATION,
             variables: {
               client_account_id: this.$store.state.auth.user.id,
@@ -129,7 +134,7 @@ export default {
         type: 'warning',
       }).then(async () => {
         try {
-          const res = await this.$apollo.mutate({
+          await this.$apollo.mutate({
             mutation: UNBLOCK_DELETE,
             variables: {
               client_account_id: this.$store.state.auth.user.id,
@@ -173,6 +178,7 @@ export default {
 <style scoped lang="scss">
 .volunteer-blacklist-card {
   width: 100%;
+  max-width: 500px;
   height: 100%;
 }
 

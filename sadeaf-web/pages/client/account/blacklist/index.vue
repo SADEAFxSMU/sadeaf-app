@@ -4,7 +4,7 @@
       <h1 style="padding-right: 16px">Blacklist</h1>
     </el-row>
 
-    <el-tabs type="border-card">
+    <el-tabs type="border-card" ref="tabContainer">
       <el-tab-pane>
         <span slot="label" style="color: red">
           <i class="el-icon-error" />
@@ -21,7 +21,13 @@
         </el-row>
 
         <div v-if="filteredVolunteers.length > 0">
-          <el-row type="flex" :gutter="16" v-for="(i, row) in blockMaxRows" :key="row">
+          <el-row type="flex"
+                  align="middle"
+                  justify="center"
+                  :gutter="16"
+                  v-for="(i, row) in blockMaxRows"
+                  :key="row + colCount"
+          >
             <el-col :span="24 / colCount" v-for="(n, col) in colCount" :key="col">
               <BlacklistVolunteerCard
                 v-if="row * colCount + col < pagedBlockedCards.length"
@@ -42,11 +48,10 @@
         </div>
 
         <div v-else>
-          <h1 style="color: red">No Volunteer Found!</h1>
+          <h1 v-if="unblockSearch" style="color: red">No Volunteer Found!</h1>
         </div>
       </el-tab-pane>
 
-      <!--      Repeated code for tabs, can be changed to Tab Component-->
       <el-tab-pane>
         <span slot="label" style="color: green">
           <i class="el-icon-success" />
@@ -62,7 +67,14 @@
           />
         </el-row>
         <div v-if="filteredUnblockVolunteers.length > 0">
-          <el-row type="flex" :gutter="16" v-for="(i, row) in unblockMaxrows" :key="row">
+          <el-row
+            type="flex"
+            align="center"
+            justify="middle"
+            :gutter="16"
+            v-for="(i, row) in unblockMaxrows"
+            :key="row"
+          >
             <el-col :span="24 / colCount" v-for="(n, col) in colCount" :key="col">
               <BlacklistVolunteerCard
                 v-if="row * colCount + col < pagedUnblockedCards.length"
@@ -84,7 +96,8 @@
         </div>
 
         <div v-else>
-          <h1 style="color: red">No Volunteer Found!</h1>
+          <h1 v-if="unblockSearch" style="color: red">No Volunteer Found!</h1>
+          <h1 v-else style="color: red">No Volunteer Blocked!</h1>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -98,7 +111,6 @@ import BlacklistVolunteerCard from '@/components/cards/BlacklistVolunteerCard/in
 import gql from 'graphql-tag';
 import ClientBlacklistDialog from '@/components/dialogs/ClientBlacklistDialog';
 
-// TODO (Austin): Should we create a trigger for blacklist, on blacklist, remove all client assignments that have that volunteer assigned
 const CLIENT_VOLUNTEER_BLOCK_SUB = gql`
   subscription sub($client_acc_id: Int!) {
     assignment(
@@ -181,12 +193,29 @@ export default {
       pageSize: 9,
     };
   },
+  methods: {
+    setColCount() {
+      const tabWidth = this.$refs.tabContainer.$el.clientWidth;
+      const newColCount = Math.max(1, Math.floor(tabWidth / 500));
+
+      if (newColCount !== this.colCount) {
+        this.colCount = newColCount;
+      }
+    },
+  },
+  mounted() {
+    this.setColCount();
+    window.addEventListener('resize', this.setColCount);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.setColCount);
+  },
   computed: {
     blockMaxRows() {
-      return Math.floor((this.filteredVolunteers.length - 1) / 3) + 1;
+      return Math.floor((this.filteredVolunteers.length - 1) / this.colCount) + 1;
     },
     unblockMaxrows() {
-      return Math.floor((this.filteredUnblockVolunteers.length - 1) / 3) + 1;
+      return Math.floor((this.filteredUnblockVolunteers.length - 1) / this.colCount) + 1;
     },
     user() {
       return this.$store.state.auth.user;
