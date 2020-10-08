@@ -313,6 +313,14 @@ export default {
         };
       },
       result({ data }) {
+        data.assignments.forEach(assignment => {
+          assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
+          assignment.end_dt   = DateUtils.utcToGmt8(assignment.end_dt);
+        });
+        data.pendingAssignments.forEach(assignment => {
+          assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
+          assignment.end_dt   = DateUtils.utcToGmt8(assignment.end_dt);
+        });
         this.assignments = data.assignments;
         this.pendingAssignments = data.pendingAssignments;
       },

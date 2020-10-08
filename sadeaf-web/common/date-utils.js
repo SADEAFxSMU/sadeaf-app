@@ -29,4 +29,7 @@ export const DateUtils = {
   humanReadableMonthYear(date) {
     return dayjs(date).format('MMM YYYY');
   },
+  utcToGmt8(date) {
+    return dayjs.utc(date).utcOffset(8);
+  }
 };

@@ -39,7 +39,7 @@
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.3",
     "cognito-express": "^2.0.18",
-    "dayjs": "^1.8.35",
+    "dayjs": "^1.9.1",
     "debounce": "^1.2.0",
     "element-ui": "^2.4.11",
     "emailjs": "^3.3.0",
