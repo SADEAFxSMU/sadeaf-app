@@ -482,6 +482,52 @@
       check: null
 - table:
     schema: public
+    name: blacklist
+  object_relationships:
+  - name: client
+    using:
+      foreign_key_constraint_on: client_account_id
+  - name: volunteer
+    using:
+      foreign_key_constraint_on: volunteer_account_id
+  insert_permissions:
+  - role: client
+    permission:
+      check:
+        client_account_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - client_account_id
+      - volunteer_account_id
+      backend_only: false
+  select_permissions:
+  - role: client
+    permission:
+      columns:
+      - client_account_id
+      - id
+      - volunteer_account_id
+      filter:
+        client_account_id:
+          _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: client
+    permission:
+      columns:
+      - id
+      - volunteer_account_id
+      filter:
+        client_account_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  delete_permissions:
+  - role: client
+    permission:
+      filter:
+        client_account_id:
+          _eq: X-Hasura-User-Id
+- table:
+    schema: public
     name: client
   object_relationships:
   - name: account
@@ -494,6 +540,13 @@
     using:
       foreign_key_constraint_on: service_requestor_id
   array_relationships:
+  - name: blacklists
+    using:
+      foreign_key_constraint_on:
+        column: client_account_id
+        table:
+          schema: public
+          name: blacklist
   - name: events
     using:
       foreign_key_constraint_on:
@@ -1475,6 +1528,13 @@
         table:
           schema: public
           name: assignment
+  - name: blacklists
+    using:
+      foreign_key_constraint_on:
+        column: volunteer_account_id
+        table:
+          schema: public
+          name: blacklist
   - name: feedbacks
     using:
       foreign_key_constraint_on:

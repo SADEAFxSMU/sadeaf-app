@@ -83,6 +83,11 @@ const defaultFormatters = {
 export default {
   name: 'BaseTable',
   props: {
+    showOperations: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
     loading: {
       type: Boolean,
       required: false,
