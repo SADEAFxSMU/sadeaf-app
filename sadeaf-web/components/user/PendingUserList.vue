@@ -14,7 +14,7 @@
             <el-button type="danger" @click="handleReject(user)">Reject</el-button>
             <span class="button-divider"> or </span>
             <el-select placeholder="Accept As" v-model="selectedRoleByUserId[user.id]">
-              <el-option v-for="role in ROLES" :label="'Accept as ' + role" :value="role">
+              <el-option v-for="role in ROLES" :key="'select-' + role" :label="'Accept as ' + role" :value="role">
                 {{ role }}
               </el-option>
             </el-select>
