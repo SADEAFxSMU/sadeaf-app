@@ -1,0 +1,1 @@
+CREATE TABLE "public"."blacklist"("id" serial NOT NULL, "client_id" integer NOT NULL, "volunteer_id" integer NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("client_id") REFERENCES "public"."client"("id") ON UPDATE restrict ON DELETE restrict, FOREIGN KEY ("volunteer_id") REFERENCES "public"."volunteer"("id") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"));
