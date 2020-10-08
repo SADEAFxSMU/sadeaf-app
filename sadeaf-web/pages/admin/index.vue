@@ -2,8 +2,8 @@
   <div>
     <div class="summary">
       <div class="left">
-        <h1>Welcome Back, {{ userName }}</h1>
-        <div class="admin-notifs">.</div>
+        <h1 class="title">Welcome Back, {{ userName }}</h1>
+        <actions-tabs style="flex: 1" />
       </div>
       <div class="service-request-summary">
         <h1>Service Requests</h1>
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <admin-events-table @summary="handleSummaryComputed" />
+    <admin-events-table @summary="handleSummaryComputed" class="events-table" />
   </div>
 </template>
 
@@ -25,9 +25,10 @@
 import AdminEventsTable from '../../components/tables/AdminEventsTable';
 import StatCard from '../../components/StatCard';
 import DoughnutChart from '../../components/charts/Doughnut';
+import ActionsTabs from '../../components/ActionsTabs';
 export default {
   name: 'admin-home',
-  components: { DoughnutChart, StatCard, AdminEventsTable },
+  components: { ActionsTabs, DoughnutChart, StatCard, AdminEventsTable },
   data() {
     return {
       userName: 'Admin',
@@ -70,18 +71,19 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  margin-bottom: 12px;
+}
 .summary {
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
+  height: 40vh;
 }
 .left {
   flex: 1;
-}
-.admin-notifs {
-  background: white;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .service-request-summary {
   display: flex;
@@ -107,5 +109,8 @@ export default {
   flex: 1;
   opacity: 0.5;
   margin-top: auto;
+}
+.events-table {
+  padding-top: 16px;
 }
 </style>
