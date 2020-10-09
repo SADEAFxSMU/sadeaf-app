@@ -5,7 +5,7 @@
     </el-row>
 
     <el-row class="margin-bottom__md">
-      <admin-blacklist-user-search user-role="client" v-on:select="getSelection" />
+      <admin-blacklist-user-search user-role="client" v-on:select="setClient" />
     </el-row>
 
     <el-row class="margin-bottom__md">
@@ -38,20 +38,21 @@
         <div v-if="filteredVolunteers.length > 0">
           <el-row
             type="flex"
-            align="middle"
-            justify="center"
-            :gutter="16"
-            v-for="(i, row) in blockMaxRows"
-            :key="row + colCount"
+            class="blacklist-cards-row"
+            align="center"
+            justify="start"
           >
-            <el-col :span="24 / colCount" v-for="(n, col) in colCount" :key="col">
+            <div
+              v-for="volunteer in pagedBlockedCards"
+              :key="volunteer.id + volunteer.name + 'blacklist_card'"
+              class="margin-bottom__md"
+              style="margin-right: 16px"
+            >
               <BlacklistVolunteerCard
-                v-if="row * colCount + col < pagedBlockedCards.length"
                 :client="client"
-                :volunteer="pagedBlockedCards[row * colCount + col]"
-                class="margin-bottom__md"
+                :volunteer="volunteer"
               />
-            </el-col>
+            </div>
           </el-row>
 
           <el-row type="flex" justify="center">
@@ -86,21 +87,22 @@
         <div v-if="filteredUnblockVolunteers.length > 0">
           <el-row
             type="flex"
+            class="blacklist-cards-row"
             align="center"
-            justify="middle"
-            :gutter="16"
-            v-for="(i, row) in unblockMaxrows"
-            :key="row"
+            justify="start"
           >
-            <el-col :span="24 / colCount" v-for="(n, col) in colCount" :key="col">
+            <div
+              v-for="volunteer in pagedUnblockedCards"
+              :key="volunteer.id + volunteer.name + 'unblacklist_card'"
+              class="margin-bottom__md"
+              style="margin-right: 16px"
+            >
               <BlacklistVolunteerCard
-                v-if="row * colCount + col < pagedUnblockedCards.length"
                 :client="client"
-                :volunteer="pagedUnblockedCards[row * colCount + col]"
-                class="margin-bottom__md"
-                :blockCard="false"
+                :volunteer="volunteer"
+                :block-card="false"
               />
-            </el-col>
+            </div>
           </el-row>
 
           <el-row type="flex" justify="center">
@@ -208,7 +210,6 @@ export default {
       blockSearch: '',
       unblockSearch: '',
       clientSearch: '',
-      colCount: 3,
       blockListCurrentPage: 1,
       unblockListCurrentPage: 1,
       pageSize: 9,
@@ -216,32 +217,11 @@ export default {
     };
   },
   methods: {
-    getSelection(client) {
+    setClient(client) {
       this.client = client;
     },
-    setColCount() {
-      const tabWidth = this.$refs.tabContainer.$el.clientWidth;
-      const newColCount = Math.max(1, Math.floor(tabWidth / 500));
-
-      if (newColCount !== this.colCount) {
-        this.colCount = newColCount;
-      }
-    },
-  },
-  mounted() {
-    this.setColCount();
-    window.addEventListener('resize', this.setColCount);
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.setColCount);
   },
   computed: {
-    blockMaxRows() {
-      return Math.floor((this.filteredVolunteers.length - 1) / this.colCount) + 1;
-    },
-    unblockMaxrows() {
-      return Math.floor((this.filteredUnblockVolunteers.length - 1) / this.colCount) + 1;
-    },
     viewMoreVisible() {
       return this.$store.state.clientBlacklist.visible;
     },
@@ -315,10 +295,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .blacklist-container {
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.blacklist-cards-row {
+  flex-wrap: wrap;
+
+  @media(max-width: 450px) {
+    overflow: scroll hidden
+  }
 }
 
 .margin-bottom__md {
