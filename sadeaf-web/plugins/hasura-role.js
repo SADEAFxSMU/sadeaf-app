@@ -51,5 +51,10 @@ export default ({ app, store }, inject) => {
         'Ensure that the apollo plugin is set up before this.'
     );
   }
+
+  inject('hasuraRole', {
+    queryAndSetUserInfo: () => queryAndSetUserInfo(apolloClient, store),
+  });
+
   queryAndSetUserInfo(apolloClient, store);
 };

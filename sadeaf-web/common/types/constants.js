@@ -55,10 +55,10 @@ export const ROLE_EL_TAG_TYPES = {
 };
 
 export const ROLE_PROFILE_PAGE_MAPPING = {
-  admin: '/admin',
-  volunteer: '/volunteer',
-  svcreq: '/org',
-  client: '/client',
+  [ROLES.admin]: '/admin',
+  [ROLES.volunteer]: '/volunteer',
+  [ROLES.service_requestor]: '/org',
+  [ROLES.client]: '/client',
 };
 
 export const RATING_KEYS = [

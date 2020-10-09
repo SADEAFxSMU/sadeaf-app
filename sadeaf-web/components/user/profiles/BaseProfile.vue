@@ -81,7 +81,7 @@ export default {
       return this.user.email;
     },
     createdAt() {
-      return DateUtils.humanReadableMonthYear(this.user.created_at) || undefined;
+      return DateUtils.humanReadableMonthYear(DateUtils.utcToGmt8(this.user.created_at)) || undefined;
     },
     client() {
       return this.user.client;

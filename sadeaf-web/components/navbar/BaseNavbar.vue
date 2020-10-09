@@ -5,7 +5,6 @@
       <status-indicator text="LIVE" color="lightseagreen" class="indicator" />
     </div>
     <slot name="user-nav"></slot>
-    <el-menu-item index="/notifications"> Notifications </el-menu-item>
     <el-submenu index="/account">
       <template slot="title">Account</template>
       <el-menu-item :index="linkToProfile"> Profile </el-menu-item>

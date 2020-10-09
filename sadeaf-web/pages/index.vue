@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { ROLE_PROFILE_PAGE_MAPPING } from '../common/types/constants';
+
 export default {
   name: 'app-home',
   middleware: ['authenticated'],
@@ -15,7 +17,7 @@ export default {
   },
   methods: {
     navigateToRoleHome() {
-      this.$router.replace('/' + this.userType);
+      this.$router.replace(ROLE_PROFILE_PAGE_MAPPING[this.userType]);
     },
   },
   computed: {

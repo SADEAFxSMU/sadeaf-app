@@ -12,7 +12,7 @@ export default {
 
   props: {
     link: {
-      type: String,
+      type: [String, Boolean],
       required: false,
     },
   },

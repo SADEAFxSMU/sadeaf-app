@@ -45,6 +45,7 @@ export default {
       const { path, push } = AuthRouting[authState];
       if (push) {
         this.$router.push({ path: path });
+        this.$hasuraRole.queryAndSetUserInfo();
       } else {
         window.history.replaceState({}, document.title, path);
       }
