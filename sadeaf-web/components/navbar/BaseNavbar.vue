@@ -8,7 +8,7 @@
     <el-menu-item index="/notifications"> Notifications </el-menu-item>
     <el-submenu index="/account">
       <template slot="title">Account</template>
-      <el-menu-item index="/account#profile"> Profile </el-menu-item>
+      <el-menu-item :index="linkToProfile"> Profile </el-menu-item>
       <el-menu-item index="/account#settings"> Settings </el-menu-item>
       <el-menu-item
         v-if="this.$store.state.auth.user.role === 'client'"
@@ -30,6 +30,17 @@ import LogoutButton from '../buttons/LogoutButton';
 export default {
   name: 'BaseNavbar',
   components: { LogoutButton, StatusIndicator },
+  computed: {
+    user() {
+      return this.$store.state.auth.user;
+    },
+    linkToProfile() {
+      const user = this.user;
+      const role = user[user.role];
+      if (role) return `/${user.role}/${role.id}`;
+      return '/account#profile';
+    },
+  },
 };
 </script>
 

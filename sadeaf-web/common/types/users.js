@@ -9,7 +9,7 @@ const ROLE_PROFILE_PAGE_PATH_MAPPING = {
   [service_requestor]: '/org',
 };
 
-export function getUserProfilePagePath({ role, id }) {
+export function getUserProfilePagePath(role, id) {
   if (!role) {
     console.error('Got undefined role');
     return '/';

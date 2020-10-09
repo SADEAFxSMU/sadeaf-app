@@ -5,6 +5,7 @@
         v-for="(user, i) in users"
         :key="'user-card-' + i"
         :user="user.account"
+        :role-id="user.id"
         link-to-page
         class="user-card"
       />

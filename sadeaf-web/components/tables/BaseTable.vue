@@ -20,6 +20,7 @@
       :expand-row-keys="expandedRowKeys"
       @expand-change="handleExpandRowsChange"
       border
+      :empty-text="emptyText"
       :class="{ elevated: elevated }"
     >
       <el-table-column v-if="expandableRows" :type="'expand'">
@@ -105,7 +106,17 @@ export default {
       required: false,
       default: () => [],
     },
+    emptyText: {
+      type: String,
+      required: false,
+      default: 'No Data',
+    },
     showToolbar: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    showOperations: {
       type: Boolean,
       required: false,
       default: true,

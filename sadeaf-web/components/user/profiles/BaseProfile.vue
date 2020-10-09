@@ -6,26 +6,31 @@
     <el-row type="flex" style="flex-wrap: wrap" :gutter="20">
       <el-col :xs="24" :md="8">
         <div class="profile">
-          <img v-if="profilePicUrl" :src="profilePicUrl" class="profile-pic" />
-          <el-avatar
-            v-else
-            class="el-icon-user-solid"
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 150px;
-              width: 150px;
-              font-size: 70px;
-            "
-          />
-          <div class="name">
-            <h1>{{ name }}</h1>
-            <role-tag :role="role" />
+          <div class="avatar">
+            <img v-if="profilePicUrl" :src="profilePicUrl" :alt="`${name}'s profile picture`" class="profile-pic" />
+            <el-avatar
+              v-else
+              class="el-icon-user-solid profile-pic"
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 150px;
+                width: 150px;
+                font-size: 70px;
+              "
+            />
+            <role-tag :role="role" class="role" />
+          </div>
+          <div class="user-info">
+            <h1 class="name">
+              {{ name }}
+            </h1>
+            <a class="link" :href="`mailto:${email}`" target="_blank">{{ email }}</a>
             <div class="user-stats">
-              <span>102</span>
-              <span>88</span>
-              <span>56</span>
+              <div v-if="createdAt" class="joined">
+                <span> Joined {{ createdAt }} </span>
+              </div>
             </div>
           </div>
         </div>
@@ -34,10 +39,12 @@
         <slot name="role-content" />
       </el-col>
     </el-row>
+    <slot name="role-body" />
   </div>
 </template>
 
 <script>
+import { DateUtils } from '../../../common/date-utils';
 import RoleTag from '../../RoleTag';
 
 /**
@@ -73,6 +80,9 @@ export default {
     email() {
       return this.user.email;
     },
+    createdAt() {
+      return DateUtils.humanReadableMonthYear(this.user.created_at) || undefined;
+    },
     client() {
       return this.user.client;
     },
@@ -97,22 +107,45 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: white;
   border-radius: 6px;
-  box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.1);
   padding: 16px;
 }
 .profile-pic {
-  border-radius: 4px;
+  border-radius: 50%;
   margin-bottom: 16px;
   width: 250px;
+  box-shadow: 2px 2px 8px 1px #cccce7;
+}
+.avatar {
+  position: relative;
+}
+.role {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  box-shadow: 1px 1px 6px 1px #dbdbf5;
+}
+.user-info {
+  display: flex;
+  flex-direction: column;
 }
 .name {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  margin-bottom: 8px;
 }
-.name > * {
-  margin: 3px;
+.link {
+  color: #6f97ff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+.link:hover {
+  color: #f8637a;
+}
+.joined {
+  color: #797994;
+  margin-top: 12px;
+  font-size: 0.8em;
 }
 </style>
