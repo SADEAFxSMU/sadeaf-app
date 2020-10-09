@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     navigateToRoleHome() {
-      this.$router.replace(ROLE_PROFILE_PAGE_MAPPING[this.userType]);
+      this.$router.replace(ROLE_PROFILE_PAGE_MAPPING[this.userType] || '/pending');
     },
   },
   computed: {
