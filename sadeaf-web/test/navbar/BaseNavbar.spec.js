@@ -26,7 +26,7 @@ describe('Client Nav Links', () => {
     wrapper = mount(BaseNavbar, { store, localVue });
   });
 
-  it('should display common nav links', async () => {
+  it("should display client's nav links", async () => {
     const commonNavLinks = [
       '/account#profile',
       '/account#settings',
@@ -65,43 +65,6 @@ describe('Common Nav Links', () => {
 
   it('should display common nav links', async () => {
     const commonNavLinks = ['/account#profile', '/account#settings', '/account/notifications', '/notifications'];
-    const renderedNavLinks = [];
-    const navMenu = wrapper.findComponent(Element.Menu);
-    _.forOwn(navMenu.vm.$data.items, (navMenuItem, index) => {
-      if (navMenuItem.$props.index) {
-        expect(navMenuItem.$props.index).toEqual(index);
-        expect(commonNavLinks).toContain(index);
-        renderedNavLinks.push(index);
-      }
-    });
-    expect(renderedNavLinks.sort()).toEqual(commonNavLinks.sort());
-  });
-});
-
-describe('Admin Nav Links', () => {
-  const state = {
-    auth: {
-      user: {
-        role: 'admin',
-      },
-    },
-  };
-
-  beforeEach(() => {
-    const store = new Vuex.Store({
-      state,
-    });
-    wrapper = mount(BaseNavbar, { store, localVue });
-  });
-
-  it('should display common nav links', async () => {
-    const commonNavLinks = [
-      '/account#profile',
-      '/account#settings',
-      '/account/notifications',
-      '/admin/account/blacklist',
-      '/notifications',
-    ];
     const renderedNavLinks = [];
     const navMenu = wrapper.findComponent(Element.Menu);
     _.forOwn(navMenu.vm.$data.items, (navMenuItem, index) => {

@@ -10,6 +10,7 @@
         <el-menu-item index="/admin/users?type=service_requestor"> Service Requestors </el-menu-item>
         <el-menu-item index="/admin/users?type=volunteer"> Volunteers </el-menu-item>
         <el-menu-item index="/admin/users/pending"> Pending </el-menu-item>
+        <el-menu-item index="/admin/blacklist"> Blacklist Users </el-menu-item>
       </el-submenu>
     </template>
   </base-navbar>
