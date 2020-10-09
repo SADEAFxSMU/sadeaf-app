@@ -118,7 +118,7 @@ export default {
     return {
       form: {
         // set defaults, which will be overrode by data from Hasura
-        id: 1,
+        id: -1,
         volunteer_new: false,
         client_matched: false,
         client_unmatched: false,
@@ -137,8 +137,7 @@ export default {
         emailPreferred: false,
         telegramHandle: '',
       },
-      // TODO(wy): the account type should be based on the logged in user
-      accountType: 'volunteer',
+      accountType: this.$store.state.auth.user.userType,
       originallyPreferredTelegram: false,
       validationRules: {
         telegramHandle: [{ validator: this.checkTelegramHandle, trigger: 'blue' }],
@@ -149,13 +148,13 @@ export default {
     onSubmit() {
       this.$refs['notificationPreferencesForm'].validate((valid) => {
         if (valid) {
-          this.updateNotificationSettings();
+          this.upsertNotificationSettings();
         } else {
           return false;
         }
       });
     },
-    updateNotificationSettings() {
+    upsertNotificationSettings() {
       /*
           We create this variable in case an error occurs - so we can 'recover' the value of
           the original form. apollo isn't clear if this.form will mutate, but they do it
@@ -173,16 +172,28 @@ export default {
               $volunteer_urgent: Boolean!
               $client_matched: Boolean!
               $client_unmatched: Boolean!
+              $account_id: Int!
             ) {
-              update_notification_setting_by_pk(
-                pk_columns: { id: 1 }
-                _set: {
+              insert_notification_setting_one(
+                object: {
                   volunteer_matched: $volunteer_matched
                   volunteer_new: $volunteer_new
                   volunteer_periodic: $volunteer_periodic
                   volunteer_urgent: $volunteer_urgent
                   client_matched: $client_matched
                   client_unmatched: $client_unmatched
+                  account_id: $account_id
+                }
+                on_conflict: {
+                  constraint: notification_setting_account_id_key
+                  update_columns: [
+                    volunteer_matched
+                    volunteer_new
+                    volunteer_periodic
+                    volunteer_urgent
+                    client_matched
+                    client_unmatched
+                  ]
                 }
               ) {
                 id
@@ -202,13 +213,16 @@ export default {
             volunteer_urgent: this.form.volunteer_urgent,
             client_matched: this.form.client_matched,
             client_unmatched: this.form.client_unmatched,
+            account_id: this.$store.state.auth.user.id,
           },
         })
         .then((data) => {
-          console.log('successfully updated!', data);
+          console.log('successfully upserted!', data);
+          this.form.id = data.data.insert_notification_setting_one.id;
 
           if (!this.originallyPreferredTelegram && this.form.telegramPreferred) {
             this.insertTelegramSettings();
+            this.originallyPreferredTelegram = true;
           } else if (this.originallyPreferredTelegram && this.form.telegramPreferred) {
             this.updateTelegramSettings();
           } else if (this.originallyPreferredTelegram && !this.form.telegramPreferred) {
@@ -229,8 +243,8 @@ export default {
               insert_telegram_information_one(
                 object: { user_handle: $user_handle, notification_setting_id: $notification_setting_id }
               ) {
+                id
                 user_handle
-                notification_setting_id
               }
             }
           `,
@@ -240,6 +254,7 @@ export default {
           },
         })
         .then((data) => {
+          this.form.telegram_information = { id: data.data.insert_telegram_information_one.id };
           console.log('inserted telegram data', data);
         })
         .catch((error) => {
@@ -333,7 +348,7 @@ export default {
       return this.form.telegramPreferred || this.form.emailPreferred;
     },
     processedData() {
-      if (!this.notification_setting) {
+      if (!this.notification_setting || !this.notification_setting[0]) {
         return this.form;
       }
 
@@ -364,27 +379,35 @@ export default {
       TODO(wy): use current logged in user to populate form
     */
   apollo: {
-    notification_setting: gql`
-      query {
-        notification_setting(where: { id: { _eq: 1 } }) {
-          id
-          volunteer_new
-          client_matched
-          client_unmatched
-          volunteer_matched
-          volunteer_periodic
-          volunteer_urgent
-          email_information {
+    notification_setting: {
+      query: gql`
+        query NotificationSettingQuery($user_id: Int!) {
+          notification_setting(where: { account_id: { _eq: $user_id } }) {
             id
-            email_address
-          }
-          telegram_information {
-            id
-            user_handle
+            volunteer_new
+            client_matched
+            client_unmatched
+            volunteer_matched
+            volunteer_periodic
+            volunteer_urgent
+            email_information {
+              id
+              email_address
+            }
+            telegram_information {
+              id
+              user_handle
+            }
           }
         }
-      }
-    `,
+      `,
+      // need to declare it like this so that we can use $store
+      variables() {
+        return {
+          user_id: this.$store.state.auth.user.id,
+        };
+      },
+    },
   },
 };
 </script>
