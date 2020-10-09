@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <el-container v-if="user" style="height: 100%">
-      <el-header>
+      <el-header v-if="user.role !== 'pending'">
         <admin-navbar v-if="userType === 'admin'" />
         <client-navbar v-else-if="userType === 'client'" />
         <volunteer-navbar v-else-if="userType === 'volunteer'" />
