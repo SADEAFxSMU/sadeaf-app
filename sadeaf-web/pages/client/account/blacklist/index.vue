@@ -21,21 +21,14 @@
         </el-row>
 
         <div v-if="filteredVolunteers.length > 0">
-          <el-row
-            type="flex"
-            class="blacklist-cards-row"
-            align="center"
-            justify="start"
-          >
+          <el-row type="flex" class="blacklist-cards-row" align="center" justify="start">
             <div
               v-for="volunteer in pagedBlockedCards"
               :key="volunteer.id + volunteer.name + 'blacklist_card'"
               class="margin-bottom__md"
               style="margin-right: 16px"
             >
-              <BlacklistVolunteerCard
-                :volunteer="volunteer"
-              />
+              <BlacklistVolunteerCard :volunteer="volunteer" />
             </div>
           </el-row>
 
@@ -69,22 +62,14 @@
           />
         </el-row>
         <div v-if="filteredUnblockVolunteers.length > 0">
-          <el-row
-            type="flex"
-            class="blacklist-cards-row"
-            align="center"
-            justify="start"
-          >
+          <el-row type="flex" class="blacklist-cards-row" align="center" justify="start">
             <div
               v-for="volunteer in pagedUnblockedCards"
               :key="volunteer.id + volunteer.name + 'unblacklist_card'"
               class="margin-bottom__md"
               style="margin-right: 16px"
             >
-              <BlacklistVolunteerCard
-                :volunteer="volunteer"
-                :block-card="false"
-              />
+              <BlacklistVolunteerCard :volunteer="volunteer" :block-card="false" />
             </div>
           </el-row>
 
@@ -271,8 +256,8 @@ export default {
 .blacklist-cards-row {
   flex-wrap: wrap;
 
-  @media(max-width: 450px) {
-    overflow: scroll hidden
+  @media (max-width: 450px) {
+    overflow: scroll hidden;
   }
 }
 
