@@ -541,12 +541,148 @@ type attendance_variance_fields {
   id: Float
 }
 
+"columns and relationships of \"blacklist\""
+type blacklist {
+  "An object relationship"
+  client: client!
+  client_account_id: Int!
+  id: Int!
+  "An object relationship"
+  volunteer: volunteer!
+  volunteer_account_id: Int!
+}
+
+"aggregated selection of \"blacklist\""
+type blacklist_aggregate {
+  aggregate: blacklist_aggregate_fields
+  nodes: [blacklist!]!
+}
+
+"aggregate fields of \"blacklist\""
+type blacklist_aggregate_fields {
+  avg: blacklist_avg_fields
+  count(columns: [blacklist_select_column!], distinct: Boolean): Int
+  max: blacklist_max_fields
+  min: blacklist_min_fields
+  stddev: blacklist_stddev_fields
+  stddev_pop: blacklist_stddev_pop_fields
+  stddev_samp: blacklist_stddev_samp_fields
+  sum: blacklist_sum_fields
+  var_pop: blacklist_var_pop_fields
+  var_samp: blacklist_var_samp_fields
+  variance: blacklist_variance_fields
+}
+
+"aggregate avg on columns"
+type blacklist_avg_fields {
+  client_account_id: Float
+  id: Float
+  volunteer_account_id: Float
+}
+
+"aggregate max on columns"
+type blacklist_max_fields {
+  client_account_id: Int
+  id: Int
+  volunteer_account_id: Int
+}
+
+"aggregate min on columns"
+type blacklist_min_fields {
+  client_account_id: Int
+  id: Int
+  volunteer_account_id: Int
+}
+
+"response of any mutation on the table \"blacklist\""
+type blacklist_mutation_response {
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [blacklist!]!
+}
+
+"aggregate stddev on columns"
+type blacklist_stddev_fields {
+  client_account_id: Float
+  id: Float
+  volunteer_account_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type blacklist_stddev_pop_fields {
+  client_account_id: Float
+  id: Float
+  volunteer_account_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type blacklist_stddev_samp_fields {
+  client_account_id: Float
+  id: Float
+  volunteer_account_id: Float
+}
+
+"aggregate sum on columns"
+type blacklist_sum_fields {
+  client_account_id: Int
+  id: Int
+  volunteer_account_id: Int
+}
+
+"aggregate var_pop on columns"
+type blacklist_var_pop_fields {
+  client_account_id: Float
+  id: Float
+  volunteer_account_id: Float
+}
+
+"aggregate var_samp on columns"
+type blacklist_var_samp_fields {
+  client_account_id: Float
+  id: Float
+  volunteer_account_id: Float
+}
+
+"aggregate variance on columns"
+type blacklist_variance_fields {
+  client_account_id: Float
+  id: Float
+  volunteer_account_id: Float
+}
+
 "columns and relationships of \"client\""
 type client {
   "An object relationship"
   account: account!
   account_id: Int!
   additional_notes: String
+  "An array relationship"
+  blacklists(
+    "distinct select on columns"
+    distinct_on: [blacklist_select_column!]
+    "limit the number of rows returned"
+    limit: Int
+    "skip the first n rows. Use only with order_by"
+    offset: Int
+    "sort the rows by one or more columns"
+    order_by: [blacklist_order_by!]
+    "filter the rows returned"
+    where: blacklist_bool_exp
+  ): [blacklist!]!
+  "An aggregated array relationship"
+  blacklists_aggregate(
+    "distinct select on columns"
+    distinct_on: [blacklist_select_column!]
+    "limit the number of rows returned"
+    limit: Int
+    "skip the first n rows. Use only with order_by"
+    offset: Int
+    "sort the rows by one or more columns"
+    order_by: [blacklist_order_by!]
+    "filter the rows returned"
+    where: blacklist_bool_exp
+  ): blacklist_aggregate!
   designation: String
   "An array relationship"
   events(
@@ -974,22 +1110,23 @@ type event_variance_fields {
 
 "columns and relationships of \"feedback\""
 type feedback {
-  confidentiality_privacy_preference: Boolean!
+  confidentiality_privacy_preference: privacy_enum
   created_at: timestamp!
   "An object relationship"
   event: event!
   event_id: Int!
+  feedback_given: Int!
   general_feedback: String
+  "Check feedback id value before inserting / updating feedback manually. It takes into account previous feedback's that have been added and increments it by 1."
   id: Int!
   live_comments: String
-  live_information_understanding: String!
-  live_interaction: String!
-  notetaker_conduct: String!
-  notetaker_punctual: Boolean!
+  live_information_understanding: rating_enum
+  live_interaction: rating_enum
+  notetaker_conduct: rating_enum
+  notetaker_punctual: rating_enum
   post_session_comments: String
-  post_session_interaction: String!
-  post_session_understanding: String!
-  training_privacy_preference: Boolean!
+  post_session_understanding: rating_enum
+  training_privacy_preference: privacy_enum
   updated_at: timestamp!
   "An object relationship"
   volunteer: volunteer!
@@ -1020,6 +1157,7 @@ type feedback_aggregate_fields {
 "aggregate avg on columns"
 type feedback_avg_fields {
   event_id: Float
+  feedback_given: Float
   id: Float
   volunteer_id: Float
 }
@@ -1028,15 +1166,11 @@ type feedback_avg_fields {
 type feedback_max_fields {
   created_at: timestamp
   event_id: Int
+  feedback_given: Int
   general_feedback: String
   id: Int
   live_comments: String
-  live_information_understanding: String
-  live_interaction: String
-  notetaker_conduct: String
   post_session_comments: String
-  post_session_interaction: String
-  post_session_understanding: String
   updated_at: timestamp
   volunteer_id: Int
 }
@@ -1045,15 +1179,11 @@ type feedback_max_fields {
 type feedback_min_fields {
   created_at: timestamp
   event_id: Int
+  feedback_given: Int
   general_feedback: String
   id: Int
   live_comments: String
-  live_information_understanding: String
-  live_interaction: String
-  notetaker_conduct: String
   post_session_comments: String
-  post_session_interaction: String
-  post_session_understanding: String
   updated_at: timestamp
   volunteer_id: Int
 }
@@ -1069,6 +1199,7 @@ type feedback_mutation_response {
 "aggregate stddev on columns"
 type feedback_stddev_fields {
   event_id: Float
+  feedback_given: Float
   id: Float
   volunteer_id: Float
 }
@@ -1076,6 +1207,7 @@ type feedback_stddev_fields {
 "aggregate stddev_pop on columns"
 type feedback_stddev_pop_fields {
   event_id: Float
+  feedback_given: Float
   id: Float
   volunteer_id: Float
 }
@@ -1083,6 +1215,7 @@ type feedback_stddev_pop_fields {
 "aggregate stddev_samp on columns"
 type feedback_stddev_samp_fields {
   event_id: Float
+  feedback_given: Float
   id: Float
   volunteer_id: Float
 }
@@ -1090,6 +1223,7 @@ type feedback_stddev_samp_fields {
 "aggregate sum on columns"
 type feedback_sum_fields {
   event_id: Int
+  feedback_given: Int
   id: Int
   volunteer_id: Int
 }
@@ -1097,6 +1231,7 @@ type feedback_sum_fields {
 "aggregate var_pop on columns"
 type feedback_var_pop_fields {
   event_id: Float
+  feedback_given: Float
   id: Float
   volunteer_id: Float
 }
@@ -1104,6 +1239,7 @@ type feedback_var_pop_fields {
 "aggregate var_samp on columns"
 type feedback_var_samp_fields {
   event_id: Float
+  feedback_given: Float
   id: Float
   volunteer_id: Float
 }
@@ -1111,6 +1247,7 @@ type feedback_var_samp_fields {
 "aggregate variance on columns"
 type feedback_variance_fields {
   event_id: Float
+  feedback_given: Float
   id: Float
   volunteer_id: Float
 }
@@ -1800,6 +1937,10 @@ type mutation_root {
   ): attendance_mutation_response
   "delete single row from the table: \"attendance\""
   delete_attendance_by_pk(id: Int!): attendance
+  "delete data from the table: \"blacklist\""
+  delete_blacklist("filter the rows which have to be deleted" where: blacklist_bool_exp!): blacklist_mutation_response
+  "delete single row from the table: \"blacklist\""
+  delete_blacklist_by_pk(id: Int!): blacklist
   "delete data from the table: \"client\""
   delete_client("filter the rows which have to be deleted" where: client_bool_exp!): client_mutation_response
   "delete single row from the table: \"client\""
@@ -1939,6 +2080,20 @@ type mutation_root {
     "on conflict condition"
     on_conflict: attendance_on_conflict
   ): attendance
+  "insert data into the table: \"blacklist\""
+  insert_blacklist(
+    "the rows to be inserted"
+    objects: [blacklist_insert_input!]!
+    "on conflict condition"
+    on_conflict: blacklist_on_conflict
+  ): blacklist_mutation_response
+  "insert a single row into the table: \"blacklist\""
+  insert_blacklist_one(
+    "the row to be inserted"
+    object: blacklist_insert_input!
+    "on conflict condition"
+    on_conflict: blacklist_on_conflict
+  ): blacklist
   "insert data into the table: \"client\""
   insert_client(
     "the rows to be inserted"
@@ -2217,6 +2372,23 @@ type mutation_root {
     _set: attendance_set_input
     pk_columns: attendance_pk_columns_input!
   ): attendance
+  "update data of the table: \"blacklist\""
+  update_blacklist(
+    "increments the integer columns with given value of the filtered values"
+    _inc: blacklist_inc_input
+    "sets the columns of the filtered rows to the given values"
+    _set: blacklist_set_input
+    "filter the rows which have to be updated"
+    where: blacklist_bool_exp!
+  ): blacklist_mutation_response
+  "update single row of the table: \"blacklist\""
+  update_blacklist_by_pk(
+    "increments the integer columns with given value of the filtered values"
+    _inc: blacklist_inc_input
+    "sets the columns of the filtered rows to the given values"
+    _set: blacklist_set_input
+    pk_columns: blacklist_pk_columns_input!
+  ): blacklist
   "update data of the table: \"client\""
   update_client(
     "increments the integer columns with given value of the filtered values"
@@ -2679,6 +2851,34 @@ type query_root {
   ): attendance_aggregate!
   "fetch data from the table: \"attendance\" using primary key columns"
   attendance_by_pk(id: Int!): attendance
+  "fetch data from the table: \"blacklist\""
+  blacklist(
+    "distinct select on columns"
+    distinct_on: [blacklist_select_column!]
+    "limit the number of rows returned"
+    limit: Int
+    "skip the first n rows. Use only with order_by"
+    offset: Int
+    "sort the rows by one or more columns"
+    order_by: [blacklist_order_by!]
+    "filter the rows returned"
+    where: blacklist_bool_exp
+  ): [blacklist!]!
+  "fetch aggregated fields from the table: \"blacklist\""
+  blacklist_aggregate(
+    "distinct select on columns"
+    distinct_on: [blacklist_select_column!]
+    "limit the number of rows returned"
+    limit: Int
+    "skip the first n rows. Use only with order_by"
+    offset: Int
+    "sort the rows by one or more columns"
+    order_by: [blacklist_order_by!]
+    "filter the rows returned"
+    where: blacklist_bool_exp
+  ): blacklist_aggregate!
+  "fetch data from the table: \"blacklist\" using primary key columns"
+  blacklist_by_pk(id: Int!): blacklist
   "fetch data from the table: \"client\""
   client(
     "distinct select on columns"
@@ -3492,6 +3692,34 @@ type subscription_root {
   ): attendance_aggregate!
   "fetch data from the table: \"attendance\" using primary key columns"
   attendance_by_pk(id: Int!): attendance
+  "fetch data from the table: \"blacklist\""
+  blacklist(
+    "distinct select on columns"
+    distinct_on: [blacklist_select_column!]
+    "limit the number of rows returned"
+    limit: Int
+    "skip the first n rows. Use only with order_by"
+    offset: Int
+    "sort the rows by one or more columns"
+    order_by: [blacklist_order_by!]
+    "filter the rows returned"
+    where: blacklist_bool_exp
+  ): [blacklist!]!
+  "fetch aggregated fields from the table: \"blacklist\""
+  blacklist_aggregate(
+    "distinct select on columns"
+    distinct_on: [blacklist_select_column!]
+    "limit the number of rows returned"
+    limit: Int
+    "skip the first n rows. Use only with order_by"
+    offset: Int
+    "sort the rows by one or more columns"
+    order_by: [blacklist_order_by!]
+    "filter the rows returned"
+    where: blacklist_bool_exp
+  ): blacklist_aggregate!
+  "fetch data from the table: \"blacklist\" using primary key columns"
+  blacklist_by_pk(id: Int!): blacklist
   "fetch data from the table: \"client\""
   client(
     "distinct select on columns"
@@ -4054,6 +4282,32 @@ type volunteer {
     where: assignment_bool_exp
   ): assignment_aggregate!
   "An array relationship"
+  blacklists(
+    "distinct select on columns"
+    distinct_on: [blacklist_select_column!]
+    "limit the number of rows returned"
+    limit: Int
+    "skip the first n rows. Use only with order_by"
+    offset: Int
+    "sort the rows by one or more columns"
+    order_by: [blacklist_order_by!]
+    "filter the rows returned"
+    where: blacklist_bool_exp
+  ): [blacklist!]!
+  "An aggregated array relationship"
+  blacklists_aggregate(
+    "distinct select on columns"
+    distinct_on: [blacklist_select_column!]
+    "limit the number of rows returned"
+    limit: Int
+    "skip the first n rows. Use only with order_by"
+    offset: Int
+    "sort the rows by one or more columns"
+    order_by: [blacklist_order_by!]
+    "filter the rows returned"
+    where: blacklist_bool_exp
+  ): blacklist_aggregate!
+  "An array relationship"
   feedbacks(
     "distinct select on columns"
     distinct_on: [feedback_select_column!]
@@ -4493,6 +4747,34 @@ enum attendance_update_column {
   id
 }
 
+"unique or primary key constraints on table \"blacklist\""
+enum blacklist_constraint {
+  "unique or primary key constraint"
+  blacklist_client_account_id_volunteer_account_id_key
+  "unique or primary key constraint"
+  blacklist_pkey
+}
+
+"select columns of table \"blacklist\""
+enum blacklist_select_column {
+  "column name"
+  client_account_id
+  "column name"
+  id
+  "column name"
+  volunteer_account_id
+}
+
+"update columns of table \"blacklist\""
+enum blacklist_update_column {
+  "column name"
+  client_account_id
+  "column name"
+  id
+  "column name"
+  volunteer_account_id
+}
+
 "unique or primary key constraints on table \"client\""
 enum client_constraint {
   "unique or primary key constraint"
@@ -4615,6 +4897,8 @@ enum event_update_column {
 enum feedback_constraint {
   "unique or primary key constraint"
   feedback_event_id_volunteer_id_key
+  "unique or primary key constraint"
+  feedback_id_key
 }
 
 "select columns of table \"feedback\""
@@ -4625,6 +4909,8 @@ enum feedback_select_column {
   created_at
   "column name"
   event_id
+  "column name"
+  feedback_given
   "column name"
   general_feedback
   "column name"
@@ -4641,8 +4927,6 @@ enum feedback_select_column {
   notetaker_punctual
   "column name"
   post_session_comments
-  "column name"
-  post_session_interaction
   "column name"
   post_session_understanding
   "column name"
@@ -4662,6 +4946,8 @@ enum feedback_update_column {
   "column name"
   event_id
   "column name"
+  feedback_given
+  "column name"
   general_feedback
   "column name"
   id
@@ -4677,8 +4963,6 @@ enum feedback_update_column {
   notetaker_punctual
   "column name"
   post_session_comments
-  "column name"
-  post_session_interaction
   "column name"
   post_session_understanding
   "column name"
@@ -5890,6 +6174,159 @@ input bigint_comparison_exp {
   _nin: [bigint!]
 }
 
+"order by aggregate values of table \"blacklist\""
+input blacklist_aggregate_order_by {
+  avg: blacklist_avg_order_by
+  count: order_by
+  max: blacklist_max_order_by
+  min: blacklist_min_order_by
+  stddev: blacklist_stddev_order_by
+  stddev_pop: blacklist_stddev_pop_order_by
+  stddev_samp: blacklist_stddev_samp_order_by
+  sum: blacklist_sum_order_by
+  var_pop: blacklist_var_pop_order_by
+  var_samp: blacklist_var_samp_order_by
+  variance: blacklist_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"blacklist\""
+input blacklist_arr_rel_insert_input {
+  data: [blacklist_insert_input!]!
+  on_conflict: blacklist_on_conflict
+}
+
+"order by avg() on columns of table \"blacklist\""
+input blacklist_avg_order_by {
+  client_account_id: order_by
+  id: order_by
+  volunteer_account_id: order_by
+}
+
+"Boolean expression to filter rows from the table \"blacklist\". All fields are combined with a logical 'AND'."
+input blacklist_bool_exp {
+  _and: [blacklist_bool_exp]
+  _not: blacklist_bool_exp
+  _or: [blacklist_bool_exp]
+  client: client_bool_exp
+  client_account_id: Int_comparison_exp
+  id: Int_comparison_exp
+  volunteer: volunteer_bool_exp
+  volunteer_account_id: Int_comparison_exp
+}
+
+"input type for incrementing integer column in table \"blacklist\""
+input blacklist_inc_input {
+  client_account_id: Int
+  id: Int
+  volunteer_account_id: Int
+}
+
+"input type for inserting data into table \"blacklist\""
+input blacklist_insert_input {
+  client: client_obj_rel_insert_input
+  client_account_id: Int
+  id: Int
+  volunteer: volunteer_obj_rel_insert_input
+  volunteer_account_id: Int
+}
+
+"order by max() on columns of table \"blacklist\""
+input blacklist_max_order_by {
+  client_account_id: order_by
+  id: order_by
+  volunteer_account_id: order_by
+}
+
+"order by min() on columns of table \"blacklist\""
+input blacklist_min_order_by {
+  client_account_id: order_by
+  id: order_by
+  volunteer_account_id: order_by
+}
+
+"input type for inserting object relation for remote table \"blacklist\""
+input blacklist_obj_rel_insert_input {
+  data: blacklist_insert_input!
+  on_conflict: blacklist_on_conflict
+}
+
+"on conflict condition type for table \"blacklist\""
+input blacklist_on_conflict {
+  constraint: blacklist_constraint!
+  update_columns: [blacklist_update_column!]!
+  where: blacklist_bool_exp
+}
+
+"ordering options when selecting data from \"blacklist\""
+input blacklist_order_by {
+  client: client_order_by
+  client_account_id: order_by
+  id: order_by
+  volunteer: volunteer_order_by
+  volunteer_account_id: order_by
+}
+
+"primary key columns input for table: \"blacklist\""
+input blacklist_pk_columns_input {
+  id: Int!
+}
+
+"input type for updating data in table \"blacklist\""
+input blacklist_set_input {
+  client_account_id: Int
+  id: Int
+  volunteer_account_id: Int
+}
+
+"order by stddev() on columns of table \"blacklist\""
+input blacklist_stddev_order_by {
+  client_account_id: order_by
+  id: order_by
+  volunteer_account_id: order_by
+}
+
+"order by stddev_pop() on columns of table \"blacklist\""
+input blacklist_stddev_pop_order_by {
+  client_account_id: order_by
+  id: order_by
+  volunteer_account_id: order_by
+}
+
+"order by stddev_samp() on columns of table \"blacklist\""
+input blacklist_stddev_samp_order_by {
+  client_account_id: order_by
+  id: order_by
+  volunteer_account_id: order_by
+}
+
+"order by sum() on columns of table \"blacklist\""
+input blacklist_sum_order_by {
+  client_account_id: order_by
+  id: order_by
+  volunteer_account_id: order_by
+}
+
+"order by var_pop() on columns of table \"blacklist\""
+input blacklist_var_pop_order_by {
+  client_account_id: order_by
+  id: order_by
+  volunteer_account_id: order_by
+}
+
+"order by var_samp() on columns of table \"blacklist\""
+input blacklist_var_samp_order_by {
+  client_account_id: order_by
+  id: order_by
+  volunteer_account_id: order_by
+}
+
+"order by variance() on columns of table \"blacklist\""
+input blacklist_variance_order_by {
+  client_account_id: order_by
+  id: order_by
+  volunteer_account_id: order_by
+}
+
 "order by aggregate values of table \"client\""
 input client_aggregate_order_by {
   avg: client_avg_order_by
@@ -5927,6 +6364,7 @@ input client_bool_exp {
   account: account_bool_exp
   account_id: Int_comparison_exp
   additional_notes: String_comparison_exp
+  blacklists: blacklist_bool_exp
   designation: String_comparison_exp
   events: event_bool_exp
   id: Int_comparison_exp
@@ -5951,6 +6389,7 @@ input client_insert_input {
   account: account_obj_rel_insert_input
   account_id: Int
   additional_notes: String
+  blacklists: blacklist_arr_rel_insert_input
   designation: String
   events: event_arr_rel_insert_input
   id: Int
@@ -6004,6 +6443,7 @@ input client_order_by {
   account: account_order_by
   account_id: order_by
   additional_notes: order_by
+  blacklists_aggregate: blacklist_aggregate_order_by
   designation: order_by
   events_aggregate: event_aggregate_order_by
   id: order_by
@@ -6430,6 +6870,7 @@ input feedback_arr_rel_insert_input {
 "order by avg() on columns of table \"feedback\""
 input feedback_avg_order_by {
   event_id: order_by
+  feedback_given: order_by
   id: order_by
   volunteer_id: order_by
 }
@@ -6439,21 +6880,21 @@ input feedback_bool_exp {
   _and: [feedback_bool_exp]
   _not: feedback_bool_exp
   _or: [feedback_bool_exp]
-  confidentiality_privacy_preference: Boolean_comparison_exp
+  confidentiality_privacy_preference: privacy_enum_comparison_exp
   created_at: timestamp_comparison_exp
   event: event_bool_exp
   event_id: Int_comparison_exp
+  feedback_given: Int_comparison_exp
   general_feedback: String_comparison_exp
   id: Int_comparison_exp
   live_comments: String_comparison_exp
-  live_information_understanding: String_comparison_exp
-  live_interaction: String_comparison_exp
-  notetaker_conduct: String_comparison_exp
-  notetaker_punctual: Boolean_comparison_exp
+  live_information_understanding: rating_enum_comparison_exp
+  live_interaction: rating_enum_comparison_exp
+  notetaker_conduct: rating_enum_comparison_exp
+  notetaker_punctual: rating_enum_comparison_exp
   post_session_comments: String_comparison_exp
-  post_session_interaction: String_comparison_exp
-  post_session_understanding: String_comparison_exp
-  training_privacy_preference: Boolean_comparison_exp
+  post_session_understanding: rating_enum_comparison_exp
+  training_privacy_preference: privacy_enum_comparison_exp
   updated_at: timestamp_comparison_exp
   volunteer: volunteer_bool_exp
   volunteer_id: Int_comparison_exp
@@ -6462,27 +6903,28 @@ input feedback_bool_exp {
 "input type for incrementing integer column in table \"feedback\""
 input feedback_inc_input {
   event_id: Int
+  feedback_given: Int
   id: Int
   volunteer_id: Int
 }
 
 "input type for inserting data into table \"feedback\""
 input feedback_insert_input {
-  confidentiality_privacy_preference: Boolean
+  confidentiality_privacy_preference: privacy_enum
   created_at: timestamp
   event: event_obj_rel_insert_input
   event_id: Int
+  feedback_given: Int
   general_feedback: String
   id: Int
   live_comments: String
-  live_information_understanding: String
-  live_interaction: String
-  notetaker_conduct: String
-  notetaker_punctual: Boolean
+  live_information_understanding: rating_enum
+  live_interaction: rating_enum
+  notetaker_conduct: rating_enum
+  notetaker_punctual: rating_enum
   post_session_comments: String
-  post_session_interaction: String
-  post_session_understanding: String
-  training_privacy_preference: Boolean
+  post_session_understanding: rating_enum
+  training_privacy_preference: privacy_enum
   updated_at: timestamp
   volunteer: volunteer_obj_rel_insert_input
   volunteer_id: Int
@@ -6492,15 +6934,11 @@ input feedback_insert_input {
 input feedback_max_order_by {
   created_at: order_by
   event_id: order_by
+  feedback_given: order_by
   general_feedback: order_by
   id: order_by
   live_comments: order_by
-  live_information_understanding: order_by
-  live_interaction: order_by
-  notetaker_conduct: order_by
   post_session_comments: order_by
-  post_session_interaction: order_by
-  post_session_understanding: order_by
   updated_at: order_by
   volunteer_id: order_by
 }
@@ -6509,15 +6947,11 @@ input feedback_max_order_by {
 input feedback_min_order_by {
   created_at: order_by
   event_id: order_by
+  feedback_given: order_by
   general_feedback: order_by
   id: order_by
   live_comments: order_by
-  live_information_understanding: order_by
-  live_interaction: order_by
-  notetaker_conduct: order_by
   post_session_comments: order_by
-  post_session_interaction: order_by
-  post_session_understanding: order_by
   updated_at: order_by
   volunteer_id: order_by
 }
@@ -6541,6 +6975,7 @@ input feedback_order_by {
   created_at: order_by
   event: event_order_by
   event_id: order_by
+  feedback_given: order_by
   general_feedback: order_by
   id: order_by
   live_comments: order_by
@@ -6549,7 +6984,6 @@ input feedback_order_by {
   notetaker_conduct: order_by
   notetaker_punctual: order_by
   post_session_comments: order_by
-  post_session_interaction: order_by
   post_session_understanding: order_by
   training_privacy_preference: order_by
   updated_at: order_by
@@ -6559,20 +6993,20 @@ input feedback_order_by {
 
 "input type for updating data in table \"feedback\""
 input feedback_set_input {
-  confidentiality_privacy_preference: Boolean
+  confidentiality_privacy_preference: privacy_enum
   created_at: timestamp
   event_id: Int
+  feedback_given: Int
   general_feedback: String
   id: Int
   live_comments: String
-  live_information_understanding: String
-  live_interaction: String
-  notetaker_conduct: String
-  notetaker_punctual: Boolean
+  live_information_understanding: rating_enum
+  live_interaction: rating_enum
+  notetaker_conduct: rating_enum
+  notetaker_punctual: rating_enum
   post_session_comments: String
-  post_session_interaction: String
-  post_session_understanding: String
-  training_privacy_preference: Boolean
+  post_session_understanding: rating_enum
+  training_privacy_preference: privacy_enum
   updated_at: timestamp
   volunteer_id: Int
 }
@@ -6580,6 +7014,7 @@ input feedback_set_input {
 "order by stddev() on columns of table \"feedback\""
 input feedback_stddev_order_by {
   event_id: order_by
+  feedback_given: order_by
   id: order_by
   volunteer_id: order_by
 }
@@ -6587,6 +7022,7 @@ input feedback_stddev_order_by {
 "order by stddev_pop() on columns of table \"feedback\""
 input feedback_stddev_pop_order_by {
   event_id: order_by
+  feedback_given: order_by
   id: order_by
   volunteer_id: order_by
 }
@@ -6594,6 +7030,7 @@ input feedback_stddev_pop_order_by {
 "order by stddev_samp() on columns of table \"feedback\""
 input feedback_stddev_samp_order_by {
   event_id: order_by
+  feedback_given: order_by
   id: order_by
   volunteer_id: order_by
 }
@@ -6601,6 +7038,7 @@ input feedback_stddev_samp_order_by {
 "order by sum() on columns of table \"feedback\""
 input feedback_sum_order_by {
   event_id: order_by
+  feedback_given: order_by
   id: order_by
   volunteer_id: order_by
 }
@@ -6608,6 +7046,7 @@ input feedback_sum_order_by {
 "order by var_pop() on columns of table \"feedback\""
 input feedback_var_pop_order_by {
   event_id: order_by
+  feedback_given: order_by
   id: order_by
   volunteer_id: order_by
 }
@@ -6615,6 +7054,7 @@ input feedback_var_pop_order_by {
 "order by var_samp() on columns of table \"feedback\""
 input feedback_var_samp_order_by {
   event_id: order_by
+  feedback_given: order_by
   id: order_by
   volunteer_id: order_by
 }
@@ -6622,6 +7062,7 @@ input feedback_var_samp_order_by {
 "order by variance() on columns of table \"feedback\""
 input feedback_variance_order_by {
   event_id: order_by
+  feedback_given: order_by
   id: order_by
   volunteer_id: order_by
 }
@@ -7654,6 +8095,19 @@ input numeric_comparison_exp {
   _nin: [numeric!]
 }
 
+"expression to compare columns of type privacy_enum. All fields are combined with logical 'AND'."
+input privacy_enum_comparison_exp {
+  _eq: privacy_enum
+  _gt: privacy_enum
+  _gte: privacy_enum
+  _in: [privacy_enum!]
+  _is_null: Boolean
+  _lt: privacy_enum
+  _lte: privacy_enum
+  _neq: privacy_enum
+  _nin: [privacy_enum!]
+}
+
 "order by aggregate values of table \"quotation\""
 input quotation_aggregate_order_by {
   avg: quotation_avg_order_by
@@ -7847,6 +8301,19 @@ input quotation_variance_order_by {
   first_block_duration_m: order_by
   id: order_by
   subsequent_block_duration_m: order_by
+}
+
+"expression to compare columns of type rating_enum. All fields are combined with logical 'AND'."
+input rating_enum_comparison_exp {
+  _eq: rating_enum
+  _gt: rating_enum
+  _gte: rating_enum
+  _in: [rating_enum!]
+  _is_null: Boolean
+  _lt: rating_enum
+  _lte: rating_enum
+  _neq: rating_enum
+  _nin: [rating_enum!]
 }
 
 "order by aggregate values of table \"service_requestor\""
@@ -8394,6 +8861,7 @@ input volunteer_bool_exp {
   account_id: Int_comparison_exp
   approval_status: Boolean_comparison_exp
   assignments: assignment_bool_exp
+  blacklists: blacklist_bool_exp
   feedbacks: feedback_bool_exp
   id: Int_comparison_exp
   volunteer_assignment_opt_ins: volunteer_assignment_opt_in_bool_exp
@@ -8411,6 +8879,7 @@ input volunteer_insert_input {
   account_id: Int
   approval_status: Boolean
   assignments: assignment_arr_rel_insert_input
+  blacklists: blacklist_arr_rel_insert_input
   feedbacks: feedback_arr_rel_insert_input
   id: Int
   volunteer_assignment_opt_ins: volunteer_assignment_opt_in_arr_rel_insert_input
@@ -8447,6 +8916,7 @@ input volunteer_order_by {
   account_id: order_by
   approval_status: order_by
   assignments_aggregate: assignment_aggregate_order_by
+  blacklists_aggregate: blacklist_aggregate_order_by
   feedbacks_aggregate: feedback_aggregate_order_by
   id: order_by
   volunteer_assignment_opt_ins_aggregate: volunteer_assignment_opt_in_aggregate_order_by
@@ -8511,6 +8981,10 @@ scalar bigint
 scalar float8
 
 scalar numeric
+
+scalar privacy_enum
+
+scalar rating_enum
 
 scalar timestamp
 

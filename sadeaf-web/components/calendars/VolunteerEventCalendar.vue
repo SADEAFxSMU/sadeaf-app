@@ -103,13 +103,12 @@ const assignmentQuery = gql`
 `;
 
 const volunteerPendingAssignmentsQuery = gql`
-  subscription VolunteerPendingAssignments($volunteer_id: Int!) {
+  subscription VolunteerPendingAssignments($volunteer_id: Int!, $account_id: Int!) {
     pending_assignments: assignment(
       where: {
-        _and: {
-          status: { _eq: "PENDING" }
-          _not: { volunteer_assignment_opt_ins: { volunteer_id: { _eq: $volunteer_id } } }
-        }
+        status: { _eq: "PENDING" }
+        volunteer_assignment_opt_ins: { volunteer_id: { _neq: $volunteer_id } }
+        event: { client: { _not: { blacklists: { volunteer_account_id: { _eq: $account_id } } } } }
       }
     ) {
       id
@@ -135,10 +134,7 @@ const volunteerPendingAssignmentsQuery = gql`
 const volunteerOptInQuery = gql`
   subscription VolunteerOptIns($volunteer_id: Int!) {
     volunteer_assignment_opt_in(
-        where: {
-          volunteer_id: { _eq: $volunteer_id },
-          assignment: {status: {_nin: ["COMPLETE", "MATCHED"]}}
-        }
+      where: { volunteer_id: { _eq: $volunteer_id }, assignment: { status: { _nin: ["COMPLETE", "MATCHED"] } } }
     ) {
       id
       assignment_id
