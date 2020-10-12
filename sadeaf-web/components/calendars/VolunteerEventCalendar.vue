@@ -5,9 +5,9 @@
         <template slot="dateCell" slot-scope="{ date }">
           <h4 :class="{ greyed: isBeforeToday(date) }">{{ date.getDate() }}</h4>
 
-          <div v-if="getMatchedAssignmentsOnDate(date)" class="assignment-cell">
-            <div v-for="assignment in getMatchedAssignmentsOnDate(date)" class="body">
-              <el-tag size="mini">
+          <div v-if="getAssignmentsOnDate(date)" class="assignment-cell">
+            <div v-for="assignment in getAssignmentsOnDate(date)" class="body">
+              <el-tag size="mini" :type="tagType(assignment)">
                 {{ assignment.event.name }}
               </el-tag>
             </div>
@@ -18,7 +18,7 @@
     <div class="assignment-command-panel">
       <el-tabs v-model="tab">
         <el-tab-pane
-          v-if="getMatchedAssignmentsOnDate(selectedDate)"
+          v-if="getAssignmentsOnDate(selectedDate)"
           :label="selectedDate.toDateString() + ' Session'"
           name="acceptedAssignments"
         >
@@ -26,7 +26,8 @@
             <assignment-card
               v-for="assignment in getAssignmentsOnDate(selectedDate)"
               :key="'as-' + assignment.id"
-              :show-cancel="true"
+              :show-edit="assignment.status === 'MATCHED'"
+              :show-cancel="assignment.status === 'MATCHED'"
               :details="assignment"
               @editClick="cancelMatchedAssignment"
             />
@@ -35,7 +36,7 @@
         <el-tab-pane label="Available Assignments" name="pendingAssignments">
           <div>
             <assignment-card
-              v-for="assignment in lastestPendingAssignmentsFromHasura"
+              v-for="assignment in latestPendingAssignmentsFromHasura"
               :key="'pend-as-' + assignment.id"
               :details="assignment"
               :to-accept="true"
@@ -79,7 +80,7 @@ import AcceptAssignmentDetailsDialog from '../dialogs/AcceptAssignmentDetailsDia
 import _ from 'lodash';
 
 const assignmentQuery = gql`
-  query($volunteer_id: Int!) {
+  subscription VolunteerAllAssignments($volunteer_id: Int!) {
     assignments: assignment(where: { volunteer_id: { _eq: $volunteer_id } }) {
       id
       latitude
@@ -98,8 +99,12 @@ const assignmentQuery = gql`
         purpose
       }
     }
+  }
+`;
 
-    pendingAssignments: assignment(
+const volunteerPendingAssignmentsQuery = gql`
+  subscription VolunteerPendingAssignments($volunteer_id: Int!) {
+    pending_assignments: assignment(
       where: {
         _and: {
           status: { _eq: "PENDING" }
@@ -128,8 +133,13 @@ const assignmentQuery = gql`
 `;
 
 const volunteerOptInQuery = gql`
-  query VolunteerOptIns($volunteer_id: Int!) {
-    volunteer_assignment_opt_in(where: { volunteer_id: { _eq: $volunteer_id } }) {
+  subscription VolunteerOptIns($volunteer_id: Int!) {
+    volunteer_assignment_opt_in(
+        where: {
+          volunteer_id: { _eq: $volunteer_id },
+          assignment: {status: {_nin: ["COMPLETE", "MATCHED"]}}
+        }
+    ) {
       id
       assignment_id
       volunteer_id
@@ -195,28 +205,29 @@ export default {
     };
   },
   methods: {
+    tagType(assignment) {
+      return assignment.status === 'COMPLETE' ? 'success' : '';
+    },
     isBeforeToday(date) {
       return DateUtils.isBeforeToday(date);
     },
-    getMatchedAssignmentsOnDate(date) {
-      const assignmentsByDt = this.getAssignmentsOnDate(date);
-      let matchedAssignments;
-
-      if (assignmentsByDt) {
-        matchedAssignments = _.pickBy(assignmentsByDt, (asg) => asg.status === 'MATCHED');
-      }
-      // Need to check for empty object since pickBy returns an empty object
-      // if there are no matches. Return undefined since {} evaluates to true in js
-      // which is undesirable behaviour for v-if
-      return _.isEmpty(matchedAssignments) ? undefined : matchedAssignments;
-    },
     getAssignmentsOnDate(date) {
       const dateKey = dayjs(date).format('YYYYMMDD');
-      return this.assignmentsByDateTime[dateKey];
+      const assignmentsByDt = this.assignmentsByDateTime[dateKey];
+      let assignments;
+
+      if (assignmentsByDt) {
+        assignments = _.pickBy(assignmentsByDt, (asg) => asg.status === 'MATCHED' || asg.status === 'COMPLETE');
+      }
+      // Need to check for empty object since pickBy returns an empty object
+      // if there are no matches. Return undefined if empty since {} evaluates to true in js
+      // which is undesirable behaviour for v-if
+      return _.isEmpty(assignments) ? undefined : assignments;
     },
+
     handleCalendarClick(date) {
       this.selectedDate = date;
-      if (this.getMatchedAssignmentsOnDate(date)) {
+      if (this.getAssignmentsOnDate(date)) {
         this.tab = 'acceptedAssignments';
       } else {
         this.tab = 'pendingAssignments';
@@ -226,14 +237,8 @@ export default {
       this.showAcceptDialog = true;
       this.selectedAssignment = assignment;
     },
-    handleAcceptDialogClose(status) {
+    handleAcceptDialogClose() {
       this.showAcceptDialog = false;
-      // only refetch queries when user has accepted an assignment
-      // to minimise the number of queries
-      if (status === 'accepted') {
-        this.$apollo.queries.assignments.refetch();
-        this.$apollo.queries.volunteer_assignment_opt_in.refetch();
-      }
     },
     optOutOfAssignment(optInDetails) {
       const text = 'This will opt you out from this assignment. You will not be able to opt in again. Are you sure?';
@@ -253,7 +258,6 @@ export default {
             })
             .then((_) => {
               this.$notify.success('Opted out for Assignment');
-              this.$apollo.queries.assignments.refetch();
             })
             .catch((error) => {
               this.$notify.error('Something went wrong with opting out of the assignment');
@@ -281,7 +285,6 @@ export default {
             .then((_) => {
               this.$notify.success('Assignment Cancelled');
               this.tab = 'pendingAssignments';
-              this.$apollo.queries.assignments.refetch();
             })
             .catch((error) => {
               this.$notify.error('Something went wrong with cancelling the assignment');
@@ -297,47 +300,56 @@ export default {
     assignmentsByDateTime() {
       return DateUtils.groupAssignmentsByDateTime(this.assignments);
     },
-    lastestPendingAssignmentsFromHasura() {
+    latestPendingAssignmentsFromHasura() {
       return this.pendingAssignments;
     },
   },
   apollo: {
-    assignments: {
-      /* TODO(wy): Ideally, this should be a subscribe - need to see what happens after
-            auth implementation and how subscriptions factor into the apps
-         */
-      query: assignmentQuery,
-      variables() {
-        return {
-          volunteer_id: this.volunteer.id,
-        };
+    $subscribe: {
+      assignments: {
+        query: assignmentQuery,
+        variables() {
+          return {
+            volunteer_id: this.volunteer.id,
+          };
+        },
+        result({ data }) {
+          data.assignments.forEach((assignment) => {
+            assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
+            assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
+          });
+          this.assignments = data.assignments;
+        },
       },
-      result({ data }) {
-        data.assignments.forEach((assignment) => {
-          assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
-          assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
-        });
-        data.pendingAssignments.forEach((assignment) => {
-          assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
-          assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
-        });
-        this.assignments = data.assignments;
-        this.pendingAssignments = data.pendingAssignments;
+      volunteer_assignment_opt_in: {
+        query: volunteerOptInQuery,
+        variables() {
+          return {
+            volunteer_id: this.volunteer.id,
+          };
+        },
+        result({ data }) {
+          data.volunteer_assignment_opt_in.forEach(({ assignment }) => {
+            assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
+            assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
+          });
+          this.volunteerOptedInAssignments = data.volunteer_assignment_opt_in;
+        },
       },
-    },
-    volunteer_assignment_opt_in: {
-      query: volunteerOptInQuery,
-      variables() {
-        return {
-          volunteer_id: this.volunteer.id,
-        };
-      },
-      result({ data }) {
-        data.volunteer_assignment_opt_in.forEach(({ assignment }) => {
-          assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
-          assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
-        });
-        this.volunteerOptedInAssignments = data.volunteer_assignment_opt_in;
+      volunteer_pending_assignments: {
+        query: volunteerPendingAssignmentsQuery,
+        variables() {
+          return {
+            volunteer_id: this.volunteer.id,
+          };
+        },
+        result({ data }) {
+          data.pending_assignments.forEach((assignment) => {
+            assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
+            assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
+          });
+          this.pendingAssignments = data.pending_assignments;
+        },
       },
     },
   },

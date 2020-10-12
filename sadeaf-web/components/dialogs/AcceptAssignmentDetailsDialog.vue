@@ -100,7 +100,7 @@ export default {
           },
         })
         .then((_) => {
-          this.$notify.success('Assignment Accepted');
+          this.$notify.success('Opted in for Assignment');
           this.$emit('onClose', 'accepted');
         })
         .catch((error) => {

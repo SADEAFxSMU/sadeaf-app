@@ -186,7 +186,7 @@ INSERT INTO assignment (
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  1, 100),
 
-(2, 1, 'PENDING', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+(2, 1, 'PENDING', CURRENT_TIMESTAMP + interval '50 hour', CURRENT_TIMESTAMP + interval '4 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  null, 100),
 
@@ -215,20 +215,20 @@ INSERT INTO assignment (
  null, 500),
 
 (9, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
-'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
-8, 100),
+ '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+ 8, 100),
 
 (10, 2, 'PENDING', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
-'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
-2, 100),
+ '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+ 2, 100),
 
 (11, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
-'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
-2, 100),
+ '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+ 2, 100),
 
 (12, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
-'1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
-2, 100);
+ '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+ 2, 100);
 
 UPDATE assignment SET status = 'COMPLETE' WHERE id = 10;
 UPDATE assignment SET status = 'COMPLETE' WHERE id = 9;
@@ -256,7 +256,7 @@ INSERT INTO interpretation_details (
 (1, 'home system', true, true, 5, 100, 1);
 
 INSERT INTO attendance(
-   id, assignment_id, attended, dispute_comment, has_dispute
+    id, assignment_id, attended, dispute_comment, has_dispute
 ) VALUES
 (1, 1, true, null, false),
 (2, 2, true, null, false),
