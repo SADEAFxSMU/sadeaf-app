@@ -7,8 +7,7 @@ const updateAssignmentsMutation = `
     update_assignment(
       where: {
         _and: [
-          { status: { _neq: "COMPLETE" }}
-          { status: { _neq: "CANCELLED" }}
+          { status: { _eq: "MATCHED" }}
           { end_dt: { _lte: $now }}
         ]
       }
@@ -24,8 +23,12 @@ const updateAssignmentsMutation = `
 `;
 
 async function hasuraUpdateAssignments() {
-  const { data: { update_assignment: { returning }}} = await executeGraphQLQuery(updateAssignmentsMutation, 'SetEndedAssignmentsStatusesToComplete', { now: new Date().toISOString() });
-  return returning;
+  try {
+    const { data: { update_assignment: { returning }}} = await executeGraphQLQuery(updateAssignmentsMutation, 'SetEndedAssignmentsStatusesToComplete', { now: new Date().toISOString() });
+    return returning;
+  } catch (err) {
+    console.error(`[AssignmentStatusUpdater] ${err}`);
+  }
 }
 
 module.exports = async function () {
