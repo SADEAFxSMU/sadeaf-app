@@ -57,5 +57,5 @@ module.exports = {
   },
   ASSIGNMENT_STATUS_WORKER: {
     INTERVAL_S: process.env.ASSIGNMENT_STATUS_WORKER_INTERVAL_S || 60,
-  }
+  },
 };
