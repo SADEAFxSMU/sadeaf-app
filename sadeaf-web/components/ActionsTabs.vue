@@ -8,13 +8,15 @@
       <pending-user-list class="pending-users" />
     </el-tab-pane>
     <el-tab-pane label="Notifications">
-      <action-card
-        v-for="(action, i) in actions"
-        :key="'action' + i"
-        :action="action"
-        @check="handleActionCardChecked"
-        class="action-card"
-      />
+      <div class="notifications">
+        <action-card
+          v-for="(action, i) in actions"
+          :key="'action' + i"
+          :action="action"
+          @check="handleActionCardChecked"
+          class="action-card"
+        />
+      </div>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -69,11 +71,15 @@ export default {
   height: 100%;
   width: 100%;
   overflow: scroll;
+  padding: 0;
 }
 .action-tabs .pending-users {
   padding: 0 32px 0 32px;
 }
 .action-tabs .action-card {
   margin-bottom: 16px;
+}
+.notifications {
+  padding: 16px;
 }
 </style>
