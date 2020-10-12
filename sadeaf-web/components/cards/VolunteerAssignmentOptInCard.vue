@@ -1,6 +1,6 @@
 <template>
   <div class="opt-in">
-    <div :class="{ 'loading': true, 'appear': !loading }">
+    <div :class="{ loading: true, appear: !loading }">
       <el-spinner />
     </div>
     <div class="opt-in-details">
@@ -30,22 +30,22 @@
 </template>
 
 <script>
-import UserAvatar from "../user/UserAvatar";
-import gql from "graphql-tag";
+import UserAvatar from '../user/UserAvatar';
+import gql from 'graphql-tag';
 
 export default {
-  name: "VolunteerAssignmentOptInCard",
-  components: {UserAvatar},
+  name: 'VolunteerAssignmentOptInCard',
+  components: { UserAvatar },
   data() {
     return {
       loading: false,
-    }
+    };
   },
   props: {
     optIn: {
       type: Object,
       required: false,
-    }
+    },
   },
 
   methods: {
@@ -80,7 +80,7 @@ export default {
       } else {
         console.error('Did not delete properly');
       }
-      setTimeout(() => this.loading = false, 1000);
+      setTimeout(() => (this.loading = false), 1000);
     },
     handleRejectVolunteerOptIn(optIn) {
       // Delete?
@@ -105,7 +105,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(4px);
   border-radius: 4px;
 }

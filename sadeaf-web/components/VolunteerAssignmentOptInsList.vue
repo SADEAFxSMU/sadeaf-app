@@ -1,8 +1,11 @@
 <template>
-  <div class="opt-in-list">
-    <div v-for="optIn in volunteerAssignmentOptIns" :key="'opt-in-' + optIn.id" class="opt-in">
-      <volunteer-assignment-opt-in-card :opt-in="optIn" loading="" />
+  <div class="container">
+    <div class="opt-in-list" v-if="volunteerAssignmentOptIns.length > 0">
+      <div v-for="optIn in volunteerAssignmentOptIns" :key="'opt-in-' + optIn.id" class="opt-in">
+        <volunteer-assignment-opt-in-card :opt-in="optIn" loading="" />
+      </div>
     </div>
+    <no-data-placeholder class="placeholder" v-else />
   </div>
 </template>
 
@@ -10,11 +13,12 @@
 import gql from 'graphql-tag';
 import UserCard from './user/UserCard';
 import UserAvatar from './user/UserAvatar';
-import VolunteerAssignmentOptInCard from "./cards/VolunteerAssignmentOptInCard";
+import VolunteerAssignmentOptInCard from './cards/VolunteerAssignmentOptInCard';
+import NoDataPlaceholder from './NoDataPlaceholder';
 
 export default {
   name: 'VolunteerAssignmentOptInsList',
-  components: {VolunteerAssignmentOptInCard, UserAvatar, UserCard },
+  components: { NoDataPlaceholder, VolunteerAssignmentOptInCard, UserAvatar, UserCard },
   data() {
     return {
       volunteerAssignmentOptIns: [],
@@ -65,6 +69,10 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  height: 100%;
+  width: 100%;
+}
 .opt-in-list {
   display: flex;
   flex-direction: column;

@@ -22,13 +22,12 @@
 <script>
 import ActionCard from './ActionCard';
 import PendingUserList from './user/PendingUserList';
-import NoDataPlaceholder from './NoDataPlaceholder';
 import VolunteerAssignmentOptInsList from './VolunteerAssignmentOptInsList';
 
 export default {
   name: 'ActionsTabs',
 
-  components: { VolunteerAssignmentOptInsList, NoDataPlaceholder, PendingUserList, ActionCard },
+  components: { VolunteerAssignmentOptInsList, PendingUserList, ActionCard },
 
   data() {
     return {
