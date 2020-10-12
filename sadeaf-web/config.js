@@ -55,4 +55,7 @@ module.exports = {
       ? (process.env.BOOTSTRAP_ADMIN_EMAIL || '').replace(/ /g, '').split(',')
       : ['sadeaf-admin@huansen.dev', 'sadeaf-admin@fuxing.io', 'weiyong@sadeaf.org.sg'],
   },
+  ASSIGNMENT_STATUS_WORKER: {
+    INTERVAL_S: process.env.ASSIGNMENT_STATUS_WORKER_INTERVAL_S || 60,
+  }
 };
