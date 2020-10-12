@@ -1,8 +1,8 @@
 <template>
   <el-tabs class="action-tabs" type="border-card" stretch>
-    <el-tab-pane label="Matching" style="height: 100%">
+    <el-tab-pane label="Matching" style="height: 100%; width: 100%; overflow: scroll">
       <!-- TODO: integrate with BA's matching service -->
-      <no-data-placeholder text="No matches yet!" />
+      <volunteer-assignment-opt-ins-list />
     </el-tab-pane>
     <el-tab-pane label="New Users">
       <pending-user-list class="pending-users" />
@@ -23,11 +23,12 @@
 import ActionCard from './ActionCard';
 import PendingUserList from './user/PendingUserList';
 import NoDataPlaceholder from './NoDataPlaceholder';
+import VolunteerAssignmentOptInsList from './VolunteerAssignmentOptInsList';
 
 export default {
   name: 'ActionsTabs',
 
-  components: { NoDataPlaceholder, PendingUserList, ActionCard },
+  components: { VolunteerAssignmentOptInsList, NoDataPlaceholder, PendingUserList, ActionCard },
 
   data() {
     return {
@@ -67,6 +68,7 @@ export default {
 }
 .action-tabs .el-tabs__content {
   height: 100%;
+  width: 100%;
   overflow: scroll;
 }
 .action-tabs .pending-users {

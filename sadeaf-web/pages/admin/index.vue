@@ -79,6 +79,7 @@ export default {
   justify-content: space-between;
   margin-bottom: 16px;
   height: 40vh;
+  width: calc(100vw - 20px);
   min-height: 450px;
 }
 .left {
