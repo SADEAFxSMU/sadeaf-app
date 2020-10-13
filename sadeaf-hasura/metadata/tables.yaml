@@ -357,9 +357,11 @@
       - room_number
       - start_dt
       - status
+      - volunteer_id
       filter:
-        volunteer_id:
-          _eq: X-Hasura-User-Id
+        volunteer:
+          account_id:
+            _eq: X-Hasura-User-Id
       check: {}
   delete_permissions:
   - role: client
@@ -509,6 +511,15 @@
       - volunteer_account_id
       filter:
         client_account_id:
+          _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      columns:
+      - id
+      - client_account_id
+      - volunteer_account_id
+      filter:
+        volunteer_account_id:
           _eq: X-Hasura-User-Id
   update_permissions:
   - role: client

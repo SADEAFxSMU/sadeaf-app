@@ -37,6 +37,7 @@ export default {
         query VolunteerByAccountId($account_id: Int!) {
           volunteer(where: { account_id: { _eq: $account_id } }) {
             id
+            account_id
           }
         }
       `,
