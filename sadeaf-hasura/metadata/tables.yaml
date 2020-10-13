@@ -357,9 +357,11 @@
       - room_number
       - start_dt
       - status
+      - volunteer_id
       filter:
-        volunteer_id:
-          _eq: X-Hasura-User-Id
+        volunteer:
+          account_id:
+            _eq: X-Hasura-User-Id
       check: {}
   delete_permissions:
   - role: client

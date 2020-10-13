@@ -164,7 +164,7 @@ const volunteerOptInQuery = gql`
 
 const cancelAssignmentQuery = gql`
   mutation cancelAssignment($assignment_id: Int!) {
-    update_assignment_by_pk(pk_columns: { id: $assignment_id }, _set: { status: "PENDING" }) {
+    update_assignment_by_pk(pk_columns: { id: $assignment_id }, _set: { status: "PENDING", volunteer_id: null }) {
       id
       status
     }
@@ -337,6 +337,7 @@ export default {
         variables() {
           return {
             volunteer_id: this.volunteer.id,
+            account_id: this.volunteer.account_id,
           };
         },
         result({ data }) {
