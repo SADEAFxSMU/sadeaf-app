@@ -12,7 +12,12 @@
         />
         <div class="event">
           <div class="event-details">
-            <h4>{{ pendingAssignment.event.name }}</h4>
+            <div class="event-title-container">
+              <h4 class="event-title">{{ pendingAssignment.event.name }}</h4>
+              <el-tooltip :content="'Assignment ID ' + pendingAssignment.id">
+                <span style="color: #6fc5ff" class="el-icon-info" />
+              </el-tooltip>
+            </div>
             <el-divider> Details </el-divider>
             <table>
               <tr>
@@ -228,6 +233,13 @@ export default {
 }
 .event-details {
   color: #5f5f75;
+}
+.event-title-container {
+  display: flex;
+  align-items: center;
+}
+.event-title {
+  margin-right: 8px;
 }
 .event-details th {
   text-align: right;
