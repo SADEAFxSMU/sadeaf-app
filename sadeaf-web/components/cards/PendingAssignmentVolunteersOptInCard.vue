@@ -191,6 +191,7 @@ export default {
   position: relative;
   border-radius: 4px;
   padding: 8px;
+  width: 100%;
 }
 .primary {
   background: #d8f8de;
