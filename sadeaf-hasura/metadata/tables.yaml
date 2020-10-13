@@ -512,6 +512,15 @@
       filter:
         client_account_id:
           _eq: X-Hasura-User-Id
+  - role: volunteer
+    permission:
+      columns:
+      - id
+      - client_account_id
+      - volunteer_account_id
+      filter:
+        volunteer_account_id:
+          _eq: X-Hasura-User-Id
   update_permissions:
   - role: client
     permission:
