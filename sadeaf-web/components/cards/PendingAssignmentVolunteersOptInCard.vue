@@ -13,9 +13,7 @@
         <div class="event">
           <div class="event-details">
             <h4>{{ pendingAssignment.event.name }}</h4>
-            <el-divider>
-              Details
-            </el-divider>
+            <el-divider> Details </el-divider>
             <table>
               <tr>
                 <th>Start</th>
@@ -66,7 +64,7 @@
 <script>
 import UserAvatar from '../user/UserAvatar';
 import gql from 'graphql-tag';
-import { DateUtils } from "../../common/date-utils";
+import { DateUtils } from '../../common/date-utils';
 
 export default {
   name: 'PendingAssignmentVolunteersOptInCard',
@@ -161,7 +159,7 @@ export default {
     },
     endDatetime() {
       return DateUtils.humanReadableDt(this.pendingAssignment.end_dt);
-    }
+    },
   },
 
   watch: {

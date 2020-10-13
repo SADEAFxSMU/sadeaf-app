@@ -9,6 +9,7 @@
         <pending-assignment-volunteers-opt-in-card
           :pending-assignment="pendingAssignment"
           :recommended-volunteer-id="getRecommendedVolunteerId(pendingAssignment)"
+          style="width: 400px"
         />
       </div>
     </div>
@@ -119,11 +120,10 @@ export default {
 .container {
   height: 100%;
   width: 100%;
+  overflow: scroll;
 }
 .pending-assignment-list {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 .pending-assignment {
