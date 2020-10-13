@@ -2,8 +2,8 @@
   <div class="user-avatar">
     <img v-if="profilePicUrl" :src="profilePicUrl" class="image" :alt="`${name}'s profile picture`" />
     <el-avatar v-else class="el-icon-user-solid avatar-placeholder" size="large" />
-    <div class="user-name">
-      <h3>{{ name }}</h3>
+    <div class="user-info">
+      <h3 class="user-name">{{ name }}</h3>
       <role-tag :role="role" />
     </div>
   </div>
@@ -50,9 +50,12 @@ export default {
   justify-content: center;
   font-size: 1.7em;
 }
-.user-name {
-  color: #575769;
-  white-space: nowrap;
+.user-info {
   padding: 0 0 0 12px;
+}
+.user-name {
+  white-space: nowrap;
+  padding: 0;
+  line-height: 1em;
 }
 </style>

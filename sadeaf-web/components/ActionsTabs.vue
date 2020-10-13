@@ -2,7 +2,7 @@
   <el-tabs class="action-tabs" type="border-card" stretch>
     <el-tab-pane label="Matching" style="height: 100%; width: 100%; overflow: scroll">
       <!-- TODO: integrate with BA's matching service -->
-      <volunteer-assignment-opt-ins-list />
+      <pending-assignments-matching-list />
     </el-tab-pane>
     <el-tab-pane label="New Users">
       <pending-user-list class="pending-users" />
@@ -24,12 +24,12 @@
 <script>
 import ActionCard from './ActionCard';
 import PendingUserList from './user/PendingUserList';
-import VolunteerAssignmentOptInsList from './VolunteerAssignmentOptInsList';
+import PendingAssignmentsMatchingList from "./PendingAssignmentsMatchingList";
 
 export default {
   name: 'ActionsTabs',
 
-  components: { VolunteerAssignmentOptInsList, PendingUserList, ActionCard },
+  components: {PendingAssignmentsMatchingList, PendingUserList, ActionCard },
 
   data() {
     return {
