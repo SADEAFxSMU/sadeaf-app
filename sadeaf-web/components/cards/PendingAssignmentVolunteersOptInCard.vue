@@ -38,7 +38,7 @@
             />
           </el-option>
         </el-select>
-        <el-button type="success" @click="handleAcceptVolunteerOptIn"> Confirm </el-button>
+        <el-button type="success" @click="handleAcceptVolunteerOptIn" :disabled="selectedVolunteerOptIn === null"> Confirm </el-button>
       </div>
     </div>
   </div>
@@ -75,8 +75,6 @@ export default {
 
       const pendingAssignment = this.pendingAssignment;
       const optIn = this.selectedVolunteerOptIn;
-
-      console.log(optIn);
 
       const {
         data: { update, del },
