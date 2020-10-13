@@ -24,6 +24,7 @@ import UserAvatar from './user/UserAvatar';
 import PendingAssignmentVolunteersOptInCard from './cards/PendingAssignmentVolunteersOptInCard';
 import NoDataPlaceholder from './NoDataPlaceholder';
 import { MATCHING_SERVICE } from '../config';
+import { DateUtils } from "../common/date-utils";
 
 export default {
   name: 'PendingAssignmentsMatchingList',
@@ -108,6 +109,10 @@ export default {
           }
         `,
         result({ data: { pending_assignments } }) {
+          pending_assignments.forEach((assignment) => {
+            assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
+            assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
+          });
           this.pendingAssignments = pending_assignments;
         },
       },
