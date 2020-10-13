@@ -31,6 +31,7 @@ import { accountFieldsFragment } from '../../../common/graphql/fragments';
 import AssignmentCard from '../../cards/AssignmentCard';
 import VolunteerEventsTable from '../../tables/VolunteerEventsTable/index';
 import StatBar from '../../indicators/StatBar';
+import { DateUtils } from '../../../common/date-utils';
 
 const statCardColor = '#97baff';
 
@@ -164,6 +165,11 @@ export default {
           } else {
             completed++;
           }
+
+          event.assignments.forEach((assignment) => {
+            assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
+            assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
+          });
         });
         this.stats.completed.value = completed;
         this.stats.inprogress.value = inprogress;

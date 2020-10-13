@@ -38,7 +38,9 @@
             />
           </el-option>
         </el-select>
-        <el-button type="success" @click="handleAcceptVolunteerOptIn" :disabled="selectedVolunteerOptIn === null"> Confirm </el-button>
+        <el-button type="success" @click="handleAcceptVolunteerOptIn" :disabled="selectedVolunteerOptIn === null">
+          Confirm
+        </el-button>
       </div>
     </div>
   </div>
