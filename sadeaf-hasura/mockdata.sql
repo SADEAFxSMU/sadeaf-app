@@ -228,6 +228,10 @@ INSERT INTO assignment (
 
 (12, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
+ 2, 100),
+
+(13, 2, 'PENDING', CURRENT_TIMESTAMP + interval '24 hour', CURRENT_TIMESTAMP + interval '26 hour',
+ '18 Cashew Ave', null, '123405', null, null, null,
  2, 100);
 
 UPDATE assignment SET status = 'COMPLETE' WHERE id = 10;

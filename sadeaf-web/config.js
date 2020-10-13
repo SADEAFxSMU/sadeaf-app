@@ -58,4 +58,8 @@ module.exports = {
   ASSIGNMENT_STATUS_WORKER: {
     INTERVAL_S: process.env.ASSIGNMENT_STATUS_WORKER_INTERVAL_S || 60,
   },
+  MATCHING_SERVICE: {
+    RECOMMENDATION_ENDPOINT:
+      process.env.MATCHING_SERVICE_RECOMMENDATION_ENDPOINT || 'http://localhost:5000/get_recommendation',
+  },
 };

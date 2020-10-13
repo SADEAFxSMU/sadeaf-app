@@ -6,7 +6,10 @@
         :key="'pa-' + pendingAssignment.id"
         class="pending-assignment"
       >
-        <pending-assignment-volunteers-opt-in-card :pending-assignment="pendingAssignment" />
+        <pending-assignment-volunteers-opt-in-card
+          :pending-assignment="pendingAssignment"
+          :recommended-volunteer-id="getRecommendedVolunteerId(pendingAssignment)"
+        />
       </div>
     </div>
     <no-data-placeholder class="placeholder" v-else />
@@ -19,6 +22,7 @@ import UserCard from './user/UserCard';
 import UserAvatar from './user/UserAvatar';
 import PendingAssignmentVolunteersOptInCard from './cards/PendingAssignmentVolunteersOptInCard';
 import NoDataPlaceholder from './NoDataPlaceholder';
+import { MATCHING_SERVICE } from '../config';
 
 export default {
   name: 'PendingAssignmentsMatchingList',
@@ -26,7 +30,44 @@ export default {
   data() {
     return {
       pendingAssignments: [],
+      matchScoresByVolunteerId: {},
     };
+  },
+
+  created() {
+    fetch(MATCHING_SERVICE.RECOMMENDATION_ENDPOINT + '?client_id=1')
+      .then((response) => response.json())
+      .then((result) => (this.matchScoresByVolunteerId = result))
+      .catch((err) => console.error('Error occurred while querying recommendations', err));
+  },
+
+  methods: {
+    getRecommendedVolunteerId(pendingAssignment) {
+      try {
+        const matchScoresByVolunteerId = this.matchScoresByVolunteerId;
+
+        // Filter the matchScoresByVolunteerId object, include only those who opted in
+        const { volunteer_assignment_opt_ins } = pendingAssignment;
+        const optedInVolunteerIds = new Set(volunteer_assignment_opt_ins.map(({ volunteer }) => volunteer.id));
+        const optedInVolunteerScores = _.pickBy(matchScoresByVolunteerId, (_, volunteerId) =>
+          optedInVolunteerIds.has(Number.parseInt(volunteerId))
+        );
+
+        // Get the volunteer id with the max score
+        let recommendedVolunteerId = null;
+        let maxScore = -Infinity;
+        _.forOwn(optedInVolunteerScores, (score, volunteerId) => {
+          if (score > maxScore) {
+            maxScore = score;
+            recommendedVolunteerId = volunteerId;
+          }
+        });
+        return Number.parseInt(recommendedVolunteerId);
+      } catch (err) {
+        console.error('Error occurred while working out recommended volunteer', err);
+        return null;
+      }
+    },
   },
 
   apollo: {

@@ -21,6 +21,7 @@
         <el-select
           :value="selectedVolunteer && selectedVolunteer.account.name"
           @change="handleSelectVolunteerOptIn"
+          no-data-text="No volunteers yet"
           style="flex: 1; margin-right: 8px"
         >
           <el-option
@@ -34,11 +35,13 @@
               :profile-pic-url="volunteerOptIn.volunteer.account.profile_pic_url"
               :name="volunteerOptIn.volunteer.account.name"
               role="volunteer"
-              class="user-avatar"
+              :class="{ 'user-avatar': true, primary: volunteerOptIn.volunteer.id === recommendedVolunteerId }"
             />
           </el-option>
         </el-select>
-        <el-button type="success" @click="handleAcceptVolunteerOptIn" :disabled="selectedVolunteerOptIn === null"> Confirm </el-button>
+        <el-button type="success" @click="handleAcceptVolunteerOptIn" :disabled="selectedVolunteerOptIn === null">
+          Confirm
+        </el-button>
       </div>
     </div>
   </div>
@@ -52,6 +55,18 @@ export default {
   name: 'PendingAssignmentVolunteersOptInCard',
   components: { UserAvatar },
 
+  props: {
+    pendingAssignment: {
+      type: Object,
+      required: false,
+    },
+    recommendedVolunteerId: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+  },
+
   data() {
     return {
       loading: false,
@@ -59,11 +74,9 @@ export default {
     };
   },
 
-  props: {
-    pendingAssignment: {
-      type: Object,
-      required: false,
-    },
+  created() {
+    const recommendedVolunteerId = this.recommendedVolunteerId;
+    this.setRecommendedVolunteer(recommendedVolunteerId);
   },
 
   methods: {
@@ -111,10 +124,26 @@ export default {
     handleRejectVolunteerOptIn() {
       // Delete?
     },
+
+    setRecommendedVolunteer(recommendedVolunteerId) {
+      if (recommendedVolunteerId) {
+        for (const volunteerOptIn of this.pendingAssignment.volunteer_assignment_opt_ins) {
+          if (volunteerOptIn.volunteer.id === recommendedVolunteerId) {
+            this.selectedVolunteerOptIn = volunteerOptIn;
+          }
+        }
+      }
+    },
   },
   computed: {
     selectedVolunteer() {
       return this.selectedVolunteerOptIn && this.selectedVolunteerOptIn.volunteer;
+    },
+  },
+
+  watch: {
+    recommendedVolunteerId(val) {
+      this.setRecommendedVolunteer(val);
     },
   },
 };
@@ -159,14 +188,19 @@ export default {
   padding: 8px;
 }
 .user-avatar {
-  height: 50px;
+  position: relative;
+  border-radius: 4px;
+  padding: 8px;
+}
+.primary {
+  background: #d8f8de;
 }
 .select-container {
   display: flex;
   padding: 0 8px 0 8px;
 }
 .option {
-  height: 65px;
+  height: 80px;
   display: flex;
   align-items: center;
 }
