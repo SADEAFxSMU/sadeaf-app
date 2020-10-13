@@ -1,20 +1,22 @@
 <template>
   <el-tabs class="action-tabs" type="border-card" stretch>
-    <el-tab-pane label="Matching" style="height: 100%">
+    <el-tab-pane label="Matching" style="height: 100%; width: 100%; overflow: scroll">
       <!-- TODO: integrate with BA's matching service -->
-      <no-data-placeholder text="No matches yet!" />
+      <pending-assignments-matching-list />
     </el-tab-pane>
     <el-tab-pane label="New Users">
       <pending-user-list class="pending-users" />
     </el-tab-pane>
     <el-tab-pane label="Notifications">
-      <action-card
-        v-for="(action, i) in actions"
-        :key="'action' + i"
-        :action="action"
-        @check="handleActionCardChecked"
-        class="action-card"
-      />
+      <div class="notifications">
+        <action-card
+          v-for="(action, i) in actions"
+          :key="'action' + i"
+          :action="action"
+          @check="handleActionCardChecked"
+          class="action-card"
+        />
+      </div>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -22,12 +24,12 @@
 <script>
 import ActionCard from './ActionCard';
 import PendingUserList from './user/PendingUserList';
-import NoDataPlaceholder from './NoDataPlaceholder';
+import PendingAssignmentsMatchingList from './PendingAssignmentsMatchingList';
 
 export default {
   name: 'ActionsTabs',
 
-  components: { NoDataPlaceholder, PendingUserList, ActionCard },
+  components: { PendingAssignmentsMatchingList, PendingUserList, ActionCard },
 
   data() {
     return {
@@ -67,12 +69,17 @@ export default {
 }
 .action-tabs .el-tabs__content {
   height: 100%;
+  width: 100%;
   overflow: scroll;
+  padding: 0;
 }
 .action-tabs .pending-users {
   padding: 0 32px 0 32px;
 }
 .action-tabs .action-card {
   margin-bottom: 16px;
+}
+.notifications {
+  padding: 16px;
 }
 </style>
