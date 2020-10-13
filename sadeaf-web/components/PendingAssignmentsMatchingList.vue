@@ -77,6 +77,8 @@ export default {
           subscription {
             pending_assignments: assignment(where: { status: { _eq: "PENDING" } }) {
               id
+              start_dt
+              end_dt
               volunteer_assignment_opt_ins {
                 id
                 volunteer {

@@ -13,7 +13,23 @@
         <div class="event">
           <div class="event-details">
             <h4>{{ pendingAssignment.event.name }}</h4>
-            <p>{{ pendingAssignment.event.description }}</p>
+            <el-divider>
+              Details
+            </el-divider>
+            <table>
+              <tr>
+                <th>Start</th>
+                <td>{{ startDatetime }}</td>
+              </tr>
+              <tr>
+                <th>End</th>
+                <td>{{ endDatetime }}</td>
+              </tr>
+              <tr>
+                <th>Desc.</th>
+                <td>{{ pendingAssignment.event.description }}</td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
@@ -50,6 +66,7 @@
 <script>
 import UserAvatar from '../user/UserAvatar';
 import gql from 'graphql-tag';
+import { DateUtils } from "../../common/date-utils";
 
 export default {
   name: 'PendingAssignmentVolunteersOptInCard',
@@ -139,6 +156,12 @@ export default {
     selectedVolunteer() {
       return this.selectedVolunteerOptIn && this.selectedVolunteerOptIn.volunteer;
     },
+    startDatetime() {
+      return DateUtils.humanReadableDt(this.pendingAssignment.start_dt);
+    },
+    endDatetime() {
+      return DateUtils.humanReadableDt(this.pendingAssignment.end_dt);
+    }
   },
 
   watch: {
@@ -204,5 +227,14 @@ export default {
   height: 80px;
   display: flex;
   align-items: center;
+}
+.event-details {
+  color: #5f5f75;
+}
+.event-details th {
+  text-align: right;
+}
+.event-details td {
+  padding: 4px 4px 4px 8px;
 }
 </style>
