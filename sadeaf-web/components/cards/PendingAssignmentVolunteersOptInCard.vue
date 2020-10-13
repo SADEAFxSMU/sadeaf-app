@@ -18,12 +18,18 @@
         </div>
       </div>
       <div class="select-container">
-        <el-select :value="selectedVolunteer && selectedVolunteer.account.name" @change="handleSelectVolunteerOptIn" style="flex: 1; margin-right: 8px;">
-          <el-option v-for="volunteerOptIn in pendingAssignment.volunteer_assignment_opt_ins"
-                     :key="'opt-in-' + pendingAssignment.id + '-v-' + volunteerOptIn.volunteer.id"
-                     class="option"
-                     :label="volunteerOptIn.volunteer.account.name"
-                     :value="volunteerOptIn">
+        <el-select
+          :value="selectedVolunteer && selectedVolunteer.account.name"
+          @change="handleSelectVolunteerOptIn"
+          style="flex: 1; margin-right: 8px"
+        >
+          <el-option
+            v-for="volunteerOptIn in pendingAssignment.volunteer_assignment_opt_ins"
+            :key="'opt-in-' + pendingAssignment.id + '-v-' + volunteerOptIn.volunteer.id"
+            class="option"
+            :label="volunteerOptIn.volunteer.account.name"
+            :value="volunteerOptIn"
+          >
             <user-avatar
               :profile-pic-url="volunteerOptIn.volunteer.account.profile_pic_url"
               :name="volunteerOptIn.volunteer.account.name"
@@ -32,9 +38,7 @@
             />
           </el-option>
         </el-select>
-        <el-button type="success" @click="handleAcceptVolunteerOptIn">
-          Confirm
-        </el-button>
+        <el-button type="success" @click="handleAcceptVolunteerOptIn"> Confirm </el-button>
       </div>
     </div>
   </div>
@@ -113,8 +117,8 @@ export default {
   computed: {
     selectedVolunteer() {
       return this.selectedVolunteerOptIn && this.selectedVolunteerOptIn.volunteer;
-    }
-  }
+    },
+  },
 };
 </script>
 

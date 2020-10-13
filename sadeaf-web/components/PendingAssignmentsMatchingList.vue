@@ -1,8 +1,12 @@
 <template>
   <div class="container">
     <div class="pending-assignment-list" v-if="pendingAssignments.length > 0">
-      <div v-for="pendingAssignment in pendingAssignments" :key="'pa-' + pendingAssignment.id" class="pending-assignment">
-         <pending-assignment-volunteers-opt-in-card :pending-assignment="pendingAssignment" />
+      <div
+        v-for="pendingAssignment in pendingAssignments"
+        :key="'pa-' + pendingAssignment.id"
+        class="pending-assignment"
+      >
+        <pending-assignment-volunteers-opt-in-card :pending-assignment="pendingAssignment" />
       </div>
     </div>
     <no-data-placeholder class="placeholder" v-else />
@@ -30,7 +34,7 @@ export default {
       volunteerAssignmentOptIns: {
         query: gql`
           subscription {
-            pending_assignments: assignment(where: { status: { _eq: "PENDING" }}) {
+            pending_assignments: assignment(where: { status: { _eq: "PENDING" } }) {
               id
               volunteer_assignment_opt_ins {
                 id

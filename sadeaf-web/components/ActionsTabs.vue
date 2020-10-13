@@ -24,12 +24,12 @@
 <script>
 import ActionCard from './ActionCard';
 import PendingUserList from './user/PendingUserList';
-import PendingAssignmentsMatchingList from "./PendingAssignmentsMatchingList";
+import PendingAssignmentsMatchingList from './PendingAssignmentsMatchingList';
 
 export default {
   name: 'ActionsTabs',
 
-  components: {PendingAssignmentsMatchingList, PendingUserList, ActionCard },
+  components: { PendingAssignmentsMatchingList, PendingUserList, ActionCard },
 
   data() {
     return {
