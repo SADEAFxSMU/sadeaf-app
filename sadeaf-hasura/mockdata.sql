@@ -214,25 +214,25 @@ INSERT INTO assignment (
  '300 West, New York', '#38-01', '213029', 'Conf. 1', 1.8231, 2.3051,
  null, 500),
 
-(9, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+(9, 2, 'MATCHED', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  8, 100),
 
-(10, 2, 'PENDING', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+(10, 2, 'MATCHED', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  2, 100),
 
-(11, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+(11, 2, 'MATCHED', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  2, 100),
 
-(12, 2, 'COMPLETE', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
+(12, 2, 'MATCHED', CURRENT_TIMESTAMP + interval '29 hour', CURRENT_TIMESTAMP + interval '4 day',
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  2, 100),
 
 (13, 2, 'PENDING', CURRENT_TIMESTAMP + interval '24 hour', CURRENT_TIMESTAMP + interval '26 hour',
  '18 Cashew Ave', null, '123405', null, null, null,
- 2, 100);
+ null, 100);
 
 UPDATE assignment SET status = 'COMPLETE' WHERE id = 10;
 UPDATE assignment SET status = 'COMPLETE' WHERE id = 9;
