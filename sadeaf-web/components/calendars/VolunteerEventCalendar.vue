@@ -103,11 +103,11 @@ const assignmentQuery = gql`
 `;
 
 const volunteerPendingAssignmentsQuery = gql`
-  subscription VolunteerPendingAssignments($account_id: Int!) {
+  subscription VolunteerPendingAssignments($volunteer_id: Int!, $account_id: Int!) {
     pending_assignments: assignment(
       where: {
         status: { _eq: "PENDING" }
-        # volunteer_assignment_opt_ins: { volunteer_id: { _neq: $volunteer_id } }
+        _not: { volunteer_assignment_opt_ins: { volunteer_id: { _eq: $volunteer_id } } }
         event: { client: { _not: { blacklists: { volunteer_account_id: { _eq: $account_id } } } } }
       }
     ) {
@@ -336,6 +336,7 @@ export default {
         query: volunteerPendingAssignmentsQuery,
         variables() {
           return {
+            volunteer_id: this.volunteer.id,
             account_id: this.volunteer.account_id,
           };
         },
