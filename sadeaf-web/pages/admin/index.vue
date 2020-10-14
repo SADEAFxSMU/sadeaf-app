@@ -3,12 +3,12 @@
     <div class="summary">
       <div class="left">
         <h1 class="title">Welcome Back, {{ userName }}</h1>
-        <actions-tabs style="flex: 1" />
+        <actions-tabs />
       </div>
       <div class="service-request-summary">
         <h1>Service Requests</h1>
         <div class="service-request-stats">
-          <doughnut-chart :data="eventsSummary" :options="{ ...chartOptions, legend: false }" />
+          <doughnut-chart :data="eventsSummary" :options="chartOptions" />
           <div class="stat-cards">
             <stat-card title="Matched" accent-color="rgba(54,191,255,0.7)" :stat="matched" />
             <stat-card title="Unmatched" accent-color="rgba(158,89,255,0.7)" :stat="unmatched" />
@@ -38,7 +38,8 @@ export default {
       lastUpdated: new Date(),
       chartOptions: {
         animation: false,
-        responsive: true,
+        responsive: false,
+        legend: false,
         maintainAspectRatio: false,
       },
     };
@@ -83,12 +84,14 @@ export default {
   min-height: 450px;
 }
 .left {
-  flex: 1;
+  width: 50vw;
+  min-width: 410px;
   display: flex;
   flex-direction: column;
   margin-right: 16px;
 }
 .service-request-summary {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;

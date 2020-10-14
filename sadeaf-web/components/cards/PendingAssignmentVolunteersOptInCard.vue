@@ -12,8 +12,27 @@
         />
         <div class="event">
           <div class="event-details">
-            <h4>{{ pendingAssignment.event.name }}</h4>
-            <p>{{ pendingAssignment.event.description }}</p>
+            <div class="event-title-container">
+              <h4 class="event-title">{{ pendingAssignment.event.name }}</h4>
+              <el-tooltip :content="'Assignment ID ' + pendingAssignment.id">
+                <span style="color: #6fc5ff" class="el-icon-info" />
+              </el-tooltip>
+            </div>
+            <el-divider> Details </el-divider>
+            <table>
+              <tr>
+                <th>Start</th>
+                <td>{{ startDatetime }}</td>
+              </tr>
+              <tr>
+                <th>End</th>
+                <td>{{ endDatetime }}</td>
+              </tr>
+              <tr>
+                <th>Desc.</th>
+                <td>{{ pendingAssignment.event.description }}</td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
@@ -21,6 +40,7 @@
         <el-select
           :value="selectedVolunteer && selectedVolunteer.account.name"
           @change="handleSelectVolunteerOptIn"
+          no-data-text="No volunteers yet"
           style="flex: 1; margin-right: 8px"
         >
           <el-option
@@ -34,7 +54,7 @@
               :profile-pic-url="volunteerOptIn.volunteer.account.profile_pic_url"
               :name="volunteerOptIn.volunteer.account.name"
               role="volunteer"
-              class="user-avatar"
+              :class="{ 'user-avatar': true, primary: volunteerOptIn.volunteer.id === recommendedVolunteerId }"
             />
           </el-option>
         </el-select>
@@ -49,10 +69,23 @@
 <script>
 import UserAvatar from '../user/UserAvatar';
 import gql from 'graphql-tag';
+import { DateUtils } from '../../common/date-utils';
 
 export default {
   name: 'PendingAssignmentVolunteersOptInCard',
   components: { UserAvatar },
+
+  props: {
+    pendingAssignment: {
+      type: Object,
+      required: false,
+    },
+    recommendedVolunteerId: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+  },
 
   data() {
     return {
@@ -61,11 +94,9 @@ export default {
     };
   },
 
-  props: {
-    pendingAssignment: {
-      type: Object,
-      required: false,
-    },
+  created() {
+    const recommendedVolunteerId = this.recommendedVolunteerId;
+    this.setRecommendedVolunteer(recommendedVolunteerId);
   },
 
   methods: {
@@ -113,10 +144,32 @@ export default {
     handleRejectVolunteerOptIn() {
       // Delete?
     },
+
+    setRecommendedVolunteer(recommendedVolunteerId) {
+      if (recommendedVolunteerId) {
+        for (const volunteerOptIn of this.pendingAssignment.volunteer_assignment_opt_ins) {
+          if (volunteerOptIn.volunteer.id === recommendedVolunteerId) {
+            this.selectedVolunteerOptIn = volunteerOptIn;
+          }
+        }
+      }
+    },
   },
   computed: {
     selectedVolunteer() {
       return this.selectedVolunteerOptIn && this.selectedVolunteerOptIn.volunteer;
+    },
+    startDatetime() {
+      return DateUtils.humanReadableDt(this.pendingAssignment.start_dt);
+    },
+    endDatetime() {
+      return DateUtils.humanReadableDt(this.pendingAssignment.end_dt);
+    },
+  },
+
+  watch: {
+    recommendedVolunteerId(val) {
+      this.setRecommendedVolunteer(val);
     },
   },
 };
@@ -161,15 +214,37 @@ export default {
   padding: 8px;
 }
 .user-avatar {
-  height: 50px;
+  position: relative;
+  border-radius: 4px;
+  padding: 8px;
+  width: 100%;
+}
+.primary {
+  background: #d8f8de;
 }
 .select-container {
   display: flex;
   padding: 0 8px 0 8px;
 }
 .option {
-  height: 65px;
+  height: 80px;
   display: flex;
   align-items: center;
+}
+.event-details {
+  color: #5f5f75;
+}
+.event-title-container {
+  display: flex;
+  align-items: center;
+}
+.event-title {
+  margin-right: 8px;
+}
+.event-details th {
+  text-align: right;
+}
+.event-details td {
+  padding: 4px 4px 4px 8px;
 }
 </style>
