@@ -29,6 +29,20 @@ async function getToken() {
   return null;
 }
 
+function getUri() {
+  if (location && process.env.NODE_ENV === 'production') {
+    const { protocol, host } = location;
+
+    if (protocol === 'https:') {
+      return `wss://${host}/api/graphql`;
+    }
+
+    return `ws://${host}/api/graphql`;
+  }
+
+  return 'ws://localhost:3000/api/graphql';
+}
+
 export default ({ app }, inject) => {
   const authLink = setContext(async (_, { headers }) => {
     const token = await getToken();
@@ -48,8 +62,7 @@ export default ({ app }, inject) => {
   );
 
   const wsLink = new WebSocketLink({
-    // TODO(fuxing): Inject and change to wss for production
-    uri: 'ws://localhost:3000/api/graphql',
+    uri: getUri(),
     options: {
       reconnect: true,
       lazy: true,
