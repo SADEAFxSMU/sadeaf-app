@@ -24,7 +24,7 @@ import UserAvatar from './user/UserAvatar';
 import PendingAssignmentVolunteersOptInCard from './cards/PendingAssignmentVolunteersOptInCard';
 import NoDataPlaceholder from './NoDataPlaceholder';
 import { MATCHING_SERVICE } from '../config';
-import { DateUtils } from "../common/date-utils";
+import { DateUtils } from '../common/date-utils';
 
 export default {
   name: 'PendingAssignmentsMatchingList',
