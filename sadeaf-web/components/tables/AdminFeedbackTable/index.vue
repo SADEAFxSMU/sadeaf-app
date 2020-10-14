@@ -10,8 +10,8 @@
       </template>
     </BaseTable>
 
-    <div v-if="this.tableData.length > 0">
-      <AdminFeedbackRatingDialog :rowData="this.tableData[0]" />
+    <div v-if="selectedRow">
+      <AdminFeedbackRatingDialog :rowData="selectedRow" />
     </div>
   </div>
 </template>
@@ -83,6 +83,7 @@ export default {
   data() {
     return {
       tableData: [],
+      selectedRow: null,
       columns: [
         {
           name: 'eventId',
@@ -122,6 +123,7 @@ export default {
         volunteer: row.volunteer,
         event: row,
       });
+      this.selectedRow = row;
     },
     closeEventFeedbackForm() {
       this.$store.commit('feedbackForm/hideForm');

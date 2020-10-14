@@ -9,10 +9,8 @@
           <el-avatar
             :size="69"
             shape="square"
-            :src="
-              this.volunteer.account.profile_pic_url ||
-              'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
-            "
+            :class="{ 'el-icon-user-solid': !this.volunteer.account.profile_pic_url }"
+            :src="this.volunteer.account.profile_pic_url"
           />
         </el-col>
 
@@ -114,30 +112,39 @@ export default {
         return [];
       }
     },
+    async setRatings() {
+      const result = await this.getFeedbackScores();
+      this.volunteerInfo.feedbackReceived.value = result.length;
+
+      const RATING_LABELS = {
+        notetaker_conduct: 'Conduct',
+        notetaker_punctual: 'Punctuality',
+        post_session_understanding: 'Post-Understanding',
+        live_information_understanding: 'Live-Understanding',
+        live_interaction: 'Interactiveness',
+      };
+
+      let ratings = [];
+      RATING_KEYS.forEach((k) => {
+        const value = result.reduce((accum, b) => accum + parseInt(b[k]), 0) / result.length;
+        ratings.push({
+          label: RATING_LABELS[k],
+          percentage: (value / 5) * 100,
+          status: value > 2.5 ? 'success' : 'exception',
+          value: value,
+        });
+      });
+      this.ratings = ratings;
+    },
   },
   async created() {
-    const RATING_LABELS = {
-      notetaker_conduct: 'Conduct',
-      notetaker_punctual: 'Punctuality',
-      post_session_understanding: 'Post-Understanding',
-      live_information_understanding: 'Live-Understanding',
-      live_interaction: 'Interactiveness',
-    };
+    await this.setRatings();
+  },
 
-    const result = await this.getFeedbackScores();
-    this.volunteerInfo.feedbackReceived.value = result.length;
-
-    let ratings = [];
-    RATING_KEYS.forEach((k) => {
-      const value = result.reduce((accum, b) => accum + parseInt(b[k]), 0) / result.length;
-      ratings.push({
-        label: RATING_LABELS[k],
-        percentage: (value / 5) * 100,
-        status: value > 2.5 ? 'success' : 'exception',
-        value: value,
-      });
-    });
-    this.ratings = ratings;
+  watch: {
+    volunteer() {
+      this.setRatings();
+    },
   },
 };
 </script>
