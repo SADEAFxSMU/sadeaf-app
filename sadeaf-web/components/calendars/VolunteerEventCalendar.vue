@@ -107,7 +107,7 @@ const volunteerPendingAssignmentsQuery = gql`
     pending_assignments: assignment(
       where: {
         status: { _eq: "PENDING" }
-        volunteer_assignment_opt_ins: { volunteer_id: { _neq: $volunteer_id } }
+        _not: { volunteer_assignment_opt_ins: { volunteer_id: { _eq: $volunteer_id } } }
         event: { client: { _not: { blacklists: { volunteer_account_id: { _eq: $account_id } } } } }
       }
     ) {
@@ -341,6 +341,7 @@ export default {
           };
         },
         result({ data }) {
+          console.log(data);
           data.pending_assignments.forEach((assignment) => {
             assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
             assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
