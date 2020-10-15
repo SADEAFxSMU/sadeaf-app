@@ -228,16 +228,23 @@ export default {
             this.deleteTelegramSettings();
           }
 
-          console.log(this.form.emailPreferred)
-
           if (this.form.emailPreferred) {
             this.upsertEmailSettings();
           } else {
             this.deleteEmailSettings();
           }
+
+          this.$notify.success({
+            title: 'Success!',
+            message: 'Updated your notification preferences',
+          });
         })
         .catch((error) => {
           console.log('update notification settings error', error);
+          this.$notify.error({
+            title: 'Error',
+            message: 'Something went wrong with updating your notification preferences.',
+          });
           // restore original form values
           this.form = new_notification_settings;
         });
@@ -347,32 +354,32 @@ export default {
         mutation: gql`
           mutation insertEmailInformation($notification_setting_id: Int!) {
             insert_email_information_one(
-                object: {notification_setting_id: $notification_setting_id}
-                on_conflict: {constraint: email_information_notification_setting_id_key, update_columns: []}
+              object: { notification_setting_id: $notification_setting_id }
+              on_conflict: { constraint: email_information_notification_setting_id_key, update_columns: [] }
             ) {
               id
             }
           }
         `,
         variables: {
-          notification_setting_id: this.form.id
-        }
-      })
+          notification_setting_id: this.form.id,
+        },
+      });
     },
     deleteEmailSettings() {
       this.$apollo.mutate({
         mutation: gql`
           mutation MyMutation($notification_setting_id: Int!) {
-            delete_email_information(where: {notification_setting_id: {_eq: $notification_setting_id}}) {
+            delete_email_information(where: { notification_setting_id: { _eq: $notification_setting_id } }) {
               affected_rows
             }
           }
         `,
         variables: {
-          notification_setting_id: this.form.id
-        }
-      })
-    }
+          notification_setting_id: this.form.id,
+        },
+      });
+    },
   },
   computed: {
     /**
