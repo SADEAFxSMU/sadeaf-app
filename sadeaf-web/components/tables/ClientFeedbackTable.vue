@@ -38,6 +38,7 @@ import VolunteersCell from '@/components/tables/custom-columns/VolunteersCell';
 import FeedbackForm from '@/components/forms/FeedbackForm/FeedbackForm';
 import AssignmentsTimeline from '@/components/cards/AssignmentsTimeline';
 import volunteer from '@/components/navbar/volunteer';
+import { DateUtils } from '@/common/date-utils';
 
 const FEEDBACK_SUBSRCRIBE_QUERY = gql`
   subscription ClientCompletedEventsSubscription($client_account_id: Int!, $feedback_given: Int!) {
@@ -155,8 +156,10 @@ export default {
             quotation: event.quotation,
             purpose: event.purpose,
             client: event.client,
-            startDate: new Date(volunteerAssignments[0].start_dt).toLocaleString(),
-            endDate: new Date(volunteerAssignments[volunteerAssignments.length - 1].start_dt).toLocaleString(),
+            startDate: DateUtils.humanReadableDt(DateUtils.utcToGmt8(volunteerAssignments[0].start_dt)),
+            endDate: DateUtils.humanReadableDt(
+              DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt)
+            ),
             name: event.name,
             description: event.description,
             volunteer: [volunteer],
