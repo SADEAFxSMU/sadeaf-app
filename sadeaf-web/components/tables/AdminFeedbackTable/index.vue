@@ -7,8 +7,8 @@
             <el-date-picker
               v-model="downloadDate"
               type="daterange"
-              start-placeholder="Start date"
-              end-placeholder="End Date"
+              start-placeholder="Earliest Event Start Date"
+              end-placeholder="Latest Event Start Date"
               @change="handleDateChange"
             />
           </el-col>
