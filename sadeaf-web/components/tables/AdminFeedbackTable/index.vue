@@ -2,19 +2,19 @@
   <div>
     <BaseTable :loading="loading" title="Feedbacks" :rows="filteredTableData" :columns="columns">
       <template v-slot:additionalHeaderCols>
-        <el-row type="flex" gutter="8">
+        <el-row type="flex" :gutter="8">
           <el-col>
             <el-date-picker
               v-model="downloadDate"
               type="daterange"
-              start-placeholder="Earliest Event Start Date"
-              end-placeholder="Latest Event Start Date"
+              start-placeholder="Assignment Start Date"
+              end-placeholder="Assignment End Date"
               @change="handleDateChange"
             />
           </el-col>
           <el-col>
             <download-csv :data="filteredTableData" :fields="downloadColumns" :name="fileName">
-              <el-button type="primary"> Export Data </el-button>
+              <el-button type="primary"> Export Data</el-button>
             </download-csv>
           </el-col>
         </el-row>
@@ -164,10 +164,20 @@ export default {
   },
   methods: {
     handleDateChange() {
+      if (!this.downloadDate) {
+        return (this.filteredTableData = this.tableData);
+      }
       const [startDate, endDate] = this.downloadDate;
-      this.filteredTableData = this.tableData.filter(
-        (row) => row.rawStartDate >= startDate && row.rawStartDate <= endDate
-      );
+      this.filteredTableData = this.tableData.filter((row) => {
+        const earliestAssignmentDate = new Date(
+          row.rawStartDate.year(),
+          row.rawStartDate.month(),
+          row.rawStartDate.date(),
+        );
+        const latestAssignmentDate = new Date(row.rawEndDate.year(), row.rawEndDate.month(), row.rawEndDate.date());
+
+        return earliestAssignmentDate >= startDate && latestAssignmentDate <= endDate;
+      });
     },
     handleOpenFeedback(row) {
       this.$store.commit('adminFeedbackDialog/clickDialog', {
@@ -237,8 +247,9 @@ export default {
             client: event.client,
             rawStartDate: DateUtils.utcToGmt8(volunteerAssignments[0].start_dt),
             startDate: DateUtils.humanReadableDt(DateUtils.utcToGmt8(volunteerAssignments[0].start_dt)),
+            rawEndDate: DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt),
             endDate: DateUtils.humanReadableDt(
-              DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt)
+              DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt),
             ),
             name: event.name,
             volunteer: volunteer,
