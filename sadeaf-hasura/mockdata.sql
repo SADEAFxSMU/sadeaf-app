@@ -160,11 +160,11 @@ INSERT INTO telegram_information(
 (3, 3333333333, 3, '@bobby');
 
 INSERT INTO email_information(
-    id, email_address, notification_setting_id
+    id, notification_setting_id
 ) VALUES
-(1, 'admin_notification_email@gmail.com', 1),
-(2, 'email_me_at_this_email@email.com', 2),
-(3, 'bobby@gmail.com', 4);
+(1, 1),
+(2, 2),
+(3, 4);
 
 INSERT INTO event (
     id, name, client_id, description, purpose

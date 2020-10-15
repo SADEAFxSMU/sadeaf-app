@@ -127,7 +127,6 @@ export default {
         volunteer_urgent: false,
         email_information: {
           id: 0,
-          email_address: '',
         },
         telegram_information: {
           id: 0,
@@ -228,6 +227,14 @@ export default {
           } else if (this.originallyPreferredTelegram && !this.form.telegramPreferred) {
             this.deleteTelegramSettings();
           }
+
+          console.log(this.form.emailPreferred)
+
+          if (this.form.emailPreferred) {
+            this.upsertEmailSettings();
+          } else {
+            this.deleteEmailSettings();
+          }
         })
         .catch((error) => {
           console.log('update notification settings error', error);
@@ -319,7 +326,6 @@ export default {
     capitalise(text) {
       return text.charAt(0).toUpperCase() + text.slice(1);
     },
-
     checkIfNotificationsAreWanted() {
       if (!this.form.telegramPreferred && !this.form.emailPreferred) {
         const notificationProperties = [
@@ -336,6 +342,37 @@ export default {
         });
       }
     },
+    upsertEmailSettings() {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation insertEmailInformation($notification_setting_id: Int!) {
+            insert_email_information_one(
+                object: {notification_setting_id: $notification_setting_id}
+                on_conflict: {constraint: email_information_notification_setting_id_key, update_columns: []}
+            ) {
+              id
+            }
+          }
+        `,
+        variables: {
+          notification_setting_id: this.form.id
+        }
+      })
+    },
+    deleteEmailSettings() {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation MyMutation($notification_setting_id: Int!) {
+            delete_email_information(where: {notification_setting_id: {_eq: $notification_setting_id}}) {
+              affected_rows
+            }
+          }
+        `,
+        variables: {
+          notification_setting_id: this.form.id
+        }
+      })
+    }
   },
   computed: {
     /**
@@ -375,9 +412,6 @@ export default {
       };
     },
   },
-  /*
-      TODO(wy): use current logged in user to populate form
-    */
   apollo: {
     notification_setting: {
       query: gql`
@@ -392,7 +426,6 @@ export default {
             volunteer_urgent
             email_information {
               id
-              email_address
             }
             telegram_information {
               id
