@@ -172,7 +172,7 @@ export default {
         const earliestAssignmentDate = new Date(
           row.rawStartDate.year(),
           row.rawStartDate.month(),
-          row.rawStartDate.date(),
+          row.rawStartDate.date()
         );
         const latestAssignmentDate = new Date(row.rawEndDate.year(), row.rawEndDate.month(), row.rawEndDate.date());
 
@@ -249,7 +249,7 @@ export default {
             startDate: DateUtils.humanReadableDt(DateUtils.utcToGmt8(volunteerAssignments[0].start_dt)),
             rawEndDate: DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt),
             endDate: DateUtils.humanReadableDt(
-              DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt),
+              DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt)
             ),
             name: event.name,
             volunteer: volunteer,
