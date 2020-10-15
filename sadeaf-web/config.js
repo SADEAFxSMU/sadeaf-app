@@ -47,8 +47,9 @@ module.exports = {
   TELEGRAM: {
     WEBHOOK_ENDPOINT: process.env.TELEGRAM_WEBHOOK_ENDPOINT || 'http://localhost:4001/',
     WEBHOOK_URL: process.env.TELEGRAM_WEBHOOK_URL || 'https://sadeaftest.tunnelto.dev/_telegram/webhook',
-    // TODO(wy): use this when making send messages via telegram
-    API_KEY: process.env.SADEAF_TELEGRAM_API_KEY,
+    BASE_URL: `https://api.telegram.org/bot${
+      process.env.SADEAF_TELEGRAM_API_KEY
+    }`,
   },
   BOOTSTRAP: {
     ADMIN_EMAIL: process.env.BOOTSTRAP_ADMIN_EMAIL

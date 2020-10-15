@@ -380,7 +380,7 @@
               account_id:
                 _eq: X-Hasura-User-Id
   event_triggers:
-  - name: matched-assignment-notifier
+  - name: assignment-status-notifier
     definition:
       enable_manual: false
       update:
