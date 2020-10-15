@@ -13,18 +13,11 @@
             />
           </el-col>
           <el-col>
-            <download-csv
-              :data="filteredTableData"
-              :fields="downloadColumns"
-              :name="fileName"
-            >
-              <el-button type="primary">
-                Export Data
-              </el-button>
+            <download-csv :data="filteredTableData" :fields="downloadColumns" :name="fileName">
+              <el-button type="primary"> Export Data </el-button>
             </download-csv>
           </el-col>
         </el-row>
-
       </template>
       <template v-slot:sentiment="{ row }">
         <SentimentEmoji :sentiment="row.sentiment"></SentimentEmoji>
@@ -116,10 +109,19 @@ export default {
       downloadDate: null,
       tableData: [],
       selectedRow: null,
-      downloadColumns: ['feedback_id', 'post_session_comments',
-        'live_comments', 'additional_comments', 'eventId', 'name',
-        'clientName', 'clientAccountId', 'volunteerName',
-        'volunteerAccountId', 'sentiment'].concat(RATING_KEYS),
+      downloadColumns: [
+        'feedback_id',
+        'post_session_comments',
+        'live_comments',
+        'additional_comments',
+        'eventId',
+        'name',
+        'clientName',
+        'clientAccountId',
+        'volunteerName',
+        'volunteerAccountId',
+        'sentiment',
+      ].concat(RATING_KEYS),
       columns: [
         {
           name: 'eventId',
@@ -155,13 +157,17 @@ export default {
   },
   computed: {
     fileName() {
-      return this.downloadDate ? `${this.downloadDate[0]}_${this.downloadDate[1]}_feedback_data.csv` : `feedback_data.csv`;
+      return this.downloadDate
+        ? `${this.downloadDate[0]}_${this.downloadDate[1]}_feedback_data.csv`
+        : `feedback_data.csv`;
     },
   },
   methods: {
     handleDateChange() {
       const [startDate, endDate] = this.downloadDate;
-      this.filteredTableData = this.tableData.filter(row => row.rawStartDate >= startDate && row.rawStartDate <= endDate);
+      this.filteredTableData = this.tableData.filter(
+        (row) => row.rawStartDate >= startDate && row.rawStartDate <= endDate
+      );
     },
     handleOpenFeedback(row) {
       this.$store.commit('adminFeedbackDialog/clickDialog', {
@@ -231,7 +237,9 @@ export default {
             client: event.client,
             rawStartDate: DateUtils.utcToGmt8(volunteerAssignments[0].start_dt),
             startDate: DateUtils.humanReadableDt(DateUtils.utcToGmt8(volunteerAssignments[0].start_dt)),
-            endDate: DateUtils.humanReadableDt(DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt)),
+            endDate: DateUtils.humanReadableDt(
+              DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt)
+            ),
             name: event.name,
             volunteer: volunteer,
             volunteerName: volunteer.account.name,
