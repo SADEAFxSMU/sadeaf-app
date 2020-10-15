@@ -38,6 +38,7 @@ import VolunteersCell from '@/components/tables/custom-columns/VolunteersCell';
 import FeedbackForm from '@/components/forms/FeedbackForm/FeedbackForm';
 import AssignmentsTimeline from '@/components/cards/AssignmentsTimeline';
 import volunteer from '@/components/navbar/volunteer';
+import { DateUtils } from '@/common/date-utils';
 
 const FEEDBACK_SUBSRCRIBE_QUERY = gql`
   subscription ClientCompletedEventsSubscription($client_account_id: Int!, $feedback_given: Int!) {
@@ -60,7 +61,7 @@ const FEEDBACK_SUBSRCRIBE_QUERY = gql`
             email
           }
         }
-        assignments(order_by: { start_dt: desc }) {
+        assignments(order_by: { start_dt: asc }) {
           id
           address_line_one
           address_line_two
@@ -147,7 +148,7 @@ export default {
       if (feedbacksToGive) {
         feedbacksToGive.forEach((feedback) => {
           const { event, volunteer } = feedback;
-          const volunteerAssignments = event.assignments.filter((a) => a.volunteer.id === volunteer.id);
+          const volunteerAssignments = event.assignments.filter((a) => a.volunteer && a.volunteer.id === volunteer.id);
           rows.push({
             feedback_id: feedback.id,
             id: event.id + volunteer.account.name,
@@ -155,8 +156,10 @@ export default {
             quotation: event.quotation,
             purpose: event.purpose,
             client: event.client,
-            startDate: new Date(volunteerAssignments[0].start_dt).toLocaleString(),
-            endDate: new Date(volunteerAssignments[volunteerAssignments.length - 1].start_dt).toLocaleString(),
+            startDate: DateUtils.humanReadableDt(DateUtils.utcToGmt8(volunteerAssignments[0].start_dt)),
+            endDate: DateUtils.humanReadableDt(
+              DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt)
+            ),
             name: event.name,
             description: event.description,
             volunteer: [volunteer],

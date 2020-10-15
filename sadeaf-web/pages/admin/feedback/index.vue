@@ -1,5 +1,7 @@
 <template>
-  <AdminFeedbackTable></AdminFeedbackTable>
+  <div>
+    <AdminFeedbackTable></AdminFeedbackTable>
+  </div>
 </template>
 
 <script>

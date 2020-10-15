@@ -1,6 +1,24 @@
 <template>
   <div>
-    <BaseTable :loading="loading" title="Feedbacks" :rows="tableData" :columns="columns">
+    <BaseTable :loading="loading" title="Feedbacks" :rows="filteredTableData" :columns="columns">
+      <template v-slot:additionalHeaderCols>
+        <el-row type="flex" :gutter="8">
+          <el-col>
+            <el-date-picker
+              v-model="downloadDate"
+              type="daterange"
+              start-placeholder="Assignment Start Date"
+              end-placeholder="Assignment End Date"
+              @change="handleDateChange"
+            />
+          </el-col>
+          <el-col>
+            <download-csv :data="filteredTableData" :fields="downloadColumns" :name="fileName">
+              <el-button type="primary"> Export Data</el-button>
+            </download-csv>
+          </el-col>
+        </el-row>
+      </template>
       <template v-slot:sentiment="{ row }">
         <SentimentEmoji :sentiment="row.sentiment"></SentimentEmoji>
       </template>
@@ -19,10 +37,13 @@
 <script>
 // TODO (Austin): think about what columns sadeaf wants to see for feedback --> Rating columns to see rating per feedback
 
+import downloadCsv from 'vue-json-csv';
 import BaseTable from '@/components/tables/BaseTable';
 import gql from 'graphql-tag';
 import SentimentEmoji from '@/components/tables/AdminFeedbackTable/SentimentEmoji';
 import AdminFeedbackRatingDialog from '@/components/dialogs/AdminFeedbackRatingDialog';
+import { DateUtils } from '@/common/date-utils';
+import { RATING_KEYS } from '@/common/types/constants';
 
 const ADMIN_FEEDBACK_SUB_QUERY = gql`
   subscription AdminFeedbackQuery($feedback_given: Int!) {
@@ -51,7 +72,7 @@ const ADMIN_FEEDBACK_SUB_QUERY = gql`
             email
           }
         }
-        assignments(order_by: { start_dt: desc }) {
+        assignments(order_by: { start_dt: asc }) {
           id
           end_dt
           start_dt
@@ -77,13 +98,30 @@ const ADMIN_FEEDBACK_SUB_QUERY = gql`
     }
   }
 `;
+
+const DOWNLOAD_COLUMNS = [];
 export default {
   name: 'AdminFeedbackTable',
-  components: { AdminFeedbackRatingDialog, SentimentEmoji, BaseTable },
+  components: { downloadCsv, AdminFeedbackRatingDialog, SentimentEmoji, BaseTable },
   data() {
     return {
+      filteredTableData: [],
+      downloadDate: null,
       tableData: [],
       selectedRow: null,
+      downloadColumns: [
+        'feedback_id',
+        'post_session_comments',
+        'live_comments',
+        'additional_comments',
+        'eventId',
+        'name',
+        'clientName',
+        'clientAccountId',
+        'volunteerName',
+        'volunteerAccountId',
+        'sentiment',
+      ].concat(RATING_KEYS),
       columns: [
         {
           name: 'eventId',
@@ -117,7 +155,30 @@ export default {
       loading: true,
     };
   },
+  computed: {
+    fileName() {
+      return this.downloadDate
+        ? `${this.downloadDate[0]}_${this.downloadDate[1]}_feedback_data.csv`
+        : `feedback_data.csv`;
+    },
+  },
   methods: {
+    handleDateChange() {
+      if (!this.downloadDate) {
+        return (this.filteredTableData = this.tableData);
+      }
+      const [startDate, endDate] = this.downloadDate;
+      this.filteredTableData = this.tableData.filter((row) => {
+        const earliestAssignmentDate = new Date(
+          row.rawStartDate.year(),
+          row.rawStartDate.month(),
+          row.rawStartDate.date()
+        );
+        const latestAssignmentDate = new Date(row.rawEndDate.year(), row.rawEndDate.month(), row.rawEndDate.date());
+
+        return earliestAssignmentDate >= startDate && latestAssignmentDate <= endDate;
+      });
+    },
     handleOpenFeedback(row) {
       this.$store.commit('adminFeedbackDialog/clickDialog', {
         volunteer: row.volunteer,
@@ -176,7 +237,7 @@ export default {
         feedbacksGiven.forEach((feedback) => {
           const { event, volunteer } = feedback;
           const sentiment = this.getVolunteerSentiment(feedback);
-          const volunteerAssignments = event.assignments.filter((a) => a.volunteer.id === volunteer.id);
+          const volunteerAssignments = event.assignments.filter((a) => a.volunteer && a.volunteer.id === volunteer.id);
           rows.push({
             ...feedback,
             sentiment,
@@ -184,17 +245,24 @@ export default {
             id: event.id + volunteer.account.name,
             eventId: event.id,
             client: event.client,
-            startDate: new Date(volunteerAssignments[0].start_dt).toLocaleString(),
-            endDate: new Date(volunteerAssignments[volunteerAssignments.length - 1].start_dt).toLocaleString(),
+            rawStartDate: DateUtils.utcToGmt8(volunteerAssignments[0].start_dt),
+            startDate: DateUtils.humanReadableDt(DateUtils.utcToGmt8(volunteerAssignments[0].start_dt)),
+            rawEndDate: DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt),
+            endDate: DateUtils.humanReadableDt(
+              DateUtils.utcToGmt8(volunteerAssignments[volunteerAssignments.length - 1].start_dt)
+            ),
             name: event.name,
             volunteer: volunteer,
             volunteerName: volunteer.account.name,
+            volunteerAccountId: volunteer.account.id,
             clientName: event.client.account.name,
+            clientAccountId: event.client.account.id,
             assignments: volunteerAssignments,
           });
         });
       }
       this.tableData = rows;
+      this.filteredTableData = this.tableData;
       this.loading = false;
     },
   },
