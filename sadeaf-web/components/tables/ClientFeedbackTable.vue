@@ -60,7 +60,7 @@ const FEEDBACK_SUBSRCRIBE_QUERY = gql`
             email
           }
         }
-        assignments(order_by: { start_dt: desc }) {
+        assignments(order_by: { start_dt: asc }) {
           id
           address_line_one
           address_line_two
@@ -147,7 +147,7 @@ export default {
       if (feedbacksToGive) {
         feedbacksToGive.forEach((feedback) => {
           const { event, volunteer } = feedback;
-          const volunteerAssignments = event.assignments.filter((a) => a.volunteer.id === volunteer.id);
+          const volunteerAssignments = event.assignments.filter((a) => a.volunteer && a.volunteer.id === volunteer.id);
           rows.push({
             feedback_id: feedback.id,
             id: event.id + volunteer.account.name,

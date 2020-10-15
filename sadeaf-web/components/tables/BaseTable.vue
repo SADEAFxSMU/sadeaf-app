@@ -8,6 +8,10 @@
         <el-input v-model="search" style="padding: 0 6px 0 6px" placeholder="Type to search" />
         <slot name="toolbar" />
       </div>
+
+      <div>
+        <slot name="additionalHeaderCols" />
+      </div>
     </div>
     <el-table
       v-loading="loading"

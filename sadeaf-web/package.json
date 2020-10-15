@@ -53,7 +53,8 @@
     "pg-boss": "^5.0.8",
     "subscriptions-transport-ws": "^0.9.18",
     "vue-apollo": "^3.0.4",
-    "vue-chartjs": "^3.5.0"
+    "vue-chartjs": "^3.5.0",
+    "vue-json-csv": "^1.2.11"
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",
