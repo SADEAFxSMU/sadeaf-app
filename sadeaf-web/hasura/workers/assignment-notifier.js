@@ -19,29 +19,37 @@ module.exports = async function () {
   await subscribe('assignment-status-notifier', async ({ data }) => {
     await new Promise(async (resolve, reject) => {
       try {
-        let eventId = data.event.data.new.event_id;
-        let volunteerId = data.event.data.new.volunteer_id;
-        let newStatus = data.event.data.new.status;
+        let {
+          event: {
+            data: {
+              new: { event_id: eventId, volunteer_id: volunteerId, status: newStatus, start_dt: newStartDt },
+            },
+          },
+        } = data;
 
         let clientDetails = await executeGraphQLQuery(clientDetailsOpsDoc, 'ClientDetails', { event_id: eventId });
         let clientAccount = clientDetails.data.event[0].client.account;
 
         let eventName = clientDetails.data.event[0].name;
-        let assignmentStartDt = DateUtils.humanReadableDt(data.event.data.new.start_dt);
+        let assignmentStartDt = DateUtils.humanReadableDt(newStartDt);
 
-        let volunteerDetails = await executeGraphQLQuery(volunteerDetailsOpsDoc, 'VolunteerDetails', {
-          volunteer_id: volunteerId,
-        });
-        let volunteerAccount = volunteerDetails.data.volunteer_by_pk.account;
+        // We need to make this check since there is no volunteer linked to an assignment if the volunteer cancels an assignment
+        if (volunteerId) {
+          let volunteerDetails = await executeGraphQLQuery(volunteerDetailsOpsDoc, 'VolunteerDetails', {
+            volunteer_id: volunteerId,
+          });
+          let volunteerAccount = volunteerDetails.data.volunteer_by_pk.account;
+
+          await sendNotifications(volunteerAccount, {
+            userType: 'volunteer',
+            eventName: eventName,
+            startDt: assignmentStartDt,
+            assignmentStatus: newStatus,
+          });
+        }
 
         await sendNotifications(clientAccount, {
           userType: 'client',
-          eventName: eventName,
-          startDt: assignmentStartDt,
-          assignmentStatus: newStatus,
-        });
-        await sendNotifications(volunteerAccount, {
-          userType: 'volunteer',
           eventName: eventName,
           startDt: assignmentStartDt,
           assignmentStatus: newStatus,
@@ -58,32 +66,14 @@ module.exports = async function () {
 
 async function sendNotifications(accountSettings, { userType, eventName, startDt, assignmentStatus }) {
   let notificationSettings = accountSettings.notification_setting;
-  let telegramMessage;
-  let email;
 
   if (!notificationSettings) {
     return;
   }
 
-  switch (assignmentStatus) {
-    case ASSIGNMENT_STATUSES.MATCHED:
-      if (notificationSettings.volunteer_matched || notificationSettings.client_matched) {
-        telegramMessage = getMatchedMessage(eventName, startDt);
-      }
-      break;
-    case ASSIGNMENT_STATUSES.PENDING:
-      // Only clients need to receive this message, since only volunteers/admins can change the status back to pending
-      if (userType === 'client') {
-        telegramMessage = getClientPendingMessage(eventName, startDt);
-      }
-      break;
-    case ASSIGNMENT_STATUSES.CANCELLED:
-      // Only volunteers need to receive this message, since only clients/admins can change the status to cancelled
-      if (userType === 'volunteer') {
-        telegramMessage = getVolunteerCancelledMessage(eventName, startDt);
-      }
-      break;
-  }
+  let telegramMessage = telegramMessageToSend(assignmentStatus, notificationSettings, eventName, startDt, userType);
+  // TODO(sde): send email based on email text
+  let email;
 
   if (email && notificationSettings.email_information) {
     // TODO(sde): send email based on email text
@@ -91,6 +81,32 @@ async function sendNotifications(accountSettings, { userType, eventName, startDt
 
   if (telegramMessage && notificationSettings.telegram_information) {
     await sendTelegramMessage(telegramMessage, notificationSettings.telegram_information.chat_id);
+  }
+}
+
+function telegramMessageToSend(assignmentStatus, notificationSettings, eventName, startDt, userType) {
+  let message;
+
+  switch (assignmentStatus) {
+    case ASSIGNMENT_STATUSES.MATCHED:
+      if (notificationSettings.volunteer_matched || notificationSettings.client_matched) {
+        message = getMatchedMessage(eventName, startDt);
+      }
+      return message;
+
+    case ASSIGNMENT_STATUSES.PENDING:
+      // Only clients need to receive this message, since only volunteers/admins can change the status back to pending
+      if (userType === 'client') {
+        message = getClientPendingMessage(eventName, startDt);
+      }
+      return message;
+
+    case ASSIGNMENT_STATUSES.CANCELLED:
+      // Only volunteers need to receive this message, since only clients/admins can change the status to cancelled
+      if (userType === 'volunteer') {
+        message = getVolunteerCancelledMessage(eventName, startDt);
+      }
+      return message;
   }
 }
 

@@ -4,8 +4,6 @@ import { TELEGRAM } from '../config';
 export async function sendTelegramMessage(message, chatId) {
   const url = `${TELEGRAM.BASE_URL}/sendMessage`;
 
-  console.log(message);
-
   let response = await fetch(url, {
     method: 'POST',
     headers: {
