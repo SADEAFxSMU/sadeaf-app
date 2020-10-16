@@ -265,11 +265,15 @@ export default {
         });
     },
     cancelMatchedAssignment(assignment) {
-      this.$confirm('This will un-match you from this assignment. Are you sure?', 'Warning', {
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-      })
+      this.$confirm(
+        'This will un-match you from this assignment and you will not be able to see it again. Are you sure?',
+        'Warning',
+        {
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+        }
+      )
         .then(() => {
           this.$apollo
             .mutate({

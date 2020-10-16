@@ -49,7 +49,7 @@ module.exports = async function () {
 
         resolve();
       } catch (e) {
-        console.error(`[MatchedAssignmentNotifier] ${e}`);
+        console.error(`[AssignmentUpdateNotifier] ${e}`);
         reject(e);
       }
     });
