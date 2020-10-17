@@ -19,13 +19,12 @@ module.exports = async function () {
   await subscribe('assignment-status-notifier', async ({ data }) => {
     await new Promise(async (resolve, reject) => {
       try {
-        let {
-          event: {
-            data: {
-              new: { event_id: eventId, volunteer_id: volunteerId, status: newStatus, start_dt: newStartDt },
-            },
-          },
-        } = data;
+        const {
+          event_id: eventId,
+          volunteer_id: volunteerId,
+          status: newStatus,
+          start_dt: newStartDt,
+        } = data.event.data.new;
 
         let clientDetails = await executeGraphQLQuery(clientDetailsOpsDoc, 'ClientDetails', { event_id: eventId });
         let clientAccount = clientDetails.data.event[0].client.account;
