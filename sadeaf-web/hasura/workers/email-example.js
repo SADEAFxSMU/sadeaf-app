@@ -25,8 +25,10 @@ module.exports = async function () {
 
     await new Promise((resolve, reject) => {
       client.send(msg, (err, message) => {
-        if (err) reject(err);
-        else resolve();
+        if (err) {
+          console.error(`[EmailExample] ${err}`);
+          reject(err);
+        } else resolve();
       });
     });
   });

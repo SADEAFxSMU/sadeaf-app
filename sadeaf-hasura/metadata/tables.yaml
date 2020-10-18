@@ -379,6 +379,18 @@
             service_requestor:
               account_id:
                 _eq: X-Hasura-User-Id
+  event_triggers:
+  - name: assignment-status-notifier
+    definition:
+      enable_manual: false
+      update:
+        columns:
+        - status
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: WEB_HOOK_URL
 - table:
     schema: public
     name: attendance
@@ -648,90 +660,70 @@
   insert_permissions:
   - role: client
     permission:
-      check:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      check: {}
       columns:
-      - email_address
+      - id
+      - notification_setting_id
       backend_only: false
   - role: service_requestor
     permission:
-      check:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      check: {}
       columns:
-      - email_address
+      - id
+      - notification_setting_id
       backend_only: false
   - role: volunteer
     permission:
-      check:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      check: {}
       columns:
-      - email_address
+      - id
+      - notification_setting_id
       backend_only: false
   select_permissions:
   - role: client
     permission:
       columns:
-      - email_address
       - id
       - notification_setting_id
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   - role: service_requestor
     permission:
       columns:
       - id
       - notification_setting_id
-      - email_address
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   - role: volunteer
     permission:
       columns:
       - id
       - notification_setting_id
-      - email_address
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   update_permissions:
   - role: client
     permission:
-      columns:
-      - email_address
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      columns: []
+      filter: {}
       check: null
   - role: service_requestor
     permission:
-      columns:
-      - email_address
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      columns: []
+      filter: {}
       check: null
   - role: volunteer
     permission:
-      columns:
-      - email_address
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      columns: []
+      filter: {}
       check: null
+  delete_permissions:
+  - role: client
+    permission:
+      filter: {}
+  - role: service_requestor
+    permission:
+      filter: {}
+  - role: volunteer
+    permission:
+      filter: {}
 - table:
     schema: public
     name: event
