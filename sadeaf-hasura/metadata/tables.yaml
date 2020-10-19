@@ -780,7 +780,9 @@
       columns:
       - client_id
       - description
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
   - role: service_requestor
     permission:
@@ -792,7 +794,9 @@
       columns:
       - client_id
       - description
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
   select_permissions:
   - role: client
@@ -802,7 +806,9 @@
       - created_at
       - description
       - id
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
       - updated_at
       filter:
@@ -817,7 +823,9 @@
       - created_at
       - description
       - id
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
       - updated_at
       filter:
@@ -833,7 +841,9 @@
       - created_at
       - description
       - id
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
       - updated_at
       filter: {}
@@ -842,7 +852,9 @@
     permission:
       columns:
       - description
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
       filter:
         client:
@@ -854,7 +866,9 @@
       columns:
       - client_id
       - description
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
       filter:
         client:
@@ -1541,18 +1555,24 @@
       columns:
       - account_id
       - id
+      - interpreter
+      - notetaker
       filter: {}
   - role: pending
     permission:
       columns:
       - account_id
       - id
+      - interpreter
+      - notetaker
       filter: {}
   - role: service_requestor
     permission:
       columns:
       - account_id
       - id
+      - interpreter
+      - notetaker
       filter: {}
   - role: volunteer
     permission:
@@ -1560,6 +1580,8 @@
       - account_id
       - approval_status
       - id
+      - interpreter
+      - notetaker
       filter: {}
 - table:
     schema: public

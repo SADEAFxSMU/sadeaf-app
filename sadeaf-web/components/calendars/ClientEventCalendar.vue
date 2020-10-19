@@ -107,7 +107,11 @@ export default {
     },
 
     handleEditAssignmentClick(assignment) {
-      this.updateAssignment = assignment;
+      this.updateAssignment = {
+        ...assignment,
+        notetaker_required: assignment.event.notetaker_required,
+        interpreter_required: assignment.event.interpreter_required,
+      };
       this.updateAssignmentDialogVisible = true;
     },
 
@@ -163,6 +167,8 @@ export default {
               event {
                 id
                 name
+                notetaker_required
+                interpreter_required
               }
               volunteer {
                 id
@@ -237,6 +243,7 @@ export default {
   flex: 1;
   transition: flex 0.3s;
 }
+
 .fade-enter,
 .fade-leave-to {
   flex: 0;
