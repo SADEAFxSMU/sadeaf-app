@@ -1,12 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { PRODUCTION } from '../config';
 import { INVALID_MESSAGE } from './registration-messages';
 import { getRegisterMessage, getStartMessage } from './actions';
 
-const {
-  TELEGRAM: { WEBHOOK_URL },
-} = require('../config');
+const { PRODUCTION } = require('../config');
 
 export default {
   async start(port) {
@@ -53,14 +50,16 @@ export default {
 
     return new Promise((resolve, reject) => {
       app.listen(port, (err) => {
-        if (err) reject(err);
-        else {
-          if (!PRODUCTION) {
-            console.warn('Remember to install tunnelto and run -> tunnelto --port 3000 -s sadeaftest');
-          }
-          console.log(`Telegram webhook listening on: ${WEBHOOK_URL}`);
-          resolve();
+        if (err) {
+          return reject(err);
         }
+
+        if (!PRODUCTION) {
+          console.warn('Remember to install tunnelto and run -> tunnelto --port 3000 -s sadeaftest');
+          console.warn(`Telegram webhook listening on: https://sadeaftest.tunnelto.dev/_telegram/webhook`);
+        }
+
+        resolve();
       });
     });
   },
