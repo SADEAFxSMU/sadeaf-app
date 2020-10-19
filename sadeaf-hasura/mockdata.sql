@@ -167,15 +167,15 @@ INSERT INTO email_information(
 (3, 4);
 
 INSERT INTO event (
-    id, name, client_id, description, purpose
+    id, name, client_id, description, purpose, notetaker_required, interpreter_required
 ) VALUES
-(1, 'IS111 - Intro to Programming', 1, 'Introductory programming class - very hands-on', 'School'),
-(2, 'IS113 - Web Application Development', 12, 'Introductory programming class - very hands-on', 'School'),
-(3, 'JPMorgan Winning Women', 3, 'Event promoting gender equality at JPMorgan', 'Workshop'),
-(4, 'CodeIT Suisse', 3, 'Annual hackathon for recruitment and campus outreach', 'Workshop'),
-(5, 'COMM169 - Management Communication', 3, 'CORE SMU module', 'School'),
-(6, 'COMM169 - Management Communication', 4, 'CORE SMU module', 'School'),
-(7, 'COMM169 - Management Communication', 5, 'CORE SMU module', 'School');
+(1, 'IS111 - Intro to Programming', 1, 'Introductory programming class - very hands-on', 'School', true, false),
+(2, 'IS113 - Web Application Development', 12, 'Introductory programming class - very hands-on', 'School', false, true),
+(3, 'JPMorgan Winning Women', 3, 'Event promoting gender equality at JPMorgan', 'Workshop', false, true),
+(4, 'CodeIT Suisse', 3, 'Annual hackathon for recruitment and campus outreach', 'Workshop', true, true),
+(5, 'COMM169 - Management Communication', 3, 'CORE SMU module', 'School', true, false),
+(6, 'COMM169 - Management Communication', 4, 'CORE SMU module', 'School', false, true),
+(7, 'COMM169 - Management Communication', 5, 'CORE SMU module', 'School', false, true);
 
 INSERT INTO assignment (
     id, event_id, status, start_dt, end_dt,
@@ -286,3 +286,13 @@ SELECT setval(pg_get_serial_sequence('membership_type', 'id'), coalesce(max(id) 
 SELECT setval(pg_get_serial_sequence('account', 'id'), coalesce(max(id) + 1, 1), false) FROM account;
 SELECT setval(pg_get_serial_sequence('quotation', 'id'), coalesce(max(id) + 1, 1), false) FROM quotation;
 SELECT setval(pg_get_serial_sequence('volunteer_assignment_opt_in', 'id'), coalesce(max(id) + 1, 1), false) FROM volunteer_assignment_opt_in;
+
+
+UPDATE volunteer SET notetaker = false, interpreter = true where id = 1;
+UPDATE volunteer SET notetaker = true, interpreter = false where id = 2;
+UPDATE volunteer SET notetaker = true, interpreter = false where id = 3;
+UPDATE volunteer SET notetaker = true, interpreter = true where id = 4;
+UPDATE volunteer SET notetaker = false, interpreter = true where id = 5;
+UPDATE volunteer SET notetaker = true, interpreter = true where id = 6;
+UPDATE volunteer SET notetaker = true, interpreter = false where id = 7;
+UPDATE volunteer SET notetaker = true, interpreter = true where id = 8;
