@@ -34,10 +34,10 @@
 
       <template v-slot:skillsRequired="{ row }">
         <span v-if="row.skillsRequired.notetakerRequired">
-          <NotetakerRequiredTag/>
+          <NotetakerRequiredTag />
         </span>
         <span v-if="row.skillsRequired.interpreterRequired">
-          <InterpreterRequiredTag/>
+          <InterpreterRequiredTag />
         </span>
       </template>
 

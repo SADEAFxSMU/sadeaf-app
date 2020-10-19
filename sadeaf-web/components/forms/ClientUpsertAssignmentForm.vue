@@ -10,7 +10,7 @@
         <h1 class="title">Pending Volunteer</h1>
       </div>
     </div>
-    <el-form ref="form" :rules=rules :model="form" label-width="150px">
+    <el-form ref="form" :rules="rules" :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
           <el-input v-model="form.address_line_one" placeholder="Address Line 1" />
@@ -22,9 +22,10 @@
         </div>
       </el-form-item>
 
-      <el-form-item v-if="form.updateEventSkillRequirements"
-                    label="Skill Requirements"
-                    prop="updateEventSkillRequirements"
+      <el-form-item
+        v-if="form.updateEventSkillRequirements"
+        label="Skill Requirements"
+        prop="updateEventSkillRequirements"
       >
         <el-checkbox-group v-model="form.updateEventSkillRequirements">
           <el-checkbox label="Notetaking" name="type"></el-checkbox>
@@ -78,14 +79,17 @@ import _ from 'lodash';
 import DangerZone from './DangerZone';
 
 const UPDATE_EVENT_SKILLS = gql`
-mutation UpdateEventSkills($assignment_id: Int!, $notetaker_required: Boolean!, $interpreter_required: Boolean!) {
-  update_event(where: {assignments: {id: {_eq: $assignment_id}}}, _set: {interpreter_required: $interpreter_required, notetaker_required: $notetaker_required}) {
-    returning {
-      notetaker_required
-      interpreter_required
+  mutation UpdateEventSkills($assignment_id: Int!, $notetaker_required: Boolean!, $interpreter_required: Boolean!) {
+    update_event(
+      where: { assignments: { id: { _eq: $assignment_id } } }
+      _set: { interpreter_required: $interpreter_required, notetaker_required: $notetaker_required }
+    ) {
+      returning {
+        notetaker_required
+        interpreter_required
+      }
     }
   }
-}
 `;
 
 const UPDATE_ASSIGNMENT = gql`
@@ -162,7 +166,8 @@ export default {
               } else {
                 callback(new Error('Please enter an event skill!'));
               }
-            }, trigger: 'blur',
+            },
+            trigger: 'blur',
           },
         ],
       },

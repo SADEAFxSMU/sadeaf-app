@@ -4,10 +4,8 @@
 
 <script>
 export default {
-name: "NotetakerRequiredTag"
-}
+  name: 'NotetakerRequiredTag',
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

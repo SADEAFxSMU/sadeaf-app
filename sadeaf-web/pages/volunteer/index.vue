@@ -24,8 +24,8 @@ export default {
       return this.user.name;
     },
     volunteer() {
-      return { account_id: this.$store.state.auth.user.id, ...this.$store.state.auth.user.volunteer }
-    }
+      return { account_id: this.$store.state.auth.user.id, ...this.$store.state.auth.user.volunteer };
+    },
   },
 };
 </script>

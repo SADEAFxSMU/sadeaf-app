@@ -120,9 +120,9 @@ const INSERT_EVENT = gql`
     $client_id: Int!
     $description: String
     $purpose: String
-    $assignments: assignment_arr_rel_insert_input,
-    $notetaker_required: Boolean,
-    $interpreter_required: Boolean,
+    $assignments: assignment_arr_rel_insert_input
+    $notetaker_required: Boolean
+    $interpreter_required: Boolean
   ) {
     insert_event_one(
       object: {
@@ -131,8 +131,8 @@ const INSERT_EVENT = gql`
         description: $description
         purpose: $purpose
         assignments: $assignments
-        notetaker_required: $notetaker_required,
-        interpreter_required: $interpreter_required,
+        notetaker_required: $notetaker_required
+        interpreter_required: $interpreter_required
       }
     ) {
       id

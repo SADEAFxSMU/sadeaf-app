@@ -3,7 +3,7 @@
     <div class="header">
       <div style="padding-bottom: 8px">
         <span v-if="notetakerRequired">
-          <NotetakerRequiredTag/>
+          <NotetakerRequiredTag />
         </span>
         <span v-if="interpreterRequired">
           <InterpreterRequiredTag />
@@ -18,7 +18,7 @@
       />
     </div>
 
-    <div class='title-wrapper'>
+    <div class="title-wrapper">
       <h2 class="title" style="padding-right: 12px">{{ eventName }}</h2>
       <assignment-status :status="status" />
     </div>
@@ -52,7 +52,13 @@ import InterpreterRequiredTag from '@/components/tags/InterpreterRequiredTag';
 
 export default {
   name: 'AssignmentCard',
-  components: { InterpreterRequiredTag, NotetakerRequiredTag, AssignmentStatus, StatusIndicator, UserCardHorizontalSmall },
+  components: {
+    InterpreterRequiredTag,
+    NotetakerRequiredTag,
+    AssignmentStatus,
+    StatusIndicator,
+    UserCardHorizontalSmall,
+  },
   props: {
     type: {
       type: String,

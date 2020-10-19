@@ -1,5 +1,5 @@
 <template>
-  <el-tag type='success' size="small"> Interpretation </el-tag>
+  <el-tag type="success" size="small"> Interpretation </el-tag>
 </template>
 
 <script>
@@ -8,6 +8,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
