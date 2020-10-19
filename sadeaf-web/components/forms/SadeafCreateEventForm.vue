@@ -19,7 +19,12 @@
           />
         </div>
       </el-form-item>
-      <el-form-item v-if="form.eventSkillRequirements" label="Skill Requirements" prop="eventSkillRequirements" required>
+      <el-form-item
+        v-if="form.eventSkillRequirements"
+        label="Skill Requirements"
+        prop="eventSkillRequirements"
+        required
+      >
         <el-checkbox-group v-model="form.eventSkillRequirements">
           <el-checkbox label="Notetaking" name="type"></el-checkbox>
           <el-checkbox label="Interpretation" name="type"></el-checkbox>
@@ -68,10 +73,26 @@ import gql from 'graphql-tag';
 import ClientSearch from '../user/ClientSearch';
 
 const UPDATE_EVENT = gql`
-  mutation UpdateEvent($notetaker_required: Boolean!, $interpreter_required: Boolean!, $client_id: Int, $description: String, $id: Int!, $name: String, $purpose: String) {
+  mutation UpdateEvent(
+    $notetaker_required: Boolean!
+    $interpreter_required: Boolean!
+    $client_id: Int
+    $description: String
+    $id: Int!
+    $name: String
+    $purpose: String
+  ) {
     update_event_by_pk(
       pk_columns: { id: $id }
-      _set: { notetaker_required: $notetaker_required, interpreter_required: $interpreter_required, client_id: $client_id, description: $description, id: $id, name: $name, purpose: $purpose }
+      _set: {
+        notetaker_required: $notetaker_required
+        interpreter_required: $interpreter_required
+        client_id: $client_id
+        description: $description
+        id: $id
+        name: $name
+        purpose: $purpose
+      }
     ) {
       client_id
       created_at
@@ -85,8 +106,24 @@ const UPDATE_EVENT = gql`
 `;
 
 const INSERT_EVENT = gql`
-  mutation InsertEvent($notetaker_required: Boolean!, $interpreter_required: Boolean!, $client_id: Int, $description: String, $name: String, $purpose: String) {
-    insert_event_one(object: { notetaker_required: $notetaker_required, interpreter_required: $interpreter_required, client_id: $client_id, description: $description, name: $name, purpose: $purpose }) {
+  mutation InsertEvent(
+    $notetaker_required: Boolean!
+    $interpreter_required: Boolean!
+    $client_id: Int
+    $description: String
+    $name: String
+    $purpose: String
+  ) {
+    insert_event_one(
+      object: {
+        notetaker_required: $notetaker_required
+        interpreter_required: $interpreter_required
+        client_id: $client_id
+        description: $description
+        name: $name
+        purpose: $purpose
+      }
+    ) {
       client_id
       created_at
       description
@@ -149,7 +186,10 @@ export default {
     },
     setForm(event) {
       if (event) {
-        const { client, skillsRequired: { notetakerRequired, interpreterRequired } } = event;
+        const {
+          client,
+          skillsRequired: { notetakerRequired, interpreterRequired },
+        } = event;
         const skillRequirements = [];
 
         if (notetakerRequired) {
@@ -184,7 +224,7 @@ export default {
           }
           this.$emit('update', this.form);
         }
-      })
+      });
     },
     handleCancel() {
       this.$emit('cancel');

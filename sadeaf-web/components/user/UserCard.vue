@@ -15,12 +15,7 @@
               <role-tag :role="role" />
             </div>
             <div class="deets">
-              <NotetakerRequiredTag
-                style="margin-right: 8px"
-                v-if="user.notetaker"
-                label="Notetaker"
-                size="mini"
-              />
+              <NotetakerRequiredTag style="margin-right: 8px" v-if="user.notetaker" label="Notetaker" size="mini" />
               <InterpreterRequiredTag
                 style="margin-right: 8px"
                 v-if="user.interpreter"
@@ -126,7 +121,7 @@ export default {
     },
     role() {
       const user = this.user;
-      return (user.role) || 'USER';
+      return user.role || 'USER';
     },
     email() {
       return this.user.email;

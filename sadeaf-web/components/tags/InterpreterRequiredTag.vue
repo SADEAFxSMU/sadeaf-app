@@ -15,8 +15,8 @@ export default {
       required: false,
       default: 'small',
       type: String,
-    }
-  }
+    },
+  },
 };
 </script>
 

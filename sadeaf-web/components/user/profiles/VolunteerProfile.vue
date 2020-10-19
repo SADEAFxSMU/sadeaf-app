@@ -90,7 +90,13 @@ export default {
 
   computed: {
     user() {
-      return this.volunteer && { ...this.volunteer.user, notetaker: this.volunteer.notetaker, interpreter: this.volunteer.interpreter };
+      return (
+        this.volunteer && {
+          ...this.volunteer.user,
+          notetaker: this.volunteer.notetaker,
+          interpreter: this.volunteer.interpreter,
+        }
+      );
     },
   },
 

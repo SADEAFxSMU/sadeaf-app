@@ -33,9 +33,7 @@
               <NotetakerRequiredTag size="large" v-if="user.notetaker" label="Notetaker" />
             </div>
 
-            <div v-if="createdAt" class="joined">
-              Joined {{ createdAt }}
-            </div>
+            <div v-if="createdAt" class="joined">Joined {{ createdAt }}</div>
           </div>
         </div>
       </el-col>

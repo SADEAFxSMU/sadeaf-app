@@ -40,12 +40,7 @@
           <InterpreterRequiredTag />
         </span>
         <span v-if="!row.skillsRequired.interpreterRequired && !row.skillsRequired.notetakerRequired">
-          <el-tag
-            size="small"
-            type="warning"
-          >
-            No Skillset Stated
-          </el-tag>
+          <el-tag size="small" type="warning"> No Skillset Stated </el-tag>
         </span>
       </template>
 

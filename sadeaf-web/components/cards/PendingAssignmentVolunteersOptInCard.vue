@@ -23,14 +23,15 @@
               <tr>
                 <th>Skillset</th>
                 <td>
-                  <NotetakerRequiredTag v-if="pendingAssignment.event.notetaker_required"/>
-                  <InterpreterRequiredTag v-if="pendingAssignment.event.interpreter_required"/>
+                  <NotetakerRequiredTag v-if="pendingAssignment.event.notetaker_required" />
+                  <InterpreterRequiredTag v-if="pendingAssignment.event.interpreter_required" />
                   <!--              No skillset shouldn't happen, but I'm putting it here in case-->
 
                   <el-tag
                     size="small"
                     type="warning"
-                    v-if="!pendingAssignment.event.notetaker_required && !pendingAssignment.event.interpreter_required">
+                    v-if="!pendingAssignment.event.notetaker_required && !pendingAssignment.event.interpreter_required"
+                  >
                     No Skillset
                   </el-tag>
                 </td>
@@ -47,7 +48,6 @@
                 <th>Desc.</th>
                 <td>{{ pendingAssignment.event.description }}</td>
               </tr>
-
             </table>
           </div>
         </div>
