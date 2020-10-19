@@ -95,6 +95,8 @@ export default {
               event {
                 id
                 name
+                interpreter_required
+                notetaker_required
                 description
                 client {
                   id

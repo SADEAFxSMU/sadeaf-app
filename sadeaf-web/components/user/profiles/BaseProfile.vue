@@ -27,10 +27,14 @@
               {{ name }}
             </h1>
             <a class="link" :href="`mailto:${email}`" target="_blank">{{ email }}</a>
-            <div class="user-stats">
-              <div v-if="createdAt" class="joined">
-                <span> Joined {{ createdAt }} </span>
-              </div>
+
+            <div class="user-skillset">
+              <InterpreterRequiredTag size="large" v-if="user.interpreter" label="Interpreter" />
+              <NotetakerRequiredTag size="large" v-if="user.notetaker" label="Notetaker" />
+            </div>
+
+            <div v-if="createdAt" class="joined">
+              Joined {{ createdAt }}
             </div>
           </div>
         </div>
@@ -46,6 +50,8 @@
 <script>
 import { DateUtils } from '../../../common/date-utils';
 import RoleTag from '../../RoleTag';
+import InterpreterRequiredTag from '@/components/tags/InterpreterRequiredTag';
+import NotetakerRequiredTag from '@/components/tags/NotetakerRequiredTag';
 
 /**
  * Shows the user's details and other account info
@@ -54,6 +60,8 @@ export default {
   name: 'BaseProfile',
 
   components: {
+    NotetakerRequiredTag,
+    InterpreterRequiredTag,
     RoleTag,
   },
 
@@ -102,6 +110,7 @@ export default {
   width: 100%;
   max-width: 1000px;
 }
+
 .profile {
   display: flex;
   flex-direction: column;
@@ -110,42 +119,54 @@ export default {
   border-radius: 6px;
   padding: 16px;
 }
+
 .profile-pic {
   border-radius: 50%;
   margin-bottom: 16px;
   width: 250px;
   box-shadow: 2px 2px 8px 1px #cccce7;
 }
+
 .avatar {
   position: relative;
 }
+
 .role {
   position: absolute;
   bottom: 12px;
   right: 12px;
   box-shadow: 1px 1px 6px 1px #dbdbf5;
 }
+
 .user-info {
   display: flex;
   flex-direction: column;
 }
+
+.user-skillset {
+  margin: 8px 0 8px 0;
+}
+
 .name {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
 }
+
 .link {
   color: #6f97ff;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.2s;
 }
+
 .link:hover {
   color: #f8637a;
 }
+
 .joined {
   color: #797994;
-  margin-top: 12px;
+  margin-top: 4px;
   font-size: 0.8em;
 }
 </style>

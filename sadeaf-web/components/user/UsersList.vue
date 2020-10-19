@@ -35,6 +35,8 @@ const allVolunteersQuery = gql`
   query AllVolunteers {
     volunteers: volunteer {
       id
+      notetaker
+      interpreter
       account {
         ...accountFields
       }
@@ -96,7 +98,10 @@ export default {
         users.push(...this.admins);
       }
       if (this.shouldShowVolunteers) {
-        users.push(...this.volunteers);
+        users.push(...this.volunteers.map(v => ({
+          ...v,
+          account: { ...v.account, notetaker: v.notetaker, interpreter: v.interpreter },
+        })));
       }
       if (this.shouldShowClients) {
         users.push(...this.clients);
@@ -159,6 +164,7 @@ export default {
   flex-wrap: wrap;
   max-width: 800px;
 }
+
 .user-card {
   flex: 1;
   background: white;

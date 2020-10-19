@@ -90,7 +90,7 @@ export default {
 
   computed: {
     user() {
-      return this.volunteer && this.volunteer.user;
+      return this.volunteer && { ...this.volunteer.user, notetaker: this.volunteer.notetaker, interpreter: this.volunteer.interpreter };
     },
   },
 
@@ -100,6 +100,8 @@ export default {
         query VolunteerQueryByAccountId($id: Int!) {
           volunteer: volunteer_by_pk(id: $id) {
             id
+            notetaker
+            interpreter
             user: account {
               ...accountFields
             }
@@ -193,14 +195,17 @@ export default {
 <style scoped>
 .volunteer {
 }
+
 .volunteer-stats {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 16px;
 }
+
 .assignments {
   width: 100%;
 }
+
 .heading {
   margin-top: 16px;
   text-align: center;
