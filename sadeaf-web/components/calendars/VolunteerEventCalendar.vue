@@ -108,7 +108,9 @@ const volunteerPendingAssignmentsQuery = gql`
       where: {
         status: { _eq: "PENDING" }
         _not: { volunteer_assignment_opt_ins: { volunteer_id: { _eq: $volunteer_id } } }
-        event: { client: { _not: { blacklists: { volunteer_account_id: { _eq: $account_id } } } } }
+        event: {
+          client: { _not: { blacklists: { volunteer_account_id: { _eq: $account_id } } } }
+        }
       }
     ) {
       id
@@ -125,6 +127,8 @@ const volunteerPendingAssignmentsQuery = gql`
         id
         name
         description
+        notetaker_required
+        interpreter_required
         purpose
       }
     }
@@ -272,7 +276,7 @@ export default {
           confirmButtonText: 'Yes',
           cancelButtonText: 'Cancel',
           type: 'warning',
-        }
+        },
       )
         .then(() => {
           this.$apollo
@@ -345,11 +349,27 @@ export default {
           };
         },
         result({ data }) {
-          data.pending_assignments.forEach((assignment) => {
+          const { pending_assignments } = data;
+          const filtered_assignments = pending_assignments.filter(a => {
+            const { notetaker: isNotetaker, interpreter: isInterpreter } = this.volunteer;
+            const { notetaker_required, interpreter_required } = a.event;
+
+            if (notetaker_required && interpreter_required) {
+              return notetaker_required === isNotetaker && interpreter_required === isInterpreter;
+            } else if (notetaker_required && !interpreter_required) {
+              return notetaker_required === isNotetaker;
+            } else if (interpreter_required && !notetaker_required) {
+              return interpreter_required === isInterpreter;
+            } else {
+              return true;
+            }
+          })
+
+          filtered_assignments.forEach((assignment) => {
             assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
             assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
           });
-          this.pendingAssignments = data.pending_assignments;
+          this.pendingAssignments = filtered_assignments;
         },
       },
     },
