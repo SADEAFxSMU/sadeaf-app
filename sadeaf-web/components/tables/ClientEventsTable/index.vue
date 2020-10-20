@@ -32,13 +32,25 @@
         </el-tag>
       </template>
 
+      <template v-slot:skillsRequired="{ row }">
+        <span v-if="row.skillsRequired.notetakerRequired">
+          <NotetakerRequiredTag />
+        </span>
+        <span v-if="row.skillsRequired.interpreterRequired">
+          <InterpreterRequiredTag />
+        </span>
+        <span v-if="!row.skillsRequired.interpreterRequired && !row.skillsRequired.notetakerRequired">
+          <el-tag size="small" type="warning"> No Skillset Stated </el-tag>
+        </span>
+      </template>
+
       <!-- Extra columns (make sure to declare in :columns -->
       <template v-slot:volunteers="{ row }">
         <volunteers-cell :volunteers="row.volunteers" v-if="row.volunteers && row.volunteers.length > 0" />
       </template>
 
       <template v-slot:edit="{ row }">
-        <el-button type="text" size="small" @click="handleUpdateEventClick(row)"> Edit </el-button>
+        <el-button type="text" size="small" @click="handleUpdateEventClick(row)"> Edit</el-button>
       </template>
     </base-table>
   </div>
@@ -52,11 +64,15 @@ import SadeafCreateAssignmentForm from '../../forms/SadeafCreateAssignmentForm';
 import gql from 'graphql-tag';
 import AssignmentsTimeline from '../../cards/AssignmentsTimeline';
 import ClientCreateEventForm from '../../forms/ClientCreateEventForm';
+import InterpreterRequiredTag from '@/components/tags/InterpreterRequiredTag';
+import NotetakerRequiredTag from '@/components/tags/NotetakerRequiredTag';
 
 export default {
   name: 'ClientEventsTable',
 
   components: {
+    NotetakerRequiredTag,
+    InterpreterRequiredTag,
     ClientCreateEventForm,
     AssignmentsTimeline,
     UserCardHorizontalSmall,
@@ -75,6 +91,10 @@ export default {
         {
           name: 'name',
           label: 'Event',
+        },
+        {
+          name: 'skillsRequired',
+          label: 'Skills Required',
         },
         {
           name: 'description',
@@ -145,6 +165,10 @@ export default {
             description: event.description,
             volunteers: event.volunteers.nodes.filter((node) => node.volunteer).map((node) => node.volunteer),
             assignments: event.assignments,
+            skillsRequired: {
+              notetakerRequired: event.notetaker_required,
+              interpreterRequired: event.interpreter_required,
+            },
           });
         }
       }
@@ -165,6 +189,8 @@ export default {
               name
               description
               purpose
+              interpreter_required
+              notetaker_required
               client {
                 id
                 account {
@@ -238,11 +264,13 @@ export default {
   border-radius: 6px;
   overflow: hidden;
 }
+
 .expanded-row .body {
   display: flex;
   align-items: center;
   margin-bottom: 16px;
 }
+
 .expanded-row .title {
   opacity: 0.5;
   margin-right: 8px;

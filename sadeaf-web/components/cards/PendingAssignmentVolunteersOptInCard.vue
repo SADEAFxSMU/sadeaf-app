@@ -21,6 +21,22 @@
             <el-divider> Details </el-divider>
             <table>
               <tr>
+                <th>Skillset</th>
+                <td>
+                  <NotetakerRequiredTag v-if="pendingAssignment.event.notetaker_required" />
+                  <InterpreterRequiredTag v-if="pendingAssignment.event.interpreter_required" />
+                  <!--              No skillset shouldn't happen, but I'm putting it here in case-->
+
+                  <el-tag
+                    size="small"
+                    type="warning"
+                    v-if="!pendingAssignment.event.notetaker_required && !pendingAssignment.event.interpreter_required"
+                  >
+                    No Skillset
+                  </el-tag>
+                </td>
+              </tr>
+              <tr>
                 <th>Start</th>
                 <td>{{ startDatetime }}</td>
               </tr>
@@ -70,10 +86,12 @@
 import UserAvatar from '../user/UserAvatar';
 import gql from 'graphql-tag';
 import { DateUtils } from '../../common/date-utils';
+import NotetakerRequiredTag from '@/components/tags/NotetakerRequiredTag';
+import InterpreterRequiredTag from '@/components/tags/InterpreterRequiredTag';
 
 export default {
   name: 'PendingAssignmentVolunteersOptInCard',
-  components: { UserAvatar },
+  components: { InterpreterRequiredTag, NotetakerRequiredTag, UserAvatar },
 
   props: {
     pendingAssignment: {

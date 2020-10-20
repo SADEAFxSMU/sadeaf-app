@@ -32,6 +32,18 @@
         </el-tag>
       </template>
 
+      <template v-slot:skillsRequired="{ row }">
+        <span v-if="row.skillsRequired.notetakerRequired">
+          <NotetakerRequiredTag />
+        </span>
+        <span v-if="row.skillsRequired.interpreterRequired">
+          <InterpreterRequiredTag />
+        </span>
+        <span v-if="!row.skillsRequired.interpreterRequired && !row.skillsRequired.notetakerRequired">
+          <el-tag size="small" type="warning"> No Skillset Stated </el-tag>
+        </span>
+      </template>
+
       <!-- Extra columns (make sure to declare in :columns -->
       <template v-slot:volunteers="{ row }">
         <volunteers-cell :volunteers="row.volunteers" v-if="row.volunteers && row.volunteers.length > 0" />
@@ -73,10 +85,14 @@ import gql from 'graphql-tag';
 import AssignmentsTimeline from '../../cards/AssignmentsTimeline';
 import SadeafCreateEventForm from '../../forms/SadeafCreateEventForm';
 import { DateUtils } from '../../../common/date-utils';
+import NotetakerRequiredTag from '@/components/tags/NotetakerRequiredTag';
+import InterpreterRequiredTag from '@/components/tags/InterpreterRequiredTag';
 
 export default {
   name: 'AdminEventsTable',
   components: {
+    InterpreterRequiredTag,
+    NotetakerRequiredTag,
     SadeafCreateEventForm,
     AssignmentsTimeline,
     UserCardHorizontalSmall,
@@ -98,6 +114,10 @@ export default {
         {
           name: 'client',
           label: 'Client',
+        },
+        {
+          name: 'skillsRequired',
+          label: 'Skills Required',
         },
         {
           name: 'name',
@@ -168,6 +188,10 @@ export default {
             description: event.description,
             volunteers: event.volunteers.nodes.filter((node) => node.volunteer).map((node) => node.volunteer),
             assignments: event.assignments,
+            skillsRequired: {
+              notetakerRequired: event.notetaker_required,
+              interpreterRequired: event.interpreter_required,
+            },
           });
         }
       }
@@ -199,6 +223,8 @@ export default {
               id
               name
               description
+              interpreter_required
+              notetaker_required
               purpose
               client {
                 id

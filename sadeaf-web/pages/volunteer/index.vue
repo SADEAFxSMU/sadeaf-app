@@ -16,12 +16,6 @@ export default {
     VolunteerEventCalendar,
   },
 
-  data() {
-    return {
-      volunteer: null,
-    };
-  },
-
   computed: {
     user() {
       return this.$store.state.auth.user;
@@ -29,26 +23,8 @@ export default {
     userName() {
       return this.user.name;
     },
-  },
-
-  apollo: {
-    volunteer: {
-      query: gql`
-        query VolunteerByAccountId($account_id: Int!) {
-          volunteer(where: { account_id: { _eq: $account_id } }) {
-            id
-            account_id
-          }
-        }
-      `,
-      variables() {
-        return {
-          account_id: this.user.id,
-        };
-      },
-      result({ data }) {
-        this.volunteer = data.volunteer[0];
-      },
+    volunteer() {
+      return { account_id: this.$store.state.auth.user.id, ...this.$store.state.auth.user.volunteer };
     },
   },
 };

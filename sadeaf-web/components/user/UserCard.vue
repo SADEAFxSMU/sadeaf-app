@@ -14,6 +14,15 @@
               <h3 class="name">{{ name }}</h3>
               <role-tag :role="role" />
             </div>
+            <div class="deets">
+              <NotetakerRequiredTag style="margin-right: 8px" v-if="user.notetaker" label="Notetaker" size="mini" />
+              <InterpreterRequiredTag
+                style="margin-right: 8px"
+                v-if="user.interpreter"
+                label="Interpreter"
+                size="mini"
+              />
+            </div>
             <div>
               {{ email }}
             </div>
@@ -21,7 +30,7 @@
         </slot>
       </div>
       <div class="footer" v-if="$slots.footer">
-        <slot name="footer"> </slot>
+        <slot name="footer"></slot>
       </div>
     </user-profile-link>
   </div>
@@ -32,11 +41,15 @@ import UserProfileLink from '../link/UserProfileLink';
 import { ROLE_EL_TAG_TYPES } from '../../common/types/constants';
 import RoleTag from '../RoleTag';
 import { getUserProfilePagePath } from '../../common/types/users';
+import NotetakerRequiredTag from '@/components/tags/NotetakerRequiredTag';
+import InterpreterRequiredTag from '@/components/tags/InterpreterRequiredTag';
 
 export default {
   name: 'UserCard',
 
   components: {
+    InterpreterRequiredTag,
+    NotetakerRequiredTag,
     UserProfileLink,
     RoleTag,
   },
@@ -108,7 +121,7 @@ export default {
     },
     role() {
       const user = this.user;
-      return (user.role && user.role) || 'USER';
+      return user.role || 'USER';
     },
     email() {
       return this.user.email;
@@ -138,33 +151,40 @@ export default {
   flex: 1;
   transition: box-shadow 0.2s;
 }
+
 .card.hover {
   cursor: pointer;
   box-shadow: 0 2px 6px 4px #d5d8ec;
 }
+
 .body-wrapper {
   height: 100%;
   display: flex;
   align-items: center;
   padding: 16px;
 }
+
 .image {
   box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   width: 75px;
 }
+
 .body {
   padding-left: 12px;
 }
+
 .deets {
   display: flex;
   align-items: center;
   margin-bottom: 4px;
 }
+
 .name {
   color: #575769;
   white-space: nowrap;
 }
+
 .role {
   margin-left: 6px;
 }
