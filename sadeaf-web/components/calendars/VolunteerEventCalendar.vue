@@ -136,7 +136,11 @@ const volunteerPendingAssignmentsQuery = gql`
 const volunteerOptInQuery = gql`
   subscription VolunteerOptIns($volunteer_id: Int!) {
     volunteer_assignment_opt_in(
-      where: { volunteer_id: { _eq: $volunteer_id }, assignment: { status: { _nin: ["COMPLETE", "MATCHED"] } } }
+      where: {
+        volunteer_id: { _eq: $volunteer_id }
+        status: { _eq: "OPTED_IN" }
+        assignment: { status: { _nin: ["COMPLETE", "MATCHED"] } }
+      }
     ) {
       id
       assignment_id
@@ -165,10 +169,17 @@ const volunteerOptInQuery = gql`
 `;
 
 const cancelAssignmentQuery = gql`
-  mutation cancelAssignment($assignment_id: Int!) {
+  mutation cancelAssignment($assignment_id: Int!, $volunteer_id: Int!) {
     update_assignment_by_pk(pk_columns: { id: $assignment_id }, _set: { status: "PENDING", volunteer_id: null }) {
       id
       status
+    }
+
+    update_volunteer_assignment_opt_in(
+      where: { assignment_id: { _eq: $assignment_id }, volunteer_id: { _eq: $volunteer_id } }
+      _set: { status: "OPTED_OUT" }
+    ) {
+      affected_rows
     }
   }
 `;
@@ -282,6 +293,7 @@ export default {
               mutation: cancelAssignmentQuery,
               variables: {
                 assignment_id: assignment.id,
+                volunteer_id: this.$store.state.auth.user.volunteer.id,
               },
             })
             .then((_) => {
