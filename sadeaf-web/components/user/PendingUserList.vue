@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div v-if="pendingUsers.length > 0">
       <user-card
         v-for="user in pendingUsers"
         :key="'user-' + user.id"
@@ -19,6 +19,7 @@
         </template>
       </user-card>
     </div>
+    <no-data-placeholder text="No New Users" v-else />
     <el-dialog
       title="Delete User"
       :visible="deleteUserDialogVisible"
@@ -59,6 +60,7 @@ import UserCard from '../../components/user/UserCard';
 import { ROLES } from '../../common/types/constants';
 import { DateUtils } from '../../common/date-utils';
 import DangerZone from '../../components/forms/DangerZone';
+import NoDataPlaceholder from '../NoDataPlaceholder';
 
 const { humanReadableDt } = DateUtils;
 
@@ -66,6 +68,7 @@ export default {
   name: 'PendingUserList',
 
   components: {
+    NoDataPlaceholder,
     DangerZone,
     UserCard,
   },
