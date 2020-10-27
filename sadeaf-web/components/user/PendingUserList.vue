@@ -12,18 +12,7 @@
         <template v-slot:footer>
           <div>
             <el-button type="danger" @click="handleReject(user)">Reject</el-button>
-            <span class="button-divider"> or </span>
-            <el-select placeholder="Accept As" v-model="selectedRoleByUserId[user.id]">
-              <el-option v-for="role in ROLES" :key="'select-' + role" :label="'Accept as ' + role" :value="role">
-                {{ role }}
-              </el-option>
-            </el-select>
-            <el-button
-              v-if="selectedRoleByUserId[user.id]"
-              :loading="confirmButtonLoadingByUserId[user.id]"
-              type="success"
-              @click="handleApprove(user)"
-            >
+            <el-button :loading="confirmButtonLoadingByUserId[user.id]" type="success" @click="handleApprove(user)">
               Confirm
             </el-button>
           </div>
@@ -103,7 +92,7 @@ export default {
         this.confirmButtonLoadingByUserId[user.id] = false;
         this.$notify.success({
           title: `Successfully on-boarded ${user.name}`,
-          message: `${user.name} (user id: ${user.id}) has been on-boarded as a ${this.selectedRoleByUserId[user.id]}!`,
+          message: `${user.name} (user id: ${user.id}) has been on-boarded as a ${user.role}!`,
           duration: 5000,
         });
       } catch (err) {
@@ -143,18 +132,14 @@ export default {
 
     graphqlOnboardUser(user) {
       const id = user.id;
-      const role = this.selectedRoleByUserId[id];
+      const { role } = user;
       switch (role) {
         case ROLES.admin:
           return this.$apollo.mutate({
             mutation: gql`
               mutation InsertAdmin($account_id: Int!) {
-                insert_admin_one(object: { account_id: $account_id }) {
+                update_account_by_pk(pk_columns: { id: $account_id }, _set: { is_enabled: true }) {
                   id
-                }
-                update_account_by_pk(pk_columns: { id: $account_id }, _set: { role: "admin" }) {
-                  id
-                  role
                 }
               }
             `,
@@ -167,12 +152,8 @@ export default {
           return this.$apollo.mutate({
             mutation: gql`
               mutation InsertVolunteer($account_id: Int!) {
-                insert_volunteer_one(object: { account_id: $account_id, approval_status: true }) {
+                update_account_by_pk(pk_columns: { id: $account_id }, _set: { is_enabled: true }) {
                   id
-                }
-                update_account_by_pk(pk_columns: { id: $account_id }, _set: { role: "volunteer" }) {
-                  id
-                  role
                 }
               }
             `,
@@ -185,12 +166,8 @@ export default {
           return this.$apollo.mutate({
             mutation: gql`
               mutation InsertClient($account_id: Int!) {
-                insert_client_one(object: { account_id: $account_id, preferred_comm_mode: "speech" }) {
+                update_account_by_pk(pk_columns: { id: $account_id }, _set: { is_enabled: true }) {
                   id
-                }
-                update_account_by_pk(pk_columns: { id: $account_id }, _set: { role: "client" }) {
-                  id
-                  role
                 }
               }
             `,
@@ -203,12 +180,8 @@ export default {
           return this.$apollo.mutate({
             mutation: gql`
               mutation InsertServiceRequestor($account_id: Int!) {
-                insert_service_requestor_one(object: { account_id: $account_id }) {
+                update_account_by_pk(pk_columns: { id: $account_id }, _set: { is_enabled: true }) {
                   id
-                }
-                update_account_by_pk(pk_columns: { id: $account_id }, _set: { role: "service_requestor" }) {
-                  id
-                  role
                 }
               }
             `,
@@ -240,7 +213,7 @@ export default {
       pendingUsers: {
         query: gql`
           subscription AllPendingUsers {
-            pendingUsers: account(where: { role: { _eq: "pending" } }) {
+            pendingUsers: account(where: { is_enabled: { _eq: false } }) {
               id
               ...accountFields
               created_at
