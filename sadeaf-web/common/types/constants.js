@@ -68,3 +68,8 @@ export const RATING_KEYS = [
   'live_information_understanding',
   'live_interaction',
 ];
+
+export const PREFERRED_COMM_MODES = {
+  SIGN_LANGUAGE: 'Sign Language',
+  SPEECH: 'Speech',
+};
