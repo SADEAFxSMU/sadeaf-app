@@ -216,7 +216,9 @@ export default {
       pendingUsers: {
         query: gql`
           subscription AllPendingUsers {
-            pendingUsers: account(where: { is_enabled: { _eq: false } }) {
+            pendingUsers: account(
+              where: { _and: [{ is_enabled: { _eq: false } }, { _not: { role: { _eq: "pending" } } }] }
+            ) {
               id
               ...accountFields
               created_at

@@ -87,6 +87,7 @@ export default {
         if (valid) {
           try {
             await this.createClient(accountFields);
+            this.redirectToPending();
           } catch (err) {
             console.error(err);
             this.$message.error('Failed to create profile!');
@@ -117,6 +118,9 @@ export default {
         },
       });
       this.$message.success("Created profile successfully! Please hold for our admin's approval.");
+    },
+    redirectToPending() {
+      this.$router.replace('/pending');
     },
   },
 
