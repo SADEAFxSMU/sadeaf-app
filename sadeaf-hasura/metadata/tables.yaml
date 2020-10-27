@@ -319,6 +319,7 @@
       - postal
       - room_number
       - start_dt
+      - status
       filter:
         event:
           client:
@@ -1628,6 +1629,9 @@
       filter: {}
       check: null
   delete_permissions:
+  - role: client
+    permission:
+      filter: {}
   - role: volunteer
     permission:
       filter: {}
