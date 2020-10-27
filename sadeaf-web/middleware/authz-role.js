@@ -34,14 +34,16 @@ export default async function ({ $auth, store, route: { path }, redirect }) {
     return;
   }
 
-  if (!user.is_enabled) {
+  if (user.id && !user.is_enabled) {
     if (user.userType !== 'pending') {
       if (path !== '/pending') {
         return redirect('/pending');
       }
       return;
     }
-    return redirect('/registration');
+    if (path !== '/registration') {
+      return redirect('/registration');
+    }
   }
 
   if (!(await $auth.isAuthenticated())) {
