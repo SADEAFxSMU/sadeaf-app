@@ -6,6 +6,7 @@ const PATH_ROLES = [
   { prefix: '/org', roles: ['admin', 'service_requestor'] },
   { prefix: '/volunteer', roles: ['admin', 'volunteer'] },
   { prefix: '/pending', roles: ['pending'] },
+  { prefix: '/registration', roles: ['pending'] },
 ];
 
 function getRoles(path) {
@@ -19,7 +20,6 @@ function getRoles(path) {
       if (landingPages.includes(path)) {
         return roles.filter((role) => role !== 'admin');
       }
-
       return roles;
     }
   }
@@ -28,16 +28,27 @@ function getRoles(path) {
 
 export default async function ({ $auth, store, route: { path }, redirect }) {
   const roles = getRoles(path);
+  const user = store.state.auth.user;
 
   if (roles === null) {
     return;
+  }
+
+  if (!user.is_enabled) {
+    if (user.userType !== 'pending') {
+      if (path !== '/pending') {
+        return redirect('/pending');
+      }
+      return;
+    }
+    return redirect('/registration');
   }
 
   if (!(await $auth.isAuthenticated())) {
     return redirect('/sign-in');
   }
 
-  if (!roles.includes(store.state.auth.user.userType)) {
+  if (!roles.includes(user.userType)) {
     return redirect('/');
   }
 }

@@ -20,6 +20,9 @@
           <el-form-item label="Full Name" prop="fullname" required>
             <el-input v-model="form.fullname" placeholder="John Smith" />
           </el-form-item>
+          <el-form-item label="Contact" prop="contact" required>
+            <el-input v-model="form.contact" placeholder="XXXXXXXX" />
+          </el-form-item>
           <slot name="role-form" />
           <el-form-item>
             <el-button-group style="width: 100%; display: flex; justify-content: center">
@@ -42,7 +45,11 @@ export default {
   name: 'BaseSignUpForm',
   data() {
     return {
-      form: {},
+      form: {
+        fullname: null,
+        contact: null,
+        profile_pic_url: null,
+      },
       rules: {
         fullname: [{ required: true, message: 'Please enter your full name', trigger: 'blur' }],
       },

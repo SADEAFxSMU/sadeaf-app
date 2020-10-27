@@ -26,17 +26,48 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import gql from 'graphql-tag';
 import BaseSignUpForm from './BaseSignUpForm';
-import VolunteerSearch from '../../user/VolunteerSearch';
 
-import { PREFERRED_COMM_MODES } from '../../../common/types/constants';
+import { PREFERRED_COMM_MODES, ROLES } from '../../../common/types/constants';
+
+const CREATE_CLIENT_MUTATION = gql`
+  mutation CreateClient(
+    $account_id: Int!
+    $role: String
+    $name: String
+    $contact: String
+    $profile_pic_url: String
+    $organisation: String
+    $designation: String
+    $preferred_comm_mode: String
+    $additional_notes: String
+  ) {
+    insert_client_one(
+      object: {
+        account_id: $account_id
+        organisation: $organisation
+        designation: $designation
+        preferred_comm_mode: $preferred_comm_mode
+        additional_notes: $additional_notes
+      }
+    ) {
+      id
+    }
+
+    update_account_by_pk(
+      pk_columns: { id: $account_id }
+      _set: { role: $role, name: $name, contact: $contact, profile_pic_url: $profile_pic_url }
+    ) {
+      id
+    }
+  }
+`;
 
 export default {
   name: 'ClientSignUpForm',
 
-  components: { VolunteerSearch, BaseSignUpForm },
+  components: { BaseSignUpForm },
 
   props: {},
 
@@ -51,19 +82,41 @@ export default {
   },
 
   methods: {
-    validateForm() {
+    submitForm(accountFields) {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
-          console.log('Submit form ');
+          try {
+            await this.createClient(accountFields);
+          } catch (err) {
+            console.error(err);
+            this.$message.error('Failed to create profile!');
+          }
         } else {
           console.log('error submit!!');
           return false;
         }
       });
     },
-    handleConfirm(formValues) {
-      this.validateForm();
-      const form = { ...this.form, ...formValues };
+    handleConfirm(accountFields) {
+      this.submitForm(accountFields);
+    },
+    async createClient(accountFields) {
+      const { fullname, contact, profile_pic_url } = accountFields;
+      await this.$apollo.mutate({
+        mutation: CREATE_CLIENT_MUTATION,
+        variables: {
+          account_id: this.accountId,
+          role: ROLES.client,
+          name: fullname,
+          contact,
+          profile_pic_url,
+          organisation: this.form.organisation,
+          designation: this.form.designation,
+          preferred_comm_mode: this.form.preferred_comm_mode,
+          additional_notes: this.form.additional_notes,
+        },
+      });
+      this.$message.success("Created profile successfully! Please hold for our admin's approval.");
     },
   },
 

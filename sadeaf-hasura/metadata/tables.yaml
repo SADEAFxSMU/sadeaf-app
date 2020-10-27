@@ -82,6 +82,7 @@
       - created_at
       - email
       - id
+      - is_enabled
       - name
       - profile_pic_url
       - role
@@ -93,10 +94,14 @@
       columns:
       - cognito_id
       - contact
+      - created_at
       - email
       - id
+      - is_enabled
       - name
+      - profile_pic_url
       - role
+      - updated_at
       filter: {}
   - role: service_requestor
     permission:
@@ -106,18 +111,12 @@
       - created_at
       - email
       - id
+      - is_enabled
       - name
       - profile_pic_url
       - role
       - updated_at
-      filter:
-        _or:
-        - client:
-            service_requestor:
-              account_id:
-                _eq: X-Hasura-User-Id
-        - id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   - role: volunteer
     permission:
       columns:
@@ -126,6 +125,7 @@
       - created_at
       - email
       - id
+      - is_enabled
       - name
       - profile_pic_url
       - role
@@ -143,6 +143,19 @@
           id:
             _eq: X-Hasura-User-Id
       check: {}
+  - role: pending
+    permission:
+      columns:
+      - contact
+      - email
+      - id
+      - name
+      - profile_pic_url
+      - role
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
   - role: service_requestor
     permission:
       columns:
@@ -577,6 +590,20 @@
         table:
           schema: public
           name: event
+  insert_permissions:
+  - role: pending
+    permission:
+      check:
+        account_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - account_id
+      - additional_notes
+      - designation
+      - id
+      - organisation
+      - preferred_comm_mode
+      backend_only: false
   select_permissions:
   - role: client
     permission:
