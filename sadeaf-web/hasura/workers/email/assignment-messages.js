@@ -1,25 +1,25 @@
 export function getMatchedEmailMessage(eventName, startDt) {
-  return baseEmailBody(
+  return emailBody(
     'Assignment Matched',
     `You have been matched for ${eventName} happening on ${startDt}. Please check the SADEAF portal for more details.`
   );
 }
 
 export function getAssignmentPendingEmailMessage(eventName, startDt) {
-  return baseEmailBody(
+  return emailBody(
     'Volunteer Backed out of Assignment',
     `A volunteer has backed out for ${eventName} happening on ${startDt}. Please check the SADEAF portal for more details.`
   );
 }
 
 export function getAssignmentCancelledEmailMessage(eventName, startDt) {
-  return baseEmailBody(
+  return emailBody(
     'Assignment Cancelled',
     `${eventName} happening on ${startDt} has been cancelled. Please check the SADEAF portal for more details.`
   );
 }
 
-function baseEmailBody(title, content) {
+function emailBody(title, content) {
   return `<html lang="en">
             <body>
               <h1>${title}</h1>
