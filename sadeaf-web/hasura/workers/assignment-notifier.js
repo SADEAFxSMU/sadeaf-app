@@ -89,7 +89,7 @@ async function sendNotifications(accountSettings, publish, { userType, eventName
   if (telegramMessage && notificationSettings.telegram_information) {
     await publish('telegram-sender', {
       message: telegramMessage,
-      chatId: notificationSettings.telegram_information.chat_id
+      chatId: notificationSettings.telegram_information.chat_id,
     });
   }
 }
