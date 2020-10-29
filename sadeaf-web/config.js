@@ -30,7 +30,7 @@ module.exports = {
     TLS: process.env.SMTP_TLS === 'true',
   },
   EMAIL: {
-    FROM_EMAIL: process.env.FROM_EMAIL || 'sadeaf-notifications@test.dev',
+    FROM_EMAIL: process.env.EMAIL_FROM_EMAIL || 'sadeaf-notifications@test.dev',
   },
   MAILHOG: {
     ENDPOINT: process.env.MAILHOG_ENDPOINT || 'http://localhost:18025',
