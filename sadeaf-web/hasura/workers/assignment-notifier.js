@@ -1,7 +1,6 @@
 import pubsub from '../pubsub';
 import { executeGraphQLQuery } from '../../telegram/hasura-helpers';
 import { ASSIGNMENT_STATUSES } from '../../common/types/constants';
-import { sendTelegramMessage } from '../../telegram/message-sender';
 import { DateUtils } from '../../common/date-utils';
 import { EMAIL } from '../../config';
 import {
@@ -88,7 +87,10 @@ async function sendNotifications(accountSettings, publish, { userType, eventName
   }
 
   if (telegramMessage && notificationSettings.telegram_information) {
-    await sendTelegramMessage(telegramMessage, notificationSettings.telegram_information.chat_id);
+    await publish('telegram-sender', {
+      message: telegramMessage,
+      chatId: notificationSettings.telegram_information.chat_id
+    });
   }
 }
 
