@@ -97,6 +97,7 @@ const assignmentQuery = gql`
         name
         description
         purpose
+        notetaker_required
       }
     }
   }
@@ -162,6 +163,7 @@ const volunteerOptInQuery = gql`
           name
           description
           purpose
+          notetaker_required
         }
       }
     }

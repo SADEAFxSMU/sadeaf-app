@@ -98,10 +98,10 @@ export default {
       return this.isOptIn ? this.details.assignment : this.details;
     },
     notetakerRequired() {
-      return this.details.event.notetaker_required;
+      return this.assignment.event.notetaker_required;
     },
     interpreterRequired() {
-      return this.details.event.interpreter_required;
+      return this.assignment.event.interpreter_required;
     },
     eventName() {
       return this.assignment.event.name;

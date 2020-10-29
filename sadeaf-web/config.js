@@ -29,6 +29,9 @@ module.exports = {
     PORT: process.env.SMTP_PORT || 11025,
     TLS: process.env.SMTP_TLS === 'true',
   },
+  EMAIL: {
+    FROM_EMAIL: process.env.EMAIL_FROM_EMAIL || 'sadeaf-notifications@test.dev',
+  },
   MAILHOG: {
     ENDPOINT: process.env.MAILHOG_ENDPOINT || 'http://localhost:18025',
   },
