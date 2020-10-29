@@ -7,7 +7,6 @@ module.exports = async function () {
 
   await subscribe('telegram-sender', async ({ data: { message, chatId } }) => {
     const url = `${TELEGRAM.BASE_URL}/sendMessage`;
-    console.log('in sender');
 
     await new Promise(async (resolve, reject) => {
       let response = await fetch(url, {
