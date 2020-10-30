@@ -246,7 +246,7 @@ export default {
           },
         });
       } catch (e) {
-        console.log(">>>> EVENT FAILED TO UPDATE", e);
+        console.log('>>>> EVENT FAILED TO UPDATE', e);
       }
 
       // this.event = data.event;

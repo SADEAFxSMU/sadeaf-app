@@ -6,21 +6,20 @@
     <el-form :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
-          {{this.address['ADDRESS']}}
-          <address-search @select="replaceAddress"
-                          @clear="handleClear"
-                          v-if="assignment"
-                          :key="assignment.address_line_one"
-                          :existingAddress="address['ADDRESS']"/>
-          <address-search @select="replaceAddress"
-                          v-else
-                          />
+          <address-search
+            @select="replaceAddress"
+            @clear="handleClear"
+            v-if="assignment"
+            :key="assignment.address_line_one"
+            :existingAddress="address['ADDRESS']"
+          />
+          <address-search @select="replaceAddress" v-else />
         </div>
         <div style="display: flex; margin-top: 5px">
           <el-input v-model="form.address_line_two" placeholder="Building Name" />
         </div>
         <div style="display: flex; margin-top: 5px">
-          <el-input v-model="form.postal" style=" width: 250px" placeholder="Postal Code" />
+          <el-input v-model="form.postal" style="width: 250px" placeholder="Postal Code" />
           <el-input v-model="form.room_number" style="margin-left: 5px; width: 250px" placeholder="Room Number" />
         </div>
       </el-form-item>
@@ -75,7 +74,7 @@ import UserCard from '../user/UserCard';
 import _ from 'lodash';
 import gql from 'graphql-tag';
 import SmallDeleteButton from '../buttons/SmallDeleteButton';
-import AddressSearch from "~/components/forms/AddressSearch";
+import AddressSearch from '~/components/forms/AddressSearch';
 
 const UPDATE_ASSIGNMENT = gql`
   mutation UpdateAssignment(
@@ -84,8 +83,8 @@ const UPDATE_ASSIGNMENT = gql`
     $address_line_two: String
     $end_dt: timestamp
     $postal: String
-    $latitude : float8
-    $longitude : float8
+    $latitude: float8
+    $longitude: float8
     $room_number: String
     $start_dt: timestamp
     $status: String
@@ -129,8 +128,8 @@ const INSERT_ASSIGNMENT = gql`
     $address_line_two: String
     $end_dt: timestamp
     $postal: String
-    $latitude : float8
-    $longitude : float8
+    $latitude: float8
+    $longitude: float8
     $room_number: String
     $start_dt: timestamp
     $status: String
@@ -206,7 +205,7 @@ export default {
       form: {},
       assignmentStatuses: ASSIGNMENT_STATUSES,
       volunteer: null,
-      address: {'ADDRESS' : this.assignment ?  this.assignment.address_line_one : ''}
+      address: { ADDRESS: this.assignment ? this.assignment.address_line_one : '' },
     };
   },
 
@@ -307,16 +306,16 @@ export default {
       this.form = {};
       this.volunteer = null;
     },
-    replaceAddress(address){
-      this.address= address;
-      this.$set(this.form, 'address_line_two', this.address['BUILDING'])
-      this.$set(this.form, 'postal', this.address['POSTAL'])
+    replaceAddress(address) {
+      this.address = address;
+      this.$set(this.form, 'address_line_two', this.address['BUILDING']);
+      this.$set(this.form, 'postal', this.address['POSTAL']);
     },
-    handleClear(){
-      this.address = {'ADDRESS' : ''}
-      this.$set(this.form, 'address_line_two', '')
-      this.$set(this.form, 'postal', '')
-    }
+    handleClear() {
+      this.address = { ADDRESS: '' };
+      this.$set(this.form, 'address_line_two', '');
+      this.$set(this.form, 'postal', '');
+    },
   },
 
   computed: {
@@ -329,8 +328,8 @@ export default {
     assignment: {
       handler(assignment) {
         this.setForm(assignment);
-        if (assignment){
-          this.address = {"ADDRESS" : assignment.address_line_one}
+        if (assignment) {
+          this.address = { ADDRESS: assignment.address_line_one };
         }
       },
       deep: true,

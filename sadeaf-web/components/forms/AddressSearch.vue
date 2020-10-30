@@ -2,7 +2,7 @@
   <el-autocomplete
     v-model="existingAddress"
     :fetch-suggestions="querySearch"
-    style="width: 100%;"
+    style="width: 100%"
     placeholder="Address Search"
     @select="handleSelect"
     placement="top-start"
@@ -11,7 +11,7 @@
   >
     <i class="el-icon-search" slot="prepend" />
     <template v-slot="{ item }">
-      <div>{{item['ADDRESS']}}</div>
+      <div>{{ item['ADDRESS'] }}</div>
     </template>
   </el-autocomplete>
 </template>
@@ -19,56 +19,52 @@
 <script>
 import debounce from 'debounce';
 export default {
-  name: "AddressSearch",
-  data(){
+  name: 'AddressSearch',
+  data() {
     return {
       results: [],
-    }
+    };
   },
 
-  props : {
-    existingAddress : {
+  props: {
+    existingAddress: {
       type: String,
-      required : false,
-      default: ""
-    }
+      required: false,
+      default: '',
+    },
   },
 
-  created(){
+  created() {
     this.querySearch = debounce(this.querySearch, 300);
   },
 
-  methods:{
-    async querySearch(queryString, cb){
-      if(queryString != '') {
-        const response = await this.$axios.get(`https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`)
+  methods: {
+    async querySearch(queryString, cb) {
+      if (queryString != '') {
+        const response = await this.$axios.get(
+          `https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`
+        );
 
-        let displayData = []
+        let displayData = [];
 
         for (var items in response['data']['results']) {
-          displayData.push({value: response['data']['results'][items]['ADDRESS']})
+          displayData.push({ value: response['data']['results'][items]['ADDRESS'] });
         }
 
-        const results = {'addresses': response['data']['results']}
-        cb(results.addresses.map((address) => ({...address, value: address['ADDRESS']})))
+        const results = { addresses: response['data']['results'] };
+        cb(results.addresses.map((address) => ({ ...address, value: address['ADDRESS'] })));
       }
     },
 
-    async handleSelect(address){
-      this.$emit('select', address)
+    async handleSelect(address) {
+      this.$emit('select', address);
     },
 
-    async handleClear(){
-      this.$emit('clear', null)
+    async handleClear() {
+      this.$emit('clear', null);
     },
-
-
-
-
-  }
-
-
-}
+  },
+};
 </script>
 
 <style scoped></style>

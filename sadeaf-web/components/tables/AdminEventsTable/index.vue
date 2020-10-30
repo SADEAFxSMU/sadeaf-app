@@ -60,7 +60,7 @@
         @cancel="handleUpsertEventCancel"
       />
     </el-dialog>
-  <!--    Manually edit client's assignment for admin-->
+    <!--    Manually edit client's assignment for admin-->
     <el-dialog
       title="Manual Client-Volunteer Assignment"
       :visible="createAssignmentDialogVisible"

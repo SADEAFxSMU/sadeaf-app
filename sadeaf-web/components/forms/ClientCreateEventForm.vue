@@ -76,13 +76,13 @@
         <div class="field-location">
           <p>Location</p>
           <div class="body">
-              <address-search @select="replaceAddress" @clear="clearAddress"/>
+            <address-search @select="replaceAddress" @clear="clearAddress" />
           </div>
           <div class="body">
             <el-input v-model="form.address_line_two" placeholder="Building Name" />
           </div>
           <div class="body">
-            <el-input v-model="form.postal" style="margin-right: 5px; width: 250px" placeholder="Postal Code"/>
+            <el-input v-model="form.postal" style="margin-right: 5px; width: 250px" placeholder="Postal Code" />
             <el-input v-model="form.room_number" style="width: 250px" placeholder="Room Number" />
           </div>
         </div>
@@ -115,7 +115,7 @@ import UserCard from '../user/UserCard';
 import SmallDeleteButton from '../buttons/SmallDeleteButton';
 import gql from 'graphql-tag';
 import dayjs from 'dayjs';
-import AddressSearch from "~/components/forms/AddressSearch";
+import AddressSearch from '~/components/forms/AddressSearch';
 
 const INSERT_EVENT = gql`
   mutation InsertEvent(
@@ -168,7 +168,7 @@ const REPEAT_OPTS = {
 
 export default {
   name: 'ClientCreateEventForm',
-  components: {AddressSearch, SmallDeleteButton, UserCard, UserCardHorizontalSmall },
+  components: { AddressSearch, SmallDeleteButton, UserCard, UserCardHorizontalSmall },
   props: {
     date: {
       type: Date,
@@ -215,7 +215,7 @@ export default {
         location: [
           {
             validator: (rule, value, callback) => {
-              if (this.address){
+              if (this.address) {
                 callback();
               } else {
                 callback(new Error('Please enter a valid address!'));
@@ -271,7 +271,7 @@ export default {
           description: this.form.description,
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
-          assignments : {data: await this.getAssignments()},
+          assignments: { data: await this.getAssignments() },
           notetaker_required: this.form.eventSkillRequirements.includes('Notetaking'),
           interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
         },
@@ -290,21 +290,12 @@ export default {
     },
 
     async getAssignments() {
-      let {
-        date,
-        start_time,
-        end_time,
-        address_line_two,
-        postal,
-        room_number,
-        repeat,
-        repeatCount,
-      } = this.form;
+      let { date, start_time, end_time, address_line_two, postal, room_number, repeat, repeatCount } = this.form;
       const assignments = [];
 
-      const address_line_one = this.address['ADDRESS']
-      const latitude = this.address['LATITUDE']
-      const longitude = this.address['LONGITUDE']
+      const address_line_one = this.address['ADDRESS'];
+      const latitude = this.address['LATITUDE'];
+      const longitude = this.address['LONGITUDE'];
 
       if (repeat === REPEAT_OPTS.DOES_NOT_REPEAT) {
         repeatCount = 1;
@@ -336,19 +327,17 @@ export default {
       }
       return assignments;
     },
-    replaceAddress(address){
-      this.address= address;
-      this.$set(this.form, 'address_line_two', this.address['BUILDING'])
-      this.$set(this.form, 'postal', this.address['POSTAL'])
-      return
-
+    replaceAddress(address) {
+      this.address = address;
+      this.$set(this.form, 'address_line_two', this.address['BUILDING']);
+      this.$set(this.form, 'postal', this.address['POSTAL']);
+      return;
     },
-    clearAddress(value){
-      this.address = value
-      this.$set(this.form, 'address_line_two', '')
-      this.$set(this.form, 'postal', '')
-    }
-
+    clearAddress(value) {
+      this.address = value;
+      this.$set(this.form, 'address_line_two', '');
+      this.$set(this.form, 'postal', '');
+    },
   },
 
   computed: {
