@@ -6,12 +6,20 @@
     <el-form :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
-          <el-input v-model="form.address_line_one" placeholder="Address Line 1" />
-          <el-input v-model="form.room_number" style="margin-left: 5px; width: 200px" placeholder="Room Number" />
+          <address-search @select="replaceAddress"
+                          v-if="assignment"
+                          :key="assignment.address_line_one"
+                          :existingAddress="assignment.address_line_one"/>
+          <address-search @select="replaceAddress"
+                          v-else
+                          />
         </div>
         <div style="display: flex; margin-top: 5px">
-          <el-input v-model="form.address_line_two" placeholder="Address Line 2" />
-          <el-input v-model="form.postal" style="margin-left: 5px; width: 150px" placeholder="Postal Code" />
+          <el-input v-model="form.address_line_two" placeholder="Building Name" />
+        </div>
+        <div style="display: flex; margin-top: 5px">
+          <el-input v-model="form.postal" style=" width: 250px" placeholder="Postal Code" />
+          <el-input v-model="form.room_number" style="margin-left: 5px; width: 250px" placeholder="Room Number" />
         </div>
       </el-form-item>
       <el-form-item label="Dates">
@@ -65,6 +73,7 @@ import UserCard from '../user/UserCard';
 import _ from 'lodash';
 import gql from 'graphql-tag';
 import SmallDeleteButton from '../buttons/SmallDeleteButton';
+import AddressSearch from "~/components/forms/AddressSearch";
 
 const UPDATE_ASSIGNMENT = gql`
   mutation UpdateAssignment(
@@ -73,6 +82,8 @@ const UPDATE_ASSIGNMENT = gql`
     $address_line_two: String
     $end_dt: timestamp
     $postal: String
+    $latitude : float8
+    $longitude : float8
     $room_number: String
     $start_dt: timestamp
     $status: String
@@ -86,6 +97,8 @@ const UPDATE_ASSIGNMENT = gql`
         end_dt: $end_dt
         id: $id
         postal: $postal
+        latitude: $latitude
+        longitude: $longitude
         room_number: $room_number
         start_dt: $start_dt
         status: $status
@@ -97,6 +110,8 @@ const UPDATE_ASSIGNMENT = gql`
       end_dt
       id
       postal
+      latitude
+      longitude
       room_number
       start_dt
       status
@@ -112,6 +127,8 @@ const INSERT_ASSIGNMENT = gql`
     $address_line_two: String
     $end_dt: timestamp
     $postal: String
+    $latitude : float8
+    $longitude : float8
     $room_number: String
     $start_dt: timestamp
     $status: String
@@ -123,6 +140,8 @@ const INSERT_ASSIGNMENT = gql`
         address_line_two: $address_line_two
         end_dt: $end_dt
         postal: $postal
+        latitude: $latitude
+        longitude: $longitude
         room_number: $room_number
         start_dt: $start_dt
         status: $status
@@ -135,6 +154,8 @@ const INSERT_ASSIGNMENT = gql`
       end_dt
       id
       postal
+      latitude
+      longitude
       room_number
       start_dt
       status
@@ -161,7 +182,7 @@ const DELETE_ASSIGNMENT = gql`
 
 export default {
   name: 'SadeafCreateAssignmentForm',
-  components: { SmallDeleteButton, UserCard, VolunteerSearch, UserCardHorizontalSmall },
+  components: { AddressSearch, SmallDeleteButton, UserCard, VolunteerSearch, UserCardHorizontalSmall },
   props: {
     client: {
       type: Object,
@@ -183,6 +204,7 @@ export default {
       form: {},
       assignmentStatuses: ASSIGNMENT_STATUSES,
       volunteer: null,
+      address: null
     };
   },
 
@@ -224,14 +246,15 @@ export default {
       this.deleteAssignment();
     },
     async insertAssignment() {
+      console.log(this.address)
       await this.$apollo.mutate({
         mutation: INSERT_ASSIGNMENT,
         variables: {
-          address_line_one: this.form.address_line_one,
+          address_line_one: this.address['ADDRESS'],
           address_line_two: this.form.address_line_two,
           end_dt: this.form.end_dt,
-          latitude: this.form.latitude,
-          longitude: this.form.longitude,
+          latitude: this.address['LATITUDE'],
+          longitude: this.address['LONGITUDE'],
           postal: this.form.postal,
           room_number: this.form.room_number,
           start_dt: this.form.start_dt,
@@ -248,11 +271,11 @@ export default {
         mutation: UPDATE_ASSIGNMENT,
         variables: {
           id: this.form.id,
-          address_line_one: this.form.address_line_one,
+          address_line_one: this.address['ADDRESS'],
           address_line_two: this.form.address_line_two,
           end_dt: this.form.end_dt,
-          latitude: this.form.latitude,
-          longitude: this.form.longitude,
+          latitude: this.address['LATITUDE'],
+          longitude: this.address['LONGITUDE'],
           postal: this.form.postal,
           room_number: this.form.room_number,
           start_dt: this.form.start_dt,
@@ -283,6 +306,11 @@ export default {
       this.form = {};
       this.volunteer = null;
     },
+    replaceAddress(address){
+      this.address= address;
+      this.$set(this.form, 'address_line_two', this.address['BUILDING'])
+      this.$set(this.form, 'postal', this.address['POSTAL'])
+    }
   },
 
   computed: {

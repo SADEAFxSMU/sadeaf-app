@@ -233,18 +233,23 @@ export default {
       this.deleteEvent();
     },
     async insertEvent() {
-      const { data } = await this.$apollo.mutate({
-        mutation: INSERT_EVENT,
-        variables: {
-          client_id: this.client.id,
-          description: this.form.description,
-          name: this.form.name,
-          purpose: this.form.purposeOther || this.form.purpose,
-          notetaker_required: this.form.eventSkillRequirements.includes('Notetaking'),
-          interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
-        },
-      });
-      this.event = data.event;
+      try {
+        const { data } = await this.$apollo.mutate({
+          mutation: INSERT_EVENT,
+          variables: {
+            client_id: this.client.id,
+            description: this.form.description,
+            name: this.form.name,
+            purpose: this.form.purposeOther || this.form.purpose,
+            notetaker_required: this.form.eventSkillRequirements.includes('Notetaking'),
+            interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
+          },
+        });
+      } catch (e) {
+        console.log(">>>> EVENT FAILED TO UPDATE", e);
+      }
+
+      // this.event = data.event;
       this.onOperationSuccess();
       this.$notify.success('Event created!');
     },
@@ -282,7 +287,9 @@ export default {
     },
 
     resetState() {
-      this.form = {};
+      this.form = {
+        eventSkillRequirements: [],
+      };
       this.client = null;
     },
   },
