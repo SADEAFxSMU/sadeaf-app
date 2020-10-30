@@ -40,3 +40,17 @@ export const volunteerDetailsOpsDoc = `
 
   ${notificationDetailsFragment}
 `;
+
+export const volunteerDetailsFromOptInsOpsDoc = `
+  query VolunteerDetailsFromOptIns($assignment_id: Int!) {
+    volunteer_assignment_opt_in(where: {assignment_id: {_eq: $assignment_id}}) {
+      volunteer{
+        account {
+          ...notificationDetails
+        }
+      }
+    }
+  }
+
+  ${notificationDetailsFragment}
+`;

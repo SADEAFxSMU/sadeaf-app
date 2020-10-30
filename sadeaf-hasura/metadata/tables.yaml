@@ -381,6 +381,22 @@
               account_id:
                 _eq: X-Hasura-User-Id
   event_triggers:
+  - name: assignment-details-update-notifier
+    definition:
+      enable_manual: false
+      update:
+        columns:
+        - end_dt
+        - start_dt
+        - address_line_one
+        - address_line_two
+        - postal
+        - room_number
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: WEB_HOOK_URL
   - name: assignment-status-notifier
     definition:
       enable_manual: false
