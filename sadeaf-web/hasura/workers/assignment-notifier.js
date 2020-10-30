@@ -2,7 +2,6 @@ import pubsub from '../pubsub';
 import { executeGraphQLQuery } from '../../telegram/hasura-helpers';
 import { ASSIGNMENT_STATUSES } from '../../common/types/constants';
 import { DateUtils } from '../../common/date-utils';
-import { EMAIL } from '../../config';
 import {
   getMatchedTelegramMessage,
   getAssignmentPendingTelegramMessage,
@@ -13,6 +12,8 @@ import {
   getAssignmentPendingEmailMessage,
   getMatchedEmailMessage,
 } from '../../hasura/workers/email/assignment-messages';
+import { clientDetailsOpsDoc, volunteerDetailsOpsDoc } from './helpers/hasura-queries';
+import { sendNotifications } from './helpers/notifications';
 
 /*
 Worker that listens for updates to the status on the assignment table.
@@ -33,6 +34,7 @@ module.exports = async function () {
 
         let clientDetails = await executeGraphQLQuery(clientDetailsOpsDoc, 'ClientDetails', { event_id: eventId });
         let clientAccount = clientDetails.data.event[0].client.account;
+        let clientNotificationSettings = clientAccount.notification_setting;
         let eventName = clientDetails.data.event[0].name;
         let assignmentStartDt = DateUtils.humanReadableDt(newStartDt);
 
@@ -42,20 +44,43 @@ module.exports = async function () {
             volunteer_id: volunteerId,
           });
           let volunteerAccount = volunteerDetails.data.volunteer_by_pk.account;
+          let volunteerNotificationSetting = volunteerAccount.notification_setting;
 
-          await sendNotifications(volunteerAccount, publish, {
-            userType: 'volunteer',
-            eventName: eventName,
-            startDt: assignmentStartDt,
-            assignmentStatus: newStatus,
+          await sendNotifications(volunteerNotificationSetting, publish, {
+            telegramMessage: telegramMessageToSend(
+              newStatus,
+              volunteerNotificationSetting,
+              eventName,
+              assignmentStartDt,
+              'volunteer'
+            ),
+            email: {
+              subject: emailSubject(newStatus, assignmentStartDt, 'volunteer'),
+              message: emailMessageToSend(
+                newStatus,
+                volunteerNotificationSetting,
+                eventName,
+                assignmentStartDt,
+                'volunteer'
+              ),
+              to: volunteerAccount.email,
+            },
           });
         }
 
-        await sendNotifications(clientAccount, publish, {
-          userType: 'client',
-          eventName: eventName,
-          startDt: assignmentStartDt,
-          assignmentStatus: newStatus,
+        await sendNotifications(clientNotificationSettings, publish, {
+          telegramMessage: telegramMessageToSend(
+            newStatus,
+            clientNotificationSettings,
+            eventName,
+            assignmentStartDt,
+            'client'
+          ),
+          email: {
+            subject: emailSubject(newStatus, assignmentStartDt, 'client'),
+            message: emailMessageToSend(newStatus, clientNotificationSettings, eventName, assignmentStartDt, 'client'),
+            to: clientAccount.email,
+          },
         });
 
         resolve();
@@ -66,33 +91,6 @@ module.exports = async function () {
     });
   });
 };
-
-async function sendNotifications(accountSettings, publish, { userType, eventName, startDt, assignmentStatus }) {
-  let notificationSettings = accountSettings.notification_setting;
-
-  if (!notificationSettings) {
-    return;
-  }
-
-  let telegramMessage = telegramMessageToSend(assignmentStatus, notificationSettings, eventName, startDt, userType);
-  let emailMessage = emailMessageToSend(assignmentStatus, notificationSettings, eventName, startDt, userType);
-
-  if (emailMessage && notificationSettings.email_information) {
-    await publish('email-sender', {
-      from: EMAIL.FROM_EMAIL,
-      to: accountSettings.email,
-      subject: emailSubject(assignmentStatus, startDt, userType),
-      body: emailMessage,
-    });
-  }
-
-  if (telegramMessage && notificationSettings.telegram_information) {
-    await publish('telegram-sender', {
-      message: telegramMessage,
-      chatId: notificationSettings.telegram_information.chat_id,
-    });
-  }
-}
 
 function emailSubject(assignmentStatus, startDt, userType) {
   let subject;
@@ -170,46 +168,3 @@ function telegramMessageToSend(assignmentStatus, notificationSettings, eventName
       return message;
   }
 }
-
-const notificationDetailsFragment = `
-  fragment notificationDetails on account {
-    email
-    notification_setting {
-      volunteer_matched
-      client_matched
-      telegram_information {
-        chat_id
-      }
-      email_information {
-        id
-      }
-    }
-  }
-`;
-
-const clientDetailsOpsDoc = `
-  query ClientDetails($event_id: Int!) {
-    event(where: {id: {_eq: $event_id}}) {
-      name
-      client {
-        account {
-          ...notificationDetails
-        }
-      }
-    }
-  }
-
-  ${notificationDetailsFragment}
-`;
-
-const volunteerDetailsOpsDoc = `
-  query VolunteerDetails($volunteer_id: Int!) {
-    volunteer_by_pk(id: $volunteer_id) {
-      account {
-        ...notificationDetails
-      }
-    }
-  }
-
-  ${notificationDetailsFragment}
-`;

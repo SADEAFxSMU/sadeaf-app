@@ -19,11 +19,29 @@ export function getAssignmentCancelledEmailMessage(eventName, startDt) {
   );
 }
 
+export function getAssignmentDetailsChangedEmailMessage(eventName, oldDetails, newDetails) {
+  const { oldAssignmentStartDt, oldAssignmentEndDt, formattedOldAddress } = oldDetails;
+  const { newAssignmentStartDt, newAssignmentEndDt, formattedNewAddress } = newDetails;
+
+  return emailBody(
+    'Assignment Details Changed',
+    `
+            <p>Assignment details for ${eventName} has changed.</p>
+            <p style="font-weight: bold">Old Details</p>
+            <p>Time: ${oldAssignmentStartDt} to ${oldAssignmentEndDt}</p>
+            <p>Address: ${formattedOldAddress}</p>
+            <p style="font-weight: bold">New Details</p>
+            <p>Time: ${newAssignmentStartDt} to ${newAssignmentEndDt}</p>
+            <p>Address: ${formattedNewAddress}</p>
+            `
+  );
+}
+
 function emailBody(title, content) {
   return `<html lang="en">
             <body>
               <h1>${title}</h1>
-              <div>${content}</div>
+              <div style="padding: 10px 0">${content}</div>
               <p>With regards,</p>
               <p>SADEAF Administrator</p>
             </body>
