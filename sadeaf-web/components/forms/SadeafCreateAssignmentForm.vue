@@ -6,10 +6,12 @@
     <el-form :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
+          {{this.address['ADDRESS']}}
           <address-search @select="replaceAddress"
+                          @clear="handleClear"
                           v-if="assignment"
                           :key="assignment.address_line_one"
-                          :existingAddress="assignment.address_line_one"/>
+                          :existingAddress="address['ADDRESS']"/>
           <address-search @select="replaceAddress"
                           v-else
                           />
@@ -204,7 +206,7 @@ export default {
       form: {},
       assignmentStatuses: ASSIGNMENT_STATUSES,
       volunteer: null,
-      address: null
+      address: {'ADDRESS' : this.assignment ?  this.assignment.address_line_one : ''}
     };
   },
 
@@ -246,7 +248,6 @@ export default {
       this.deleteAssignment();
     },
     async insertAssignment() {
-      console.log(this.address)
       await this.$apollo.mutate({
         mutation: INSERT_ASSIGNMENT,
         variables: {
@@ -310,6 +311,11 @@ export default {
       this.address= address;
       this.$set(this.form, 'address_line_two', this.address['BUILDING'])
       this.$set(this.form, 'postal', this.address['POSTAL'])
+    },
+    handleClear(){
+      this.address = {'ADDRESS' : ''}
+      this.$set(this.form, 'address_line_two', '')
+      this.$set(this.form, 'postal', '')
     }
   },
 
@@ -323,6 +329,9 @@ export default {
     assignment: {
       handler(assignment) {
         this.setForm(assignment);
+        if (assignment){
+          this.address = {"ADDRESS" : assignment.address_line_one}
+        }
       },
       deep: true,
     },

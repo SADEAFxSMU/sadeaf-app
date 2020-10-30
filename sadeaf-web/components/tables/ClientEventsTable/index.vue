@@ -131,13 +131,11 @@ export default {
     },
     handleNewAssignmentClick(row) {
       this.event_id = row.id;
-      this.client = row.client;
       this.updateAssignment = null;
       this.createAssignmentDialogVisible = true;
     },
     handleUpdateAssignmentClick(row, assignment) {
       this.event_id = row.id;
-      this.client = row.client;
       this.updateAssignment = assignment;
       this.createAssignmentDialogVisible = true;
     },

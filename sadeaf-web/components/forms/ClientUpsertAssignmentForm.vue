@@ -13,12 +13,22 @@
     <el-form ref="form" :rules="rules" :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
-          <el-input v-model="form.address_line_one" placeholder="Address Line 1" />
-          <el-input v-model="form.room_number" style="margin-left: 5px; width: 200px" placeholder="Room Number" />
+          <address-search @select="replaceAddress"
+                          @clear="handleClear"
+                          v-if="assignment"
+                          :key="assignment.address_line_one"
+                          :existingAddress="address['ADDRESS']"/>
+          <address-search @select="replaceAddress"
+                          v-else
+          />
         </div>
         <div style="display: flex; margin-top: 5px">
-          <el-input v-model="form.address_line_two" placeholder="Address Line 2" />
-          <el-input v-model="form.postal" style="margin-left: 5px; width: 150px" placeholder="Postal Code" />
+          <el-input v-model="form.address_line_two" placeholder="Building" />
+
+        </div>
+        <div style="display: flex; margin-top: 5px">
+          <el-input v-model="form.postal" style="width: 250px" placeholder="Postal Code" />
+          <el-input v-model="form.room_number" style="margin-left: 5px; width: 250px" placeholder="Room Number" />
         </div>
       </el-form-item>
 
@@ -77,6 +87,7 @@ import UserCard from '../user/UserCard';
 import gql from 'graphql-tag';
 import _ from 'lodash';
 import DangerZone from './DangerZone';
+import AddressSearch from "~/components/forms/AddressSearch";
 
 const UPDATE_EVENT_SKILLS = gql`
   mutation UpdateEventSkills($assignment_id: Int!, $notetaker_required: Boolean!, $interpreter_required: Boolean!) {
@@ -150,6 +161,7 @@ export default {
   components: {
     DangerZone,
     UserCard,
+    AddressSearch,
   },
 
   data() {
@@ -157,6 +169,8 @@ export default {
       form: {
         updateEventSkillRequirements: [],
       },
+      address: {"ADDRESS" : this.assignment.address_line_one},
+
       rules: {
         updateEventSkillRequirements: [
           {
@@ -173,7 +187,6 @@ export default {
       },
     };
   },
-
   created() {
     this.setForm(this.assignment);
   },
@@ -227,15 +240,16 @@ export default {
 
     async insertAssignment() {
       const {
-        address_line_one,
         address_line_two,
         end_dt,
-        latitude,
-        longitude,
         postal,
         room_number,
         start_dt,
       } = this.form;
+      const address_line_one = this.address['ADDRESS']
+      const latitude = this.address['LATITUDE']
+      const longitude = this.address['LONGITUDE']
+
       await this.$apollo.mutate({
         mutation: INSERT_ASSIGNMENT,
         variables: {
@@ -266,15 +280,16 @@ export default {
 
     async updateAssignment() {
       const {
-        address_line_one,
         address_line_two,
         end_dt,
-        latitude,
-        longitude,
         postal,
         room_number,
         start_dt,
       } = this.form;
+      const address_line_one = this.address['ADDRESS']
+      const latitude = this.address['LATITUDE']
+      const longitude = this.address['LONGITUDE']
+
       await this.$apollo.mutate({
         mutation: UPDATE_ASSIGNMENT,
         variables: {
@@ -309,6 +324,17 @@ export default {
       this.form = {};
       this.volunteer = null;
     },
+
+    replaceAddress(address){
+      this.address = address;
+      this.$set(this.form, 'address_line_two', this.address['BUILDING'])
+      this.$set(this.form, 'postal', this.address['POSTAL'])
+    },
+    handleClear(){
+      this.address={'ADDRESS' : ''}
+      this.$set(this.form, 'address_line_two', '')
+      this.$set(this.form, 'postal', '')
+    }
   },
 
   computed: {
@@ -328,6 +354,9 @@ export default {
     assignment: {
       handler(assignment) {
         this.setForm(assignment);
+        if(assignment) {
+          this.address = {'ADDRESS': assignment.address_line_one}
+        }
       },
       deep: true,
     },
