@@ -27,7 +27,7 @@
                 v-for="assignment in getAssignmentsOnDate(selectedDate)"
                 :key="'as-' + assignment.id"
                 :details="assignment"
-                :show-edit="assignment.status !== cancelledText()"
+                :show-edit="assignment.status !== cancelledText() && assignment.status !== completedText()"
                 @editClick="handleEditAssignmentClick"
               />
             </div>
@@ -146,6 +146,9 @@ export default {
     },
     cancelledText() {
       return ASSIGNMENT_STATUSES.CANCELLED;
+    },
+    completedText() {
+      return ASSIGNMENT_STATUSES.COMPLETE;
     },
   },
 
