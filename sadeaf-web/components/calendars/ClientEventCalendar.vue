@@ -27,6 +27,7 @@
                 v-for="assignment in getAssignmentsOnDate(selectedDate)"
                 :key="'as-' + assignment.id"
                 :details="assignment"
+                :show-edit="assignment.status !== cancelledText() && assignment.status !== completedText()"
                 @editClick="handleEditAssignmentClick"
               />
             </div>
@@ -64,8 +65,9 @@ import ClientCreateEventForm from '../forms/ClientCreateEventForm';
 import UserCard from '../user/UserCard';
 import AssignmentCard from '../cards/AssignmentCard';
 import ClientUpsertAssignmentForm from '../forms/ClientUpsertAssignmentForm';
-import { DateUtils } from '../../common/date-utils';
+import { DateUtils } from '@/common/date-utils';
 import dayjs from 'dayjs';
+import { ASSIGNMENT_STATUSES } from '@/common/types/constants';
 
 export default {
   name: 'ClientEventCalendar',
@@ -141,6 +143,12 @@ export default {
     },
     isAfterToday(date) {
       return DateUtils.isAfterToday(date);
+    },
+    cancelledText() {
+      return ASSIGNMENT_STATUSES.CANCELLED;
+    },
+    completedText() {
+      return ASSIGNMENT_STATUSES.COMPLETE;
     },
   },
 
