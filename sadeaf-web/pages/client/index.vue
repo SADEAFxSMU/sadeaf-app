@@ -2,7 +2,6 @@
   <div>
     <h1 class="page-title">Welcome Back, {{ userName }}</h1>
     <client-event-calendar />
-    <!--    <client-events-table />-->
   </div>
 </template>
 

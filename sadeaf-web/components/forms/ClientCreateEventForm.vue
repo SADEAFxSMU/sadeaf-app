@@ -293,9 +293,7 @@ export default {
       let { date, start_time, end_time, address_line_two, postal, room_number, repeat, repeatCount } = this.form;
       const assignments = [];
 
-      const address_line_one = this.address['ADDRESS'];
-      const latitude = this.address['LATITUDE'];
-      const longitude = this.address['LONGITUDE'];
+      const { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.address;
 
       if (repeat === REPEAT_OPTS.DOES_NOT_REPEAT) {
         repeatCount = 1;
@@ -329,8 +327,8 @@ export default {
     },
     replaceAddress(address) {
       this.address = address;
-      this.$set(this.form, 'address_line_two', this.address['BUILDING']);
-      this.$set(this.form, 'postal', this.address['POSTAL']);
+      this.$set(this.form, 'address_line_two', this.address.BUILDING);
+      this.$set(this.form, 'postal', this.address.POSTAL);
       return;
     },
     clearAddress(value) {

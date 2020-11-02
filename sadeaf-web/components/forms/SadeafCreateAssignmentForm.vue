@@ -6,14 +6,7 @@
     <el-form :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
-          <address-search
-            @select="replaceAddress"
-            @clear="handleClear"
-            v-if="assignment"
-            :key="assignment.address_line_one"
-            :existingAddress="address['ADDRESS']"
-          />
-          <address-search @select="replaceAddress" v-else />
+          <address-search @select="replaceAddress" @clear="handleClear" :existingAddress="address" />
         </div>
         <div style="display: flex; margin-top: 5px">
           <el-input v-model="form.address_line_two" placeholder="Building Name" />
@@ -205,7 +198,7 @@ export default {
       form: {},
       assignmentStatuses: ASSIGNMENT_STATUSES,
       volunteer: null,
-      address: { ADDRESS: this.assignment ? this.assignment.address_line_one : '' },
+      resultSearch: null,
     };
   },
 
@@ -247,14 +240,16 @@ export default {
       this.deleteAssignment();
     },
     async insertAssignment() {
+      let { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.resultSearch;
+
       await this.$apollo.mutate({
         mutation: INSERT_ASSIGNMENT,
         variables: {
-          address_line_one: this.address['ADDRESS'],
+          address_line_one: address_line_one,
           address_line_two: this.form.address_line_two,
           end_dt: this.form.end_dt,
-          latitude: this.address['LATITUDE'],
-          longitude: this.address['LONGITUDE'],
+          latitude: latitude,
+          longitude: longitude,
           postal: this.form.postal,
           room_number: this.form.room_number,
           start_dt: this.form.start_dt,
@@ -267,15 +262,20 @@ export default {
       this.$notify.success('Assignment created!');
     },
     async updateAssignment() {
+      if (!this.resultSearch) {
+        this.resultSearch = await this.catchNoEdit(this.address);
+      }
+      let { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.resultSearch;
+
       await this.$apollo.mutate({
         mutation: UPDATE_ASSIGNMENT,
         variables: {
           id: this.form.id,
-          address_line_one: this.address['ADDRESS'],
+          address_line_one: address_line_one,
           address_line_two: this.form.address_line_two,
           end_dt: this.form.end_dt,
-          latitude: this.address['LATITUDE'],
-          longitude: this.address['LONGITUDE'],
+          latitude: latitude,
+          longitude: longitude,
           postal: this.form.postal,
           room_number: this.form.room_number,
           start_dt: this.form.start_dt,
@@ -286,6 +286,16 @@ export default {
       this.onOperationSuccess();
       this.$notify.success('Assignment updated!');
     },
+
+    async catchNoEdit(queryString) {
+      const response = await this.$axios.get(
+        `https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`
+      );
+
+      const results = response['data']['results'][0];
+      return results;
+    },
+
     async deleteAssignment() {
       await this.$apollo.mutate({
         mutation: DELETE_ASSIGNMENT,
@@ -307,12 +317,11 @@ export default {
       this.volunteer = null;
     },
     replaceAddress(address) {
-      this.address = address;
-      this.$set(this.form, 'address_line_two', this.address['BUILDING']);
-      this.$set(this.form, 'postal', this.address['POSTAL']);
+      this.resultSearch = address;
+      this.$set(this.form, 'address_line_two', this.resultSearch.BUILDING);
+      this.$set(this.form, 'postal', this.resultSearch.POSTAL);
     },
     handleClear() {
-      this.address = { ADDRESS: '' };
       this.$set(this.form, 'address_line_two', '');
       this.$set(this.form, 'postal', '');
     },
@@ -322,15 +331,15 @@ export default {
     isUpdate() {
       return this.assignment !== null;
     },
+    address() {
+      return this.assignment ? this.assignment.address_line_one : '';
+    },
   },
 
   watch: {
     assignment: {
       handler(assignment) {
         this.setForm(assignment);
-        if (assignment) {
-          this.address = { ADDRESS: assignment.address_line_one };
-        }
       },
       deep: true,
     },

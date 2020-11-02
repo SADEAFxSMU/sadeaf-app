@@ -1,6 +1,6 @@
 <template>
   <el-autocomplete
-    v-model="existingAddress"
+    v-model="addressInput"
     :fetch-suggestions="querySearch"
     style="width: 100%"
     placeholder="Address Search"
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       results: [],
+      addressInput: this.existingAddress,
     };
   },
 
@@ -35,25 +36,19 @@ export default {
   },
 
   created() {
-    this.querySearch = debounce(this.querySearch, 300);
+    this.querySearch = debounce(this.querySearch, 1000);
   },
 
   methods: {
     async querySearch(queryString, cb) {
-      if (queryString != '') {
-        const response = await this.$axios.get(
-          `https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`
-        );
-
-        let displayData = [];
-
-        for (var items in response['data']['results']) {
-          displayData.push({ value: response['data']['results'][items]['ADDRESS'] });
-        }
-
-        const results = { addresses: response['data']['results'] };
-        cb(results.addresses.map((address) => ({ ...address, value: address['ADDRESS'] })));
+      if (queryString == '') {
+        return;
       }
+      const response = await this.$axios.get(
+        `https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`
+      );
+      const results = { addresses: response['data']['results'] };
+      cb(results.addresses.map((address) => ({ ...address, value: address['ADDRESS'] })));
     },
 
     async handleSelect(address) {
@@ -62,6 +57,13 @@ export default {
 
     async handleClear() {
       this.$emit('clear', null);
+    },
+  },
+  watch: {
+    existingAddress: {
+      handler(existingAddress) {
+        this.addressInput = existingAddress;
+      },
     },
   },
 };

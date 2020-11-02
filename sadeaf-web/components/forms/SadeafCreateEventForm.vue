@@ -246,10 +246,9 @@ export default {
           },
         });
       } catch (e) {
-        console.log('>>>> EVENT FAILED TO UPDATE', e);
+        this.$notify.error('Event failed to update');
       }
 
-      // this.event = data.event;
       this.onOperationSuccess();
       this.$notify.success('Event created!');
     },

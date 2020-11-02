@@ -13,14 +13,7 @@
     <el-form ref="form" :rules="rules" :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
-          <address-search
-            @select="replaceAddress"
-            @clear="handleClear"
-            v-if="assignment"
-            :key="assignment.address_line_one"
-            :existingAddress="address['ADDRESS']"
-          />
-          <address-search @select="replaceAddress" v-else />
+          <address-search @select="replaceAddress" @clear="handleClear" :existingAddress="address" />
         </div>
         <div style="display: flex; margin-top: 5px">
           <el-input v-model="form.address_line_two" placeholder="Building" />
@@ -168,7 +161,6 @@ export default {
       form: {
         updateEventSkillRequirements: [],
       },
-      address: { ADDRESS: this.assignment ? this.assignment.address_line_one : '' },
 
       rules: {
         updateEventSkillRequirements: [
@@ -184,6 +176,7 @@ export default {
           },
         ],
       },
+      resultSearch: null,
     };
   },
   created() {
@@ -216,6 +209,7 @@ export default {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           await this.updateEventSkillRequirements();
+          // await this.updateNoEditAddress();
 
           if (this.isUpdate) {
             await this.updateAssignment();
@@ -239,9 +233,9 @@ export default {
 
     async insertAssignment() {
       const { address_line_two, end_dt, postal, room_number, start_dt } = this.form;
-      const address_line_one = this.address['ADDRESS'];
-      const latitude = this.address['LATITUDE'];
-      const longitude = this.address['LONGITUDE'];
+      const address_line_one = this.resultSearch['ADDRESS'];
+      const latitude = this.resultSearch['LATITUDE'];
+      const longitude = this.resultSearch['LONGITUDE'];
 
       await this.$apollo.mutate({
         mutation: INSERT_ASSIGNMENT,
@@ -273,9 +267,12 @@ export default {
 
     async updateAssignment() {
       const { address_line_two, end_dt, postal, room_number, start_dt } = this.form;
-      const address_line_one = this.address['ADDRESS'];
-      const latitude = this.address['LATITUDE'];
-      const longitude = this.address['LONGITUDE'];
+
+      if (!this.resultSearch) {
+        this.resultSearch = await this.catchNoEdit(this.address);
+      }
+
+      let { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.resultSearch;
 
       await this.$apollo.mutate({
         mutation: UPDATE_ASSIGNMENT,
@@ -291,6 +288,15 @@ export default {
           start_dt,
         },
       });
+    },
+
+    async catchNoEdit(queryString) {
+      const response = await this.$axios.get(
+        `https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`
+      );
+
+      const results = response['data']['results'][0];
+      return results;
     },
 
     async deleteAssignment() {
@@ -313,12 +319,11 @@ export default {
     },
 
     replaceAddress(address) {
-      this.address = address;
-      this.$set(this.form, 'address_line_two', this.address['BUILDING']);
-      this.$set(this.form, 'postal', this.address['POSTAL']);
+      this.resultSearch = address;
+      this.$set(this.form, 'address_line_two', this.resultSearch.BUILDING);
+      this.$set(this.form, 'postal', this.resultSearch.POSTAL);
     },
     handleClear() {
-      this.address = { ADDRESS: '' };
       this.$set(this.form, 'address_line_two', '');
       this.$set(this.form, 'postal', '');
     },
@@ -335,15 +340,15 @@ export default {
     isUpdate() {
       return Boolean(this.assignment);
     },
+    address() {
+      return this.assignment ? this.assignment.address_line_one : '';
+    },
   },
 
   watch: {
     assignment: {
       handler(assignment) {
         this.setForm(assignment);
-        if (assignment) {
-          this.address = { ADDRESS: assignment.address_line_one };
-        }
       },
       deep: true,
     },
