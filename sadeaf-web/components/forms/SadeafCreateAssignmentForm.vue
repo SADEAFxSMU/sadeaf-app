@@ -6,7 +6,7 @@
     <el-form :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
-          <address-search @select="replaceAddress" @clear="handleClear" :existingAddress="address" />
+          <address-search @select="replaceAddress" @clear="handleClear" :existingAddress="this.assignment ? this.assignment.address_line_one : ''" />
         </div>
         <div style="display: flex; margin-top: 5px">
           <el-input v-model="form.address_line_two" placeholder="Building Name" />
@@ -198,7 +198,7 @@ export default {
       form: {},
       assignmentStatuses: ASSIGNMENT_STATUSES,
       volunteer: null,
-      resultSearch: null,
+      addressSearchResult: null,
     };
   },
 
@@ -240,7 +240,7 @@ export default {
       this.deleteAssignment();
     },
     async insertAssignment() {
-      let { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.resultSearch;
+      let { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.addressSearchResult;
 
       await this.$apollo.mutate({
         mutation: INSERT_ASSIGNMENT,
@@ -262,10 +262,14 @@ export default {
       this.$notify.success('Assignment created!');
     },
     async updateAssignment() {
-      if (!this.resultSearch) {
-        this.resultSearch = await this.catchNoEdit(this.address);
+
+      let { address_line_one: address_line_one, latitude: latitude, longitude: longitude } = this.assignment;
+
+      if (this.addressSearchResult) {
+        address_line_one = this.addressSearchResult.ADDRESS
+        latitude = this.addressSearchResult.LATITUDE
+        longitude = this.addressSearchResult.LONGITUDE
       }
-      let { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.resultSearch;
 
       await this.$apollo.mutate({
         mutation: UPDATE_ASSIGNMENT,
@@ -317,9 +321,9 @@ export default {
       this.volunteer = null;
     },
     replaceAddress(address) {
-      this.resultSearch = address;
-      this.$set(this.form, 'address_line_two', this.resultSearch.BUILDING);
-      this.$set(this.form, 'postal', this.resultSearch.POSTAL);
+      this.addressSearchResult = address;
+      this.$set(this.form, 'address_line_two', this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING );
+      this.$set(this.form, 'postal', this.addressSearchResult.POSTAL === 'NIL' ? '' : this.addressSearchResult.POSTAL);
     },
     handleClear() {
       this.$set(this.form, 'address_line_two', '');
@@ -330,9 +334,6 @@ export default {
   computed: {
     isUpdate() {
       return this.assignment !== null;
-    },
-    address() {
-      return this.assignment ? this.assignment.address_line_one : '';
     },
   },
 

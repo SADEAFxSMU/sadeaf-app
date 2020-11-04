@@ -11,7 +11,7 @@
   >
     <i class="el-icon-search" slot="prepend" />
     <template v-slot="{ item }">
-      <div>{{ item['ADDRESS'] }}</div>
+      <div>{{ item.ADDRESS }}</div>
     </template>
   </el-autocomplete>
 </template>
@@ -41,7 +41,7 @@ export default {
 
   methods: {
     async querySearch(queryString, cb) {
-      if (queryString == '') {
+      if (queryString === '') {
         return;
       }
       const response = await this.$axios.get(
@@ -56,7 +56,7 @@ export default {
     },
 
     async handleClear() {
-      this.$emit('clear', null);
+      this.$emit('clear');
     },
   },
   watch: {

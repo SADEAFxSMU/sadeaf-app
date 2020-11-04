@@ -215,7 +215,7 @@ export default {
         location: [
           {
             validator: (rule, value, callback) => {
-              if (this.address) {
+              if (this.addressSearchResult) {
                 callback();
               } else {
                 callback(new Error('Please enter a valid address!'));
@@ -224,7 +224,7 @@ export default {
           },
         ],
       },
-      address: null,
+      addressSearchResult: null,
       form: {
         // default values
         date: this.date,
@@ -293,7 +293,7 @@ export default {
       let { date, start_time, end_time, address_line_two, postal, room_number, repeat, repeatCount } = this.form;
       const assignments = [];
 
-      const { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.address;
+      const { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.addressSearchResult;
 
       if (repeat === REPEAT_OPTS.DOES_NOT_REPEAT) {
         repeatCount = 1;
@@ -326,13 +326,13 @@ export default {
       return assignments;
     },
     replaceAddress(address) {
-      this.address = address;
-      this.$set(this.form, 'address_line_two', this.address.BUILDING);
-      this.$set(this.form, 'postal', this.address.POSTAL);
+      this.addressSearchResult = address;
+      this.$set(this.form, 'address_line_two', this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING );
+      this.$set(this.form, 'postal', this.addressSearchResult.POSTAL === 'NIL' ? '' : this.addressSearchResult.POSTAL);
       return;
     },
-    clearAddress(value) {
-      this.address = value;
+    clearAddress() {
+      this.address = null;
       this.$set(this.form, 'address_line_two', '');
       this.$set(this.form, 'postal', '');
     },
