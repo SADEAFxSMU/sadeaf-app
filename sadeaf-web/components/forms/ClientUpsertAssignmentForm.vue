@@ -13,7 +13,11 @@
     <el-form ref="form" :rules="rules" :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
-          <address-search @select="replaceAddress" @clear="handleClear" :existingAddress="this.assignment ? this.assignment.address_line_one : ''" />
+          <address-search
+            @select="replaceAddress"
+            @clear="handleClear"
+            :existingAddress="this.assignment ? this.assignment.address_line_one : ''"
+          />
         </div>
         <div style="display: flex; margin-top: 5px">
           <el-input v-model="form.address_line_two" placeholder="Building" />
@@ -271,9 +275,9 @@ export default {
       let { address_line_one: address_line_one, latitude: latitude, longitude: longitude } = this.assignment;
 
       if (this.addressSearchResult) {
-        address_line_one = this.addressSearchResult.ADDRESS
-        latitude = this.addressSearchResult.LATITUDE
-        longitude = this.addressSearchResult.LONGITUDE
+        address_line_one = this.addressSearchResult.ADDRESS;
+        latitude = this.addressSearchResult.LATITUDE;
+        longitude = this.addressSearchResult.LONGITUDE;
       }
 
       await this.$apollo.mutate({
@@ -291,7 +295,6 @@ export default {
         },
       });
     },
-
 
     async deleteAssignment() {
       await this.$apollo.mutate({
@@ -314,7 +317,11 @@ export default {
 
     replaceAddress(address) {
       this.addressSearchResult = address;
-      this.$set(this.form, 'address_line_two', this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING);
+      this.$set(
+        this.form,
+        'address_line_two',
+        this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING
+      );
       this.$set(this.form, 'postal', this.addressSearchResult.POSTAL === 'NIL' ? '' : this.addressSearchResult.POSTAL);
     },
     handleClear() {

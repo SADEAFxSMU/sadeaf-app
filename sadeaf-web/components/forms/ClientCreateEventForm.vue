@@ -327,7 +327,11 @@ export default {
     },
     replaceAddress(address) {
       this.addressSearchResult = address;
-      this.$set(this.form, 'address_line_two', this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING );
+      this.$set(
+        this.form,
+        'address_line_two',
+        this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING
+      );
       this.$set(this.form, 'postal', this.addressSearchResult.POSTAL === 'NIL' ? '' : this.addressSearchResult.POSTAL);
       return;
     },
