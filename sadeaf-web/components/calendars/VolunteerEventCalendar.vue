@@ -98,6 +98,14 @@ const assignmentQuery = gql`
         description
         purpose
         notetaker_required
+        interpreter_required
+      }
+      volunteer {
+        id
+        account {
+          id
+          name
+        }
       }
     }
   }
@@ -129,6 +137,13 @@ const volunteerPendingAssignmentsQuery = gql`
         notetaker_required
         interpreter_required
         purpose
+      }
+      volunteer {
+        id
+        account {
+          id
+          name
+        }
       }
     }
   }
@@ -287,7 +302,7 @@ export default {
           confirmButtonText: 'Yes',
           cancelButtonText: 'Cancel',
           type: 'warning',
-        }
+        },
       )
         .then(() => {
           this.$apollo
