@@ -2,7 +2,8 @@ div::-webkit-scrollbar {
   display: none;
 }
 
+/*noinspection CssUnknownProperty*/
 div {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

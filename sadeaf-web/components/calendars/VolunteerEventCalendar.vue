@@ -28,8 +28,10 @@
               :key="'as-' + assignment.id"
               :show-edit="assignment.status === 'MATCHED'"
               :show-cancel="assignment.status === 'MATCHED'"
+              :show-attendance="assignment.status === 'COMPLETE'"
               :details="assignment"
               @editClick="cancelMatchedAssignment"
+              @showAttendance="handleShowAttendanceDialog(assignment)"
             />
           </div>
         </el-tab-pane>
@@ -68,6 +70,12 @@
       :assignment="selectedAssignment"
       @onClose="handleAcceptDialogClose"
     />
+    <attendance-confirmation-dialog
+      v-if="showAttendanceDialog"
+      :is-visible="showAttendanceDialog"
+      :assignment="selectedAssignmentForAttendance"
+      @onClose="handleCloseAttendanceDialog"
+    />
   </div>
 </template>
 
@@ -78,6 +86,7 @@ import dayjs from 'dayjs';
 import AssignmentCard from '../cards/AssignmentCard';
 import AcceptAssignmentDetailsDialog from '../dialogs/AcceptAssignmentDetailsDialog';
 import _ from 'lodash';
+import AttendanceConfirmationDialog from '@/components/dialogs/AttendanceConfirmationDialog';
 
 const assignmentQuery = gql`
   subscription VolunteerAllAssignments($volunteer_id: Int!) {
@@ -212,7 +221,7 @@ const optOutOfOptedInAssignmentQuery = gql`
 
 export default {
   name: 'VolunteerEventCalendar',
-  components: { AcceptAssignmentDetailsDialog, AssignmentCard },
+  components: { AttendanceConfirmationDialog, AcceptAssignmentDetailsDialog, AssignmentCard },
   props: {
     volunteer: {
       type: Object,
@@ -226,7 +235,9 @@ export default {
       selectedDate: null,
       tab: 'pendingAssignments',
       showAcceptDialog: false,
+      showAttendanceDialog: false,
       selectedAssignment: undefined,
+      selectedAssignmentForAttendance: undefined,
       volunteerOptedInAssignments: [],
     };
   },
@@ -302,7 +313,7 @@ export default {
           confirmButtonText: 'Yes',
           cancelButtonText: 'Cancel',
           type: 'warning',
-        },
+        }
       )
         .then(() => {
           this.$apollo
@@ -325,6 +336,14 @@ export default {
         .catch(() => {
           // do nothing if the user pressed cancel
         });
+    },
+    handleShowAttendanceDialog(assignment) {
+      this.showAttendanceDialog = true;
+      this.selectedAssignmentForAttendance = assignment;
+    },
+    handleCloseAttendanceDialog() {
+      this.showAttendanceDialog = false;
+      this.selectedAssignmentForAttendance = undefined;
     },
   },
   computed: {
@@ -437,6 +456,7 @@ export default {
   overflow: scroll;
 }
 
+/*noinspection CssUnusedSymbol*/
 .greyed {
   color: #cbcbcb;
 }
