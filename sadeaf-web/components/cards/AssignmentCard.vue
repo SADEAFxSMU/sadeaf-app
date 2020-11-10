@@ -1,9 +1,13 @@
 <template>
   <div :class="`assignment-card ${type}`">
     <div class="header">
-      <div class="title-wrapper">
-        <h2 class="title">{{ eventName }}</h2>
-        <assignment-status :status="status" />
+      <div style="padding-bottom: 8px">
+        <span v-if="notetakerRequired">
+          <NotetakerRequiredTag />
+        </span>
+        <span v-if="interpreterRequired">
+          <InterpreterRequiredTag />
+        </span>
       </div>
       <el-button
         v-if="showEdit"
@@ -13,6 +17,12 @@
         @click="$emit('editClick', details)"
       />
     </div>
+
+    <div class="title-wrapper">
+      <h2 class="title" style="padding-right: 12px">{{ eventName }}</h2>
+      <assignment-status :status="status" />
+    </div>
+
     <div class="body">
       <div>
         <h4>
@@ -35,12 +45,20 @@
 import UserCardHorizontalSmall from '../user/UserCardHorizontalSmall';
 import StatusIndicator from '../StatusIndicator';
 import AssignmentStatus from '../AssignmentStatus';
-import { DateUtils } from '../../common/date-utils';
+import { DateUtils } from '@/common/date-utils';
 import dayjs from 'dayjs';
+import NotetakerRequiredTag from '@/components/tags/NotetakerRequiredTag';
+import InterpreterRequiredTag from '@/components/tags/InterpreterRequiredTag';
 
 export default {
   name: 'AssignmentCard',
-  components: { AssignmentStatus, StatusIndicator, UserCardHorizontalSmall },
+  components: {
+    InterpreterRequiredTag,
+    NotetakerRequiredTag,
+    AssignmentStatus,
+    StatusIndicator,
+    UserCardHorizontalSmall,
+  },
   props: {
     type: {
       type: String,
@@ -78,6 +96,12 @@ export default {
     // can be passed into this component
     assignment() {
       return this.isOptIn ? this.details.assignment : this.details;
+    },
+    notetakerRequired() {
+      return this.assignment.event.notetaker_required;
+    },
+    interpreterRequired() {
+      return this.assignment.event.interpreter_required;
     },
     eventName() {
       return this.assignment.event.name;
@@ -125,23 +149,33 @@ export default {
   margin: 8px;
   padding: 16px;
 }
+
 .assignment-card.indent {
   box-shadow: inset 2px 2px 6px #d5dbe9;
 }
+
 .assignment-card.elevate {
   box-shadow: 2px 2px 6px 1px #d9dfee;
 }
+
 .assignment-card .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .assignment-card .header .title {
   color: #5f5f75;
   font-weight: normal;
   margin-right: 12px;
 }
-.assignment-card .header .title-wrapper {
+
+.assignment-card .header {
+  display: flex;
+  align-items: center;
+}
+
+.title-wrapper {
   display: flex;
   align-items: center;
 }
@@ -149,6 +183,7 @@ export default {
 .assignment-card .body {
   padding: 8px 0 8px 0;
 }
+
 .assignment-card .body > * {
   padding: 4px;
 }

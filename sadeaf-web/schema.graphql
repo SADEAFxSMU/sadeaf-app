@@ -17,6 +17,7 @@ type account {
   created_at: timestamp!
   email: String!
   id: Int!
+  is_enabled: Boolean!
   "An array relationship"
   memberships(
     "distinct select on columns"
@@ -840,7 +841,6 @@ type client_variance_fields {
 
 "columns and relationships of \"email_information\""
 type email_information {
-  email_address: String!
   id: Int!
   "An object relationship"
   notification_setting: notification_setting!
@@ -876,14 +876,12 @@ type email_information_avg_fields {
 
 "aggregate max on columns"
 type email_information_max_fields {
-  email_address: String
   id: Int
   notification_setting_id: Int
 }
 
 "aggregate min on columns"
 type email_information_min_fields {
-  email_address: String
   id: Int
   notification_setting_id: Int
 }
@@ -1000,9 +998,11 @@ type event {
   id: Int!
   "An object relationship"
   interpretation_detail: interpretation_details
+  interpreter_required: Boolean
   "An object relationship"
   invoice: invoice
   name: String!
+  notetaker_required: Boolean!
   purpose: String
   "A computed field, executes function \"get_uncompleted_status\""
   uncompleted_status: Boolean
@@ -4334,6 +4334,8 @@ type volunteer {
     where: feedback_bool_exp
   ): feedback_aggregate!
   id: Int!
+  interpreter: Boolean!
+  notetaker: Boolean!
   "An array relationship"
   volunteer_assignment_opt_ins(
     "distinct select on columns"
@@ -4590,6 +4592,8 @@ enum account_select_column {
   "column name"
   id
   "column name"
+  is_enabled
+  "column name"
   name
   "column name"
   profile_pic_url
@@ -4611,6 +4615,8 @@ enum account_update_column {
   email
   "column name"
   id
+  "column name"
+  is_enabled
   "column name"
   name
   "column name"
@@ -4834,8 +4840,6 @@ enum email_information_constraint {
 "select columns of table \"email_information\""
 enum email_information_select_column {
   "column name"
-  email_address
-  "column name"
   id
   "column name"
   notification_setting_id
@@ -4843,8 +4847,6 @@ enum email_information_select_column {
 
 "update columns of table \"email_information\""
 enum email_information_update_column {
-  "column name"
-  email_address
   "column name"
   id
   "column name"
@@ -4868,7 +4870,11 @@ enum event_select_column {
   "column name"
   id
   "column name"
+  interpreter_required
+  "column name"
   name
+  "column name"
+  notetaker_required
   "column name"
   purpose
   "column name"
@@ -4886,7 +4892,11 @@ enum event_update_column {
   "column name"
   id
   "column name"
+  interpreter_required
+  "column name"
   name
+  "column name"
+  notetaker_required
   "column name"
   purpose
   "column name"
@@ -5311,8 +5321,6 @@ enum telegram_information_constraint {
   telegram_information_notification_setting_id_key
   "unique or primary key constraint"
   telegram_information_pkey
-  "unique or primary key constraint"
-  telegram_information_user_handle_key
 }
 
 "select columns of table \"telegram_information\""
@@ -5391,6 +5399,10 @@ enum volunteer_select_column {
   approval_status
   "column name"
   id
+  "column name"
+  interpreter
+  "column name"
+  notetaker
 }
 
 "update columns of table \"volunteer\""
@@ -5401,6 +5413,10 @@ enum volunteer_update_column {
   approval_status
   "column name"
   id
+  "column name"
+  interpreter
+  "column name"
+  notetaker
 }
 
 "expression to compare columns of type Boolean. All fields are combined with logical 'AND'."
@@ -5486,6 +5502,7 @@ input account_bool_exp {
   created_at: timestamp_comparison_exp
   email: String_comparison_exp
   id: Int_comparison_exp
+  is_enabled: Boolean_comparison_exp
   memberships: membership_bool_exp
   name: String_comparison_exp
   notification_setting: notification_setting_bool_exp
@@ -5510,6 +5527,7 @@ input account_insert_input {
   created_at: timestamp
   email: String
   id: Int
+  is_enabled: Boolean
   memberships: membership_arr_rel_insert_input
   name: String
   notification_setting: notification_setting_obj_rel_insert_input
@@ -5568,6 +5586,7 @@ input account_order_by {
   created_at: order_by
   email: order_by
   id: order_by
+  is_enabled: order_by
   memberships_aggregate: membership_aggregate_order_by
   name: order_by
   notification_setting: notification_setting_order_by
@@ -5590,6 +5609,7 @@ input account_set_input {
   created_at: timestamp
   email: String
   id: Int
+  is_enabled: Boolean
   name: String
   profile_pic_url: String
   role: String
@@ -6560,7 +6580,6 @@ input email_information_bool_exp {
   _and: [email_information_bool_exp]
   _not: email_information_bool_exp
   _or: [email_information_bool_exp]
-  email_address: String_comparison_exp
   id: Int_comparison_exp
   notification_setting: notification_setting_bool_exp
   notification_setting_id: Int_comparison_exp
@@ -6574,7 +6593,6 @@ input email_information_inc_input {
 
 "input type for inserting data into table \"email_information\""
 input email_information_insert_input {
-  email_address: String
   id: Int
   notification_setting: notification_setting_obj_rel_insert_input
   notification_setting_id: Int
@@ -6582,14 +6600,12 @@ input email_information_insert_input {
 
 "order by max() on columns of table \"email_information\""
 input email_information_max_order_by {
-  email_address: order_by
   id: order_by
   notification_setting_id: order_by
 }
 
 "order by min() on columns of table \"email_information\""
 input email_information_min_order_by {
-  email_address: order_by
   id: order_by
   notification_setting_id: order_by
 }
@@ -6609,7 +6625,6 @@ input email_information_on_conflict {
 
 "ordering options when selecting data from \"email_information\""
 input email_information_order_by {
-  email_address: order_by
   id: order_by
   notification_setting: notification_setting_order_by
   notification_setting_id: order_by
@@ -6622,7 +6637,6 @@ input email_information_pk_columns_input {
 
 "input type for updating data in table \"email_information\""
 input email_information_set_input {
-  email_address: String
   id: Int
   notification_setting_id: Int
 }
@@ -6709,8 +6723,10 @@ input event_bool_exp {
   feedbacks: feedback_bool_exp
   id: Int_comparison_exp
   interpretation_detail: interpretation_details_bool_exp
+  interpreter_required: Boolean_comparison_exp
   invoice: invoice_bool_exp
   name: String_comparison_exp
+  notetaker_required: Boolean_comparison_exp
   purpose: String_comparison_exp
   updated_at: timestamp_comparison_exp
 }
@@ -6731,8 +6747,10 @@ input event_insert_input {
   feedbacks: feedback_arr_rel_insert_input
   id: Int
   interpretation_detail: interpretation_details_obj_rel_insert_input
+  interpreter_required: Boolean
   invoice: invoice_obj_rel_insert_input
   name: String
+  notetaker_required: Boolean
   purpose: String
   updated_at: timestamp
 }
@@ -6782,8 +6800,10 @@ input event_order_by {
   feedbacks_aggregate: feedback_aggregate_order_by
   id: order_by
   interpretation_detail: interpretation_details_order_by
+  interpreter_required: order_by
   invoice: invoice_order_by
   name: order_by
+  notetaker_required: order_by
   purpose: order_by
   updated_at: order_by
 }
@@ -6799,7 +6819,9 @@ input event_set_input {
   created_at: timestamp
   description: String
   id: Int
+  interpreter_required: Boolean
   name: String
+  notetaker_required: Boolean
   purpose: String
   updated_at: timestamp
 }
@@ -8864,6 +8886,8 @@ input volunteer_bool_exp {
   blacklists: blacklist_bool_exp
   feedbacks: feedback_bool_exp
   id: Int_comparison_exp
+  interpreter: Boolean_comparison_exp
+  notetaker: Boolean_comparison_exp
   volunteer_assignment_opt_ins: volunteer_assignment_opt_in_bool_exp
 }
 
@@ -8882,6 +8906,8 @@ input volunteer_insert_input {
   blacklists: blacklist_arr_rel_insert_input
   feedbacks: feedback_arr_rel_insert_input
   id: Int
+  interpreter: Boolean
+  notetaker: Boolean
   volunteer_assignment_opt_ins: volunteer_assignment_opt_in_arr_rel_insert_input
 }
 
@@ -8919,6 +8945,8 @@ input volunteer_order_by {
   blacklists_aggregate: blacklist_aggregate_order_by
   feedbacks_aggregate: feedback_aggregate_order_by
   id: order_by
+  interpreter: order_by
+  notetaker: order_by
   volunteer_assignment_opt_ins_aggregate: volunteer_assignment_opt_in_aggregate_order_by
 }
 
@@ -8932,6 +8960,8 @@ input volunteer_set_input {
   account_id: Int
   approval_status: Boolean
   id: Int
+  interpreter: Boolean
+  notetaker: Boolean
 }
 
 "order by stddev() on columns of table \"volunteer\""

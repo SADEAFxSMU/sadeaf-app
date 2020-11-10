@@ -1,7 +1,9 @@
 <template>
   <el-menu class="el-menu-nav" mode="horizontal" router>
     <div class="nav-logo">
-      <h1>SADEAF Dashboard</h1>
+      <nuxt-link to="/">
+        <h1>SADEAF Dashboard</h1>
+      </nuxt-link>
       <status-indicator text="LIVE" color="lightseagreen" class="indicator" />
     </div>
     <slot name="user-nav"></slot>
@@ -59,5 +61,9 @@ export default {
 }
 .nav-logo .indicator {
   padding-left: 15px;
+}
+
+.nuxt-link-active {
+  text-decoration-line: none;
 }
 </style>

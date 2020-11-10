@@ -97,6 +97,7 @@ const assignmentQuery = gql`
         name
         description
         purpose
+        notetaker_required
       }
     }
   }
@@ -125,6 +126,8 @@ const volunteerPendingAssignmentsQuery = gql`
         id
         name
         description
+        notetaker_required
+        interpreter_required
         purpose
       }
     }
@@ -134,7 +137,11 @@ const volunteerPendingAssignmentsQuery = gql`
 const volunteerOptInQuery = gql`
   subscription VolunteerOptIns($volunteer_id: Int!) {
     volunteer_assignment_opt_in(
-      where: { volunteer_id: { _eq: $volunteer_id }, assignment: { status: { _nin: ["COMPLETE", "MATCHED"] } } }
+      where: {
+        volunteer_id: { _eq: $volunteer_id }
+        status: { _eq: "OPTED_IN" }
+        assignment: { status: { _nin: ["COMPLETE", "MATCHED"] } }
+      }
     ) {
       id
       assignment_id
@@ -156,6 +163,7 @@ const volunteerOptInQuery = gql`
           name
           description
           purpose
+          notetaker_required
         }
       }
     }
@@ -163,10 +171,17 @@ const volunteerOptInQuery = gql`
 `;
 
 const cancelAssignmentQuery = gql`
-  mutation cancelAssignment($assignment_id: Int!) {
+  mutation cancelAssignment($assignment_id: Int!, $volunteer_id: Int!) {
     update_assignment_by_pk(pk_columns: { id: $assignment_id }, _set: { status: "PENDING", volunteer_id: null }) {
       id
       status
+    }
+
+    update_volunteer_assignment_opt_in(
+      where: { assignment_id: { _eq: $assignment_id }, volunteer_id: { _eq: $volunteer_id } }
+      _set: { status: "OPTED_OUT" }
+    ) {
+      affected_rows
     }
   }
 `;
@@ -265,17 +280,22 @@ export default {
         });
     },
     cancelMatchedAssignment(assignment) {
-      this.$confirm('This will un-match you from this assignment. Are you sure?', 'Warning', {
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-      })
+      this.$confirm(
+        'This will un-match you from this assignment and you will not be able to see it again. Are you sure?',
+        'Warning',
+        {
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+        }
+      )
         .then(() => {
           this.$apollo
             .mutate({
               mutation: cancelAssignmentQuery,
               variables: {
                 assignment_id: assignment.id,
+                volunteer_id: this.$store.state.auth.user.volunteer.id,
               },
             })
             .then((_) => {
@@ -341,11 +361,27 @@ export default {
           };
         },
         result({ data }) {
-          data.pending_assignments.forEach((assignment) => {
+          const { pending_assignments } = data;
+          const filtered_assignments = pending_assignments.filter((a) => {
+            const { notetaker: isNotetaker, interpreter: isInterpreter } = this.volunteer;
+            const { notetaker_required, interpreter_required } = a.event;
+
+            if (notetaker_required && interpreter_required) {
+              return notetaker_required === isNotetaker && interpreter_required === isInterpreter;
+            } else if (notetaker_required && !interpreter_required) {
+              return notetaker_required === isNotetaker;
+            } else if (interpreter_required && !notetaker_required) {
+              return interpreter_required === isInterpreter;
+            } else {
+              return true;
+            }
+          });
+
+          filtered_assignments.forEach((assignment) => {
             assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
             assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
           });
-          this.pendingAssignments = data.pending_assignments;
+          this.pendingAssignments = filtered_assignments;
         },
       },
     },

@@ -1,6 +1,6 @@
-import pubsub from '../pubsub';
+import pubsub from '../../pubsub';
 // noinspection ES6PreferShortImport
-import { SMTP } from '../../config';
+import { SMTP } from '../../../config';
 import { SMTPClient } from 'emailjs';
 
 const client = new SMTPClient({
@@ -14,19 +14,21 @@ const client = new SMTPClient({
 module.exports = async function () {
   const { subscribe } = await pubsub();
 
-  await subscribe('email-example', async ({ data: { from, to, subject, body } }) => {
-    // TODO(sde): Refer to this https://github.com/eleith/emailjs
+  // body should be a HTML string representing the email
+  await subscribe('email-sender', async ({ data: { from, to, subject, body } }) => {
     const msg = {
       from: from,
       to: to,
       subject: subject,
-      text: body,
+      attachment: [{ data: body, alternative: true }],
     };
 
     await new Promise((resolve, reject) => {
       client.send(msg, (err, message) => {
-        if (err) reject(err);
-        else resolve();
+        if (err) {
+          console.error(`[EmailExample] ${err}`);
+          reject(err);
+        } else resolve();
       });
     });
   });

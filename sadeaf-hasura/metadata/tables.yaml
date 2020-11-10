@@ -82,6 +82,7 @@
       - created_at
       - email
       - id
+      - is_enabled
       - name
       - profile_pic_url
       - role
@@ -93,10 +94,14 @@
       columns:
       - cognito_id
       - contact
+      - created_at
       - email
       - id
+      - is_enabled
       - name
+      - profile_pic_url
       - role
+      - updated_at
       filter: {}
   - role: service_requestor
     permission:
@@ -106,18 +111,12 @@
       - created_at
       - email
       - id
+      - is_enabled
       - name
       - profile_pic_url
       - role
       - updated_at
-      filter:
-        _or:
-        - client:
-            service_requestor:
-              account_id:
-                _eq: X-Hasura-User-Id
-        - id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   - role: volunteer
     permission:
       columns:
@@ -126,6 +125,7 @@
       - created_at
       - email
       - id
+      - is_enabled
       - name
       - profile_pic_url
       - role
@@ -143,6 +143,19 @@
           id:
             _eq: X-Hasura-User-Id
       check: {}
+  - role: pending
+    permission:
+      columns:
+      - contact
+      - email
+      - id
+      - name
+      - profile_pic_url
+      - role
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
   - role: service_requestor
     permission:
       columns:
@@ -319,6 +332,7 @@
       - postal
       - room_number
       - start_dt
+      - status
       filter:
         event:
           client:
@@ -379,6 +393,34 @@
             service_requestor:
               account_id:
                 _eq: X-Hasura-User-Id
+  event_triggers:
+  - name: assignment-details-update-notifier
+    definition:
+      enable_manual: false
+      update:
+        columns:
+        - end_dt
+        - start_dt
+        - address_line_one
+        - address_line_two
+        - postal
+        - room_number
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: WEB_HOOK_URL
+  - name: assignment-status-notifier
+    definition:
+      enable_manual: false
+      update:
+        columns:
+        - status
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: WEB_HOOK_URL
 - table:
     schema: public
     name: attendance
@@ -565,6 +607,20 @@
         table:
           schema: public
           name: event
+  insert_permissions:
+  - role: pending
+    permission:
+      check:
+        account_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - account_id
+      - additional_notes
+      - designation
+      - id
+      - organisation
+      - preferred_comm_mode
+      backend_only: false
   select_permissions:
   - role: client
     permission:
@@ -648,90 +704,70 @@
   insert_permissions:
   - role: client
     permission:
-      check:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      check: {}
       columns:
-      - email_address
+      - id
+      - notification_setting_id
       backend_only: false
   - role: service_requestor
     permission:
-      check:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      check: {}
       columns:
-      - email_address
+      - id
+      - notification_setting_id
       backend_only: false
   - role: volunteer
     permission:
-      check:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      check: {}
       columns:
-      - email_address
+      - id
+      - notification_setting_id
       backend_only: false
   select_permissions:
   - role: client
     permission:
       columns:
-      - email_address
       - id
       - notification_setting_id
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   - role: service_requestor
     permission:
       columns:
       - id
       - notification_setting_id
-      - email_address
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   - role: volunteer
     permission:
       columns:
       - id
       - notification_setting_id
-      - email_address
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   update_permissions:
   - role: client
     permission:
-      columns:
-      - email_address
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      columns: []
+      filter: {}
       check: null
   - role: service_requestor
     permission:
-      columns:
-      - email_address
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      columns: []
+      filter: {}
       check: null
   - role: volunteer
     permission:
-      columns:
-      - email_address
-      filter:
-        notification_setting:
-          account_id:
-            _eq: X-Hasura-User-Id
+      columns: []
+      filter: {}
       check: null
+  delete_permissions:
+  - role: client
+    permission:
+      filter: {}
+  - role: service_requestor
+    permission:
+      filter: {}
+  - role: volunteer
+    permission:
+      filter: {}
 - table:
     schema: public
     name: event
@@ -788,7 +824,9 @@
       columns:
       - client_id
       - description
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
   - role: service_requestor
     permission:
@@ -800,7 +838,9 @@
       columns:
       - client_id
       - description
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
   select_permissions:
   - role: client
@@ -810,7 +850,9 @@
       - created_at
       - description
       - id
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
       - updated_at
       filter:
@@ -825,7 +867,9 @@
       - created_at
       - description
       - id
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
       - updated_at
       filter:
@@ -841,7 +885,9 @@
       - created_at
       - description
       - id
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
       - updated_at
       filter: {}
@@ -850,7 +896,9 @@
     permission:
       columns:
       - description
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
       filter:
         client:
@@ -862,7 +910,9 @@
       columns:
       - client_id
       - description
+      - interpreter_required
       - name
+      - notetaker_required
       - purpose
       filter:
         client:
@@ -1549,18 +1599,24 @@
       columns:
       - account_id
       - id
+      - interpreter
+      - notetaker
       filter: {}
   - role: pending
     permission:
       columns:
       - account_id
       - id
+      - interpreter
+      - notetaker
       filter: {}
   - role: service_requestor
     permission:
       columns:
       - account_id
       - id
+      - interpreter
+      - notetaker
       filter: {}
   - role: volunteer
     permission:
@@ -1568,6 +1624,8 @@
       - account_id
       - approval_status
       - id
+      - interpreter
+      - notetaker
       filter: {}
 - table:
     schema: public
@@ -1614,6 +1672,9 @@
       filter: {}
       check: null
   delete_permissions:
+  - role: client
+    permission:
+      filter: {}
   - role: volunteer
     permission:
       filter: {}

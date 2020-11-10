@@ -27,6 +27,7 @@
                 v-for="assignment in getAssignmentsOnDate(selectedDate)"
                 :key="'as-' + assignment.id"
                 :details="assignment"
+                :show-edit="assignment.status !== cancelledText() && assignment.status !== completedText()"
                 @editClick="handleEditAssignmentClick"
               />
             </div>
@@ -64,8 +65,9 @@ import ClientCreateEventForm from '../forms/ClientCreateEventForm';
 import UserCard from '../user/UserCard';
 import AssignmentCard from '../cards/AssignmentCard';
 import ClientUpsertAssignmentForm from '../forms/ClientUpsertAssignmentForm';
-import { DateUtils } from '../../common/date-utils';
+import { DateUtils } from '@/common/date-utils';
 import dayjs from 'dayjs';
+import { ASSIGNMENT_STATUSES } from '@/common/types/constants';
 
 export default {
   name: 'ClientEventCalendar',
@@ -107,7 +109,11 @@ export default {
     },
 
     handleEditAssignmentClick(assignment) {
-      this.updateAssignment = assignment;
+      this.updateAssignment = {
+        ...assignment,
+        notetaker_required: assignment.event.notetaker_required,
+        interpreter_required: assignment.event.interpreter_required,
+      };
       this.updateAssignmentDialogVisible = true;
     },
 
@@ -138,6 +144,12 @@ export default {
     isAfterToday(date) {
       return DateUtils.isAfterToday(date);
     },
+    cancelledText() {
+      return ASSIGNMENT_STATUSES.CANCELLED;
+    },
+    completedText() {
+      return ASSIGNMENT_STATUSES.COMPLETE;
+    },
   },
 
   computed: {
@@ -163,6 +175,8 @@ export default {
               event {
                 id
                 name
+                notetaker_required
+                interpreter_required
               }
               volunteer {
                 id
@@ -237,6 +251,7 @@ export default {
   flex: 1;
   transition: flex 0.3s;
 }
+
 .fade-enter,
 .fade-leave-to {
   flex: 0;

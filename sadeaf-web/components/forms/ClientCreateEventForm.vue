@@ -4,6 +4,12 @@
       <el-form-item label="Event Name" prop="name" required>
         <el-input v-model="form.name" placeholder="IS111 - Introduction to Programming" />
       </el-form-item>
+      <el-form-item label="Event Skill Requirements" prop="eventSkillRequirements" required>
+        <el-checkbox-group v-model="form.eventSkillRequirements">
+          <el-checkbox label="Notetaking" name="type"></el-checkbox>
+          <el-checkbox label="Interpretation" name="type"></el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
       <el-form-item label="Purpose" prop="purpose" required>
         <div class="field-purpose">
           <el-select v-model="form.purpose" placeholder="School">
@@ -81,8 +87,8 @@
       </el-form-item>
       <el-form-item>
         <el-button-group>
-          <el-button @click="submitForm"> Confirm </el-button>
-          <el-button @click="handleCancel"> Cancel </el-button>
+          <el-button @click="submitForm"> Confirm</el-button>
+          <el-button @click="handleCancel"> Cancel</el-button>
         </el-button-group>
         <el-popconfirm
           v-if="event"
@@ -93,7 +99,7 @@
           title="Are you sure you want to delete this?"
           @onConfirm="handleDelete"
         >
-          <el-button slot="reference" type="danger"> Delete </el-button>
+          <el-button slot="reference" type="danger"> Delete</el-button>
         </el-popconfirm>
       </el-form-item>
     </el-form>
@@ -101,7 +107,7 @@
 </template>
 
 <script>
-import { EVENT_PURPOSE_OPTIONS } from '../../common/types/constants';
+import { EVENT_PURPOSE_OPTIONS } from '@/common/types/constants';
 import UserCardHorizontalSmall from '../user/UserCardHorizontalSmall';
 import UserCard from '../user/UserCard';
 import SmallDeleteButton from '../buttons/SmallDeleteButton';
@@ -115,6 +121,8 @@ const INSERT_EVENT = gql`
     $description: String
     $purpose: String
     $assignments: assignment_arr_rel_insert_input
+    $notetaker_required: Boolean
+    $interpreter_required: Boolean
   ) {
     insert_event_one(
       object: {
@@ -123,6 +131,8 @@ const INSERT_EVENT = gql`
         description: $description
         purpose: $purpose
         assignments: $assignments
+        notetaker_required: $notetaker_required
+        interpreter_required: $interpreter_required
       }
     ) {
       id
@@ -130,6 +140,8 @@ const INSERT_EVENT = gql`
       client_id
       description
       purpose
+      notetaker_required
+      interpreter_required
       assignments {
         id
         address_line_one
@@ -167,6 +179,17 @@ export default {
         name: [{ required: true, message: 'Please enter a name for this Event', trigger: 'blur' }],
         purpose: [{ required: true, message: 'Please enter a purpose' }],
         date: [{ required: true, message: 'Please enter a date' }],
+        eventSkillRequirements: [
+          {
+            validator: (rule, value, callback) => {
+              if (this.form.eventSkillRequirements.length > 0) {
+                callback();
+              } else {
+                callback(new Error('Please enter an event skill!'));
+              }
+            },
+          },
+        ],
         duration: [
           {
             validator: (_, __, callback) => {
@@ -204,6 +227,7 @@ export default {
         date: this.date,
         repeat: REPEAT_OPTS.DOES_NOT_REPEAT,
         repeatCount: 1,
+        eventSkillRequirements: [],
       },
       eventPurposeOptions: EVENT_PURPOSE_OPTIONS,
     };
@@ -245,6 +269,8 @@ export default {
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
           assignments: { data: this.assignments },
+          notetaker_required: this.form.eventSkillRequirements.includes('Notetaking'),
+          interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
         },
       });
       this.event = data.insert_event_one;

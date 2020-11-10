@@ -10,7 +10,7 @@
         <h1 class="title">Pending Volunteer</h1>
       </div>
     </div>
-    <el-form :model="form" label-width="150px">
+    <el-form ref="form" :rules="rules" :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
           <el-input v-model="form.address_line_one" placeholder="Address Line 1" />
@@ -21,6 +21,18 @@
           <el-input v-model="form.postal" style="margin-left: 5px; width: 150px" placeholder="Postal Code" />
         </div>
       </el-form-item>
+
+      <el-form-item
+        v-if="form.updateEventSkillRequirements"
+        label="Skill Requirements"
+        prop="updateEventSkillRequirements"
+      >
+        <el-checkbox-group v-model="form.updateEventSkillRequirements">
+          <el-checkbox label="Notetaking" name="type"></el-checkbox>
+          <el-checkbox label="Interpretation" name="type"></el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
+
       <el-form-item label="Dates">
         <el-date-picker v-model="form.start_dt" placeholder="Start" type="datetime" />
         -
@@ -44,7 +56,7 @@
               title="Are you sure you want to cancel this assignment?"
               @onConfirm="handleDelete"
             >
-              <el-button slot="reference" type="danger" size="mini"> Cancel </el-button>
+              <el-button slot="reference" type="danger" size="mini"> Cancel</el-button>
             </el-popconfirm>
           </div>
         </danger-zone>
@@ -52,7 +64,7 @@
       <el-form-item>
         <div style="display: flex; justify-content: space-between">
           <el-button-group>
-            <el-button @click="handleConfirm"> Confirm </el-button>
+            <el-button @click="handleConfirm"> Confirm</el-button>
           </el-button-group>
         </div>
       </el-form-item>
@@ -65,6 +77,20 @@ import UserCard from '../user/UserCard';
 import gql from 'graphql-tag';
 import _ from 'lodash';
 import DangerZone from './DangerZone';
+
+const UPDATE_EVENT_SKILLS = gql`
+  mutation UpdateEventSkills($assignment_id: Int!, $notetaker_required: Boolean!, $interpreter_required: Boolean!) {
+    update_event(
+      where: { assignments: { id: { _eq: $assignment_id } } }
+      _set: { interpreter_required: $interpreter_required, notetaker_required: $notetaker_required }
+    ) {
+      returning {
+        notetaker_required
+        interpreter_required
+      }
+    }
+  }
+`;
 
 const UPDATE_ASSIGNMENT = gql`
   mutation UpdateAssignment(
@@ -105,7 +131,11 @@ const UPDATE_ASSIGNMENT = gql`
 
 const DELETE_ASSIGNMENT = gql`
   mutation DeleteAssignmentByPk($id: Int!) {
-    delete_assignment_by_pk(id: $id) {
+    delete_volunteer_assignment_opt_in(where: { assignment_id: { _eq: $id } }) {
+      affected_rows
+    }
+
+    update_assignment_by_pk(pk_columns: { id: $id }, _set: { status: "CANCELLED" }) {
       id
     }
   }
@@ -128,7 +158,23 @@ export default {
 
   data() {
     return {
-      form: {},
+      form: {
+        updateEventSkillRequirements: [],
+      },
+      rules: {
+        updateEventSkillRequirements: [
+          {
+            validator: (rule, value, callback) => {
+              if (this.form.updateEventSkillRequirements.length > 0) {
+                callback();
+              } else {
+                callback(new Error('Please enter an event skill!'));
+              }
+            },
+            trigger: 'blur',
+          },
+        ],
+      },
     };
   },
 
@@ -139,23 +185,40 @@ export default {
   methods: {
     setForm(assignment) {
       if (assignment) {
+        const skillRequirements = [];
+        const { notetaker_required, interpreter_required } = assignment;
+        if (notetaker_required) {
+          skillRequirements.push('Notetaking');
+        }
+        if (interpreter_required) {
+          skillRequirements.push('Interpretation');
+        }
+        this.$set(this.form, 'updateEventSkillRequirements', skillRequirements);
+
         _.forOwn(assignment, (value, fieldName) => {
-          this.$set(this.form, fieldName, value);
+          if (fieldName !== 'notetaker_required' && fieldName !== 'interpreter_required') {
+            this.$set(this.form, fieldName, value);
+          }
         });
       } else {
         this.resetValues();
       }
     },
-
     handleConfirm() {
-      if (this.isUpdate) {
-        this.updateAssignment();
-        this.$notify.success('Assignment updated!');
-      } else {
-        this.insertAssignment();
-        this.$notify.success('Assignment created!');
-      }
-      this.onOperationSuccess();
+      this.$refs.form.validate(async (valid) => {
+        if (valid) {
+          await this.updateEventSkillRequirements();
+
+          if (this.isUpdate) {
+            await this.updateAssignment();
+            this.$notify.success('Assignment updated!');
+          } else {
+            await this.insertAssignment();
+            this.$notify.success('Assignment created!');
+          }
+          this.onOperationSuccess();
+        }
+      });
     },
     handleCancel() {
       this.$emit('cancel');
@@ -188,6 +251,19 @@ export default {
           postal,
           room_number,
           start_dt,
+        },
+      });
+    },
+
+    async updateEventSkillRequirements() {
+      const updateEventSkillRequirements = this.form.updateEventSkillRequirements;
+      const id = this.assignment.id;
+      await this.$apollo.mutate({
+        mutation: UPDATE_EVENT_SKILLS,
+        variables: {
+          assignment_id: id,
+          notetaker_required: updateEventSkillRequirements.includes('Notetaking'),
+          interpreter_required: updateEventSkillRequirements.includes('Interpretation'),
         },
       });
     },
@@ -273,6 +349,7 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .pending-volunteer .title {
   margin-left: 8px;
 }
@@ -282,9 +359,11 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
+
 .cancel-field .heading {
   color: #be5555;
 }
+
 .cancel-field .body {
   opacity: 0.7;
   line-height: 18px;
