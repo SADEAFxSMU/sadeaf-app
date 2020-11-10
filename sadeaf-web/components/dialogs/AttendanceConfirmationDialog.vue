@@ -4,9 +4,9 @@
       <h4>Confirming attendance for {{ assignment.event.name }}</h4>
       <p>Event Duration: {{ eventDuration() }} hours</p>
     </div>
-    <div class="button-wrapper" v-if="!isDisputed && !attended">
+    <div class="button-wrapper" v-if="(!isDisputed && !attended) || (showDisputeOnly && !isDisputed)">
       <el-button type="danger" @click="disputeAttendance">Dispute Attendance</el-button>
-      <el-button type="primary" @click="upsertVolunteerAssignment">Confirm</el-button>
+      <el-button v-if="!showDisputeOnly" type="primary" @click="upsertVolunteerAssignment">Confirm</el-button>
     </div>
     <div v-else-if="isDisputed">
       <DangerZone title="Disputed Assignment">
@@ -71,6 +71,11 @@ export default {
     assignment: {
       type: Object,
       required: true,
+    },
+    showDisputeOnly: {
+      type: Boolean,
+      require: false,
+      default: false,
     },
   },
   data() {

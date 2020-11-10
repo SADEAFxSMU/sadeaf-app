@@ -152,7 +152,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .assignment-card {
   background: white;

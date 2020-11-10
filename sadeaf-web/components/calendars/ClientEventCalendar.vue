@@ -1,3 +1,4 @@
+<!--suppress CssUnusedSymbol -->
 <template>
   <div class="main">
     <div class="calendar">
@@ -28,7 +29,9 @@
                 :key="'as-' + assignment.id"
                 :details="assignment"
                 :show-edit="assignment.status !== cancelledText() && assignment.status !== completedText()"
+                :show-attendance="assignment.status === 'COMPLETE'"
                 @editClick="handleEditAssignmentClick"
+                @showAttendance="handleShowAttendanceDialog(assignment)"
               />
             </div>
           </el-tab-pane>
@@ -56,6 +59,13 @@
         @cancel="handleEditAssignmentCancel"
       />
     </el-dialog>
+    <attendance-confirmation-dialog
+      v-if="showAttendanceDialog"
+      :is-visible="showAttendanceDialog"
+      :assignment="selectedAssignmentForAttendance"
+      :show-dispute-only="true"
+      @onClose="handleCloseAttendanceDialog"
+    />
   </div>
 </template>
 
@@ -68,6 +78,7 @@ import ClientUpsertAssignmentForm from '../forms/ClientUpsertAssignmentForm';
 import { DateUtils } from '@/common/date-utils';
 import dayjs from 'dayjs';
 import { ASSIGNMENT_STATUSES } from '@/common/types/constants';
+import AttendanceConfirmationDialog from '@/components/dialogs/AttendanceConfirmationDialog';
 
 export default {
   name: 'ClientEventCalendar',
@@ -77,6 +88,7 @@ export default {
     AssignmentCard,
     UserCard,
     ClientCreateEventForm,
+    AttendanceConfirmationDialog,
   },
 
   data() {
@@ -89,6 +101,8 @@ export default {
       tab: 'assignments',
       createServiceRequestFormVisible: false,
       updateAssignmentDialogVisible: false,
+      showAttendanceDialog: false,
+      selectedAssignmentForAttendance: undefined,
     };
   },
 
@@ -149,6 +163,14 @@ export default {
     },
     completedText() {
       return ASSIGNMENT_STATUSES.COMPLETE;
+    },
+    handleShowAttendanceDialog(assignment) {
+      this.showAttendanceDialog = true;
+      this.selectedAssignmentForAttendance = assignment;
+    },
+    handleCloseAttendanceDialog() {
+      this.showAttendanceDialog = false;
+      this.selectedAssignmentForAttendance = undefined;
     },
   },
 
