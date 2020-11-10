@@ -17,11 +17,11 @@
 
 <script>
 import ClientSignUpForm from '../components/forms/SignUpForm/ClientSignUpForm';
-import VolunteerSignUpForm from "../components/forms/SignUpForm/VolunteerSignUpForm";
+import VolunteerSignUpForm from '../components/forms/SignUpForm/VolunteerSignUpForm';
 
 export default {
   name: 'registration-page',
-  components: {VolunteerSignUpForm, ClientSignUpForm },
+  components: { VolunteerSignUpForm, ClientSignUpForm },
   data() {
     return {
       role: 'pending',
