@@ -9,6 +9,7 @@
           <el-radio-button label="service_requestor"> Service Requestor </el-radio-button>
         </el-radio-group>
         <client-sign-up-form v-if="role === 'client'" />
+        <volunteer-sign-up-form v-else-if="role === 'volunteer'" />
       </div>
     </div>
   </div>
@@ -16,10 +17,11 @@
 
 <script>
 import ClientSignUpForm from '../components/forms/SignUpForm/ClientSignUpForm';
+import VolunteerSignUpForm from "../components/forms/SignUpForm/VolunteerSignUpForm";
 
 export default {
   name: 'registration-page',
-  components: { ClientSignUpForm },
+  components: {VolunteerSignUpForm, ClientSignUpForm },
   data() {
     return {
       role: 'pending',
