@@ -1,11 +1,5 @@
 <template>
-  <el-menu class="el-menu-nav" mode="horizontal" router>
-    <div class="nav-logo">
-      <nuxt-link to="/">
-        <h1>SADEAF Dashboard</h1>
-      </nuxt-link>
-      <status-indicator text="LIVE" color="lightseagreen" class="indicator" />
-    </div>
+  <el-menu class="el-menu-nav" :mode="isMobileView ? 'vertical' : 'horizontal'" router>
     <slot name="user-nav"></slot>
     <el-submenu index="/account">
       <template slot="title">Account</template>
@@ -28,8 +22,10 @@
 <script>
 import StatusIndicator from '../StatusIndicator';
 import LogoutButton from '../buttons/LogoutButton';
+import { isMobileViewMixin } from '../../common/mixins';
 export default {
   name: 'BaseNavbar',
+  mixins: [isMobileViewMixin],
   components: { LogoutButton, StatusIndicator },
   computed: {
     user() {
@@ -47,23 +43,9 @@ export default {
 
 <style scoped>
 .el-menu-nav {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.el-menu-nav .nav-logo {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  outline: none;
-}
-.nav-logo .indicator {
-  padding-left: 15px;
-}
-
-.nuxt-link-active {
-  text-decoration-line: none;
+  padding: 0 20px 0 20px;
+  border: none;
+  overflow: scroll;
+  height: 100%;
 }
 </style>
