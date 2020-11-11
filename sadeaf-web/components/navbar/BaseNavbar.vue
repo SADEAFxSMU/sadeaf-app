@@ -30,7 +30,6 @@ export default {
   methods: {
     handleSelect(e) {
       this.$emit('select', e);
-      console.log('emitted by base');
     },
   },
   computed: {
