@@ -26,6 +26,9 @@ export const DateUtils = {
   humanReadableDt(date) {
     return dayjs(date).format('DD MMMM YYYY HH:MM');
   },
+  humanReadableDate(date) {
+    return dayjs(date).format('ddd, DD MMMM YYYY');
+  },
   humanReadableMonthYear(date) {
     return dayjs(date).format('MMM YYYY');
   },
