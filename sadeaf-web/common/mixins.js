@@ -41,3 +41,27 @@ export const FullscreenMixin = {
     },
   },
 };
+
+export const isMobileViewMixin = {
+  data() {
+    return {
+      isMobileView: window.innerWidth <= 900, // from element-ui xs breakpoint
+    };
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize);
+    });
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize);
+  },
+
+  methods: {
+    onResize() {
+      this.isMobileView = window.innerWidth <= 900;
+    },
+  },
+};

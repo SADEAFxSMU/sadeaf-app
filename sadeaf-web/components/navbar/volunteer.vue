@@ -1,5 +1,5 @@
 <template>
-  <base-navbar>
+  <base-navbar v-on="$listeners">
     <template v-slot:user-nav>
       <el-menu-item index="/volunteer"> Service Requests </el-menu-item>
     </template>
