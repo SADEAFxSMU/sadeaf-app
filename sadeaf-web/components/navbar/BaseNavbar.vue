@@ -1,5 +1,5 @@
 <template>
-  <el-menu class="el-menu-nav" :mode="isMobileView ? 'vertical' : 'horizontal'" router>
+  <el-menu class="el-menu-nav" :mode="isMobileView ? 'vertical' : 'horizontal'" router @select="handleSelect">
     <slot name="user-nav"></slot>
     <el-submenu index="/account">
       <template slot="title">Account</template>
@@ -27,6 +27,12 @@ export default {
   name: 'BaseNavbar',
   mixins: [isMobileViewMixin],
   components: { LogoutButton, StatusIndicator },
+  methods: {
+    handleSelect(e) {
+      this.$emit('select', e);
+      console.log('emitted by base');
+    },
+  },
   computed: {
     user() {
       return this.$store.state.auth.user;
