@@ -402,6 +402,7 @@ export default {
   margin-bottom: 16px;
   height: 700px;
   padding-top: 12px;
+  width: 100%;
 }
 
 .cal-title {
