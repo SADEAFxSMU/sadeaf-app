@@ -45,7 +45,7 @@ export const FullscreenMixin = {
 export const isMobileViewMixin = {
   data() {
     return {
-      isMobileView: window.innerWidth <= 900, // from element-ui xs breakpoint
+      isMobileView: window.innerWidth <= 900,
     };
   },
 

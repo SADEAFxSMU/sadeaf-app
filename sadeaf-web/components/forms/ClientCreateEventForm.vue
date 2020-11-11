@@ -182,7 +182,7 @@ export default {
         eventSkillRequirements: [
           {
             validator: (rule, value, callback) => {
-              if (this.form.eventSkillRequirements.length > 0) {
+              if (this.form.eventSkillRequirements && this.form.eventSkillRequirements.length > 0) {
                 callback();
               } else {
                 callback(new Error('Please enter an event skill!'));
@@ -273,7 +273,7 @@ export default {
           interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
         },
       });
-      this.event = data.insert_event_one;
+      // this.event = data.insert_event_one;
       return data.insert_event_one.id;
     },
 
@@ -283,7 +283,13 @@ export default {
     },
 
     resetState() {
-      this.form = {};
+      this.form = {
+        // default values
+        date: this.date,
+        repeat: REPEAT_OPTS.DOES_NOT_REPEAT,
+        repeatCount: 1,
+        eventSkillRequirements: [],
+      };
     },
   },
 
