@@ -33,7 +33,9 @@
               :key="'as-' + assignment.id"
               :details="assignment"
               :show-edit="assignment.status !== cancelledText() && assignment.status !== completedText()"
+              :show-attendance="assignment.status === 'COMPLETE'"
               @editClick="handleEditAssignmentClick"
+              @showAttendance="handleShowAttendanceDialog(assignment)"
             />
           </div>
           <no-data-placeholder text="No assignments yet!" style="height: 200px" v-else />
