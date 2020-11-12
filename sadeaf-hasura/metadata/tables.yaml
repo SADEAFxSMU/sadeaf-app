@@ -1593,6 +1593,17 @@
         table:
           schema: public
           name: volunteer_assignment_opt_in
+  insert_permissions:
+  - role: pending
+    permission:
+      check:
+        account_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - account_id
+      - interpreter
+      - notetaker
+      backend_only: false
   select_permissions:
   - role: client
     permission:
@@ -1622,7 +1633,6 @@
     permission:
       columns:
       - account_id
-      - approval_status
       - id
       - interpreter
       - notetaker

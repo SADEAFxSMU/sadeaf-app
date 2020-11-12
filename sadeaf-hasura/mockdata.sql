@@ -128,16 +128,16 @@ INSERT INTO client(
 (12, 'Singapore Management University', 'student', 'Speech', null, null, 26, 5);
 
 INSERT INTO volunteer(
-    id, approval_status, account_id
+    id, account_id
 ) VALUES
-(1, TRUE, 17),
-(2, TRUE, 18),
-(3, TRUE, 19),
-(4, TRUE, 20),
-(5, TRUE, 21),
-(6, TRUE, 22),
-(7, TRUE, 23),
-(8, TRUE, 25);
+(1, 17),
+(2, 18),
+(3, 19),
+(4, 20),
+(5, 21),
+(6, 22),
+(7, 23),
+(8, 25);
 
 -- INSERT INTO profile(
 --     id, account_id
