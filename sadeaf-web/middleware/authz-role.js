@@ -5,7 +5,7 @@ const PATH_ROLES = [
   { prefix: '/invoice', roles: ['admin'] },
   { prefix: '/org', roles: ['admin', 'service_requestor'] },
   { prefix: '/volunteer', roles: ['admin', 'volunteer'] },
-  { prefix: '/pending', roles: ['pending'] },
+  { prefix: '/pending', roles: ['pending', 'volunteer', 'client', 'service_requestor', 'admin'] },
   { prefix: '/registration', roles: ['pending'] },
 ];
 

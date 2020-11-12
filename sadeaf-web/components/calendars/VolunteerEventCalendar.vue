@@ -71,6 +71,12 @@
       :assignment="selectedAssignment"
       @onClose="handleAcceptDialogClose"
     />
+    <attendance-confirmation-dialog
+      v-if="showAttendanceDialog"
+      :is-visible="showAttendanceDialog"
+      :assignment="selectedAssignmentForAttendance"
+      @onClose="handleCloseAttendanceDialog"
+    />
   </div>
 </template>
 
@@ -83,6 +89,7 @@ import AcceptAssignmentDetailsDialog from '../dialogs/AcceptAssignmentDetailsDia
 import _ from 'lodash';
 import { isMobileViewMixin } from '../../common/mixins';
 import NoDataPlaceholder from '../NoDataPlaceholder';
+import AttendanceConfirmationDialog from '@/components/dialogs/AttendanceConfirmationDialog';
 
 const assignmentQuery = gql`
   subscription VolunteerAllAssignments($volunteer_id: Int!) {
@@ -103,6 +110,14 @@ const assignmentQuery = gql`
         description
         purpose
         notetaker_required
+        interpreter_required
+      }
+      volunteer {
+        id
+        account {
+          id
+          name
+        }
       }
     }
   }
@@ -134,6 +149,13 @@ const volunteerPendingAssignmentsQuery = gql`
         notetaker_required
         interpreter_required
         purpose
+      }
+      volunteer {
+        id
+        account {
+          id
+          name
+        }
       }
     }
   }
@@ -202,7 +224,7 @@ const optOutOfOptedInAssignmentQuery = gql`
 
 export default {
   name: 'VolunteerEventCalendar',
-  components: { NoDataPlaceholder, AcceptAssignmentDetailsDialog, AssignmentCard },
+  components: { NoDataPlaceholder, AttendanceConfirmationDialog, AcceptAssignmentDetailsDialog, AssignmentCard },
   mixins: [isMobileViewMixin],
   props: {
     volunteer: {
@@ -217,7 +239,9 @@ export default {
       selectedDate: null,
       tab: 'events',
       showAcceptDialog: false,
+      showAttendanceDialog: false,
       selectedAssignment: undefined,
+      selectedAssignmentForAttendance: undefined,
       volunteerOptedInAssignments: [],
       assignmentCommandDialogVisible: false,
       assignmentCommandDialogTitle: '',
@@ -316,6 +340,14 @@ export default {
         .catch(() => {
           // do nothing if the user pressed cancel
         });
+    },
+    handleShowAttendanceDialog(assignment) {
+      this.showAttendanceDialog = true;
+      this.selectedAssignmentForAttendance = assignment;
+    },
+    handleCloseAttendanceDialog() {
+      this.showAttendanceDialog = false;
+      this.selectedAssignmentForAttendance = undefined;
     },
   },
   computed: {
@@ -438,6 +470,7 @@ export default {
   overflow: scroll;
 }
 
+/*noinspection CssUnusedSymbol*/
 .greyed {
   color: #cbcbcb;
 }

@@ -35,4 +35,7 @@ export const DateUtils = {
   utcToGmt8(date) {
     return dayjs.utc(date).utcOffset(8);
   },
+  differenceInHours(startDt, endDt) {
+    return dayjs(endDt).diff(dayjs(startDt), 'hour');
+  },
 };

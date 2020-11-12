@@ -1,3 +1,4 @@
+<!--suppress CssUnusedSymbol -->
 <template>
   <div class="client-cal">
     <el-tabs v-model="tab" :tab-position="isMobileView ? 'top' : 'left'">
@@ -57,6 +58,13 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
+    <attendance-confirmation-dialog
+      v-if="showAttendanceDialog"
+      :is-visible="showAttendanceDialog"
+      :assignment="selectedAssignmentForAttendance"
+      :show-dispute-only="true"
+      @onClose="handleCloseAttendanceDialog"
+    />
   </div>
 </template>
 
@@ -71,6 +79,7 @@ import dayjs from 'dayjs';
 import { ASSIGNMENT_STATUSES } from '@/common/types/constants';
 import { isMobileViewMixin } from '../../common/mixins';
 import NoDataPlaceholder from '../NoDataPlaceholder';
+import AttendanceConfirmationDialog from '@/components/dialogs/AttendanceConfirmationDialog';
 
 export default {
   name: 'ClientEventCalendar',
@@ -83,6 +92,7 @@ export default {
     AssignmentCard,
     UserCard,
     ClientCreateEventForm,
+    AttendanceConfirmationDialog,
   },
 
   data() {
@@ -95,6 +105,8 @@ export default {
       tab: 'events',
       dialogTab: 'assignments',
       updateAssignmentDialogVisible: false,
+      showAttendanceDialog: false,
+      selectedAssignmentForAttendance: undefined,
       createServiceRequestDialogVisible: false,
     };
   },
@@ -158,6 +170,14 @@ export default {
     },
     completedText() {
       return ASSIGNMENT_STATUSES.COMPLETE;
+    },
+    handleShowAttendanceDialog(assignment) {
+      this.showAttendanceDialog = true;
+      this.selectedAssignmentForAttendance = assignment;
+    },
+    handleCloseAttendanceDialog() {
+      this.showAttendanceDialog = false;
+      this.selectedAssignmentForAttendance = undefined;
     },
   },
 
@@ -271,8 +291,5 @@ export default {
 
 .greyed {
   color: #cbcbcb;
-}
-.disabled {
-  cursor: context-menu;
 }
 </style>
