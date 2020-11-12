@@ -33,7 +33,11 @@
       </template>
 
       <template v-slot:charges="{ row }">
-        <span>${{ calculateEventTotalCharges(row.assignments) }}</span>
+        <span>{{
+          hideEventTotalCharges(row.assignments)
+            ? 'Event not complete'
+            : '$' + calculateEventTotalCharges(row.assignments)
+        }}</span>
       </template>
 
       <template v-slot:skillsRequired="{ row }">
@@ -88,7 +92,7 @@ import gql from 'graphql-tag';
 import AssignmentsTimeline from '../../cards/AssignmentsTimeline';
 import SadeafCreateEventForm from '../../forms/SadeafCreateEventForm';
 import { DateUtils } from '../../../common/date-utils';
-import { CLIENT_CHARGE_PER_HOUR } from '../../../common/types/constants';
+import { CLIENT_CHARGE_PER_HOUR, ASSIGNMENT_STATUSES } from '../../../common/types/constants';
 import NotetakerRequiredTag from '@/components/tags/NotetakerRequiredTag';
 import InterpreterRequiredTag from '@/components/tags/InterpreterRequiredTag';
 
@@ -149,6 +153,9 @@ export default {
   },
 
   methods: {
+    hideEventTotalCharges(assignments) {
+      return assignments.filter((assignment) => assignment.status !== ASSIGNMENT_STATUSES.COMPLETE).length > 0;
+    },
     calculateEventTotalCharges(assignments) {
       return assignments
         .reduce((acc, cur) => (acc + DateUtils.differenceInHours(cur.start_dt, cur.end_dt)) * CLIENT_CHARGE_PER_HOUR, 0)
