@@ -90,17 +90,6 @@
           <el-button @click="submitForm"> Confirm</el-button>
           <el-button @click="handleCancel"> Cancel</el-button>
         </el-button-group>
-        <el-popconfirm
-          v-if="event"
-          confirmButtonText="Confirm"
-          cancelButtonText="Cancel"
-          icon="el-icon-info"
-          iconColor="red"
-          title="Are you sure you want to delete this?"
-          @onConfirm="handleDelete"
-        >
-          <el-button slot="reference" type="danger"> Delete</el-button>
-        </el-popconfirm>
       </el-form-item>
     </el-form>
   </div>
@@ -174,7 +163,6 @@ export default {
   },
   data() {
     return {
-      event: null,
       rules: {
         name: [{ required: true, message: 'Please enter a name for this Event', trigger: 'blur' }],
         purpose: [{ required: true, message: 'Please enter a purpose' }],
@@ -182,7 +170,7 @@ export default {
         eventSkillRequirements: [
           {
             validator: (rule, value, callback) => {
-              if (this.form.eventSkillRequirements.length > 0) {
+              if (this.form.eventSkillRequirements && this.form.eventSkillRequirements.length > 0) {
                 callback();
               } else {
                 callback(new Error('Please enter an event skill!'));
@@ -235,7 +223,6 @@ export default {
 
   created() {
     this.REPEAT_OPTS = REPEAT_OPTS;
-    // this.setForm(this.event);
   },
 
   methods: {
@@ -273,7 +260,6 @@ export default {
           interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
         },
       });
-      this.event = data.insert_event_one;
       return data.insert_event_one.id;
     },
 
@@ -283,16 +269,19 @@ export default {
     },
 
     resetState() {
-      this.form = {};
+      this.form = {
+        // default values
+        date: this.date,
+        repeat: REPEAT_OPTS.DOES_NOT_REPEAT,
+        repeatCount: 1,
+        eventSkillRequirements: [],
+      };
     },
   },
 
   computed: {
     client() {
       return this.$store.state.auth.user.client;
-    },
-    isUpdate() {
-      return this.event !== null;
     },
     day() {
       return dayjs(this.date).format('dddd');

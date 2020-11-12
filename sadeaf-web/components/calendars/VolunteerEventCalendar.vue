@@ -1,69 +1,70 @@
 <template>
-  <div class="main">
-    <div class="calendar">
-      <el-calendar @input="handleCalendarClick" style="height: 700px">
-        <template slot="dateCell" slot-scope="{ date }">
-          <h4 :class="{ greyed: isBeforeToday(date) }">{{ date.getDate() }}</h4>
+  <div class="volunteer-cal">
+    <el-tabs v-model="tab" :tab-position="isMobileView ? 'top' : 'left'">
+      <el-tab-pane label="My Events" name="events" class="tab-pane">
+        <h2 class="cal-title">My Events</h2>
+        <div class="calendar">
+          <el-calendar @input="handleCalendarClick" style="height: 700px">
+            <template slot="dateCell" slot-scope="{ date }">
+              <h4 :class="{ greyed: isBeforeToday(date) }">{{ date.getDate() }}</h4>
+              <div v-if="getAssignmentsOnDate(date)" class="assignment-cell">
+                <div v-for="assignment in getAssignmentsOnDate(date)" class="body">
+                  <el-tag size="mini" :type="tagType(assignment)">
+                    {{ assignment.event.name }}
+                  </el-tag>
+                </div>
+              </div>
+            </template>
+          </el-calendar>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="Available Assignments" name="pendingAssignments" class="tab-pane">
+        <div class="pending-assignments">
+          <assignment-card
+            v-for="assignment in latestPendingAssignmentsFromHasura"
+            :key="'pend-as-' + assignment.id"
+            :details="assignment"
+            :to-accept="true"
+            @editClick="showAcceptPendingAssignmentDialog"
+          />
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="Opt-In History" name="optInHistory">
+        <div>
+          <div v-if="volunteerOptedInAssignments.length === 0">
+            <span>You haven't opted in for any assignments!</span>
+          </div>
+          <assignment-card
+            v-for="optInDetails in volunteerOptedInAssignments"
+            :key="'optin-as-' + optInDetails.id"
+            :details="optInDetails"
+            :show-edit="optInDetails.status === 'OPTED_IN'"
+            :is-opt-in="true"
+            :show-cancel="true"
+            @editClick="optOutOfAssignment"
+          />
+        </div>
+      </el-tab-pane>
+    </el-tabs>
 
-          <div v-if="getAssignmentsOnDate(date)" class="assignment-cell">
-            <div v-for="assignment in getAssignmentsOnDate(date)" class="body">
-              <el-tag size="mini" :type="tagType(assignment)">
-                {{ assignment.event.name }}
-              </el-tag>
-            </div>
-          </div>
-        </template>
-      </el-calendar>
-    </div>
-    <div class="assignment-command-panel">
-      <el-tabs v-model="tab">
-        <el-tab-pane
-          v-if="getAssignmentsOnDate(selectedDate)"
-          :label="selectedDate.toDateString() + ' Session'"
-          name="acceptedAssignments"
-        >
-          <div class="assignment-cards">
-            <assignment-card
-              v-for="assignment in getAssignmentsOnDate(selectedDate)"
-              :key="'as-' + assignment.id"
-              :show-edit="assignment.status === 'MATCHED'"
-              :show-cancel="assignment.status === 'MATCHED'"
-              :show-attendance="assignment.status === 'COMPLETE'"
-              :details="assignment"
-              @editClick="cancelMatchedAssignment"
-              @showAttendance="handleShowAttendanceDialog(assignment)"
-            />
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="Available Assignments" name="pendingAssignments">
-          <div>
-            <assignment-card
-              v-for="assignment in latestPendingAssignmentsFromHasura"
-              :key="'pend-as-' + assignment.id"
-              :details="assignment"
-              :to-accept="true"
-              @editClick="showAcceptPendingAssignmentDialog"
-            />
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="Opt-In History" name="optInHistory">
-          <div>
-            <div v-if="volunteerOptedInAssignments.length === 0">
-              <span>You haven't opted in for any assignments!</span>
-            </div>
-            <assignment-card
-              v-for="optInDetails in volunteerOptedInAssignments"
-              :key="'optin-as-' + optInDetails.id"
-              :details="optInDetails"
-              :show-edit="optInDetails.status === 'OPTED_IN'"
-              :is-opt-in="true"
-              :show-cancel="true"
-              @editClick="optOutOfAssignment"
-            />
-          </div>
-        </el-tab-pane>
-      </el-tabs>
-    </div>
+    <el-dialog
+      :fullscreen="isMobileView"
+      :visible="assignmentCommandDialogVisible"
+      @close="assignmentCommandDialogVisible = false"
+      :title="assignmentCommandDialogTitle"
+    >
+      <div class="assignment-cards" v-if="getAssignmentsOnDate(selectedDate)">
+        <assignment-card
+          v-for="assignment in getAssignmentsOnDate(selectedDate)"
+          :key="'as-' + assignment.id"
+          :show-edit="assignment.status === 'MATCHED'"
+          :show-cancel="assignment.status === 'MATCHED'"
+          :details="assignment"
+          @editClick="cancelMatchedAssignment"
+        />
+      </div>
+      <no-data-placeholder v-else text="You have no assignments on this date" />
+    </el-dialog>
     <accept-assignment-details-dialog
       v-if="showAcceptDialog"
       :is-visible="showAcceptDialog"
@@ -86,6 +87,8 @@ import dayjs from 'dayjs';
 import AssignmentCard from '../cards/AssignmentCard';
 import AcceptAssignmentDetailsDialog from '../dialogs/AcceptAssignmentDetailsDialog';
 import _ from 'lodash';
+import { isMobileViewMixin } from '../../common/mixins';
+import NoDataPlaceholder from '../NoDataPlaceholder';
 import AttendanceConfirmationDialog from '@/components/dialogs/AttendanceConfirmationDialog';
 
 const assignmentQuery = gql`
@@ -221,7 +224,8 @@ const optOutOfOptedInAssignmentQuery = gql`
 
 export default {
   name: 'VolunteerEventCalendar',
-  components: { AttendanceConfirmationDialog, AcceptAssignmentDetailsDialog, AssignmentCard },
+  components: { NoDataPlaceholder, AttendanceConfirmationDialog, AcceptAssignmentDetailsDialog, AssignmentCard },
+  mixins: [isMobileViewMixin],
   props: {
     volunteer: {
       type: Object,
@@ -233,12 +237,14 @@ export default {
       assignments: [],
       pendingAssignments: [],
       selectedDate: null,
-      tab: 'pendingAssignments',
+      tab: 'events',
       showAcceptDialog: false,
       showAttendanceDialog: false,
       selectedAssignment: undefined,
       selectedAssignmentForAttendance: undefined,
       volunteerOptedInAssignments: [],
+      assignmentCommandDialogVisible: false,
+      assignmentCommandDialogTitle: '',
     };
   },
   methods: {
@@ -265,9 +271,8 @@ export default {
     handleCalendarClick(date) {
       this.selectedDate = date;
       if (this.getAssignmentsOnDate(date)) {
-        this.tab = 'acceptedAssignments';
-      } else {
-        this.tab = 'pendingAssignments';
+        this.assignmentCommandDialogVisible = true;
+        this.assignmentCommandDialogTitle = DateUtils.humanReadableDate(date);
       }
     },
     showAcceptPendingAssignmentDialog(assignment) {
@@ -326,7 +331,6 @@ export default {
             })
             .then((_) => {
               this.$notify.success('Assignment Cancelled');
-              this.tab = 'pendingAssignments';
             })
             .catch((error) => {
               this.$notify.error('Something went wrong with cancelling the assignment');
@@ -424,12 +428,16 @@ export default {
 </script>
 
 <style scoped>
-.main {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+.volunteer-cal {
   margin-bottom: 16px;
   height: 700px;
+  padding-top: 12px;
+  width: 100%;
+}
+
+.cal-title {
+  padding: 0 0 0 12px;
+  margin-bottom: 12px;
 }
 
 .calendar {
@@ -437,6 +445,14 @@ export default {
   box-shadow: 2px 2px 6px 1px #d3d7ea;
   border-radius: 8px;
   overflow: hidden;
+}
+
+.pending-assignments {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .assignment-cell {
@@ -450,9 +466,7 @@ export default {
 }
 
 .assignment-command-panel {
-  flex: 1;
   height: 100%;
-  padding-left: 24px;
   overflow: scroll;
 }
 
