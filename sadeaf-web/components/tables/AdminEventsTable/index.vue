@@ -158,7 +158,7 @@ export default {
     },
     calculateEventTotalCharges(assignments) {
       return assignments
-        .reduce((acc, cur) => (acc + DateUtils.differenceInHours(cur.start_dt, cur.end_dt)) * CLIENT_CHARGE_PER_HOUR, 0)
+        .reduce((acc, cur) => acc + DateUtils.differenceInHours(cur.start_dt, cur.end_dt) * CLIENT_CHARGE_PER_HOUR, 0)
         .toLocaleString();
     },
     handleNewEventClick() {
