@@ -60,7 +60,9 @@
           :show-edit="assignment.status === 'MATCHED'"
           :show-cancel="assignment.status === 'MATCHED'"
           :details="assignment"
+          :show-attendance="assignment.status === 'COMPLETE'"
           @editClick="cancelMatchedAssignment"
+          @showAttendance="handleShowAttendanceDialog(assignment)"
         />
       </div>
       <no-data-placeholder v-else text="You have no assignments on this date" />
