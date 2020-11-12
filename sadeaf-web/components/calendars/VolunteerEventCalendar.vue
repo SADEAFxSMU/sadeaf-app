@@ -20,15 +20,13 @@
       </el-tab-pane>
       <el-tab-pane label="Available Assignments" name="pendingAssignments" class="tab-pane">
         <div class="pending-assignments">
-          <div>
-            <assignment-card
-              v-for="assignment in latestPendingAssignmentsFromHasura"
-              :key="'pend-as-' + assignment.id"
-              :details="assignment"
-              :to-accept="true"
-              @editClick="showAcceptPendingAssignmentDialog"
-            />
-          </div>
+          <assignment-card
+            v-for="assignment in latestPendingAssignmentsFromHasura"
+            :key="'pend-as-' + assignment.id"
+            :details="assignment"
+            :to-accept="true"
+            @editClick="showAcceptPendingAssignmentDialog"
+          />
         </div>
       </el-tab-pane>
       <el-tab-pane label="Opt-In History" name="optInHistory">
@@ -419,8 +417,10 @@ export default {
 
 .pending-assignments {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .assignment-cell {
