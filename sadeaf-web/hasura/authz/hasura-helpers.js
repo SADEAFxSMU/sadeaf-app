@@ -42,7 +42,7 @@ function hasuraRoleAndIdQuery(cognitoId) {
 }
 
 function getRole(email) {
-  if (BOOTSTRAP.ADMIN_EMAIL.includes(email)) {
+  if (isAdminEmail(email)) {
     return 'admin';
   }
   return 'pending';
@@ -57,6 +57,7 @@ function createNewHasuraAccount(user) {
           cognito_id: $cognito_id,
           email: $email,
           role: $role
+          ${isAdminEmail(user.email) ? 'is_enabled: true' : ''}
         }
       ) { id role }
     }
@@ -76,4 +77,8 @@ function createNewHasuraAccount(user) {
     }),
     method: 'POST',
   });
+}
+
+function isAdminEmail(email) {
+  return BOOTSTRAP.ADMIN_EMAIL.includes(email);
 }
