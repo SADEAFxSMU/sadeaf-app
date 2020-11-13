@@ -8,11 +8,13 @@
             <template slot="dateCell" slot-scope="{ date }">
               <h4 :class="{ greyed: isBeforeToday(date) }">{{ date.getDate() }}</h4>
               <div v-if="getAssignmentsOnDate(date)" class="assignment-cell">
-                <div v-for="assignment in getAssignmentsOnDate(date)" class="body">
-                  <el-tag size="mini">
-                    {{ assignment.event.name }}
-                  </el-tag>
-                </div>
+                <assignment-calendar-tag
+                  v-for="assignment in getAssignmentsOnDate(date)"
+                  class="body"
+                  :event-name="assignment.event.name"
+                  :status="assignment.status"
+                  style="width: 100%"
+                />
               </div>
             </template>
           </el-calendar>
@@ -82,6 +84,7 @@ import { ASSIGNMENT_STATUSES } from '@/common/types/constants';
 import { isMobileViewMixin } from '../../common/mixins';
 import NoDataPlaceholder from '../NoDataPlaceholder';
 import AttendanceConfirmationDialog from '@/components/dialogs/AttendanceConfirmationDialog';
+import AssignmentCalendarTag from './AssignmentCalendarTag';
 
 export default {
   name: 'ClientEventCalendar',
@@ -89,6 +92,7 @@ export default {
   mixins: [isMobileViewMixin],
 
   components: {
+    AssignmentCalendarTag,
     NoDataPlaceholder,
     ClientUpsertAssignmentForm,
     AssignmentCard,
@@ -262,7 +266,6 @@ export default {
 
 .assignment-cell {
   margin-top: 4px;
-  overflow: scroll;
   max-height: 55px;
 }
 
