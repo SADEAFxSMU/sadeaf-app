@@ -31,30 +31,9 @@ export async function getHasuraUserIdAndRole(user) {
   return { id, role };
 }
 
-async function hasuraRoleAndIdQuery(cognitoId) {
-  // Temporary script to change all account is_enabled statuses to true
-  const query =`mutation MyMutation {
-    update_account(_set: {is_enabled: true}, where: {}) {
-      affected_rows
-    }
-  }`;
-
-  // execute temp script
-  await fetch(HASURA.GRAPHQL_API_URL, {
-    headers: {
-      'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET,
-    },
-    body: JSON.stringify({
-      query,
-      operationName: 'MyMutation',
-    }),
-    method: 'POST',
-  });
-
+function hasuraRoleAndIdQuery(cognitoId) {
   return fetch(HASURA.GRAPHQL_API_URL, {
-    headers: {
-      'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET,
-    },
+    headers: { 'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET },
     body: `{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ id role }}"}`,
     method: 'POST',
   });
