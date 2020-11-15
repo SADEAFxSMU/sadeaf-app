@@ -290,7 +290,7 @@ export default {
     },
     async getAssignments() {
       let { date, start_time, end_time, address_line_two, postal, room_number, repeat, repeatCount } = this.form;
-      
+
       const assignments = [];
 
       const { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.addressSearchResult;
