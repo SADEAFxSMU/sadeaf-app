@@ -280,14 +280,6 @@ export default {
         eventSkillRequirements: [],
       };
     },
-
-  computed: {
-    client() {
-      return this.$store.state.auth.user.client;
-    },
-    day() {
-      return dayjs(this.date).format('dddd');
-    },
     async getAssignments() {
       let { date, start_time, end_time, address_line_two, postal, room_number, repeat, repeatCount } = this.form;
 
@@ -333,7 +325,6 @@ export default {
         this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING
       );
       this.$set(this.form, 'postal', this.addressSearchResult.POSTAL === 'NIL' ? '' : this.addressSearchResult.POSTAL);
-      return;
     },
     clearAddress() {
       this.address = null;
