@@ -24,7 +24,7 @@ export const DateUtils = {
     return assignmentsByDateTime;
   },
   humanReadableDt(date) {
-    return dayjs(date).format('DD MMMM YYYY HH:MM');
+    return dayjs(date).format('DD MMMM YYYY HH:mm');
   },
   humanReadableDate(date) {
     return dayjs(date).format('ddd, DD MMMM YYYY');
