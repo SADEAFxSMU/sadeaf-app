@@ -33,16 +33,14 @@ export async function getHasuraUserIdAndRole(user) {
 
 function hasuraRoleAndIdQuery(cognitoId) {
   return fetch(HASURA.GRAPHQL_API_URL, {
-    headers: {
-      'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET,
-    },
+    headers: { 'X-Hasura-Admin-Secret': HASURA.GRAPHQL_ADMIN_SECRET },
     body: `{"query":"{account(where:{cognito_id:{_eq:\\"${cognitoId}\\"}}){ id role }}"}`,
     method: 'POST',
   });
 }
 
 function getRole(email) {
-  if (BOOTSTRAP.ADMIN_EMAIL.includes(email)) {
+  if (isAdminEmail(email)) {
     return 'admin';
   }
   return 'pending';
@@ -57,6 +55,7 @@ function createNewHasuraAccount(user) {
           cognito_id: $cognito_id,
           email: $email,
           role: $role
+          ${isAdminEmail(user.email) ? 'is_enabled: true' : ''}
         }
       ) { id role }
     }
@@ -76,4 +75,8 @@ function createNewHasuraAccount(user) {
     }),
     method: 'POST',
   });
+}
+
+function isAdminEmail(email) {
+  return BOOTSTRAP.ADMIN_EMAIL.includes(email);
 }
