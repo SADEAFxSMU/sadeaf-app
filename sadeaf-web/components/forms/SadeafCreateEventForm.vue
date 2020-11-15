@@ -20,14 +20,14 @@
         </div>
       </el-form-item>
       <el-form-item label="Topic">
-        <el-select v-model="form.topic" placeholder="Choose one">
+        <el-select v-model="form.category" placeholder="Choose one">
           <el-option v-for="option in EVENT_CATEGORY_OPTIONS" :key="'t-opt-' + option" :value="option">
             {{ option }}
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="Edu Level Needed">
-        <el-select v-model="form.eduLevel" placeholder="Choose one">
+        <el-select v-model="form.education" placeholder="Choose one">
           <el-option v-for="option in EVENT_EDUCATION_OPTIONS" :key="'e-opt-' + option" :value="option">
             {{ option }}
           </el-option>
@@ -102,6 +102,8 @@ const UPDATE_EVENT = gql`
     $id: Int!
     $name: String
     $purpose: String
+    $category: String
+    $education: String
   ) {
     update_event_by_pk(
       pk_columns: { id: $id }
@@ -113,6 +115,8 @@ const UPDATE_EVENT = gql`
         id: $id
         name: $name
         purpose: $purpose
+        category: $category
+        education: $education
       }
     ) {
       client_id
@@ -121,6 +125,8 @@ const UPDATE_EVENT = gql`
       id
       name
       purpose
+      category
+      education
       updated_at
     }
   }
@@ -269,8 +275,8 @@ export default {
           description: this.form.description,
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
-          category: this.form.topic || EVENT_CATEGORY_OPTIONS_DEFAULT,
-          education: this.form.eduLevel || EVENT_EDUCATION_OPTIONS_DEFAULT,
+          category: this.form.category || EVENT_CATEGORY_OPTIONS_DEFAULT,
+          education: this.form.education || EVENT_EDUCATION_OPTIONS_DEFAULT,
           notetaker_required: this.form.eventSkillRequirements.includes('Notetaking'),
           interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
         },
@@ -288,8 +294,8 @@ export default {
           description: this.form.description,
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
-          category: this.form.topic || EVENT_CATEGORY_OPTIONS_DEFAULT,
-          education: this.form.eduLevel || EVENT_EDUCATION_OPTIONS_DEFAULT,
+          category: this.form.category || EVENT_CATEGORY_OPTIONS_DEFAULT,
+          education: this.form.education || EVENT_EDUCATION_OPTIONS_DEFAULT,
           notetaker_required: this.form.eventSkillRequirements.includes('Notetaking'),
           interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
         },

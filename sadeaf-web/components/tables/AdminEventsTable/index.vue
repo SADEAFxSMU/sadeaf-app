@@ -208,6 +208,8 @@ export default {
             client: event.client,
             status: aggStatus,
             purpose: event.purpose,
+            category: event.category,
+            education: event.education,
             name: event.name,
             description: event.description,
             volunteers: event.volunteers.nodes.filter((node) => node.volunteer).map((node) => node.volunteer),
@@ -250,6 +252,8 @@ export default {
               interpreter_required
               notetaker_required
               purpose
+              category
+              education
               client {
                 id
                 account {
