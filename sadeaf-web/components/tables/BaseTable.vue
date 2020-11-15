@@ -1,3 +1,4 @@
+<!--suppress CssUnusedSymbol -->
 <template>
   <div ref="basetable" class="base-table">
     <div class="title-wrapper" v-if="title || showToolbar">
@@ -190,15 +191,17 @@ export default {
         if (!this.search) return true;
         const searchString = this.search.toLowerCase();
         for (const column in data) {
-          const value = data[column];
-          if (value) {
-            if (typeof value === 'string') {
-              if (value.toLowerCase().includes(searchString)) {
-                return true;
-              }
-            } else {
-              if (value.toString().includes(searchString)) {
-                return true;
+          if (data.hasOwnProperty(column)) {
+            const value = data[column];
+            if (value) {
+              if (typeof value === 'string') {
+                if (value.toLowerCase().includes(searchString)) {
+                  return true;
+                }
+              } else {
+                if (value.toString().includes(searchString)) {
+                  return true;
+                }
               }
             }
           }
