@@ -60,7 +60,11 @@
         <el-button type="text" size="small" @click="handleUpdateEventClick(row)"> Edit </el-button>
       </template>
     </base-table>
-    <el-dialog title="Create New Event" :visible="createEventDialogVisible" @close="handleUpsertEventCancel">
+    <el-dialog
+      :title="updateEvent ? 'Update Event' : 'Create New Event'"
+      :visible="createEventDialogVisible"
+      @close="handleUpsertEventCancel"
+    >
       <sadeaf-create-event-form
         :event="updateEvent"
         @success="createEventDialogVisible = false"

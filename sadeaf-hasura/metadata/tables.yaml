@@ -839,8 +839,10 @@
           account_id:
             _eq: X-Hasura-User-Id
       columns:
+      - category
       - client_id
       - description
+      - education
       - interpreter_required
       - name
       - notetaker_required
@@ -863,9 +865,11 @@
   - role: client
     permission:
       columns:
+      - category
       - client_id
       - created_at
       - description
+      - education
       - id
       - interpreter_required
       - name
@@ -912,7 +916,9 @@
   - role: client
     permission:
       columns:
+      - category
       - description
+      - education
       - interpreter_required
       - name
       - notetaker_required
