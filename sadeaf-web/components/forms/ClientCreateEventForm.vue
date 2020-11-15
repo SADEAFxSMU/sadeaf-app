@@ -281,82 +281,68 @@ export default {
       };
     },
 
-  computed: {
-    client() {
-      return this.$store.state.auth.user.client;
-    },
-    day() {
-      return dayjs(this.date).format('dddd');
-    },
-    async getAssignments() {
-      let { date, start_time, end_time, address_line_two, postal, room_number, repeat, repeatCount } = this.form;
+    computed: {
+      client() {
+        return this.$store.state.auth.user.client;
+      },
+      isUpdate() {
+        return this.event !== null;
+      },
+      async getAssignments() {
+        let { date, start_time, end_time, address_line_two, postal, room_number, repeat, repeatCount } = this.form;
 
-      const assignments = [];
+        const assignments = [];
 
-      const { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.addressSearchResult;
+        const { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.addressSearchResult;
 
-      if (repeat === REPEAT_OPTS.DOES_NOT_REPEAT) {
-        repeatCount = 1;
-      }
-      if (!repeatCount) {
-        repeatCount = 1;
-      }
+        if (repeat === REPEAT_OPTS.DOES_NOT_REPEAT) {
+          repeatCount = 1;
+        }
+        if (!repeatCount) {
+          repeatCount = 1;
+        }
 
-      let start_dt = dayjs(date)
-        .set('hour', start_time.getHours())
-        .set('minute', start_time.getMinutes())
-        .set('second', start_time.getSeconds());
-      let end_dt = dayjs(date)
-        .set('hour', end_time.getHours())
-        .set('minute', end_time.getMinutes())
-        .set('second', end_time.getSeconds());
+        let start_dt = dayjs(date)
+          .set('hour', start_time.getHours())
+          .set('minute', start_time.getMinutes())
+          .set('second', start_time.getSeconds());
+        let end_dt = dayjs(date)
+          .set('hour', end_time.getHours())
+          .set('minute', end_time.getMinutes())
+          .set('second', end_time.getSeconds());
 
-      for (let i = 0; i < repeatCount; i++) {
-        assignments.push({
-          address_line_one,
-          address_line_two,
-          postal,
-          latitude,
-          longitude,
-          room_number,
-          start_dt: start_dt.add(7 * i, 'day'),
-          end_dt: end_dt.add(7 * i, 'day'),
-        });
-      }
-      return assignments;
+        for (let i = 0; i < repeatCount; i++) {
+          assignments.push({
+            address_line_one,
+            address_line_two,
+            postal,
+            latitude,
+            longitude,
+            room_number,
+            start_dt: start_dt.add(7 * i, 'day'),
+            end_dt: end_dt.add(7 * i, 'day'),
+          });
+        }
+        return assignments;
+      },
+      replaceAddress(address) {
+        this.addressSearchResult = address;
+        this.$set(
+          this.form,
+          'address_line_two',
+          this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING
+        );
+        this.$set(
+          this.form,
+          'postal',
+          this.addressSearchResult.POSTAL === 'NIL' ? '' : this.addressSearchResult.POSTAL
+        );
+      },
     },
-    replaceAddress(address) {
-      this.addressSearchResult = address;
-      this.$set(
-        this.form,
-        'address_line_two',
-        this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING
-      );
-      this.$set(this.form, 'postal', this.addressSearchResult.POSTAL === 'NIL' ? '' : this.addressSearchResult.POSTAL);
-      return;
-    },
-    clearAddress() {
-      this.address = null;
-      this.$set(this.form, 'address_line_two', '');
-      this.$set(this.form, 'postal', '');
-    },
-  },
-
-  computed: {
-    client() {
-      return this.$store.state.auth.user.client;
-    },
-    isUpdate() {
-      return this.event !== null;
-    },
-    day() {
-      return dayjs(this.date).format('dddd');
-    },
-  },
-
-  watch: {
-    date(val) {
-      this.$set(this.form, 'date', val);
+    watch: {
+      date(val) {
+        this.$set(this.form, 'date', val);
+      },
     },
   },
 };
