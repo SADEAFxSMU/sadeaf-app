@@ -24,6 +24,8 @@ export default {
     return {
       results: [],
       addressInput: this.existingAddress,
+      // track if a request has been made from the component to properly validate in parent form
+      requestMade: false,
     };
   },
 
@@ -47,6 +49,7 @@ export default {
       const response = await this.$axios.get(
         `https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`
       );
+      this.requestMade = true;
       const results = { addresses: response.data.results };
       cb(results.addresses.map((address) => ({ ...address, value: address.ADDRESS })));
     },
@@ -64,6 +67,11 @@ export default {
       handler(existingAddress) {
         this.addressInput = existingAddress;
       },
+    },
+    addressInput(newInput, _) {
+      if (newInput === '' && this.requestMade) {
+        this.$emit('addressDeleted');
+      }
     },
   },
 };

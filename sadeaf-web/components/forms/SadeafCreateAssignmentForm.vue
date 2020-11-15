@@ -3,12 +3,13 @@
     <div class="client">
       <user-card :user="client.account" />
     </div>
-    <el-form :model="form" label-width="150px">
-      <el-form-item label="Address">
+    <el-form :model="form" :rules="rules" ref="sadeafCreateAssignmentForm" label-width="150px">
+      <el-form-item label="Address" prop="location">
         <div style="display: flex; margin-top: 5px">
           <address-search
             @select="replaceAddress"
             @clear="handleClear"
+            @addressDeleted="handleDeletedAddress"
             :existingAddress="this.assignment ? this.assignment.address_line_one : ''"
           />
         </div>
@@ -20,19 +21,21 @@
           <el-input v-model="form.room_number" style="margin-left: 5px; width: 250px" placeholder="Room Number" />
         </div>
       </el-form-item>
-      <el-form-item label="Dates">
-        <el-date-picker v-model="form.start_dt" placeholder="Start" type="datetime" />
-        -
-        <el-date-picker v-model="form.end_dt" placeholder="End" type="datetime" />
+      <el-form-item label="Dates" prop="duration">
+        <el-col>
+          <el-date-picker v-model="form.start_dt" placeholder="Start" type="datetime" />
+          -
+          <el-date-picker v-model="form.end_dt" placeholder="End" type="datetime" />
+        </el-col>
       </el-form-item>
-      <el-form-item label="Status">
+      <el-form-item label="Status" prop="status">
         <el-select v-model="form.status">
           <el-option v-for="status in assignmentStatuses" :key="'opt-' + status" :value="status">
             {{ status }}
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Volunteer">
+      <el-form-item label="Volunteer" prop="volunteer">
         <div v-if="volunteer" class="current-volunteer-info">
           <user-card-horizontal-small :user="volunteer.account" />
           <small-delete-button @click="replaceVolunteer(null)" />
@@ -72,6 +75,7 @@ import _ from 'lodash';
 import gql from 'graphql-tag';
 import SmallDeleteButton from '../buttons/SmallDeleteButton';
 import AddressSearch from '~/components/forms/AddressSearch';
+import dayjs from 'dayjs';
 
 const UPDATE_ASSIGNMENT = gql`
   mutation UpdateAssignment(
@@ -203,6 +207,61 @@ export default {
       assignmentStatuses: ASSIGNMENT_STATUSES,
       volunteer: null,
       addressSearchResult: null,
+      rules: {
+        status: [
+          {
+            validator: (_, __, callback) => {
+              if (this.form.status) {
+                callback();
+                return;
+              }
+              callback(new Error('Please select a status!'));
+            },
+          },
+        ],
+        volunteer: [
+          {
+            validator: (_, __, callback) => {
+              if (this.volunteer) {
+                callback();
+                return;
+              }
+              callback(new Error('Please select a volunteer!'));
+            },
+          },
+        ],
+        duration: [
+          {
+            validator: (_, __, callback) => {
+              let { start_dt, end_dt } = this.form;
+              if (!start_dt && !end_dt) {
+                callback(new Error('Please enter start and end time'));
+              }
+              start_dt = dayjs(start_dt);
+              end_dt = dayjs(end_dt);
+
+              const diff_hours = end_dt.diff(start_dt, 'hour', false);
+              if (diff_hours < 2) {
+                callback(new Error('Minimum duration is 2 hours'));
+              } else {
+                callback();
+              }
+            },
+            trigger: 'blur',
+          },
+        ],
+        location: [
+          {
+            validator: (_, __, callback) => {
+              if (this.addressSearchResult && this.form.postal) {
+                callback();
+                return;
+              }
+              callback(new Error('Please enter a valid address!'));
+            },
+          },
+        ],
+      },
     };
   },
 
@@ -230,18 +289,26 @@ export default {
       }
     },
     handleConfirm() {
-      if (this.isUpdate) {
-        this.updateAssignment();
-      } else {
-        this.insertAssignment();
-      }
-      this.$emit('update', this.form);
+      this.$refs['sadeafCreateAssignmentForm'].validate((valid) => {
+        if (!valid) {
+          return false;
+        }
+        if (this.isUpdate) {
+          this.updateAssignment();
+        } else {
+          this.insertAssignment();
+        }
+        this.$emit('update', this.form);
+      });
     },
     handleCancel() {
       this.$emit('cancel');
     },
     handleDelete() {
       this.deleteAssignment();
+    },
+    handleDeletedAddress() {
+      this.addressSearchResult = null;
     },
     async insertAssignment() {
       let { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.addressSearchResult;
@@ -293,15 +360,6 @@ export default {
       this.onOperationSuccess();
       this.$notify.success('Assignment updated!');
     },
-
-    async catchNoEdit(queryString) {
-      const response = await this.$axios.get(
-        `https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`
-      );
-
-      return response.data.results[0];
-    },
-
     async deleteAssignment() {
       await this.$apollo.mutate({
         mutation: DELETE_ASSIGNMENT,
