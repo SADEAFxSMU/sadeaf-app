@@ -120,11 +120,6 @@ export default {
       required: false,
       default: true,
     },
-    showOperations: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
     elevated: {
       type: Boolean,
       required: false,
