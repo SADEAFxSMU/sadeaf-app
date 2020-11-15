@@ -299,8 +299,7 @@ export default {
         `https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`
       );
 
-      const results = response['data']['results'][0];
-      return results;
+      return response.data.results[0];
     },
 
     async deleteAssignment() {

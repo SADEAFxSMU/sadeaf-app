@@ -47,8 +47,8 @@ export default {
       const response = await this.$axios.get(
         `https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`
       );
-      const results = { addresses: response['data']['results'] };
-      cb(results.addresses.map((address) => ({ ...address, value: address['ADDRESS'] })));
+      const results = { addresses: response.data.results };
+      cb(results.addresses.map((address) => ({ ...address, value: address.ADDRESS })));
     },
 
     async handleSelect(address) {

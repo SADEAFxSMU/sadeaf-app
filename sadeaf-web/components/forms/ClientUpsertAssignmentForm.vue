@@ -241,9 +241,9 @@ export default {
 
     async insertAssignment() {
       const { address_line_two, end_dt, postal, room_number, start_dt } = this.form;
-      const address_line_one = this.addressSearchResult['ADDRESS'];
-      const latitude = this.addressSearchResult['LATITUDE'];
-      const longitude = this.addressSearchResult['LONGITUDE'];
+      const address_line_one = this.addressSearchResult.ADDRESS;
+      const latitude = this.addressSearchResult.LATITUDE;
+      const longitude = this.addressSearchResult.LONGITUDE;
 
       await this.$apollo.mutate({
         mutation: INSERT_ASSIGNMENT,
