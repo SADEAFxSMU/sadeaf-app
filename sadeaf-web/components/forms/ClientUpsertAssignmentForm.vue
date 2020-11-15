@@ -138,7 +138,11 @@ const UPDATE_ASSIGNMENT = gql`
 
 const DELETE_ASSIGNMENT = gql`
   mutation DeleteAssignmentByPk($id: Int!) {
-    delete_assignment_by_pk(id: $id) {
+    delete_volunteer_assignment_opt_in(where: { assignment_id: { _eq: $id } }) {
+      affected_rows
+    }
+
+    update_assignment_by_pk(pk_columns: { id: $id }, _set: { status: "CANCELLED" }) {
       id
     }
   }

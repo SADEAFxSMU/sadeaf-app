@@ -1,10 +1,9 @@
 <template>
   <el-tabs class="action-tabs" type="border-card" stretch>
     <el-tab-pane label="Matching" style="height: 100%; width: 100%; overflow: scroll">
-      <!-- TODO: integrate with BA's matching service -->
       <pending-assignments-matching-list />
     </el-tab-pane>
-    <el-tab-pane label="New Users">
+    <el-tab-pane label="New Users" style="height: 100%; width: 100%; overflow: scroll">
       <pending-user-list class="pending-users" />
     </el-tab-pane>
     <el-tab-pane label="Notifications">
@@ -75,6 +74,7 @@ export default {
   padding: 0;
 }
 .action-tabs .pending-users {
+  height: 100%;
   padding: 0 32px 0 32px;
 }
 .action-tabs .action-card {

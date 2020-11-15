@@ -1,3 +1,4 @@
+<!--suppress CssUnusedSymbol -->
 <template>
   <div :class="`assignment-card ${type}`">
     <div class="header">
@@ -16,6 +17,7 @@
         :disabled="editButtonDisabled"
         @click="$emit('editClick', details)"
       />
+      <el-button v-if="showAttendance" icon="el-icon-time" size="mini" @click="$emit('showAttendance')" />
     </div>
 
     <div class="title-wrapper">
@@ -30,9 +32,7 @@
           <span class="room-number" v-if="roomNumber"> {{ roomNumber }} </span>
         </h4>
       </div>
-      <h5>
-        {{ startDate }}
-      </h5>
+      <h5>{{ startDate }}, {{ eventDuration() }} hour event</h5>
       <div class="assigned-volunteer">
         <user-card-horizontal-small v-if="assignment.volunteer" :user="assignment.volunteer.account" />
       </div>
@@ -80,6 +80,11 @@ export default {
       default: false,
       required: false,
     },
+    showAttendance: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
     isOptIn: {
       type: Boolean,
       default: false,
@@ -98,10 +103,10 @@ export default {
       return this.isOptIn ? this.details.assignment : this.details;
     },
     notetakerRequired() {
-      return this.details.event.notetaker_required;
+      return this.assignment.event.notetaker_required;
     },
     interpreterRequired() {
-      return this.details.event.interpreter_required;
+      return this.assignment.event.interpreter_required;
     },
     eventName() {
       return this.assignment.event.name;
@@ -137,6 +142,11 @@ export default {
     editButtonDisabled() {
       // disable edit button if assignment start datetime is before current datetime
       return dayjs(this.assignment.start_dt).isBefore(dayjs());
+    },
+  },
+  methods: {
+    eventDuration() {
+      return DateUtils.differenceInHours(this.assignment.start_dt, this.assignment.end_dt);
     },
   },
 };

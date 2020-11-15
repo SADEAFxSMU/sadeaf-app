@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible="isVisible" title="Event Details" @close="closeDialog">
+  <el-dialog :visible="isVisible" title="Event Details" @close="$emit('onClose')">
     <div>
       <el-row>
         <el-col :span="4">
@@ -74,11 +74,6 @@ export default {
     return {};
   },
   methods: {
-    closeDialog() {
-      this.$emit('onClose');
-    },
-    // need to await mutation so that parent will only refetch assignment
-    // data after mutation is complete
     async optInForAssignment() {
       await this.$apollo
         .mutate({

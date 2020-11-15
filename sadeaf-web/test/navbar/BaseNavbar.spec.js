@@ -1,4 +1,4 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import { createLocalVue, mount, config } from '@vue/test-utils';
 import BaseNavbar from '../../components/navbar/BaseNavbar';
 import Element from 'element-ui';
 import _ from 'lodash';
@@ -7,6 +7,8 @@ import Vuex from 'vuex';
 const localVue = createLocalVue();
 localVue.use(Element);
 localVue.use(Vuex);
+
+config.stubs['nuxt-link'] = { template: '<a><slot/></a>' };
 
 let wrapper;
 

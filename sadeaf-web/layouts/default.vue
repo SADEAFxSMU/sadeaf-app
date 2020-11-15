@@ -1,16 +1,26 @@
 <template>
   <div class="layout">
-    <el-container v-if="user" style="height: 100%">
-      <el-header v-if="user.role !== 'pending'">
-        <admin-navbar v-if="userType === 'admin'" />
-        <client-navbar v-else-if="userType === 'client'" />
-        <volunteer-navbar v-else-if="userType === 'volunteer'" />
-        <service-requestor-navbar v-else-if="userType === 'service_requestor'" />
-      </el-header>
-      <el-main class="main">
+    <div v-if="user" style="height: 100%">
+      <header v-if="user.is_enabled && user.role !== 'pending'">
+        <div class="nav-logo">
+          <nuxt-link to="/">
+            <h1>SADEAF Dashboard</h1>
+          </nuxt-link>
+          <status-indicator text="LIVE" color="lightseagreen" class="indicator" />
+        </div>
+        <hamburger-menu :user-type="userType" v-if="isMobileView" />
+        <div v-else style="flex: 1; display: flex">
+          <div style="flex: 1"></div>
+          <admin-navbar v-if="userType === 'admin'" />
+          <client-navbar v-else-if="userType === 'client'" />
+          <volunteer-navbar v-else-if="userType === 'volunteer'" />
+          <service-requestor-navbar v-else-if="userType === 'service_requestor'" />
+        </div>
+      </header>
+      <main class="main">
         <nuxt />
-      </el-main>
-    </el-container>
+      </main>
+    </div>
     <div class="loading-page" v-else>
       <h1>
         SADEAF
@@ -26,9 +36,22 @@ import ClientNavbar from '../components/navbar/client';
 import VolunteerNavbar from '../components/navbar/volunteer';
 import UserSwitcher from '../components/dev_only/UserSwitcher';
 import ServiceRequestorNavbar from '../components/navbar/service-requestor';
+import StatusIndicator from '../components/StatusIndicator';
+import { isMobileViewMixin } from '../common/mixins';
+import HamburgerMenu from '../components/navbar/HamburgerMenu';
 
 export default {
-  components: { ServiceRequestorNavbar, UserSwitcher, AdminNavbar, ClientNavbar, VolunteerNavbar },
+  components: {
+    HamburgerMenu,
+    StatusIndicator,
+    ServiceRequestorNavbar,
+    UserSwitcher,
+    AdminNavbar,
+    ClientNavbar,
+    VolunteerNavbar,
+  },
+
+  mixins: [isMobileViewMixin],
 
   computed: {
     user() {
@@ -76,8 +99,22 @@ h3 {
   width: 100vw;
 }
 
-.main {
+header {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 60px;
+  background: white;
+}
+
+body {
   background: #f4f5ff;
+}
+
+.main {
+  padding: 70px 20px 10px 20px;
 }
 
 .loading-page {
@@ -86,5 +123,20 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  outline: none;
+  white-space: nowrap;
+  padding-left: 20px;
+}
+.nav-logo .indicator {
+  padding-left: 15px;
+}
+
+.nuxt-link-active {
+  text-decoration-line: none;
 }
 </style>

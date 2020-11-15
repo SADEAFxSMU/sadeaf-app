@@ -26,10 +26,16 @@ export const DateUtils = {
   humanReadableDt(date) {
     return dayjs(date).format('DD MMMM YYYY HH:MM');
   },
+  humanReadableDate(date) {
+    return dayjs(date).format('ddd, DD MMMM YYYY');
+  },
   humanReadableMonthYear(date) {
     return dayjs(date).format('MMM YYYY');
   },
   utcToGmt8(date) {
     return dayjs.utc(date).utcOffset(8);
+  },
+  differenceInHours(startDt, endDt) {
+    return dayjs(endDt).diff(dayjs(startDt), 'hour');
   },
 };

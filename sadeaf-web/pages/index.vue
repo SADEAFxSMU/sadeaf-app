@@ -11,22 +11,33 @@ export default {
   name: 'app-home',
   middleware: ['authenticated'],
   mounted() {
-    if (this.userType) {
+    if (this.user) {
       this.navigateToRoleHome();
     }
   },
   methods: {
     navigateToRoleHome() {
-      this.$router.replace(ROLE_PROFILE_PAGE_MAPPING[this.userType] || '/pending');
+      const { is_enabled, userType } = this.user;
+      if (userType === 'pending') {
+        this.redirectTo('/registration');
+      } else if (!is_enabled) {
+        this.redirectTo('/pending');
+      } else {
+        const roleHomePage = ROLE_PROFILE_PAGE_MAPPING[userType];
+        this.redirectTo(roleHomePage);
+      }
+    },
+    redirectTo(route) {
+      this.$router.replace(route);
     },
   },
   computed: {
-    userType() {
-      return this.$store.state.auth.user.userType;
+    user() {
+      return this.$store.state.auth.user;
     },
   },
   watch: {
-    userType() {
+    user() {
       this.navigateToRoleHome();
     },
   },
