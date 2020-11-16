@@ -290,7 +290,7 @@ export default {
           purpose: this.form.purposeOther || this.form.purpose,
           category: this.form.category || EVENT_CATEGORY_OPTIONS_DEFAULT,
           education: this.form.education || EVENT_EDUCATION_OPTIONS_DEFAULT,
-          assignments: { data: this.assignments },
+          assignments: { data: await this.getAssignments() },
           notetaker_required: this.form.eventSkillRequirements.includes('Notetaking'),
           interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
         },
