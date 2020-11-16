@@ -60,19 +60,25 @@
         <el-button type="text" size="small" @click="handleUpdateEventClick(row)"> Edit </el-button>
       </template>
     </base-table>
-    <el-dialog title="Create New Event" :visible="createEventDialogVisible" @close="handleUpsertEventCancel">
+    <el-dialog
+      :title="updateEvent ? 'Update Event' : 'Create New Event'"
+      :visible="createEventDialogVisible"
+      @close="handleUpsertEventCancel"
+    >
       <sadeaf-create-event-form
         :event="updateEvent"
         @success="createEventDialogVisible = false"
         @cancel="handleUpsertEventCancel"
       />
     </el-dialog>
+    <!--    Manually edit client's assignment for admin-->
     <el-dialog
       title="Manual Client-Volunteer Assignment"
       :visible="createAssignmentDialogVisible"
       @close="handleAssignmentFormCancel"
     >
       <sadeaf-create-assignment-form
+        v-if="createAssignmentDialogVisible"
         :event_id="event_id"
         :client="client"
         :assignment="updateAssignment"
@@ -204,6 +210,8 @@ export default {
             client: event.client,
             status: aggStatus,
             purpose: event.purpose,
+            category: event.category,
+            education: event.education,
             name: event.name,
             description: event.description,
             volunteers: event.volunteers.nodes.filter((node) => node.volunteer).map((node) => node.volunteer),
@@ -246,6 +254,8 @@ export default {
               interpreter_required
               notetaker_required
               purpose
+              category
+              education
               client {
                 id
                 account {

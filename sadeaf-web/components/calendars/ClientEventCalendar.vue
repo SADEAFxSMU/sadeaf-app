@@ -207,6 +207,8 @@ export default {
               address_line_two
               room_number
               postal
+              latitude
+              longitude
               start_dt
               end_dt
               status
