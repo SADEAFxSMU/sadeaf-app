@@ -13,12 +13,18 @@
     <el-form ref="form" :rules="rules" :model="form" label-width="150px">
       <el-form-item label="Address">
         <div style="display: flex; margin-top: 5px">
-          <el-input v-model="form.address_line_one" placeholder="Address Line 1" />
-          <el-input v-model="form.room_number" style="margin-left: 5px; width: 200px" placeholder="Room Number" />
+          <address-search
+            @select="replaceAddress"
+            @clear="handleClear"
+            :existingAddress="this.assignment ? this.assignment.address_line_one : ''"
+          />
         </div>
         <div style="display: flex; margin-top: 5px">
-          <el-input v-model="form.address_line_two" placeholder="Address Line 2" />
-          <el-input v-model="form.postal" style="margin-left: 5px; width: 150px" placeholder="Postal Code" />
+          <el-input v-model="form.address_line_two" placeholder="Building" />
+        </div>
+        <div style="display: flex; margin-top: 5px">
+          <el-input v-model="form.postal" style="width: 250px" placeholder="Postal Code" />
+          <el-input v-model="form.room_number" style="margin-left: 5px; width: 250px" placeholder="Room Number" />
         </div>
       </el-form-item>
 
@@ -77,6 +83,7 @@ import UserCard from '../user/UserCard';
 import gql from 'graphql-tag';
 import _ from 'lodash';
 import DangerZone from './DangerZone';
+import AddressSearch from '~/components/forms/AddressSearch';
 
 const UPDATE_EVENT_SKILLS = gql`
   mutation UpdateEventSkills($assignment_id: Int!, $notetaker_required: Boolean!, $interpreter_required: Boolean!) {
@@ -154,6 +161,7 @@ export default {
   components: {
     DangerZone,
     UserCard,
+    AddressSearch,
   },
 
   data() {
@@ -161,6 +169,7 @@ export default {
       form: {
         updateEventSkillRequirements: [],
       },
+
       rules: {
         updateEventSkillRequirements: [
           {
@@ -175,9 +184,9 @@ export default {
           },
         ],
       },
+      addressSearchResult: null,
     };
   },
-
   created() {
     this.setForm(this.assignment);
   },
@@ -208,6 +217,7 @@ export default {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           await this.updateEventSkillRequirements();
+          // await this.updateNoEditAddress();
 
           if (this.isUpdate) {
             await this.updateAssignment();
@@ -230,16 +240,11 @@ export default {
     },
 
     async insertAssignment() {
-      const {
-        address_line_one,
-        address_line_two,
-        end_dt,
-        latitude,
-        longitude,
-        postal,
-        room_number,
-        start_dt,
-      } = this.form;
+      const { address_line_two, end_dt, postal, room_number, start_dt } = this.form;
+      const address_line_one = this.addressSearchResult.ADDRESS;
+      const latitude = this.addressSearchResult.LATITUDE;
+      const longitude = this.addressSearchResult.LONGITUDE;
+
       await this.$apollo.mutate({
         mutation: INSERT_ASSIGNMENT,
         variables: {
@@ -269,16 +274,16 @@ export default {
     },
 
     async updateAssignment() {
-      const {
-        address_line_one,
-        address_line_two,
-        end_dt,
-        latitude,
-        longitude,
-        postal,
-        room_number,
-        start_dt,
-      } = this.form;
+      const { address_line_two, end_dt, postal, room_number, start_dt } = this.form;
+
+      let { address_line_one: address_line_one, latitude: latitude, longitude: longitude } = this.assignment;
+
+      if (this.addressSearchResult) {
+        address_line_one = this.addressSearchResult.ADDRESS;
+        latitude = this.addressSearchResult.LATITUDE;
+        longitude = this.addressSearchResult.LONGITUDE;
+      }
+
       await this.$apollo.mutate({
         mutation: UPDATE_ASSIGNMENT,
         variables: {
@@ -312,6 +317,20 @@ export default {
     resetValues() {
       this.form = {};
       this.volunteer = null;
+    },
+
+    replaceAddress(address) {
+      this.addressSearchResult = address;
+      this.$set(
+        this.form,
+        'address_line_two',
+        this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING
+      );
+      this.$set(this.form, 'postal', this.addressSearchResult.POSTAL === 'NIL' ? '' : this.addressSearchResult.POSTAL);
+    },
+    handleClear() {
+      this.$set(this.form, 'address_line_two', '');
+      this.$set(this.form, 'postal', '');
     },
   },
 

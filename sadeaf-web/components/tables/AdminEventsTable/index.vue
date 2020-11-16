@@ -71,12 +71,14 @@
         @cancel="handleUpsertEventCancel"
       />
     </el-dialog>
+    <!--    Manually edit client's assignment for admin-->
     <el-dialog
       title="Manual Client-Volunteer Assignment"
       :visible="createAssignmentDialogVisible"
       @close="handleAssignmentFormCancel"
     >
       <sadeaf-create-assignment-form
+        v-if="createAssignmentDialogVisible"
         :event_id="event_id"
         :client="client"
         :assignment="updateAssignment"

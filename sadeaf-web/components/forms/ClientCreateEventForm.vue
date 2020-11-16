@@ -90,12 +90,14 @@
         <div class="field-location">
           <p>Location</p>
           <div class="body">
-            <el-input v-model="form.address_line_one" placeholder="Address Line 1" />
-            <el-input v-model="form.room_number" style="margin-left: 5px; width: 200px" placeholder="Room Number" />
+            <address-search @select="replaceAddress" @clear="clearAddress" @addressDeleted="handleDeletedAddress" />
           </div>
           <div class="body">
-            <el-input v-model="form.address_line_two" placeholder="Address Line 2" />
-            <el-input v-model="form.postal" style="margin-left: 5px; width: 150px" placeholder="Postal Code" />
+            <el-input v-model="form.address_line_two" placeholder="Building Name" />
+          </div>
+          <div class="body">
+            <el-input v-model="form.postal" style="margin-right: 5px; width: 250px" placeholder="Postal Code" />
+            <el-input v-model="form.room_number" style="width: 250px" placeholder="Room Number" />
           </div>
         </div>
       </el-form-item>
@@ -122,6 +124,7 @@ import UserCard from '../user/UserCard';
 import SmallDeleteButton from '../buttons/SmallDeleteButton';
 import gql from 'graphql-tag';
 import dayjs from 'dayjs';
+import AddressSearch from '~/components/forms/AddressSearch';
 
 const INSERT_EVENT = gql`
   mutation InsertEvent(
@@ -180,7 +183,7 @@ const REPEAT_OPTS = {
 
 export default {
   name: 'ClientCreateEventForm',
-  components: { SmallDeleteButton, UserCard, UserCardHorizontalSmall },
+  components: { AddressSearch, SmallDeleteButton, UserCard, UserCardHorizontalSmall },
   props: {
     date: {
       type: Date,
@@ -225,17 +228,17 @@ export default {
         repeatCount: [{ required: true, message: 'Please indicate a count' }],
         location: [
           {
-            validator: (rule, value, callback) => {
-              // address_line_one is mandatory, the rest are optional
-              if (this.form.address_line_one) {
+            validator: (_, __, callback) => {
+              if (this.addressSearchResult && this.form.postal) {
                 callback();
-              } else {
-                callback(new Error('Please enter an address!'));
+                return;
               }
+              callback(new Error('Please enter a valid address!'));
             },
           },
         ],
       },
+      addressSearchResult: null,
       form: {
         // default values
         date: this.date,
@@ -274,7 +277,9 @@ export default {
     handleDelete() {
       this.deleteEvent();
     },
-
+    handleDeletedAddress() {
+      this.addressSearchResult = null;
+    },
     async insertEvent() {
       const { data } = await this.$apollo.mutate({
         mutation: INSERT_EVENT,
@@ -307,28 +312,12 @@ export default {
         eventSkillRequirements: [],
       };
     },
-  },
+    async getAssignments() {
+      let { date, start_time, end_time, address_line_two, postal, room_number, repeat, repeatCount } = this.form;
 
-  computed: {
-    client() {
-      return this.$store.state.auth.user.client;
-    },
-    day() {
-      return dayjs(this.date).format('dddd');
-    },
-    assignments() {
-      let {
-        date,
-        start_time,
-        end_time,
-        address_line_one,
-        address_line_two,
-        postal,
-        room_number,
-        repeat,
-        repeatCount,
-      } = this.form;
       const assignments = [];
+
+      const { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.addressSearchResult;
 
       if (repeat === REPEAT_OPTS.DOES_NOT_REPEAT) {
         repeatCount = 1;
@@ -351,12 +340,40 @@ export default {
           address_line_one,
           address_line_two,
           postal,
+          latitude,
+          longitude,
           room_number,
           start_dt: start_dt.add(7 * i, 'day'),
           end_dt: end_dt.add(7 * i, 'day'),
         });
       }
       return assignments;
+    },
+    replaceAddress(address) {
+      this.addressSearchResult = address;
+      this.$set(
+        this.form,
+        'address_line_two',
+        this.addressSearchResult.BUILDING === 'NIL' ? '' : this.addressSearchResult.BUILDING
+      );
+      this.$set(this.form, 'postal', this.addressSearchResult.POSTAL === 'NIL' ? '' : this.addressSearchResult.POSTAL);
+    },
+    clearAddress() {
+      this.address = null;
+      this.$set(this.form, 'address_line_two', '');
+      this.$set(this.form, 'postal', '');
+    },
+  },
+
+  computed: {
+    client() {
+      return this.$store.state.auth.user.client;
+    },
+    isUpdate() {
+      return this.event !== null;
+    },
+    day() {
+      return dayjs(this.date).format('dddd');
     },
   },
 
