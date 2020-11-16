@@ -13,7 +13,7 @@
       <el-form-item label="Purpose" prop="purpose" required>
         <div class="field-purpose">
           <el-select v-model="form.purpose" placeholder="School">
-            <el-option v-for="option in eventPurposeOptions" :key="'opt-' + option" :value="option">
+            <el-option v-for="option in EVENT_PURPOSE_OPTIONS" :key="'opt-' + option" :value="option">
               {{ option }}
             </el-option>
           </el-select>
@@ -24,6 +24,20 @@
             v-model="form.purposeOther"
           />
         </div>
+      </el-form-item>
+      <el-form-item label="Topic">
+        <el-select v-model="form.category" placeholder="Choose one">
+          <el-option v-for="option in EVENT_CATEGORY_OPTIONS" :key="'t-opt-' + option" :value="option">
+            {{ option }}
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="Edu Level Needed">
+        <el-select v-model="form.education" placeholder="Choose one">
+          <el-option v-for="option in EVENT_EDUCATION_OPTIONS" :key="'e-opt-' + option" :value="option">
+            {{ option }}
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="Description" prop="description">
         <el-input type="textarea" v-model="form.description" placeholder="..." />
@@ -96,7 +110,13 @@
 </template>
 
 <script>
-import { EVENT_PURPOSE_OPTIONS } from '@/common/types/constants';
+import {
+  EVENT_PURPOSE_OPTIONS,
+  EVENT_CATEGORY_OPTIONS,
+  EVENT_EDUCATION_OPTIONS,
+  EVENT_CATEGORY_OPTIONS_DEFAULT,
+  EVENT_EDUCATION_OPTIONS_DEFAULT,
+} from '@/common/types/constants';
 import UserCardHorizontalSmall from '../user/UserCardHorizontalSmall';
 import UserCard from '../user/UserCard';
 import SmallDeleteButton from '../buttons/SmallDeleteButton';
@@ -109,6 +129,8 @@ const INSERT_EVENT = gql`
     $client_id: Int!
     $description: String
     $purpose: String
+    $category: String
+    $education: String
     $assignments: assignment_arr_rel_insert_input
     $notetaker_required: Boolean
     $interpreter_required: Boolean
@@ -119,6 +141,8 @@ const INSERT_EVENT = gql`
         client_id: $client_id
         description: $description
         purpose: $purpose
+        category: $category
+        education: $education
         assignments: $assignments
         notetaker_required: $notetaker_required
         interpreter_required: $interpreter_required
@@ -129,6 +153,8 @@ const INSERT_EVENT = gql`
       client_id
       description
       purpose
+      category
+      education
       notetaker_required
       interpreter_required
       assignments {
@@ -217,7 +243,9 @@ export default {
         repeatCount: 1,
         eventSkillRequirements: [],
       },
-      eventPurposeOptions: EVENT_PURPOSE_OPTIONS,
+      EVENT_PURPOSE_OPTIONS,
+      EVENT_CATEGORY_OPTIONS,
+      EVENT_EDUCATION_OPTIONS,
     };
   },
 
@@ -255,6 +283,8 @@ export default {
           description: this.form.description,
           name: this.form.name,
           purpose: this.form.purposeOther || this.form.purpose,
+          category: this.form.category || EVENT_CATEGORY_OPTIONS_DEFAULT,
+          education: this.form.education || EVENT_EDUCATION_OPTIONS_DEFAULT,
           assignments: { data: this.assignments },
           notetaker_required: this.form.eventSkillRequirements.includes('Notetaking'),
           interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),

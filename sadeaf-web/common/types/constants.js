@@ -40,6 +40,21 @@ export const EVENT_PURPOSE_OPTIONS = [
   'Others',
 ];
 
+export const EVENT_CATEGORY_OPTIONS = [
+  'Technology',
+  'Lifeskills',
+  'Engineering',
+  'Design',
+  'Science',
+  'Business/Finance',
+  'Social Science',
+  'Others',
+];
+export const EVENT_CATEGORY_OPTIONS_DEFAULT = 'Others';
+
+export const EVENT_EDUCATION_OPTIONS = ['University', 'Polytechnic', 'ITE', 'Others', 'NA'];
+export const EVENT_EDUCATION_OPTIONS_DEFAULT = 'NA';
+
 export const ROLES = {
   admin: 'admin',
   client: 'client',
