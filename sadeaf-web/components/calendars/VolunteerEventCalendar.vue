@@ -1,3 +1,4 @@
+<!--suppress CssUnusedSymbol -->
 <template>
   <div class="volunteer-cal">
     <el-tabs v-model="tab" :tab-position="isMobileView ? 'top' : 'left'">
@@ -126,9 +127,10 @@ const assignmentQuery = gql`
 `;
 
 const volunteerPendingAssignmentsQuery = gql`
-  subscription VolunteerPendingAssignments($volunteer_id: Int!, $account_id: Int!) {
+  subscription VolunteerPendingAssignments($volunteer_id: Int!, $account_id: Int!, $cutoff_timestamp: timestamp!) {
     pending_assignments: assignment(
       where: {
+        start_dt: { _gt: $cutoff_timestamp }
         status: { _eq: "PENDING" }
         _not: { volunteer_assignment_opt_ins: { volunteer_id: { _eq: $volunteer_id } } }
         event: { client: { _not: { blacklists: { volunteer_account_id: { _eq: $account_id } } } } }
@@ -398,6 +400,8 @@ export default {
           return {
             volunteer_id: this.volunteer.id,
             account_id: this.volunteer.account_id,
+            // show events that start from at least 3 hours in the future
+            cutoff_timestamp: dayjs().add(3, 'hour').toString(),
           };
         },
         result({ data }) {
@@ -472,7 +476,6 @@ export default {
   overflow: scroll;
 }
 
-/*noinspection CssUnusedSymbol*/
 .greyed {
   color: #cbcbcb;
 }
