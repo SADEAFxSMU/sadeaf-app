@@ -76,7 +76,7 @@
         <div class="field-location">
           <p>Location</p>
           <div class="body">
-            <address-search @select="replaceAddress" @clear="clearAddress" />
+            <address-search @select="replaceAddress" @clear="clearAddress" @addressDeleted="handleDeletedAddress" />
           </div>
           <div class="body">
             <el-input v-model="form.address_line_two" placeholder="Building Name" />
@@ -202,12 +202,12 @@ export default {
         repeatCount: [{ required: true, message: 'Please indicate a count' }],
         location: [
           {
-            validator: (rule, value, callback) => {
-              if (this.addressSearchResult) {
+            validator: (_, __, callback) => {
+              if (this.addressSearchResult && this.form.postal) {
                 callback();
-              } else {
-                callback(new Error('Please enter a valid address!'));
+                return;
               }
+              callback(new Error('Please enter a valid address!'));
             },
           },
         ],
@@ -249,7 +249,9 @@ export default {
     handleDelete() {
       this.deleteEvent();
     },
-
+    handleDeletedAddress() {
+      this.addressSearchResult = null;
+    },
     async insertEvent() {
       const { data } = await this.$apollo.mutate({
         mutation: INSERT_EVENT,
