@@ -1,7 +1,7 @@
 <template>
   <div>
-    <client-event-calendar />
-    <client-events-table class="client-event-table" />
+    <client-event-calendar data-test="client-event-calendar" />
+    <client-events-table data-test="client-events-table" class="client-event-table" />
   </div>
 </template>
 

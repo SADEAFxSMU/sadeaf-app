@@ -1,8 +1,6 @@
-const siteUrl = 'http://localhost:3000';
-
 describe('Login', () => {
   beforeEach(() => {
-    cy.visit(siteUrl);
+    cy.visit('/');
   });
 
   it('should redirect to login page and show login form', () => {
