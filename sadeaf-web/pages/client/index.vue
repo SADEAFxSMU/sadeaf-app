@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h1 class="page-title">Welcome Back, {{ userName }}</h1>
     <client-event-calendar />
-    <client-events-table />
+    <client-events-table class="client-event-table" />
   </div>
 </template>
 
@@ -52,7 +51,7 @@ export default {
 </script>
 
 <style scoped>
-.page-title {
-  margin-bottom: 8px;
+.client-event-table {
+  padding-top: 40px;
 }
 </style>

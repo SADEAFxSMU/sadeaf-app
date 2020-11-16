@@ -438,9 +438,11 @@
               account_id:
                 _eq: X-Hasura-User-Id
       columns:
+      - assignment_id
       - attended
       - dispute_comment
       - has_dispute
+      - id
       backend_only: false
   - role: service_requestor
     permission:
@@ -454,6 +456,16 @@
       - attended
       - dispute_comment
       - has_dispute
+      backend_only: false
+  - role: volunteer
+    permission:
+      check: {}
+      columns:
+      - attended
+      - has_dispute
+      - assignment_id
+      - id
+      - dispute_comment
       backend_only: false
   select_permissions:
   - role: client
@@ -492,10 +504,7 @@
       - assignment_id
       - id
       - dispute_comment
-      filter:
-        assignment:
-          volunteer_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
       allow_aggregations: true
   update_permissions:
   - role: client
@@ -523,6 +532,14 @@
             client:
               account_id:
                 _eq: X-Hasura-User-Id
+      check: null
+  - role: volunteer
+    permission:
+      columns:
+      - attended
+      - dispute_comment
+      - has_dispute
+      filter: {}
       check: null
 - table:
     schema: public
@@ -1593,6 +1610,17 @@
         table:
           schema: public
           name: volunteer_assignment_opt_in
+  insert_permissions:
+  - role: pending
+    permission:
+      check:
+        account_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - account_id
+      - interpreter
+      - notetaker
+      backend_only: false
   select_permissions:
   - role: client
     permission:
@@ -1622,7 +1650,6 @@
     permission:
       columns:
       - account_id
-      - approval_status
       - id
       - interpreter
       - notetaker

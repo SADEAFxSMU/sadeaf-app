@@ -10,7 +10,7 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-  css: ['element-ui/lib/theme-chalk/index.css'],
+  css: ['element-ui/lib/theme-chalk/index.css', '@assets/css/global.css'],
   plugins: [
     '@/plugins/amplify-cognito',
     '@/plugins/apollo',

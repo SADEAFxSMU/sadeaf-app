@@ -1,0 +1,14 @@
+div::-webkit-scrollbar {
+  display: none;
+}
+
+/*noinspection CssUnknownProperty*/
+div {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  word-break: normal;
+}
+
+.el-table .cell {
+  word-break: normal;
+}

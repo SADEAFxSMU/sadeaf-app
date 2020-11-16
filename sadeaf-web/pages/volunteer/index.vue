@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <h1 class="page-title">Welcome Back, {{ userName }}</h1>
+  <div class="cal-container">
     <VolunteerEventCalendar v-if="volunteer" :volunteer="volunteer" />
   </div>
 </template>
 
 <script>
-import gql from 'graphql-tag';
 import VolunteerEventCalendar from '../../components/calendars/VolunteerEventCalendar';
 
 export default {
@@ -32,6 +30,9 @@ export default {
 
 <style scoped>
 .page-title {
-  margin-bottom: 8px;
+}
+.cal-container {
+  display: flex;
+  justify-content: center;
 }
 </style>

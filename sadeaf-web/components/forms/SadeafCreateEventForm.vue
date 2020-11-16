@@ -244,7 +244,7 @@ export default {
           interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
         },
       });
-      this.event = data.event;
+      // this.event = data.event;
       this.onOperationSuccess();
       this.$notify.success('Event created!');
     },
@@ -261,7 +261,7 @@ export default {
           interpreter_required: this.form.eventSkillRequirements.includes('Interpretation'),
         },
       });
-      this.event = data.event;
+      // this.event = data.event;
       this.onOperationSuccess();
       this.$notify.success('Event updated!');
     },

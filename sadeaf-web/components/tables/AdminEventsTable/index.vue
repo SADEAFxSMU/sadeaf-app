@@ -25,11 +25,19 @@
         <user-card-horizontal-small :user="row.client.account" />
       </template>
 
-      <!-- Custom columns -->
+      <!-- Extra columns (make sure to declare in :columns) -->
       <template v-slot:status="{ row }">
         <el-tag :type="row.status === 'COMPLETE' ? 'success' : 'primary'">
           {{ row.status }}
         </el-tag>
+      </template>
+
+      <template v-slot:charges="{ row }">
+        <span>{{
+          hideEventTotalCharges(row.assignments)
+            ? 'Event not complete'
+            : '$' + calculateEventTotalCharges(row.assignments)
+        }}</span>
       </template>
 
       <template v-slot:skillsRequired="{ row }">
@@ -44,7 +52,6 @@
         </span>
       </template>
 
-      <!-- Extra columns (make sure to declare in :columns -->
       <template v-slot:volunteers="{ row }">
         <volunteers-cell :volunteers="row.volunteers" v-if="row.volunteers && row.volunteers.length > 0" />
       </template>
@@ -85,6 +92,7 @@ import gql from 'graphql-tag';
 import AssignmentsTimeline from '../../cards/AssignmentsTimeline';
 import SadeafCreateEventForm from '../../forms/SadeafCreateEventForm';
 import { DateUtils } from '../../../common/date-utils';
+import { CLIENT_CHARGE_PER_HOUR, ASSIGNMENT_STATUSES } from '../../../common/types/constants';
 import NotetakerRequiredTag from '@/components/tags/NotetakerRequiredTag';
 import InterpreterRequiredTag from '@/components/tags/InterpreterRequiredTag';
 
@@ -128,6 +136,10 @@ export default {
           label: 'Description',
         },
         {
+          name: 'charges',
+          label: 'Event Total Charges',
+        },
+        {
           name: 'status',
           label: 'Status',
         },
@@ -141,6 +153,14 @@ export default {
   },
 
   methods: {
+    hideEventTotalCharges(assignments) {
+      return assignments.filter((assignment) => assignment.status !== ASSIGNMENT_STATUSES.COMPLETE).length > 0;
+    },
+    calculateEventTotalCharges(assignments) {
+      return assignments
+        .reduce((acc, cur) => acc + DateUtils.differenceInHours(cur.start_dt, cur.end_dt) * CLIENT_CHARGE_PER_HOUR, 0)
+        .toLocaleString();
+    },
     handleNewEventClick() {
       this.createEventDialogVisible = true;
     },
