@@ -21,7 +21,9 @@ describe('Client Create New Assignment', () => {
     pressCreateNewAssignmentButton();
     cy.get('.el-dialog__body').contains('Please enter a name for this Event');
     cy.get('.el-dialog__body').contains('Please enter a purpose');
-    cy.get('.el-dialog__body').contains('Please enter an address');
+    cy.get('.el-dialog__body').contains('Please enter an event skill!');
+    cy.get('.el-dialog__body').contains('Please enter a valid address');
+    cy.get('.el-dialog__body').contains('Minimum duration is 2 hours');
   });
 
   it('should error when submitting assignment timing <2hrs apart', () => {
@@ -45,23 +47,26 @@ describe('Client Create New Assignment', () => {
     // event skill
     cy.get('.el-checkbox-group > :nth-child(1)').click();
     // event purpose
-    cy.get('.field-purpose > .el-select > .el-input > .el-input__inner')
-      .click()
-      .get('.el-select-dropdown__wrap > .el-scrollbar__view > :nth-child(3)')
-      .click();
+    cy.get('[data-test=client-create-event-purpose]').click().type('{downarrow}{enter}');
+    // event category
+    cy.get('[data-test=client-create-event-category]').click().type('{downarrow}{enter}');
+    // event education
+    cy.get('[data-test=client-create-event-education]').click().type('{downarrow}{enter}');
     // assignment timing
     cy.get(':nth-child(2) > .el-form-item > .el-form-item__content > :nth-child(1) > .el-input__inner')
       .click()
       .focus()
-      .type('{selectall}{backspace} 11:00');
+      .type('{selectall}{backspace} 11:00 {enter}');
     cy.get('.el-form-item__content > :nth-child(2) > .el-input__inner')
       .click()
       .focus()
-      .type('{selectall}{backspace} 15:00');
+      .type('{selectall}{backspace} 15:00 {enter}');
     // address field
-    cy.get('.field-location > :nth-child(2) > :nth-child(1) > .el-input__inner')
+    cy.get('.el-autocomplete > .el-input > .el-input__inner')
       .click()
-      .type('Singapore Management University');
+      .type('Singapore Management University')
+      .wait(4000)
+      .type('{downarrow}{enter}');
     pressCreateNewAssignmentButton();
     cy.get(':nth-child(4) > :nth-child(5) > .el-calendar-day').contains('Some new assignment');
   });
