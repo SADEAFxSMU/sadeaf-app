@@ -14,7 +14,7 @@
       <el-menu-item index="/account/notifications"> Notification Preferences </el-menu-item>
     </el-submenu>
     <el-menu-item>
-      <logout-button />
+      <logout-button data-test="logout-button" />
     </el-menu-item>
   </el-menu>
 </template>

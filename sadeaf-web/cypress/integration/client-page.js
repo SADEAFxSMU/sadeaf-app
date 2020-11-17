@@ -1,3 +1,5 @@
+import { enterClientHomepage } from '../helpers/login-helpers';
+
 describe('Client Page', () => {
   beforeEach(() => {
     enterClientHomepage();
@@ -18,7 +20,7 @@ describe('Client Create New Assignment', () => {
   });
 
   it('should error when submitting empty new assignment form', () => {
-    pressCreateNewAssignmentButton();
+    cy.get('.el-form-item__content > .el-button-group > :nth-child(1)').click();
     cy.get('.el-dialog__body').contains('Please enter a name for this Event');
     cy.get('.el-dialog__body').contains('Please enter a purpose');
     cy.get('.el-dialog__body').contains('Please enter an event skill!');
@@ -35,7 +37,7 @@ describe('Client Create New Assignment', () => {
       .click()
       .focus()
       .type('{selectall}{backspace} 12:00');
-    pressCreateNewAssignmentButton();
+    cy.get('.el-form-item__content > .el-button-group > :nth-child(1)').click();
     cy.get('.el-dialog__body').contains('Minimum duration is 2 hours');
   });
 
@@ -67,18 +69,7 @@ describe('Client Create New Assignment', () => {
       .type('Singapore Management University')
       .wait(4000)
       .type('{downarrow}{enter}');
-    pressCreateNewAssignmentButton();
+    cy.get('.el-form-item__content > .el-button-group > :nth-child(1)').click();
     cy.get(':nth-child(4) > :nth-child(5) > .el-calendar-day').contains('Some new assignment');
   });
 });
-
-function enterClientHomepage() {
-  cy.visit('/');
-  cy.get('[data-test=sign-in-email-input]').first().type('sadeaf-client@huansen.dev', { force: true });
-  cy.get('[data-test=sign-in-password-input]').first().type('password123', { force: true });
-  cy.get('[data-test="sign-in-sign-in-button"]').first().click();
-}
-
-function pressCreateNewAssignmentButton() {
-  cy.get('.el-form-item__content > .el-button-group > :nth-child(1)').click();
-}

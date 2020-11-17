@@ -421,6 +421,8 @@ export default {
             }
           });
 
+          filtered_assignments.sort((a, b) => a.id - b.id);
+
           filtered_assignments.forEach((assignment) => {
             assignment.start_dt = DateUtils.utcToGmt8(assignment.start_dt);
             assignment.end_dt = DateUtils.utcToGmt8(assignment.end_dt);
