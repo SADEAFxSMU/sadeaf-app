@@ -1,17 +1,5 @@
 import { enterClientHomepage } from '../helpers/login-helpers';
 
-describe('Client Page', () => {
-  beforeEach(() => {
-    enterClientHomepage();
-  });
-
-  it('should show the correctly rendered client homepage', () => {
-    cy.location('pathname').should('equals', '/client');
-    cy.get('.el-calendar__body');
-    cy.get('.el-table');
-  });
-});
-
 describe('Client Create New Assignment', () => {
   beforeEach(() => {
     enterClientHomepage();
