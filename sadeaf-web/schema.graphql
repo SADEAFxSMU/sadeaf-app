@@ -964,11 +964,13 @@ type event {
     "filter the rows returned"
     where: assignment_bool_exp
   ): assignment_aggregate!
+  category: String!
   "An object relationship"
   client: client!
   client_id: Int!
   created_at: timestamp!
   description: String
+  education: String!
   "An array relationship"
   feedbacks(
     "distinct select on columns"
@@ -1038,9 +1040,11 @@ type event_avg_fields {
 
 "aggregate max on columns"
 type event_max_fields {
+  category: String
   client_id: Int
   created_at: timestamp
   description: String
+  education: String
   id: Int
   name: String
   purpose: String
@@ -1049,9 +1053,11 @@ type event_max_fields {
 
 "aggregate min on columns"
 type event_min_fields {
+  category: String
   client_id: Int
   created_at: timestamp
   description: String
+  education: String
   id: Int
   name: String
   purpose: String
@@ -4254,7 +4260,6 @@ type volunteer {
   "An object relationship"
   account: account!
   account_id: Int!
-  approval_status: Boolean!
   "An array relationship"
   assignments(
     "distinct select on columns"
@@ -4862,11 +4867,15 @@ enum event_constraint {
 "select columns of table \"event\""
 enum event_select_column {
   "column name"
+  category
+  "column name"
   client_id
   "column name"
   created_at
   "column name"
   description
+  "column name"
+  education
   "column name"
   id
   "column name"
@@ -4884,11 +4893,15 @@ enum event_select_column {
 "update columns of table \"event\""
 enum event_update_column {
   "column name"
+  category
+  "column name"
   client_id
   "column name"
   created_at
   "column name"
   description
+  "column name"
+  education
   "column name"
   id
   "column name"
@@ -5396,8 +5409,6 @@ enum volunteer_select_column {
   "column name"
   account_id
   "column name"
-  approval_status
-  "column name"
   id
   "column name"
   interpreter
@@ -5409,8 +5420,6 @@ enum volunteer_select_column {
 enum volunteer_update_column {
   "column name"
   account_id
-  "column name"
-  approval_status
   "column name"
   id
   "column name"
@@ -6716,10 +6725,12 @@ input event_bool_exp {
   _not: event_bool_exp
   _or: [event_bool_exp]
   assignments: assignment_bool_exp
+  category: String_comparison_exp
   client: client_bool_exp
   client_id: Int_comparison_exp
   created_at: timestamp_comparison_exp
   description: String_comparison_exp
+  education: String_comparison_exp
   feedbacks: feedback_bool_exp
   id: Int_comparison_exp
   interpretation_detail: interpretation_details_bool_exp
@@ -6740,10 +6751,12 @@ input event_inc_input {
 "input type for inserting data into table \"event\""
 input event_insert_input {
   assignments: assignment_arr_rel_insert_input
+  category: String
   client: client_obj_rel_insert_input
   client_id: Int
   created_at: timestamp
   description: String
+  education: String
   feedbacks: feedback_arr_rel_insert_input
   id: Int
   interpretation_detail: interpretation_details_obj_rel_insert_input
@@ -6757,9 +6770,11 @@ input event_insert_input {
 
 "order by max() on columns of table \"event\""
 input event_max_order_by {
+  category: order_by
   client_id: order_by
   created_at: order_by
   description: order_by
+  education: order_by
   id: order_by
   name: order_by
   purpose: order_by
@@ -6768,9 +6783,11 @@ input event_max_order_by {
 
 "order by min() on columns of table \"event\""
 input event_min_order_by {
+  category: order_by
   client_id: order_by
   created_at: order_by
   description: order_by
+  education: order_by
   id: order_by
   name: order_by
   purpose: order_by
@@ -6793,10 +6810,12 @@ input event_on_conflict {
 "ordering options when selecting data from \"event\""
 input event_order_by {
   assignments_aggregate: assignment_aggregate_order_by
+  category: order_by
   client: client_order_by
   client_id: order_by
   created_at: order_by
   description: order_by
+  education: order_by
   feedbacks_aggregate: feedback_aggregate_order_by
   id: order_by
   interpretation_detail: interpretation_details_order_by
@@ -6815,9 +6834,11 @@ input event_pk_columns_input {
 
 "input type for updating data in table \"event\""
 input event_set_input {
+  category: String
   client_id: Int
   created_at: timestamp
   description: String
+  education: String
   id: Int
   interpreter_required: Boolean
   name: String
@@ -8881,7 +8902,6 @@ input volunteer_bool_exp {
   _or: [volunteer_bool_exp]
   account: account_bool_exp
   account_id: Int_comparison_exp
-  approval_status: Boolean_comparison_exp
   assignments: assignment_bool_exp
   blacklists: blacklist_bool_exp
   feedbacks: feedback_bool_exp
@@ -8901,7 +8921,6 @@ input volunteer_inc_input {
 input volunteer_insert_input {
   account: account_obj_rel_insert_input
   account_id: Int
-  approval_status: Boolean
   assignments: assignment_arr_rel_insert_input
   blacklists: blacklist_arr_rel_insert_input
   feedbacks: feedback_arr_rel_insert_input
@@ -8940,7 +8959,6 @@ input volunteer_on_conflict {
 input volunteer_order_by {
   account: account_order_by
   account_id: order_by
-  approval_status: order_by
   assignments_aggregate: assignment_aggregate_order_by
   blacklists_aggregate: blacklist_aggregate_order_by
   feedbacks_aggregate: feedback_aggregate_order_by
@@ -8958,7 +8976,6 @@ input volunteer_pk_columns_input {
 "input type for updating data in table \"volunteer\""
 input volunteer_set_input {
   account_id: Int
-  approval_status: Boolean
   id: Int
   interpreter: Boolean
   notetaker: Boolean
