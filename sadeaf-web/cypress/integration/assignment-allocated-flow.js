@@ -6,13 +6,12 @@ import {
 } from '../helpers/login-helpers';
 
 describe('Correct Opt-In flow', () => {
-  it('should allow volunteers to opt in for an assignment created by a client', () => {
-    const newAssignmentName = 'Volunteer opt in success test';
+  const newAssignmentName = 'Volunteer opt in success test';
 
-    // --- Create assignment from client ---
+  it('should allow clients to create an assignment', () => {
     enterClientHomepage();
     // open calendar on 21th day
-    cy.get(':nth-child(4) > :nth-child(6) > .el-calendar-day').click();
+    cy.get(':nth-child(5) > :nth-child(6) > .el-calendar-day').click();
     // event name
     cy.get('.el-form > :nth-child(1) > .el-form-item__content > .el-input > .el-input__inner')
       .click()
@@ -42,27 +41,24 @@ describe('Correct Opt-In flow', () => {
       .type('{downarrow}{enter}');
     // submit
     cy.get('.el-form-item__content > .el-button-group > :nth-child(1)').click();
-    cy.get(':nth-child(4) > :nth-child(6) > .el-calendar-day').contains(newAssignmentName);
+    cy.get(':nth-child(5) > :nth-child(6) > .el-calendar-day').contains(newAssignmentName);
     clickLogoutButton();
+  });
 
-    // --- Volunteer opt-in ---
+  it('should allow volunteers to opt in for an assignment created by a client', () => {
     enterVolunteerHomepage();
     cy.get('#tab-pendingAssignments').click();
-
-    // Accept the newly added available assignment
     cy.get('#tab-pendingAssignments').click();
     cy.wait(1000);
     cy.get(':nth-last-child(1) > .header > .el-button').eq(0).click({ force: true });
     cy.get('.el-dialog__footer > div > .el-button').click();
-
-    // check that it is present in opted in assignments
     cy.get('#tab-optInHistory').click();
     cy.get('#pane-optInHistory > :nth-last-child(1) > .assignment-card').contains(newAssignmentName);
     clickLogoutButton();
+  });
 
-    // --- Admin approve ---
+  it('should allow an admin to match the volunteer', () => {
     enterAdminHomepage();
-    // Match the newly added event
     cy.get(
       ':nth-last-child(1)> .opt-in > .opt-in-details > .select-container > .el-select > .el-input > .el-input__inner'
     )
@@ -70,17 +66,19 @@ describe('Correct Opt-In flow', () => {
       .type('{downarrow}{enter}', { force: true });
     cy.get(':nth-last-child(1) > .opt-in > .opt-in-details > .select-container > .el-button').click({ force: true });
     clickLogoutButton();
+  });
 
-    // --- Check that volunteer is matched ---
+  it('should show as matched on volunteer homepage', () => {
     enterVolunteerHomepage();
-    cy.get(':nth-child(4) > :nth-child(6) > .el-calendar-day').click();
+    cy.get(':nth-child(5) > :nth-child(6) > .el-calendar-day').click();
     cy.get('.el-dialog__body').contains(newAssignmentName);
     cy.get('.el-dialog__body').contains('MATCHED');
     clickLogoutButton();
+  });
 
-    // --- Check that client is matched to Test Volunteer ---
+  it('should show as matched on client homepage', () => {
     enterClientHomepage();
-    cy.get(':nth-child(4) > :nth-child(6) > .el-calendar-day').click();
+    cy.get(':nth-child(5) > :nth-child(6) > .el-calendar-day').click();
     cy.get('.el-dialog__body').contains(newAssignmentName);
     cy.get('.el-dialog__body').contains('MATCHED');
     cy.get('.el-dialog__body').contains('Test Volunteer');
