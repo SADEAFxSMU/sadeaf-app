@@ -175,7 +175,8 @@ INSERT INTO event (
 (4, 'CodeIT Suisse', 3, 'Annual hackathon for recruitment and campus outreach', 'Workshop', true, true),
 (5, 'COMM169 - Management Communication', 3, 'CORE SMU module', 'School', true, false),
 (6, 'COMM169 - Management Communication', 4, 'CORE SMU module', 'School', false, true),
-(7, 'COMM169 - Management Communication', 5, 'CORE SMU module', 'School', false, true);
+(7, 'COMM169 - Management Communication', 5, 'CORE SMU module', 'School', false, true),
+(8, 'Feedback Event', 12, 'CORE SMU module', 'School', false, true);
 
 INSERT INTO assignment (
     id, event_id, status, start_dt, end_dt,
@@ -232,10 +233,15 @@ INSERT INTO assignment (
 
 (13, 2, 'PENDING', CURRENT_TIMESTAMP + interval '192 hour', CURRENT_TIMESTAMP + interval '194 hour',
  '18 Cashew Ave', null, '123405', null, null, null,
- null, 100);
+ null, 100),
+
+(14, 8, 'MATCHED', CURRENT_TIMESTAMP + interval '24 hour', CURRENT_TIMESTAMP + interval '27 hour',
+ '18 Cashew Ave', null, '123405', null, null, null,
+ 8, 100);
 
 UPDATE assignment SET status = 'COMPLETE' WHERE id = 10;
 UPDATE assignment SET status = 'COMPLETE' WHERE id = 9;
+UPDATE assignment SET status = 'COMPLETE' WHERE id = 14;
 
 
 -- TODO: Add more assignments for the other clients + volunteers
