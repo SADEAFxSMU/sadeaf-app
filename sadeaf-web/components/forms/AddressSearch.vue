@@ -5,6 +5,7 @@
     style="width: 100%"
     placeholder="Address Search"
     @select="handleSelect"
+    @input="handleInput"
     placement="top-start"
     clearable
     @clear="handleClear"
@@ -49,7 +50,6 @@ export default {
       const response = await this.$axios.get(
         `https://developers.onemap.sg/commonapi/search?searchVal=${queryString}&returnGeom=Y&getAddrDetails=Y`
       );
-      this.requestMade = true;
       const results = { addresses: response.data.results };
       cb(results.addresses.map((address) => ({ ...address, value: address.ADDRESS })));
     },
@@ -57,7 +57,9 @@ export default {
     async handleSelect(address) {
       this.$emit('select', address);
     },
-
+    handleInput() {
+      this.requestMade = true;
+    },
     async handleClear() {
       this.$emit('clear');
     },

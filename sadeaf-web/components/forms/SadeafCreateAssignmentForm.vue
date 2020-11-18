@@ -253,7 +253,11 @@ export default {
         location: [
           {
             validator: (_, __, callback) => {
-              if (this.addressSearchResult && this.form.postal) {
+              if (this.form.postal) {
+                callback();
+                return;
+              }
+              if (this.addressSearchResult) {
                 callback();
                 return;
               }
@@ -309,6 +313,9 @@ export default {
     },
     handleDeletedAddress() {
       this.addressSearchResult = null;
+      this.form.postal = undefined;
+      this.form.address_line_two = undefined;
+      this.form.room_number = undefined;
     },
     async insertAssignment() {
       let { ADDRESS: address_line_one, LATITUDE: latitude, LONGITUDE: longitude } = this.addressSearchResult;

@@ -229,7 +229,11 @@ export default {
         location: [
           {
             validator: (_, __, callback) => {
-              if (this.addressSearchResult && this.form.postal) {
+              if (this.form.postal) {
+                callback();
+                return;
+              }
+              if (this.addressSearchResult) {
                 callback();
                 return;
               }
@@ -279,6 +283,9 @@ export default {
     },
     handleDeletedAddress() {
       this.addressSearchResult = null;
+      this.form.postal = undefined;
+      this.form.address_line_two = undefined;
+      this.form.room_number = undefined;
     },
     async insertEvent() {
       const { data } = await this.$apollo.mutate({
