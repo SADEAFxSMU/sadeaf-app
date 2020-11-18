@@ -36,7 +36,7 @@ module.exports = async function () {
         let clientAccount = clientDetails.data.event[0].client.account;
         let clientNotificationSettings = clientAccount.notification_setting;
         let eventName = clientDetails.data.event[0].name;
-        let assignmentStartDt = DateUtils.humanReadableDt(newStartDt);
+        let assignmentStartDt = DateUtils.timezoneAdjustedHumanReadableDt(newStartDt);
 
         // We need to make this check since there is no volunteer linked to an assignment if the volunteer cancels an assignment
         if (volunteerId) {

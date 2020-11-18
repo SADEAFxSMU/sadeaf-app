@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
 
 export const DateUtils = {
   isBeforeToday(date) {
@@ -25,6 +27,9 @@ export const DateUtils = {
   },
   humanReadableDt(date) {
     return dayjs(date).format('DD MMMM YYYY HH:mm');
+  },
+  timezoneAdjustedHumanReadableDt(date) {
+    return dayjs.utc(date).utcOffset(8).format('DD MMMM YYYY HH:mm');
   },
   humanReadableDate(date) {
     return dayjs(date).format('ddd, DD MMMM YYYY');
