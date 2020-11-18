@@ -231,7 +231,7 @@ INSERT INTO assignment (
  '1 Stanford Road', null, '123821', 'Haven 1A', 1.93821, 2.3247,
  2, 100),
 
-(13, 2, 'PENDING', CURRENT_TIMESTAMP + interval '192 hour', CURRENT_TIMESTAMP + interval '194 hour',
+(13, 2, 'PENDING', CURRENT_TIMESTAMP + interval '4 day', CURRENT_TIMESTAMP + interval '194 hour',
  '18 Cashew Ave', null, '123405', null, null, null,
  null, 100),
 

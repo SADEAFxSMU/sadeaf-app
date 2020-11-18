@@ -4,7 +4,7 @@ describe('Client Create New Assignment', () => {
   beforeEach(() => {
     enterClientHomepage();
     // open calendar on 20th day
-    cy.get(':nth-child(4) > :nth-child(5) > .el-calendar-day').click();
+    cy.get(':nth-child(5) > :nth-child(5) > .el-calendar-day').click();
   });
 
   it('should error when submitting empty new assignment form', () => {
@@ -58,6 +58,6 @@ describe('Client Create New Assignment', () => {
       .wait(4000)
       .type('{downarrow}{enter}');
     cy.get('.el-form-item__content > .el-button-group > :nth-child(1)').click();
-    cy.get(':nth-child(4) > :nth-child(5) > .el-calendar-day').contains('Some new assignment');
+    cy.get(':nth-child(5) > :nth-child(5) > .el-calendar-day').contains('Some new assignment');
   });
 });
