@@ -3,8 +3,8 @@
     <el-form :model="form" :rules="rules" ref="form" slot="role-form" class="form">
       <el-form-item label="Skills">
         <el-checkbox-group v-model="form.skills">
-          <el-checkbox label="Note-taker" value="notetaker" />
-          <el-checkbox label="Interpreter" value="interpreter" />
+          <el-checkbox label="Note-taker" />
+          <el-checkbox label="Interpreter" />
         </el-checkbox-group>
       </el-form-item>
     </el-form>
@@ -82,8 +82,8 @@ export default {
     async createVolunteer(accountFields) {
       const skills = this.form.skills;
       const { fullname, contact, profile_pic_url } = accountFields;
-      const isNoteTaker = skills.includes('notetaker');
-      const isInterpreter = skills.includes('interpreter');
+      const isNoteTaker = skills.includes('Note-taker');
+      const isInterpreter = skills.includes('Interpreter');
 
       await this.$apollo.mutate({
         mutation: CREATE_VOLUNTEER_MUTATION,
