@@ -5,7 +5,9 @@ export async function getHasuraUserIdAndRole(user) {
   // user.sub contains the cognitoId
   let response = await hasuraRoleAndIdQuery(user.sub);
   let { data } = await response.json();
-
+  console.log('hello world')
+  console.log(">>> data", data)
+  console.log(">>> user", user)
   if (!data || !data.account) {
     console.error('Did not receive expected json response from Hasura');
     return null;
@@ -15,6 +17,7 @@ export async function getHasuraUserIdAndRole(user) {
     // No results -- user does not exist in `account` table based on cognito_id
     try {
       let resp = await createNewHasuraAccount(user);
+      console.log(">>> Resp", resp)
       let {
         data: {
           insert_account_one: { id, role },

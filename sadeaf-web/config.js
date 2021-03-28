@@ -18,8 +18,8 @@ module.exports = {
     },
     COGNITO: {
       REGION: process.env.AWS_COGNITO_REGION || 'ap-southeast-1',
-      USER_POOL_ID: process.env.AWS_COGNITO_USER_POOL_ID || 'ap-southeast-1_n6W18LYYn',
-      USER_POOL_WEB_CLIENT_ID: process.env.AWS_COGNITO_USER_POOL_WEB_CLIENT_ID || '1m91mgkmmhi4bqchc5uecbg7t4',
+      USER_POOL_ID: process.env.AWS_COGNITO_USER_POOL_ID || 'ap-southeast-1_cunyHzBz8',
+      USER_POOL_WEB_CLIENT_ID: process.env.AWS_COGNITO_USER_POOL_WEB_CLIENT_ID || '445h6iof4ej0g94t16nm2aec8r',
     },
   },
   SMTP: {
